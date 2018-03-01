@@ -1,7 +1,7 @@
 .footer__main-contaienr {
     background-color: #343434;
-    height: 30vh;
-    widows: 100%;
+    min-height: 30vh;
+    width: 100%;
 }
 
 .footer__main-text, .footer__copyrights-text {
@@ -23,4 +23,18 @@
     font-size: 1.5em;
     margin-top: 5%;
     border-right: 1px solid #ffffff;
+}
+
+@media only screen and (max-width: 600px) {
+    .footer__main-text {
+        font-size: 2em;
+    }
+
+    .footer__copyrights-text {
+        font-size: 1.5em;
+    }
+
+    .footer__contact-info {
+        font-size: 1em;
+    }
 }
