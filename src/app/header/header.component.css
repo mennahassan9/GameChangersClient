@@ -1,12 +1,12 @@
 .header__logo {
     float: left;
-    padding: 20px;
+    margin-top: 10px;
 }
 
 .header__stub-container {
     float: right;
     font-size: 1.5em;
-    padding: 20px;
+    margin-top: 10px;
 }
 
 .clr {

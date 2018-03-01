@@ -1,3 +1,7 @@
+.home__main-container {
+    overflow-x: hidden;
+}
+
 .home__main-container, .home__login-container, .home__uni-container {
     background-size: cover;
     min-height: 100vh;
