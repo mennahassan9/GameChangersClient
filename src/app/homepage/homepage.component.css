@@ -1,9 +1,71 @@
-.class1 {
-    background-color: red;
-    height: 100px;
+.home__main-container, .home__login-container, .home__uni-container {
+    background-size: cover;
+    min-height: 100vh;
+    min-width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.class4 {
-    background-color: yellow;
-    height: 100px;
+.home__main-container {
+    background-image: url("../../assets/images/home_ideas_background_alt1.jpg");
+}
+
+.home__login-container {
+    background-image: url("../../assets/images/home_login_calendar_alt1.jpg");
+}
+
+.home__uni-container {
+    background-image: url("../../assets/images/home_university_link_alt1.jpg");
+    min-height: 50vh;
+}
+
+.home__main-text, .home__main-text-details, .home__calendar-main-text, .home__uni-link-text {
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+}
+
+.home__main-text {
+    font-size: 4em;
+    margin-top: 20%;
+}
+
+.home__main-text-details, .home__calendar-main-text, .home__uni-link-text {
+    font-size: 3em;
+}
+
+.home__calendar-main-text {
+    margin-top: 10%;
+}
+
+.home__btn-container {
+    text-align: center;
+}
+
+.home__btns {
+    color: #ffffff;
+    font-size: 2em;
+    border-radius: 3%;
+    padding: 3%;
+    width: 30%;
+    height: 25%;
+    margin-top: 15%; 
+}
+
+.home__calendar-container {
+    margin-top: 5%;
+}
+
+.home__calendar-deadline-one, .home__calendar-deadline-two, .home__calendar-deadline-three {
+    text-align: center;
+    color: #ffffff;
+    font-size: 2em;
+}
+
+.home__calendar-deadline-one, .home__calendar-deadline-two {
+    border-right: 1px solid #ffffff;
+}
+
+.home__uni-link-text {
+    margin-top: 10%;
 }
