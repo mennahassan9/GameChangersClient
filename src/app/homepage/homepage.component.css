@@ -12,7 +12,6 @@
 
 .home__main-container {
     background-image: url("../../assets/images/home_ideas_background_alt4.jpg");
-    /* background-position: 0px 25px; */
 }
 
 .home__login-container {
@@ -55,6 +54,14 @@
     width: 30%;
     height: 25%;
     margin-top: 15%; 
+}
+
+.home__btns--login {
+    background-color: #6EA204;
+}
+
+.home__btns--register {
+    background-color: #CE1126;
 }
 
 .home__calendar-container {

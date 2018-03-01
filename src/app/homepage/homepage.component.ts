@@ -12,15 +12,15 @@ export class HomeComponent implements OnInit {
     private router: Router
   ) {}
 
+  // redirection to the registration page
   redirectToRegister(): void {
     this.router.navigate(['./signup']);
   }
 
+  // redirection to the log-in page
   redirectToLogin(): void {
     
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
