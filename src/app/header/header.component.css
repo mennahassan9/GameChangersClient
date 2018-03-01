@@ -1,0 +1,18 @@
+.header__container {
+    background-color: #444444;
+}
+
+.header__logo {
+    float: left;
+    margin-top: 10px;
+}
+
+.header__stub-container {
+    float: right;
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+
+.clr {
+    clear: both;
+}
