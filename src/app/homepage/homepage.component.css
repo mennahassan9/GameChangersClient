@@ -69,3 +69,17 @@
 .home__uni-link-text {
     margin-top: 10%;
 }
+
+@media only screen and (max-width: 600px) {
+    .home__main-text {
+        font-size: 2.5em;
+    }
+
+    .home__main-text-details, .home__calendar-main-text, .home__uni-link-text {
+        font-size: 2em;
+    }
+
+    .home__calendar-deadline-one, .home__calendar-deadline-two, .home__calendar-deadline-three, .home__btns {
+        font-size: 1em;
+    }
+}
