@@ -8,6 +8,7 @@
 
 .home__main-container {
     background-image: url("../../assets/images/home_ideas_background_alt1.jpg");
+    background-position: 0px 25px;
 }
 
 .home__login-container {

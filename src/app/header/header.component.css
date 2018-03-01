@@ -1,0 +1,14 @@
+.header__logo {
+    float: left;
+    padding: 20px;
+}
+
+.header__stub-container {
+    float: right;
+    font-size: 1.5em;
+    padding: 20px;
+}
+
+.clr {
+    clear: both;
+}
