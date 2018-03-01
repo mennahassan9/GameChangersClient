@@ -10,7 +10,10 @@ import { UserComponent } from './user/user.component';
 import { AppRoutes } from './app.routes';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { RegistrationComponent } from './registration/registration.component'
+import { RegistrationComponent } from './registration/registration.component';
+import { HomeComponent } from './homepage/homepage.component';
+/*************************************** */
+
 
 
 @NgModule({
@@ -19,6 +22,7 @@ import { RegistrationComponent } from './registration/registration.component'
     UserComponent,
     HeaderComponent,
     FooterComponent,
+    HomeComponent,
     RegistrationComponent
   ],
   imports: [
