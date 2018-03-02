@@ -10,6 +10,7 @@ import { IdeaModel } from '../../shared/Models/IdeaModel';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+  otherLocationField: boolean;
   match: boolean;
   form : FormGroup;
   locations: Array<String>;
@@ -20,10 +21,9 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.locations = new Array<String>()
-    this.locations.push("test")
-    this.locations.push("test1")
     this.ages = new Array<String>();
     this.ideas = new Array<IdeaModel>();
+    this.addLocations();
     this.addAges();
     this.addIdeas();
     this.form = new FormGroup({
@@ -33,11 +33,12 @@ export class RegistrationComponent implements OnInit {
       passConf: new FormControl('' , [Validators.required]),
       remote: new FormControl('' , [Validators.required]),
       location: new FormControl('' , [Validators.required]),
+      otherLocation: new FormControl(''),
       func: new FormControl('as' , [Validators.required]),
       role: new FormControl('' , [Validators.required]),
       age: new FormControl('' , [Validators.required]),
       participated: new FormControl('' , [Validators.required]),
-      GenNextMember: new FormControl('' , [Validators.required]),
+      genNextMember: new FormControl('' , [Validators.required]),
       ideasOrder: new FormControl('' , [Validators.required])
     });
     this.form.get('passConf').valueChanges.subscribe(() => {
@@ -73,6 +74,9 @@ export class RegistrationComponent implements OnInit {
     this.form.get('ideasOrder').setValue(newIdeasOrder);
   }
 
+  addLocations(){
+    this.locations.push("Other")
+  }
   addAges()
   {
     this.ages.push("<25");
@@ -114,7 +118,16 @@ export class RegistrationComponent implements OnInit {
     this.ideas = ideas;
   }
   onSelect(data){
-    console.log(this.form.get('location'))
     console.log(data)
+    if(data == "Other")
+    {
+      this.otherLocationField = true;
+      this.form.get('otherLocation').setValidators(Validators.required)
+    }
+    else
+    {
+      this.otherLocationField = false;
+      this.form.get('otherLocation').setValidators(null)
+    }
   }
 }
