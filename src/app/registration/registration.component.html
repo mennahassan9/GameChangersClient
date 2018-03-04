@@ -49,9 +49,12 @@
             <input type="password" formControlName = "passConf" id="password_confirm" name="password_confirm"  placeholder="Confirm Password" class="input-xlarge">
             <i class="help-block">Please confirm password</i>
           </div>
-            <div *ngIf = "(form.get('passConf').invalid && form.get('passConf').touched || form.get('passConf').touched && !match || (submit && form.get('passConf').invalid))" class="alert alert-danger">
+            <div *ngIf = "(form.get('passConf').invalid && form.get('passConf').touched || (submit && form.get('passConf').invalid))" class="alert alert-danger">
               <div *ngIf = "form.get('passConf').errors.required">Please confirm your password. </div>
               <div [hidden] ="form.get('passConf').errors.required" *ngIf = "!match">Your passwords do not match. </div>                
+            </div>
+            <div *ngIf = "form.get('passConf').touched && !match" class="alert alert-danger">
+              <div [hidden] ="form.get('passConf').invalid" *ngIf = "!match">Your passwords do not match. </div>                
             </div>
         </div>
 
@@ -79,7 +82,8 @@
               <br>
               <div *ngIf = "otherLocationField == true">
                 <input type = "text" placeholder="City, Country" formControlName = "otherLocation" class="input-xlarge">
-                <div *ngIf = "(form.get('otherLocation').touched && form.get('location').invalid) || (form.get('otherLocation').invalid && submit)">
+                <div *ngIf = "(form.get('otherLocation').touched && form.get('otherLocation').invalid) || (form.get('otherLocation').invalid && submit)">
+                  <br>
                   <div class = "alert alert-danger">
                     Please enter your office location.
                   </div>
