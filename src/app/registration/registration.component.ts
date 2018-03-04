@@ -37,31 +37,26 @@ export class RegistrationComponent implements OnInit {
       role: new FormControl('' , [Validators.required]),
       age: new FormControl('' , [Validators.required]),
       participated: new FormControl('' , [Validators.required]),
-      GenNextMember: new FormControl('' , [Validators.required]),
+      genNextMember: new FormControl('' , [Validators.required]),
       ideasOrder: new FormControl('' , [Validators.required])
     });
     this.form.get('passConf').valueChanges.subscribe(() => {
       if(this.form.get('password').value === this.form.get('passConf').value){
         this.match = true;
-        console.log(this.match)
       }
       else{
-        this.match = false;
-        console.log(this.match)      
+        this.match = false;      
       }
     });
   }
   register()
   {
     this.submit = true;
-    console.log(this.form.get('name').invalid);
     if(this.form.valid){
       this.resortIdeas();
-      console.log(this.form.value)
-    }
-    else{
-        console.log(this.form.errors)
       }
+    else{
+        }
   }
   resortIdeas()
   {
@@ -114,7 +109,6 @@ export class RegistrationComponent implements OnInit {
     this.ideas = ideas;
   }
   onSelect(data){
-    console.log(this.form.get('location'))
-    console.log(data)
+
   }
 }
