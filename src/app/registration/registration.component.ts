@@ -31,7 +31,7 @@ export class RegistrationComponent implements OnInit {
     this.addRegions();
     this.form = new FormGroup({
       name: new FormControl('' , [Validators.required]),
-      email : new FormControl('' , [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@dell.com$")]),
+      email : new FormControl('' , [Validators.required, Validators.pattern("^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(dell|emc|virtustream|rsa|pivotal|secureworks)\.com$")]),
       password: new FormControl('' , [Validators.required, Validators.minLength(8)]),
       passConf: new FormControl('' , [Validators.required]),
       region: new FormControl('', Validators.required),

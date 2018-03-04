@@ -22,11 +22,11 @@
           <label class="control-label" for="email">E-mail *</label>
           <div class="controls">
             <input type="text" id="email" formControlName = "email" name="email" placeholder="michael@dell.com" class="input-xlarge">
-            <i class="help-block">Please provide your Dell email address.</i>
+            <i class="help-block">Please provide your corporate email address.</i>
           </div>
           <div *ngIf = "(form.get('email').invalid && form.get('email').touched || (submit && form.get('email').invalid))" class="alert alert-danger">
-              <div *ngIf = "form.get('email').errors.required">Please enter your email address. </div>
-              <div *ngIf = "form.get('email').errors.pattern">You should provide your Dell email. </div>            
+              <div *ngIf = "form.get('email').errors.required">Please enter your corporate email address. </div>
+              <div *ngIf = "form.get('email').errors.pattern">You should provide your corporate email address. </div>            
             </div>
         </div>
 
