@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-/****************************************/
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {DndModule} from 'ng2-dnd';
+
+  /*************************************** */
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
 import { AppRoutes } from './app.routes';
@@ -24,7 +27,11 @@ import { HomeComponent } from './homepage/homepage.component';
   ],
   imports: [
     RouterModule.forRoot(AppRoutes),
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DndModule.forRoot()
+
   ],
   providers: [],
   bootstrap: [AppComponent]
