@@ -1,201 +1,223 @@
-<div class = "jumbotron">
-  <form class="form-horizontal" [formGroup] = "form" (ngSubmit) = "register()">
-    <fieldset>
-      <div id="legend">
-        <legend class="">Register</legend>
-      </div>
-      <div class="control-group">
-        <!-- Username -->
-        <label class="control-label">Name *</label>
-        <div class="controls">
-          <input type="text" formControlName = "name" id="name" name="name" placeholder="John Doe" value = " " class="input-xlarge" required>
-          <i class="help-block">Please provide your preferred name.</i>
+<div class = "container">
+  <div class = "jumbotron">
+    <form class="form-horizontal" [formGroup] = "form" (ngSubmit) = "register()">
+      <fieldset>
+        <div id="legend">
+          <legend class="">Register</legend>
         </div>
-        <div *ngIf = "(form.get('name').invalid && form.get('name').touched || (submit && form.get('name').invalid))" class="alert alert-danger">
-          <div *ngIf = "form.get('name').errors.required">Please enter your name. </div>
-        </div>
-      </div>
-  
-      <div class="control-group">
-        <!-- E-mail -->
-        <label class="control-label" for="email">E-mail *</label>
-        <div class="controls">
-          <input type="text" id="email" formControlName = "email" name="email" placeholder="michael@dell.com" class="input-xlarge">
-          <i class="help-block">Please provide your Dell email address.</i>
-        </div>
-        <div *ngIf = "(form.get('email').invalid && form.get('email').touched || (submit && form.get('email').invalid))" class="alert alert-danger">
-            <div *ngIf = "form.get('email').errors.required">Please enter your email address. </div>
-            <div *ngIf = "form.get('email').errors.pattern">You should provide your Dell email. </div>            
+        <div class="control-group">
+          <!-- Username -->
+          <label class="control-label">Name *</label>
+          <div class="controls">
+            <input type="text" formControlName = "name" id="name" name="name" placeholder="John Doe" value = " " class="input-xlarge" required>
+            <i class="help-block">Please provide your preferred name.</i>
           </div>
-      </div>
-
-      <div class="control-group">
-          <!-- Password -->        
-            <label class="control-label">Password *</label>
-            <div class="controls">
-            <input type="password" formControlName = "password" id="inputPassword" placeholder="Password">
-            <i class="help-block">Please enter your password</i>
-            </div>
-            <div *ngIf = "(form.get('password').invalid && form.get('password').touched || (submit && form.get('password').invalid))" class="alert alert-danger">
-                <div *ngIf = "form.get('password').errors.required">Please enter your password. </div>
-                <div *ngIf = "form.get('password').errors.minlength">Your password should be at least 8 characters. </div>                
-              </div>
+          <div *ngIf = "(form.get('name').invalid && form.get('name').touched || (submit && form.get('name').invalid))" class="alert alert-danger">
+            <div *ngIf = "form.get('name').errors.required">Please enter your name. </div>
+          </div>
         </div>
     
         <div class="control-group">
-          <!-- Confirm Password -->
-          <label class="control-label">Confirm Password *</label>
+          <!-- E-mail -->
+          <label class="control-label" for="email">E-mail *</label>
           <div class="controls">
-            <input type="password" formControlName = "passConf" id="password_confirm" name="password_confirm"  placeholder="Confirm Password" class="input-xlarge">
-            <i class="help-block">Please confirm password</i>
+            <input type="text" id="email" formControlName = "email" name="email" placeholder="michael@dell.com" class="input-xlarge">
+            <i class="help-block">Please provide your Dell email address.</i>
           </div>
-            <div *ngIf = "(form.get('passConf').invalid && form.get('passConf').touched || (submit && form.get('passConf').invalid))" class="alert alert-danger">
-              <div *ngIf = "form.get('passConf').errors.required">Please confirm your password. </div>
-              <div [hidden] ="form.get('passConf').errors.required" *ngIf = "!match">Your passwords do not match. </div>                
-            </div>
-            <div *ngIf = "form.get('passConf').touched && !match" class="alert alert-danger">
-              <div [hidden] ="form.get('passConf').invalid" *ngIf = "!match">Your passwords do not match. </div>                
+          <div *ngIf = "(form.get('email').invalid && form.get('email').touched || (submit && form.get('email').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('email').errors.required">Please enter your email address. </div>
+              <div *ngIf = "form.get('email').errors.pattern">You should provide your Dell email. </div>            
             </div>
         </div>
 
-      <div class="control-group">
-          <!-- remote -->
-          <label class="control-label">Are you working remotely? *</label>
-          <div class="controls">
-            <input type="radio" value = "1" formControlName="remote" name = "remote" class="input-xlarge">Yes <br>
-            <input type="radio" value = "0" formControlName="remote" name = "remote" class="input-xlarge">No            
+        <div class="control-group">
+            <!-- Password -->        
+              <label class="control-label">Password *</label>
+              <div class="controls">
+              <input type="password" formControlName = "password" id="inputPassword" placeholder="Password">
+              <i class="help-block">Please enter your password</i>
+              </div>
+              <div *ngIf = "(form.get('password').invalid && form.get('password').touched || (submit && form.get('password').invalid))" class="alert alert-danger">
+                  <div *ngIf = "form.get('password').errors.required">Please enter your password. </div>
+                  <div *ngIf = "form.get('password').errors.minlength">Your password should be at least 8 characters. </div>                
+                </div>
           </div>
-          <div *ngIf = "(form.get('remote').invalid && form.get('remote').touched || (submit && form.get('remote').invalid))" class="alert alert-danger">
-            <div *ngIf = "form.get('remote').errors.required">Please select if you are working remotely or not. </div> 
-          </div>
-      </div>
       
-      <div class="control-group">
-          <!-- office location -->
-          <label class="control-label">What is your office location? *</label>
-          <div class="controls">
-              <select class="form-control" formControlName="location" (ngModelChange)="onSelect($event)">
-                  <option *ngFor="let location of locations" [ngValue]="location" >
-                    {{location}}
-                  </option>
-              </select>
-              <br>
-              <div *ngIf = "otherLocationField == true">
-                <input type = "text" placeholder="City, Country" formControlName = "otherLocation" class="input-xlarge">
-                <div *ngIf = "(form.get('otherLocation').touched && form.get('otherLocation').invalid) || (form.get('otherLocation').invalid && submit)">
-                  <br>
-                  <div class = "alert alert-danger">
-                    Please enter your office location.
+          <div class="control-group">
+            <!-- Confirm Password -->
+            <label class="control-label">Confirm Password *</label>
+            <div class="controls">
+              <input type="password" formControlName = "passConf" id="password_confirm" name="password_confirm"  placeholder="Confirm Password" class="input-xlarge">
+              <i class="help-block">Please confirm password</i>
+            </div>
+              <div *ngIf = "(form.get('passConf').invalid && form.get('passConf').touched || (submit && form.get('passConf').invalid))" class="alert alert-danger">
+                <div *ngIf = "form.get('passConf').errors.required">Please confirm your password. </div>
+                <div [hidden] ="form.get('passConf').errors.required" *ngIf = "!match">Your passwords do not match. </div>                
+              </div>
+              <div *ngIf = "form.get('passConf').touched && !match" class="alert alert-danger">
+                <div [hidden] ="form.get('passConf').invalid" *ngIf = "!match">Your passwords do not match. </div>                
+              </div>
+          </div>
+
+          <div class="control-group">
+            <!-- office location -->
+            <label class="control-label">What is your region? *</label>
+            <div class="controls">
+                <select class="form-control" formControlName="region">
+                    <option *ngFor="let region of regions" [ngValue]="region" >
+                      {{region}}
+                    </option>
+                </select>
+                <br>
+                  <i class="help-block location">Please specify your region.</i>
+                    <div *ngIf = "(form.get('region').invalid && form.get('region').touched || (submit && form.get('region').invalid))" class="alert alert-danger">
+                      <div *ngIf = "form.get('region').errors.required">Please specify your region. </div> 
+                    </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <!-- remote -->
+            <label class="control-label">Are you working remotely? *</label>
+            <div class="controls">
+              <input type="radio" value = "1" formControlName="remote" name = "remote" class="input-xlarge">Yes <br>
+              <input type="radio" value = "0" formControlName="remote" name = "remote" class="input-xlarge">No            
+            </div>
+            <div *ngIf = "(form.get('remote').invalid && form.get('remote').touched || (submit && form.get('remote').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('remote').errors.required">Please select if you are working remotely or not. </div> 
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <!-- office location -->
+            <label class="control-label">Where is your office location? *</label>
+            <div class="controls">
+                <select class="form-control" formControlName="location" (ngModelChange)="onSelect($event)">
+                    <option *ngFor="let location of locations" [ngValue]="location" >
+                      {{location}}
+                    </option>
+                </select>
+                <br>
+                <div *ngIf = "otherLocationField == true">
+                  <input type = "text" placeholder="City, Country" formControlName = "otherLocation" class="input-xlarge">
+                  <div *ngIf = "(form.get('otherLocation').touched && form.get('otherLocation').invalid) || (form.get('otherLocation').invalid && submit)">
+                    <br>
+                    <div class = "alert alert-danger">
+                      Please enter your office location.
+                    </div>
                   </div>
                 </div>
-              </div>
-                <i class="help-block location">If we missed your office location, it does not mean you are excluded; select "Other" and specify your office location.
-                  If remote, select closest location.</i>
-                  <div *ngIf = "(form.get('location').invalid && form.get('location').touched || (submit && form.get('location').invalid))" class="alert alert-danger">
-                    <div *ngIf = "form.get('location').errors.required">Please select your office location. </div> 
-                  </div>
-          </div>
-  
-      </div>
-      <div class="control-group">
-          <!-- office location -->
-          <label class="control-label">What is your job function? *</label>
-          <div class="controls">
-              <select class="form-control" formControlName="func" (change)="onSelect($event.target.value)">
-                  <option *ngFor="let function of functions" [ngValue]="function" >
-                    {{function}}
-                  </option>
-              </select>    
-          </div>
-          <div *ngIf = "(form.get('func').invalid && form.get('func').touched || (submit && form.get('func').invalid))" class="alert alert-danger">
-            <div *ngIf = "form.get('func').errors.required">Please select your job function. </div> 
-          </div>
-      </div>
+                  <i class="help-block location">If we missed your office location, it does not mean you are excluded; select "Other" and specify your office location.
+                    If remote, select closest location.</i>
+                    <div *ngIf = "(form.get('location').invalid && form.get('location').touched || (submit && form.get('location').invalid))" class="alert alert-danger">
+                      <div *ngIf = "form.get('location').errors.required">Please select your office location. </div> 
+                    </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <!-- office location -->
+            <label class="control-label">What is your job function? *</label>
+            <div class="controls">
+                <input type = "text" class="form-control" placeholder ="example: Engineering"formControlName="func">    
+            </div>
+            <div *ngIf = "(form.get('func').invalid && form.get('func').touched || (submit && form.get('func').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('func').errors.required">Please select your job function. </div> 
+            </div>
+        </div>
 
-      <div class="control-group">
-          <!-- remote -->
-          <label class="control-label">Are you an individual contributor or manager? *</label>
-          <div class="controls">
-            <input type="radio" value = "1" formControlName="role" name = "role" class="input-xlarge">Individual contributor <br>
-            <input type="radio" value = "0" formControlName="role" name = "role" class="input-xlarge">Manager/Executive
-          </div>
-          <div *ngIf = "(form.get('role').invalid && form.get('role').touched || (submit && form.get('role').invalid))" class="alert alert-danger">
-            <div *ngIf = "form.get('role').errors.required">Please select your role. </div> 
-          </div>
-      </div>
-      
-      <div class="control-group">
-          <!-- office location -->
-          <label class="control-label">What is your age range? *</label>
-          <div class="controls">
-              <select class="form-control" formControlName="age" (change)="onSelect($event.target.value)">
-                  <option *ngFor="let age of ages" [ngValue]="age" >
-                    {{age}}
-                  </option>
-              </select>    
-          </div>
-          <div *ngIf = "(form.get('age').invalid && form.get('age').touched || (submit && form.get('age').invalid))" class="alert alert-danger">
-            <div *ngIf = "form.get('age').errors.required">Please select your age range. </div> 
-          </div>
-      </div>
+        <div class="control-group">
+            <!-- remote -->
+            <label class="control-label">Are you an individual contributor or manager? *</label>
+            <div class="controls">
+              <input type="radio" value = "1" formControlName="role" name = "role" class="input-xlarge">Individual contributor <br>
+              <input type="radio" value = "0" formControlName="role" name = "role" class="input-xlarge">Manager/Executive
+            </div>
+            <div *ngIf = "(form.get('role').invalid && form.get('role').touched || (submit && form.get('role').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('role').errors.required">Please select your role. </div> 
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <!-- office location -->
+            <label class="control-label">What is your age range? *</label>
+            <div class="controls">
+                <select class="form-control" formControlName="age" (change)="onSelect($event.target.value)">
+                    <option *ngFor="let age of ages" [ngValue]="age" >
+                      {{age}}
+                    </option>
+                </select>    
+            </div>
+            <div *ngIf = "(form.get('age').invalid && form.get('age').touched || (submit && form.get('age').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('age').errors.required">Please select your age range. </div> 
+            </div>
+        </div>
 
-      <div class="control-group">
-          <!-- remote -->
-          <label class="control-label">Have you participated in GameChangers in the past? *</label>
-          <div class="controls">
-            <input type="radio" value = "1" formControlName="participated" name = "participated" class="input-xlarge">Yes<br>
-            <input type="radio" value = "0" formControlName="participated" name = "participated" class="input-xlarge">No
-          </div>
-          <div *ngIf = "(form.get('participated').invalid && form.get('participated').touched || (submit && form.get('participated').invalid))" class="alert alert-danger">
-            <div *ngIf = "form.get('participated').errors.required">Please select whether you have participated or not. </div> 
-          </div>
-      </div>
+        <div class="control-group">
+            <!-- remote -->
+            <label class="control-label">Have you participated in GameChangers in the past? *</label>
+            <div class="controls">
+              <input type="radio" value = "1" formControlName="participated" name = "participated" class="input-xlarge">Yes<br>
+              <input type="radio" value = "0" formControlName="participated" name = "participated" class="input-xlarge">No
+            </div>
+            <div *ngIf = "(form.get('participated').invalid && form.get('participated').touched || (submit && form.get('participated').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('participated').errors.required">Please select whether you have participated or not. </div> 
+            </div>
+        </div>
 
-      <div class="control-group">
-          <!-- remote -->
-          <label class="control-label">Are you a member of GenNext? *</label>
-          <div class="controls">
-              <input type="radio" value = "1" formControlName="genNextMember" name = "genNextMember" class="input-xlarge">Yes<br>
-              <input type="radio" value = "0" formControlName="genNextMember" name = "genNextMember" class="input-xlarge">No
-          </div>
-          <div *ngIf = "(form.get('genNextMember').invalid && form.get('genNextMember').touched || (submit && form.get('genNextMember').invalid))" class="alert alert-danger">
-            <div *ngIf = "form.get('genNextMember').errors.required">Please select whether you are a member or not. </div> 
-          </div>
-      </div>
-      <label >Please rate your preference in working on each of the business problems listed below (1 would indicate the problem you would most like to address; 3 indicates the problem you would least like to address).</label>
-      <i>Drag to sort according to priority</i>
-      <div class="row">
-          <div class="col-sm-12">
-              <div class="panel">
-                  <div class="panel-heading">
-                  </div>
-                  <div class="panel-body">
-                      <ul class="list-group" dnd-sortable-container [sortableData]="ideas" style="cursor:move">
-                          <li *ngFor="let idea of ideas; let i = index" class="list-group-item" dnd-sortable-handle dnd-sortable [sortableIndex]="i" (drop)="detectNewIdeaOrder(ideas)" draggable ="true" >
-                            <div>
+        <div class="control-group">
+            <!-- remote -->
+            <label class="control-label">Are you a member of GenNext? *</label>
+            <div class="controls">
+                <input type="radio" value = "1" formControlName="genNextMember" name = "genNextMember" class="input-xlarge">Yes<br>
+                <input type="radio" value = "0" formControlName="genNextMember" name = "genNextMember" class="input-xlarge">No
+            </div>
+            <div *ngIf = "(form.get('genNextMember').invalid && form.get('genNextMember').touched || (submit && form.get('genNextMember').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('genNextMember').errors.required">Please select whether you are a member or not. </div> 
+            </div>
+        </div>
+        <label >Please rate your preference in working on each of the business problems listed below (1 would indicate the problem you would most like to address; 3 indicates the problem you would least like to address).</label>
+        <i>Drag to sort according to priority</i>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group" dnd-sortable-container [sortableData]="ideas" style="cursor:move">
+                            <li *ngFor="let idea of ideas; let i = index" class="list-group-item" dnd-sortable-handle dnd-sortable [sortableIndex]="i" (drop)="detectNewIdeaOrder(ideas)" draggable ="true" >
                               <div>
-                                {{i + 1}})
-                              </div> 
-                              <div class = "title">
-                                {{idea.title}}
-                              </div>
-                              <div class = "owner">
-                                  {{idea.owner}}
+                                <div>
+                                  {{i + 1}})
+                                </div> 
+                                <div class = "title">
+                                  {{idea.title}}
                                 </div>
-                                <div class = "body">
-                                    {{idea.body}}
+                                <div class = "owner">
+                                    {{idea.owner}}
                                   </div>
-                            </div>
-                          </li>
-                        
-                      </ul>
-                  </div>
-              </div>
+                                  <div class = "body">
+                                      {{idea.body}}
+                                    </div>
+                              </div>
+                            </li>
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+          <!-- Confirm Password -->
+          <label class="control-label">Brief</label>
+          <div class="controls">
+            <textarea type="text" formControlName = "brief" class="form-control" rows = "5"></textarea>
+            <i class="help-block">Add a small brief about yourself</i>
           </div>
-      </div>
-      <div class = "control-group">
-        <input type="submit" class = "btn btn-success">
-      </div>
-    </fieldset>
-  </form>
+        </div>
+        <div class = "control-group">
+          <input type="submit" class = "btn btn-success">
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </div>
