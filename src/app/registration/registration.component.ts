@@ -65,7 +65,6 @@ export class RegistrationComponent implements OnInit {
   register()
   {
     this.submit = true;
-    debugger;
     if(this.form.valid){
       this.resortIdeas();
       console.log(this.form.value)
