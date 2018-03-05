@@ -1,0 +1,28 @@
+<div class="container-fluid login__main-container">
+    <div class="row">
+        <div class="col-sm-offset-4 col-sm-4 login__form-container">
+            <div *ngIf = "wrongCredentials" class="alert alert-danger">
+                <div *ngIf = "wrongCredentials" class="login__error-msg">The credentials entered were not correct. </div>       
+            </div>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input [class.login__error]="(form.get('email').invalid && form.get('email').touched) || (formSubmitted && form.get('email').invalid) || wrongCredentials" formControlName="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                </div>
+                <div *ngIf = "(form.get('email').invalid && form.get('email').touched) || (formSubmitted && form.get('email').invalid)" class="alert alert-danger">
+                    <div *ngIf = "form.get('email').errors.required" class="login__error-msg">You should not leave your email entry. </div>       
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input [class.login__error]="(form.get('password').invalid && form.get('password').touched) || (formSubmitted && form.get('password').invalid) || wrongCredentials" formControlName="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password">
+                </div>
+                <div *ngIf = "(form.get('password').invalid && form.get('password').touched) || (formSubmitted && form.get('password').invalid)" class="alert alert-danger">
+                    <div *ngIf = "form.get('password').errors.required" class="login__error-msg">You should not leave your password entry. </div>       
+                </div>
+                <div class="login__btn-container">
+                    <button class="btn btn-default login__btn">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

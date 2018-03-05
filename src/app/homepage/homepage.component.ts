@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
 
   // redirection to the log-in page
   redirectToLogin(): void {
-    
+    this.router.navigate(['./signin']);
   }
 
   ngOnInit() {}
