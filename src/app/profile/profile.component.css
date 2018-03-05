@@ -6,19 +6,23 @@
     background-position: 0px 30px;
 }
 
+.profile__brief-container {
+    margin: 10px 0px;
+}
+
 .profile__info {
-    min-height: 50vh;
+    min-height: 60vh;
     border-bottom: 2px solid #ffffff;
 }
 
 .profile__info-main-text {
-    font-size: 3em;
+    font-size: 2em;
     color: #ffffff;
-    margin-top: 10%;
+    margin-top: 6%;
 }
 
 .profile__info-details {
-    font-size: 2em;
+    font-size: 1.5em;
     color: #ffffff;
     border: 1px solid #ffffff;
     padding: 10px;
@@ -26,7 +30,7 @@
 }
 
 .profile__control-panel {
-    min-height: 50vh;
+    min-height: 40vh;
 }
 
 .profile__btn-team, .profile__btn-idea {

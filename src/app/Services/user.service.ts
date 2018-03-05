@@ -13,10 +13,10 @@ export class UserService {
         headers.append('Content-Type','application/json');
         let options = new RequestOptions({ headers: headers,method:"POST"});
         let body= JSON.stringify(user);
-        return this.http.post("http://localhost:3000/users/signup",body ,options)
+        return this.http.post("http://localhost:4040/users/signup",body ,options)
                  .toPromise()
                  .then( (success)=> {
-                  //  this.router.navigate(['']);
+                   this.router.navigate(['./signin']);
                  })
                  .catch((err)=> {
                    console.log(err);
