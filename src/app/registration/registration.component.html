@@ -80,8 +80,8 @@
             <!-- remote -->
             <label class="control-label">Are you working remotely? *</label>
             <div class="controls">
-              <input type="radio" value = "1" formControlName="isRemote" name = "isRemote" class="input-xlarge">Yes <br>
-              <input type="radio" value = "0" formControlName="isRemote" name = "isRemote" class="input-xlarge">No            
+              <input type="radio" value = true formControlName="isRemote" name = "isRemote" class="input-xlarge">Yes <br>
+              <input type="radio" value = false formControlName="isRemote" name = "isRemote" class="input-xlarge">No            
             </div>
             <div *ngIf = "(form.get('isRemote').invalid && form.get('isRemote').touched || (submit && form.get('isRemote').invalid))" class="alert alert-danger">
               <div *ngIf = "form.get('isRemote').errors.required">Please select if you are working remotely or not. </div> 
@@ -129,8 +129,8 @@
             <!-- remote -->
             <label class="control-label">Are you an individual contributor or manager? *</label>
             <div class="controls">
-              <input type="radio" value = "1" formControlName="careerLevel" name = "careerLevel" class="input-xlarge">Individual contributor <br>
-              <input type="radio" value = "0" formControlName="careerLevel" name = "careerLevel" class="input-xlarge">Manager/Executive
+              <input type="radio" value = true formControlName="careerLevel" name = "careerLevel" class="input-xlarge">Individual contributor <br>
+              <input type="radio" value = false formControlName="careerLevel" name = "careerLevel" class="input-xlarge">Manager/Executive
             </div>
             <div *ngIf = "(form.get('careerLevel').invalid && form.get('careerLevel').touched || (submit && form.get('careerLevel').invalid))" class="alert alert-danger">
               <div *ngIf = "form.get('careerLevel').errors.required">Please select your role. </div> 
@@ -156,8 +156,8 @@
             <!-- remote -->
             <label class="control-label">Have you participated in GameChangers in the past? *</label>
             <div class="controls">
-              <input type="radio" value = "1" formControlName="previousParticipation" name = "previousParticipation" class="input-xlarge">Yes<br>
-              <input type="radio" value = "0" formControlName="previousParticipation" name = "previousParticipation" class="input-xlarge">No
+              <input type="radio" value = true formControlName="previousParticipation" name = "previousParticipation" class="input-xlarge">Yes<br>
+              <input type="radio" value = false formControlName="previousParticipation" name = "previousParticipation" class="input-xlarge">No
             </div>
             <div *ngIf = "(form.get('previousParticipation').invalid && form.get('previousParticipation').touched || (submit && form.get('previousParticipation').invalid))" class="alert alert-danger">
               <div *ngIf = "form.get('previousParticipation').errors.required">Please select whether you have participated or not. </div> 
@@ -168,8 +168,8 @@
             <!-- remote -->
             <label class="control-label">Are you a member of GenNext? *</label>
             <div class="controls">
-                <input type="radio" value = "1" formControlName="genNextMember" name = "genNextMember" class="input-xlarge">Yes<br>
-                <input type="radio" value = "0" formControlName="genNextMember" name = "genNextMember" class="input-xlarge">No
+                <input type="radio" value = true formControlName="genNextMember" name = "genNextMember" class="input-xlarge">Yes<br>
+                <input type="radio" value = false formControlName="genNextMember" name = "genNextMember" class="input-xlarge">No
             </div>
             <div *ngIf = "(form.get('genNextMember').invalid && form.get('genNextMember').touched || (submit && form.get('genNextMember').invalid))" class="alert alert-danger">
               <div *ngIf = "form.get('genNextMember').errors.required">Please select whether you are a member or not. </div> 
