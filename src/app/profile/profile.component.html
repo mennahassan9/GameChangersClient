@@ -1,3 +1,32 @@
-<h1 style="margin-top: 100px;">
-    Profile!
-</h1>
+<div class="container-fluid profile__main-container">
+    <div class="profile__info row">
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6 text-center profile__info-main-text">
+                {{ currentUser.email }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6 text-center profile__info-details">
+                *user info to be displayed in a card, for instance*
+            </div>
+        </div>
+    </div>
+    <div class="profile__control-panel row">
+        <div class="profile__btns-container--team col-sm-offset-1 col-sm-5 text-center">
+            <div class="row">
+                <button class="profile__btn-team">Team</button>
+            </div>
+            <div class="row profile__btn-team-desc">
+                View and/or manipulate your team members!
+            </div>
+        </div>
+        <div class="profile__btns-container--idea col-sm-5 text-center">
+            <div class="row">
+                <button class="profile__btn-idea">Idea</button>
+            </div>
+            <div class="row profile__btn-idea-desc">
+                View and/or update your idea before deadline!
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { LoginService } from './../Services/login.service';
+
 @Component({
   selector: 'profile',
   templateUrl: './profile.component.html',
@@ -8,7 +10,17 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-    constructor() {}
+    currentUser: any = {};
 
-    ngOnInit(){}
+    constructor(
+      private loginService: LoginService
+    ) {}
+
+    ngOnInit() {
+      this.loginService.getUser().subscribe((res) => {
+        this.currentUser = JSON.parse(res["_body"]);
+      }, (err) => {
+        console.log("ERR --> ", err);
+      });
+    }
 }

@@ -1,0 +1,61 @@
+.profile__main-container {
+    overflow-x: hidden;
+    background-image: url("../../assets/images/profile_control_panel.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0px 30px;
+}
+
+.profile__info {
+    min-height: 50vh;
+    border-bottom: 2px solid #ffffff;
+}
+
+.profile__info-main-text {
+    font-size: 3em;
+    color: #ffffff;
+    margin-top: 10%;
+}
+
+.profile__info-details {
+    font-size: 2em;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 10px;
+    margin-top: 2%;
+}
+
+.profile__control-panel {
+    min-height: 50vh;
+}
+
+.profile__btn-team, .profile__btn-idea {
+    color: #ffffff;
+    font-size: 3em;
+    padding: 3%;
+    width: 70%;
+}
+
+.profile__btn-team {
+    background-color: #007DB8;
+    border-color: #007DB8;
+}
+
+.profile__btn-idea {
+    background-color: #F2AF00;
+    border-color: #F2AF00;
+}
+
+.profile__btns-container--idea, .profile__btns-container--team {
+    margin-top: 5%;
+}
+
+.profile__btns-container--team {
+    border-right: 2px solid #ffffff;
+}
+
+.profile__btn-idea-desc, .profile__btn-team-desc {
+    font-size: 1.5em;
+    margin-top: 3%;
+    color: #ffffff;
+}
