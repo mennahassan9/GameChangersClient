@@ -15,6 +15,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './homepage/homepage.component';
+import {UserService} from './Services/user.service';
 import { ProfileComponent } from './profile/profile.component';
 /*************************************** */
 import { LoginService } from './Services/login.service';
@@ -44,6 +45,7 @@ import { LoginService } from './Services/login.service';
     DndModule.forRoot()
   ],
   providers: [
+    UserService,
     LoginService
   ],
   bootstrap: [AppComponent]

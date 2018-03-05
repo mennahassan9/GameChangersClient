@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup,FormControl, Validators, FormControlName } from 
 import { VALID } from '@angular/forms/src/model';
 import {DndModule} from 'ng2-dnd';
 import { IdeaModel } from '../../shared/Models/IdeaModel';
+import { UserService } from '../Services/user.service';
+import { RegistrationModel } from './Models/RegistrationModel';
 
 @Component({
   selector: 'app-registration',
@@ -18,7 +20,7 @@ export class RegistrationComponent implements OnInit {
   regions: Array<String>;
   ideas: Array<IdeaModel>;
   submit: boolean;
-  constructor(private fb : FormBuilder) { }
+  constructor(private fb : FormBuilder, private userSvc: UserService) { }
 
   ngOnInit() {
     this.locations = new Array<String>()
@@ -35,13 +37,13 @@ export class RegistrationComponent implements OnInit {
       password: new FormControl('' , [Validators.required, Validators.minLength(8)]),
       passConf: new FormControl('' , [Validators.required]),
       region: new FormControl('', Validators.required),
-      remote: new FormControl('' , [Validators.required]),
+      isRemote: new FormControl('' , [Validators.required]),
       location: new FormControl('' , [Validators.required]),
       otherLocation: new FormControl(''),
-      func: new FormControl('' , [Validators.required]),
-      role: new FormControl('' , [Validators.required]),
+      position: new FormControl('' , [Validators.required]),
+      careerLevel: new FormControl('' , [Validators.required]),
       age: new FormControl('' , [Validators.required]),
-      participated: new FormControl('' , [Validators.required]),
+      previousParticipation: new FormControl('' , [Validators.required]),
       genNextMember: new FormControl('' , [Validators.required]),
       ideasOrder: new FormControl('[1,2,3]' , [Validators.required]),
       brief: new FormControl('')
@@ -68,6 +70,7 @@ export class RegistrationComponent implements OnInit {
     this.submit = true;
     if(this.form.valid){
       this.resortIdeas();
+      this.userSvc.register(this.form.value as RegistrationModel);
     }
     else{
       }

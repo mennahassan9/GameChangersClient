@@ -80,11 +80,11 @@
             <!-- remote -->
             <label class="control-label">Are you working remotely? *</label>
             <div class="controls">
-              <input type="radio" value = "1" formControlName="remote" name = "remote" class="input-xlarge">Yes <br>
-              <input type="radio" value = "0" formControlName="remote" name = "remote" class="input-xlarge">No            
+              <input type="radio" value = "1" formControlName="isRemote" name = "isRemote" class="input-xlarge">Yes <br>
+              <input type="radio" value = "0" formControlName="isRemote" name = "isRemote" class="input-xlarge">No            
             </div>
-            <div *ngIf = "(form.get('remote').invalid && form.get('remote').touched || (submit && form.get('remote').invalid))" class="alert alert-danger">
-              <div *ngIf = "form.get('remote').errors.required">Please select if you are working remotely or not. </div> 
+            <div *ngIf = "(form.get('isRemote').invalid && form.get('isRemote').touched || (submit && form.get('isRemote').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('isRemote').errors.required">Please select if you are working remotely or not. </div> 
             </div>
         </div>
         
@@ -118,10 +118,10 @@
             <!-- office location -->
             <label class="control-label">What is your job function? *</label>
             <div class="controls">
-                <input type = "text" class="form-control" placeholder ="example: Engineering"formControlName="func">    
+                <input type = "text" class="form-control" placeholder ="example: Engineering"formControlName="position">    
             </div>
-            <div *ngIf = "(form.get('func').invalid && form.get('func').touched || (submit && form.get('func').invalid))" class="alert alert-danger">
-              <div *ngIf = "form.get('func').errors.required">Please select your job function. </div> 
+            <div *ngIf = "(form.get('position').invalid && form.get('position').touched || (submit && form.get('position').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('position').errors.required">Please select your job function. </div> 
             </div>
         </div>
 
@@ -129,11 +129,11 @@
             <!-- remote -->
             <label class="control-label">Are you an individual contributor or manager? *</label>
             <div class="controls">
-              <input type="radio" value = "1" formControlName="role" name = "role" class="input-xlarge">Individual contributor <br>
-              <input type="radio" value = "0" formControlName="role" name = "role" class="input-xlarge">Manager/Executive
+              <input type="radio" value = "1" formControlName="careerLevel" name = "careerLevel" class="input-xlarge">Individual contributor <br>
+              <input type="radio" value = "0" formControlName="careerLevel" name = "careerLevel" class="input-xlarge">Manager/Executive
             </div>
-            <div *ngIf = "(form.get('role').invalid && form.get('role').touched || (submit && form.get('role').invalid))" class="alert alert-danger">
-              <div *ngIf = "form.get('role').errors.required">Please select your role. </div> 
+            <div *ngIf = "(form.get('careerLevel').invalid && form.get('careerLevel').touched || (submit && form.get('careerLevel').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('careerLevel').errors.required">Please select your role. </div> 
             </div>
         </div>
         
@@ -156,11 +156,11 @@
             <!-- remote -->
             <label class="control-label">Have you participated in GameChangers in the past? *</label>
             <div class="controls">
-              <input type="radio" value = "1" formControlName="participated" name = "participated" class="input-xlarge">Yes<br>
-              <input type="radio" value = "0" formControlName="participated" name = "participated" class="input-xlarge">No
+              <input type="radio" value = "1" formControlName="previousParticipation" name = "previousParticipation" class="input-xlarge">Yes<br>
+              <input type="radio" value = "0" formControlName="previousParticipation" name = "previousParticipation" class="input-xlarge">No
             </div>
-            <div *ngIf = "(form.get('participated').invalid && form.get('participated').touched || (submit && form.get('participated').invalid))" class="alert alert-danger">
-              <div *ngIf = "form.get('participated').errors.required">Please select whether you have participated or not. </div> 
+            <div *ngIf = "(form.get('previousParticipation').invalid && form.get('previousParticipation').touched || (submit && form.get('previousParticipation').invalid))" class="alert alert-danger">
+              <div *ngIf = "form.get('previousParticipation').errors.required">Please select whether you have participated or not. </div> 
             </div>
         </div>
 
