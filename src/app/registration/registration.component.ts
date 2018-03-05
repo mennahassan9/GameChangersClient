@@ -10,42 +10,56 @@ import { IdeaModel } from '../../shared/Models/IdeaModel';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+  otherLocationField: boolean;
   match: boolean;
   form : FormGroup;
   locations: Array<String>;
   ages: Array<String>;
+  regions: Array<String>;
   ideas: Array<IdeaModel>;
   submit: boolean;
   constructor(private fb : FormBuilder) { }
 
   ngOnInit() {
     this.locations = new Array<String>()
-    this.locations.push("test")
-    this.locations.push("test1")
     this.ages = new Array<String>();
     this.ideas = new Array<IdeaModel>();
+    this.regions = new Array<String>();
+    this.addLocations();
     this.addAges();
     this.addIdeas();
+    this.addRegions();
     this.form = new FormGroup({
       name: new FormControl('' , [Validators.required]),
       email : new FormControl('' , [Validators.required, Validators.pattern("^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(dell|emc|virtustream|rsa|pivotal|secureworks)\.com$")]),
       password: new FormControl('' , [Validators.required, Validators.minLength(8)]),
       passConf: new FormControl('' , [Validators.required]),
+      region: new FormControl('', Validators.required),
       remote: new FormControl('' , [Validators.required]),
       location: new FormControl('' , [Validators.required]),
-      func: new FormControl('as' , [Validators.required]),
+      otherLocation: new FormControl(''),
+      func: new FormControl('' , [Validators.required]),
       role: new FormControl('' , [Validators.required]),
       age: new FormControl('' , [Validators.required]),
       participated: new FormControl('' , [Validators.required]),
       genNextMember: new FormControl('' , [Validators.required]),
-      ideasOrder: new FormControl('' , [Validators.required])
+      ideasOrder: new FormControl('[1,2,3]' , [Validators.required]),
+      brief: new FormControl('')
     });
     this.form.get('passConf').valueChanges.subscribe(() => {
       if(this.form.get('password').value === this.form.get('passConf').value){
         this.match = true;
       }
       else{
-        this.match = false;      
+        this.match = false;
+      }
+    });
+    this.form.get('password').valueChanges.subscribe(() => {
+      if(this.form.get('password').value === this.form.get('passConf').value){
+        this.match = true;
+      }
+      else{
+        this.match = false;
       }
     });
   }
@@ -54,9 +68,9 @@ export class RegistrationComponent implements OnInit {
     this.submit = true;
     if(this.form.valid){
       this.resortIdeas();
-      }
+    }
     else{
-        }
+      }
   }
   resortIdeas()
   {
@@ -68,6 +82,10 @@ export class RegistrationComponent implements OnInit {
     this.form.get('ideasOrder').setValue(newIdeasOrder);
   }
 
+  addLocations(){
+    this.locations.push("Others")    
+    this.locations.push("Other")
+  }
   addAges()
   {
     this.ages.push("<25");
@@ -103,12 +121,29 @@ export class RegistrationComponent implements OnInit {
     this.ideas.push(idea);
     
   }
+  addRegions()
+  {
+    this.regions.push("IMEA");
+    this.regions.push("APJ");
+    this.regions.push("Americas");
+  }
   detectNewIdeaOrder(ideas)
   {
     ideas = ideas as IdeaModel;
     this.ideas = ideas;
   }
   onSelect(data){
-
+    if(data == "Other")
+    {
+      this.otherLocationField = true;
+      this.form.get('otherLocation').setValidators(Validators.required)
+    }
+    else
+    {
+      this.otherLocationField = false;
+      this.form.get('otherLocation').setValue("");
+      this.form.get('otherLocation').clearValidators();
+    }
   }
+
 }
