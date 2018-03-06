@@ -19,7 +19,7 @@
 }
 
 .home__uni-container {
-    background-image: url("../../assets/images/home_university_link_alt1.jpg");
+    background-image: url("../../assets/images/home_ideas_background.jpg");
     min-height: 50vh;
 }
 
@@ -29,13 +29,43 @@
     text-align: center;
 }
 
-.home__main-text {
-    font-size: 4em;
-    margin-top: 20%;
+.home__highlights-container {
+    border: 1px solid #ffffff;
+    margin-top: 5%;
 }
 
-.home__main-text-details, .home__calendar-main-text, .home__uni-link-text {
-    font-size: 3em;
+.home__highlights-container--header {
+    border-bottom: 1px solid #ffffff;
+}
+
+.home__highlights-container--body {
+    text-align: left;
+    padding: 10px 0px;
+    color: #ffffff;
+    font-size: 1.25em;
+}
+
+.home__main-text {
+    font-size: 2.75em;
+    margin-top: 15%;
+}
+
+.home__main-text-details {
+    font-size: 2.25em;
+    color: #ffffff;
+    padding-bottom: 10px;
+}
+
+.home__uni-link-text {
+    font-size: 2.25em;
+}
+
+.home__calendar-main-text {
+    font-size: 2.5em;
+}
+
+.home__main-text-details {
+    margin-top: 2%;
 }
 
 .home__calendar-main-text {
@@ -66,16 +96,21 @@
 
 .home__calendar-container {
     margin-top: 5%;
+    min-height: 200px;
+    padding: 0px 30px;
 }
 
-.home__calendar-deadline-one, .home__calendar-deadline-two, .home__calendar-deadline-three {
+.home__calendar-deadlines {
     text-align: center;
     color: #ffffff;
-    font-size: 2em;
+    font-size: 1.75em;
 }
 
-.home__calendar-deadline-one, .home__calendar-deadline-two {
-    border-right: 1px solid #ffffff;
+.home__calendare-dates {
+    color: #CE1126;
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
 }
 
 .home__uni-link-text {
@@ -84,14 +119,18 @@
 
 @media only screen and (max-width: 600px) {
     .home__main-text {
-        font-size: 2.5em;
+        font-size: 1.5em;
     }
 
     .home__main-text-details, .home__calendar-main-text, .home__uni-link-text {
-        font-size: 2em;
-    }
-
-    .home__calendar-deadline-one, .home__calendar-deadline-two, .home__calendar-deadline-three, .home__btns {
         font-size: 1em;
     }
+
+    .home__calendar-deadlines, .home__btns {
+        font-size: 1em;
+    }
+}
+
+.home__inside-dell {
+    color: #007DB8;
 }
