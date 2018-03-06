@@ -6,6 +6,7 @@ import { HomeComponent } from './homepage/homepage.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
 
 export const AppRoutes : Routes= [
     { 
@@ -27,5 +28,9 @@ export const AppRoutes : Routes= [
     {
         path: '',
         component: HomeComponent
+    },
+    {
+        path: 'authenticate/:id',
+        component: AuthenticateUserComponent
     }
 ] 

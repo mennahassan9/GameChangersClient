@@ -24,4 +24,22 @@ export class UserService {
                    console.log(err);
                  });
   }
+  authenticate(userId: String)
+  {
+    let headers = new Headers();
+        headers.append('Content-Type','application/json');
+        let options = new RequestOptions({ headers: headers,method:"POST"});
+        const userIdObject = {
+          "userId": userId
+        }
+        let body= JSON.stringify(userIdObject);
+        return this.http.post(environment.apiUrl + "/users/authenticate",body ,options)
+                 .toPromise()
+                 .then( (success)=> {
+                   this.router.navigate(['/signin']);
+                 })
+                 .catch((err)=> {
+                   console.log(err);
+                 });
+  }
 }

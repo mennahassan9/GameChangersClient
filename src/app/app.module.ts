@@ -19,6 +19,7 @@ import {UserService} from './Services/user.service';
 import { ProfileComponent } from './profile/profile.component';
 /*************************************** */
 import { LoginService } from './Services/login.service';
+import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { LoginService } from './Services/login.service';
     HomeComponent,
     RegistrationComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    AuthenticateUserComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes),
