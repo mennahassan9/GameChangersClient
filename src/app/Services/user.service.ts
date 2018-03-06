@@ -3,6 +3,8 @@ import { Headers, Http,RequestOptions,URLSearchParams } from '@angular/http';
 import { Router, CanActivate, Route } from '@angular/router';
 import { RegistrationModel } from '../registration/Models/RegistrationModel';
 
+import { environment } from '../../environments/environment';
+
 @Injectable()
 export class UserService {
 
@@ -13,7 +15,7 @@ export class UserService {
         headers.append('Content-Type','application/json');
         let options = new RequestOptions({ headers: headers,method:"POST"});
         let body= JSON.stringify(user);
-        return this.http.post("http://localhost:4040/users/signup",body ,options)
+        return this.http.post(environment.apiUrl + "/users/signup",body ,options)
                  .toPromise()
                  .then( (success)=> {
                    this.router.navigate(['./signin']);
