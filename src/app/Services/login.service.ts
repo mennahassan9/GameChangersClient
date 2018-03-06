@@ -23,7 +23,7 @@ export class LoginService {
   loginCheck(email, password): Observable<any> {
       // need to be abstracted in an env file
       this.reqOptions = new RequestOptions({ headers: this.reqHeaders });
-      return this.http.post(environment.apiUrl + "/users/ ", { email, password }, this.reqOptions);
+      return this.http.post(environment.apiUrl + "/users/login", { email, password }, this.reqOptions);
   }
 
   getUser(): Observable<any> {

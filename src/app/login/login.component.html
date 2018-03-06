@@ -16,9 +16,14 @@
                     <label for="exampleInputPassword1">Password</label>
                     <input [class.login__error]="(form.get('password').invalid && form.get('password').touched) || (formSubmitted && form.get('password').invalid) || wrongCredentials" formControlName="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password">
                 </div>
+                <div class="login__error-msg">
+                    <a href="/forgot-password">Forgot your password? </a>
+                </div>
+                
                 <div *ngIf = "(form.get('password').invalid && form.get('password').touched) || (formSubmitted && form.get('password').invalid)" class="alert alert-danger">
                     <div *ngIf = "form.get('password').errors.required" class="login__error-msg">You should not leave your password entry. </div>       
                 </div>
+                
                 <div class="login__btn-container">
                     <button class="btn btn-default login__btn">Submit</button>
                 </div>

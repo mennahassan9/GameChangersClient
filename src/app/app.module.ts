@@ -17,9 +17,12 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './homepage/homepage.component';
 import {UserService} from './Services/user.service';
 import { ProfileComponent } from './profile/profile.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 /*************************************** */
 import { LoginService } from './Services/login.service';
 import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
+
 
 
 @NgModule({
@@ -32,6 +35,8 @@ import { AuthenticateUserComponent } from './authenticate-user/authenticate-user
     RegistrationComponent,
     LoginComponent,
     ProfileComponent,
+    ForgotPasswordComponent,
+    PasswordResetComponent,
     AuthenticateUserComponent
   ],
   imports: [

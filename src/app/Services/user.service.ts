@@ -8,7 +8,12 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class UserService {
 
-  constructor(private http: Http, private router: Router) { }
+  public reqHeaders: Headers = new Headers();
+  public reqOptions: RequestOptions;
+
+  constructor(private http: Http, private router: Router) { 
+    this.reqHeaders.append('Content-Type', 'application/json');
+  }
   register( user:RegistrationModel)
   {
     let headers = new Headers();
@@ -23,6 +28,14 @@ export class UserService {
                  .catch((err)=> {
                    console.log(err);
                  });
+  }
+  forgotPassword(email){
+    this.reqOptions = new RequestOptions({ headers: this.reqHeaders });
+    return this.http.post(environment.apiUrl + "/users/forgot-password", { email }, this.reqOptions);
+  }
+  resetPassword(token, newPassword, verifyPassword){
+    this.reqOptions = new RequestOptions({ headers: this.reqHeaders });
+    return this.http.post(environment.apiUrl + "/users/reset-password", { token, newPassword, verifyPassword }, this.reqOptions);
   }
   authenticate(userId: String)
   {
