@@ -13,8 +13,13 @@ export class ProfileComponent implements OnInit {
     currentUser: any = {};
 
     constructor(
-      private loginService: LoginService
+      private loginService: LoginService,
+      private router: Router
     ) {}
+
+    redirectToTeam() {
+      this.router.navigate(['./registerTeam']);
+    }
 
     ngOnInit() {
       this.loginService.getUser().subscribe((res) => {

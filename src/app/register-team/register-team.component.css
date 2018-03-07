@@ -1,9 +1,63 @@
-.invite-body
-{
-    padding-top: 5%;
-    height: 70vh;
+.team__body {
+    padding-top: 10%;
+    min-height: 100vh;
+    background-image: url("../../assets/images/home_ideas_background_alt7.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
-.invite-teamName
-{
-    padding-bottom: 2%;
+
+.team__register-container {
+    border: 2px solid #000000;
+    /* padding: 10px; */
+    padding-top: 20px; 
+    margin-top: 5%;
+}
+
+.team__regitser-header {
+    /* color: */
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.team__regitser-team-name {
+    padding-top: 2%;
+}
+
+.team__regitser-team-name-input {
+    font-size: 2em;
+    padding: 30px 20px;
+}
+
+.team__register-team-add-text {
+    font-size: 1.6em;
+    padding-top: 6%;
+    font-weight: bold;
+}
+
+.team__register-team-members {
+    font-size: 1.5em;
+    padding-top: 2%;
+}
+
+.team__create-btn {
+    font-size: 2em;
+    padding: 20px 15px;
+    background-color: #6EA204;
+    color: #ffffff;
+    border-radius: 3%;
+}
+
+.team__create-btn-container {
+    padding-bottom: 5%;
+}
+
+.team__remove-member {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000000;
+}
+
+.team__remove-member:hover {
+    text-decoration: none;
+    cursor: pointer;
 }

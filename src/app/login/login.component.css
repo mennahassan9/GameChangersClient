@@ -7,7 +7,7 @@
 }
 
 .login__form-container {
-    margin-top: 15%;
+    margin-top: 12%;
     font-size: 2em;
     color: #ffffff;
     border: 1px solid #ffffff;
@@ -32,4 +32,11 @@
 
 .login__error-msg {
     font-size: 0.5em;
+}
+
+.login__forget-password-msg {
+    color: #ffffff;
+    text-align: right;
+    font-size: 0.6em;
+    font-weight: bold;
 }

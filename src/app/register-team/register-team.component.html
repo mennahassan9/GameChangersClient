@@ -1,22 +1,35 @@
-<div class = "container invite-body" >
-    <div class = "invite-teamName">
-        <h1>Register your team</h1>
-        <input type="email" class="form-control col-xs-3" name="teamName" [(ngModel)] = "teamName" placeholder="Team name" />
-    </div>
-    <div class = "col-md-6">
-        <label for="email">Email address</label>
-        <app-invite-team-member  (employee) = "addEmployee($event)"></app-invite-team-member>
-        <div class="alert alert-danger" *ngIf="alreadyInCurrentTeam || maxNumber">
-            <div *ngIf="alreadyInCurrentTeam">This employee is already within your team</div>
-            <div *ngIf="maxNumber">You have reached the maximum number of members per team</div>    
+<div class = "container-fluid team__body" >
+    <div class = " col-sm-offset-2 col-sm-8">
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6 text-center team__regitser-header">
+                Create your team now!
+            </div>
         </div>
-    </div>
-    <div class = "col-md-6">
-        <div *ngFor= "let item of teamEmails; let i = index;">
-                {{item}}
-            <a (click)= "removeFromTeam(i)">x</a>
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6 text-center team__regitser-team-name">
+                <input type="email" class="form-control team__regitser-team-name-input" name="teamName" [(ngModel)] = "teamName" placeholder="Team name" />
+            </div>
         </div>
-        <input *ngIf = "teamEmails.length>0" type = "submit" value = "Create team" class = "btn btn-success" (click)= "createTeam()">
+        <div class="row team__register-container">
+            <!-- already invited members -->
+            <div class="col-sm-offset-3 col-sm-6 text-center team__register-team-add">
+                <div class="team__register-team-add-text row" for="email">Invite team members via their email</div>
+                <div class="row team__register-team-members" *ngFor="let item of teamEmails; let i = index;">
+                        {{ item }}
+                    <a (click)= "removeFromTeam(i)" class="team__remove-member">x</a>
+                </div>
+            </div>
+            <app-invite-team-member  (employee) = "addEmployee($event)"></app-invite-team-member>
+            <div class="alert alert-danger" *ngIf="alreadyInCurrentTeam || maxNumber">
+                <div *ngIf="alreadyInCurrentTeam">This employee is already within your team</div>
+                <div *ngIf="maxNumber">You have reached the maximum number of members per team</div>    
+            </div>
+            <div class="row team__create-btn-container">
+                <div class="col-sm-offset-8 col-sm-2">
+                    <input class="team__create-btn" *ngIf = "teamEmails.length>0" type = "submit" value = "Create team" (click)= "createTeam()">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

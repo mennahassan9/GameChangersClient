@@ -1,12 +1,33 @@
-.invite{
-    display: inline-block;
-}
-.invite-button{
+.invite-button {
     border-radius: 30%;
-    
 }
-.invite-button-image
-{
+
+.invite-button-image {
     max-width: 6%;
+    cursor: pointer;
+}
+
+.team__invite-field {
+    /* width: 75%; */
+    font-size: 1.25em;
+    padding: 20px 15px;
+}
+
+.team__invite-container {
+    padding-top: 2%;
+}
+
+.team__invite-error {
+    padding-top: 2%;
+}
+
+.team__add {
+    font-size: 2.25em;
+    font-weight: bold;
+    color: #000000;
+}
+
+.team__add:hover {
+    text-decoration: none;
     cursor: pointer;
 }

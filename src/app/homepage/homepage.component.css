@@ -11,7 +11,7 @@
 }
 
 .home__main-container {
-    background-image: url("../../assets/images/home_ideas_background_alt4.jpg");
+    background-image: url("../../assets/images/home_ideas_background_alt8.jpg");
 }
 
 .home__login-container {
@@ -29,6 +29,10 @@
     text-align: center;
 }
 
+.home__uni-link-text {
+    color: #ffffff;
+}
+
 .home__highlights-container {
     border: 1px solid #ffffff;
     margin-top: 5%;
@@ -43,6 +47,7 @@
     padding: 10px 0px;
     color: #ffffff;
     font-size: 1.25em;
+    font-weight: bold;
 }
 
 .home__main-text {
@@ -54,6 +59,7 @@
     font-size: 2.25em;
     color: #ffffff;
     padding-bottom: 10px;
+    font-weight: bold;
 }
 
 .home__uni-link-text {
