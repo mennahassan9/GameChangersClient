@@ -86,7 +86,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   addLocations(){
-    this.locations.push("Others")    
+    this.locations.push("Others")
     this.locations.push("Other")
   }
   addAges()
@@ -122,7 +122,7 @@ export class RegistrationComponent implements OnInit {
     idea.owner = "Jennifer Saavedra (SVP, Talent and Culture)"
     idea.body = "How do we make #Culturecode really come to life, and be a consistent experience for all team member?"
     this.ideas.push(idea);
-    
+
   }
   addRegions()
   {

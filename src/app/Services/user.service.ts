@@ -16,7 +16,7 @@ export class UserService {
 
 
    }
-  
+
   checkIfInTeam(email: string) {
     let currentToken = this.localStorageService.get('token');
         this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
@@ -34,7 +34,8 @@ export class UserService {
 
   register( user:RegistrationModel)
   {
-        this.reqHeaders.append('Content-Type','application/json');
+    console.log(user)
+        // this.reqHeaders.append('Content-Type','application/json');
         this.reqOptions = new RequestOptions({ headers:this.reqHeaders,method:"POST"});
         let body= JSON.stringify(user);
         return this.http.post(environment.apiUrl + "/users/signup",body ,this.reqOptions)
