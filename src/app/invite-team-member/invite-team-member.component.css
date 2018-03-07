@@ -1,0 +1,12 @@
+.invite{
+    display: inline-block;
+}
+.invite-button{
+    border-radius: 30%;
+    
+}
+.invite-button-image
+{
+    max-width: 6%;
+    cursor: pointer;
+}

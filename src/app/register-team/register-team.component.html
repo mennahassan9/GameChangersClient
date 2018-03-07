@@ -1,0 +1,22 @@
+<div class = "container invite-body" >
+    <div class = "invite-teamName">
+        <h1>Register your team</h1>
+        <input type="email" class="form-control col-xs-3" name="teamName" [(ngModel)] = "teamName" placeholder="Team name" />
+    </div>
+    <div class = "col-md-6">
+        <label for="email">Email address</label>
+        <app-invite-team-member  (employee) = "addEmployee($event)"></app-invite-team-member>
+        <div class="alert alert-danger" *ngIf="alreadyInCurrentTeam || maxNumber">
+            <div *ngIf="alreadyInCurrentTeam">This employee is already within your team</div>
+            <div *ngIf="maxNumber">You have reached the maximum number of members per team</div>    
+        </div>
+    </div>
+    <div class = "col-md-6">
+        <div *ngFor= "let item of teamEmails; let i = index;">
+                {{item}}
+            <a (click)= "removeFromTeam(i)">x</a>
+        </div>
+        <input *ngIf = "teamEmails.length>0" type = "submit" value = "Create team" class = "btn btn-success" (click)= "createTeam()">
+    </div>
+</div>
+

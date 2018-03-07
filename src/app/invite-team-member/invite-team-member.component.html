@@ -1,0 +1,16 @@
+<div class = "container invite-body">
+  <div [formGroup]="form">
+      <div class="form-group invite">
+          <input type="email" [readonly] = "disabled" class="form-control" name="email" formControlName="email" placeholder="Enter email" />
+          <div *ngIf="alreadyInvited" class="alert alert-danger">This person is already in another team ✘</div>
+          <div class="alert alert-danger" *ngIf="(send && !form.get('email').valid) || alreadyInvited">
+              <div *ngIf="form.get('email').errors.required">You should fill in this field</div>
+              <div *ngIf="alreadyInvited">This employee is already within your team</div>
+              <div *ngIf="form.get('email').errors.pattern">Please enter the employee's corporate email</div>
+          </div>
+      </div>
+      <a (click) = "checkIfInTeam()">
+         <img class= "invite-button-image" src = "assets/images/addIcon.png">
+      </a>
+  </div>
+</div>

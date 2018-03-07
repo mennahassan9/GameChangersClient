@@ -21,6 +21,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 /*************************************** */
 import { LoginService } from './Services/login.service';
+import { InviteTeamMemberComponent } from './invite-team-member/invite-team-member.component';
+import { RegisterTeamComponent } from './register-team/register-team.component';
+import { TeamService} from './Services/team.service'
 import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
 
 
@@ -35,6 +38,8 @@ import { AuthenticateUserComponent } from './authenticate-user/authenticate-user
     RegistrationComponent,
     LoginComponent,
     ProfileComponent,
+    InviteTeamMemberComponent,
+    RegisterTeamComponent,
     ForgotPasswordComponent,
     PasswordResetComponent,
     AuthenticateUserComponent
@@ -53,7 +58,9 @@ import { AuthenticateUserComponent } from './authenticate-user/authenticate-user
   ],
   providers: [
     UserService,
-    LoginService
+    LoginService,
+    InviteTeamMemberComponent,
+    TeamService
   ],
   bootstrap: [AppComponent]
 })
