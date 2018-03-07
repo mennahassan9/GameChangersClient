@@ -11,14 +11,14 @@
 }
 
 .profile__info {
-    min-height: 60vh;
+    min-height: 65vh;
     border-bottom: 2px solid #ffffff;
 }
 
 .profile__info-main-text {
     font-size: 2em;
     color: #ffffff;
-    margin-top: 6%;
+    margin-top: 1%;
 }
 
 .profile__info-details {
@@ -30,7 +30,7 @@
 }
 
 .profile__control-panel {
-    min-height: 40vh;
+    min-height: 35vh;
 }
 
 .profile__btn-team, .profile__btn-idea {
@@ -62,4 +62,16 @@
     font-size: 1.5em;
     margin-top: 3%;
     color: #ffffff;
+}
+
+.profile__logout-container {
+    margin-top: 5%;
+}
+
+.profile__logout-btn {
+    font-size: 1.25em;
+    color: #ffffff;
+    background-color: #CE1126;
+    border-color: #CE1126;
+    padding: 10px 20px;
 }

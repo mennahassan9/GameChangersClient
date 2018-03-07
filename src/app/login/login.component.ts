@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
 
   // binds the templates form to the customized validations, as defined here.
   ngOnInit() {
+    this.localStorageService.remove("token");
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),

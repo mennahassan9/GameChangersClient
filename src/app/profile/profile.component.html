@@ -1,5 +1,10 @@
 <div class="container-fluid profile__main-container">
     <div class="profile__info row">
+        <div class="row profile__logout-container">
+            <div class="col-sm-offset-10 col-sm-2">
+                <button class="profile__logout-btn" (click)="redirectToHome()">Logout</button>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-offset-3 col-sm-6 text-center profile__info-main-text">
                 {{ currentUser.name }}

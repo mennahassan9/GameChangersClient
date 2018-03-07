@@ -9,13 +9,15 @@ import { LocalStorageModule } from 'angular-2-local-storage';
   /*************************************** */
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
+import { ViewTeamComponent } from './view-team/view-team.component';
+import { EditTeamComponent } from './edit-team/edit-team.component';
 import { AppRoutes } from './app.routes';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './homepage/homepage.component';
-import {UserService} from './Services/user.service';
+import { UserService } from './Services/user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
@@ -42,7 +44,9 @@ import { AuthenticateUserComponent } from './authenticate-user/authenticate-user
     RegisterTeamComponent,
     ForgotPasswordComponent,
     PasswordResetComponent,
-    AuthenticateUserComponent
+    AuthenticateUserComponent,
+    EditTeamComponent,
+    ViewTeamComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes),

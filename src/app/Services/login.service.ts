@@ -18,8 +18,6 @@ export class LoginService {
     private localStorageService: LocalStorageService
   ) {
     this.reqHeaders.append('Content-Type', 'application/json');
-    let currentToken = this.localStorageService.get('token');
-    this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
   }
 
   loginCheck(email, password): Observable<any> {
@@ -29,6 +27,8 @@ export class LoginService {
   }
 
   getUser(): Observable<any> {
+    let currentToken = this.localStorageService.get('token');
+    this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     this.reqOptions = new RequestOptions({ headers: this.reqHeaders });
     return this.http.get(environment.apiUrl + "/users/user", this.reqOptions);
   }

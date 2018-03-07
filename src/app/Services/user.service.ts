@@ -6,6 +6,9 @@ import { RegistrationModel } from '../registration/Models/RegistrationModel';
 import { environment } from '../../environments/environment';
 import { LocalStorageService } from 'angular-2-local-storage';
 
+import "rxjs";
+import { Observable } from 'rxjs';
+
 @Injectable()
 export class UserService {
   public reqHeaders: Headers = new Headers();
@@ -31,6 +34,13 @@ export class UserService {
             console.log( err)
           })
       }
+
+  getUserTeamStatus(): Observable<any> {
+    let currentToken = this.localStorageService.get('token');
+    this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    this.reqOptions = new RequestOptions({ headers:this.reqHeaders });
+    return this.http.get(environment.apiUrl + "/users/team", this.reqOptions);
+  }
 
   register( user:RegistrationModel)
   {

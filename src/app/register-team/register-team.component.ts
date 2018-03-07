@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TeamService } from '../Services/team.service';
+import { UserService } from '../Services/user.service';
+import { LoginService } from '../Services/login.service';
+
+import { LocalStorageService } from 'angular-2-local-storage';
+import { Headers, Http,RequestOptions,URLSearchParams } from '@angular/http';
+import { environment } from "../../environments/environment";
 
 @Component({
   selector: 'app-register-team',
@@ -15,7 +21,20 @@ export class RegisterTeamComponent implements OnInit {
   fb: FormBuilder;
   teamNumber: Array<number>;
   teamName: String;
-  constructor(private teamService : TeamService) { }
+  
+
+
+  ////////////////////
+  public reqHeaders: Headers = new Headers();
+  public reqOptions: RequestOptions;
+  
+  constructor(
+    private teamService : TeamService,
+    private http: Http, 
+    private localStorageService: LocalStorageService,
+    private userService: UserService,
+    private loginService: LoginService
+  ) { }
 
   ngOnInit() {
     this.teamNumber = new Array<number>();
@@ -24,7 +43,7 @@ export class RegisterTeamComponent implements OnInit {
     this.fb = new FormBuilder();
     this.form = this.fb.group({
       teamName: new FormControl('', [Validators.compose([Validators.required])])
-    })
+    });
   }
   addEmployee(email)
   { 
@@ -58,6 +77,22 @@ export class RegisterTeamComponent implements OnInit {
   }
   createTeam()
   {
-    this.teamService.createTeam(this.teamName, this.teamEmails)
+    this.reqHeaders.append('Content-Type', 'application/json');
+    let currentToken = this.localStorageService.get('token');
+    this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    this.reqOptions = new RequestOptions({headers: this.reqHeaders, method: "POST"})
+    let body= {
+      'teamName': this.teamName,
+      'members': this.teamEmails
+    }
+    return this.http.post(environment.apiUrl + "/teams/new", body, this.reqOptions)
+      .toPromise()
+      .then((res) => {
+         console.log(res)
+      })
+      .catch((err) => {
+        console.log( err)
+      })
+    // this.teamService.createTeam(this.teamName, this.teamEmails)
   }
 }

@@ -8,13 +8,11 @@
 
 .team__register-container {
     border: 2px solid #000000;
-    /* padding: 10px; */
     padding-top: 20px; 
     margin-top: 5%;
 }
 
 .team__regitser-header {
-    /* color: */
     font-size: 2.5em;
     font-weight: bold;
 }

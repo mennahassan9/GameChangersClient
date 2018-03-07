@@ -25,18 +25,22 @@ export class InviteTeamMemberComponent implements OnInit {
   {
     this.send = true;
     if(this.form.valid){
-    this.userService.checkIfInTeam(this.form.get('email').value).then((isInTeam) => {
-     if(isInTeam)
-     {
-      this.alreadyInvited = true;
-      this.send= false;  
-     }
-     else{
+    // this.userService.checkIfInTeam(this.form.get('email').value).then((isInTeam) => {
+    //  if(isInTeam)
+    //  {
+    //   this.alreadyInvited = true;
+    //   this.send= false;  
+    //  }
+    //  else{
+    //   this.addEmployeeToPending.emit(this.form.get('email'));
+    //   this.form.get('email').setValue(" ");
+    //   this.send = false;
+    //  }
+    // })
       this.addEmployeeToPending.emit(this.form.get('email'));
       this.form.get('email').setValue(" ");
       this.send = false;
-     }
-    })
     }
+      
   }
 }
