@@ -6,6 +6,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 
 import "rxjs";
 import { Observable } from 'rxjs';
+import { TeamInviteModel } from '../register-team/Models/teamInviteModel';
 
 @Injectable()
 export class TeamService {
@@ -29,16 +30,17 @@ export class TeamService {
     return this.http.get(environment.apiUrl + "/teams/view/team", { headers: reqHeaders });
   }
 
-  createTeam(teamName: String, teamEmails: Array<String> )
+  createTeam(teamInvitation : TeamInviteModel )
   {
         const reqHeaders: Headers = new Headers();
         reqHeaders.append('Content-Type', 'application/json');
         const currentToken = this.localStorageService.get('token');
         reqHeaders.append('Authorization', 'Bearer ' + currentToken);
         let body= {
-          'teamName': teamName,
-          'members': teamEmails
+          'teamName': teamInvitation.teamName,
+          'members': teamInvitation.members
         }
+        console.log(body)
         return this.http.post(environment.apiUrl + "/teams/new", body, { headers: reqHeaders })
           .toPromise()
           .then((res) => {

@@ -7,6 +7,8 @@ import { LoginService } from '../Services/login.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Headers, Http,RequestOptions,URLSearchParams } from '@angular/http';
 import { environment } from "../../environments/environment";
+import { InviteeModel } from './Models/inviteeModel';
+import { TeamInviteModel } from './Models/teamInviteModel';
 
 @Component({
   selector: 'app-register-team',
@@ -21,6 +23,9 @@ export class RegisterTeamComponent implements OnInit {
   fb: FormBuilder;
   teamNumber: Array<number>;
   teamName: String;
+  teamInvitation: TeamInviteModel;
+  
+
 
   ////////////////////
   public reqHeaders: Headers = new Headers();
@@ -35,6 +40,7 @@ export class RegisterTeamComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.teamInvitation = new TeamInviteModel();
     this.teamNumber = new Array<number>();
     this.teamNumber.push(1);
     this.teamEmails = new Array<String>();
@@ -44,14 +50,19 @@ export class RegisterTeamComponent implements OnInit {
     });
   }
   
-  addEmployee(email) { 
+  addEmployee(email) {
+    var invitee: InviteeModel = new InviteeModel();
+    invitee.email = email.value;
+    invitee.email = invitee.email.toLowerCase();
     this.alreadyInCurrentTeam = false;  
     if(this.checkEmployee(email.value)){
       this.alreadyInCurrentTeam = true;
     }
     else{
-      if(this.teamEmails.length < 6)
-      this.teamEmails.push(email.value)
+      if(this.teamEmails.length < 6){
+        this.teamInvitation.members.push(invitee);
+        this.teamEmails.push(email.value)
+      }
       else
       this.maxNumber = true;
     }
@@ -74,22 +85,9 @@ export class RegisterTeamComponent implements OnInit {
   }
 
   createTeam() {
-    // this.reqHeaders.append('Content-Type', 'application/json');
-    // let currentToken = this.localStorageService.get('token');
-    // this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    // this.reqOptions = new RequestOptions({headers: this.reqHeaders, method: "POST"})
-    // let body= {
-    //   'teamName': this.teamName,
-    //   'members': this.teamEmails
-    // }
-    // return this.http.post(environment.apiUrl + "/teams/new", body, this.reqOptions)
-    //   .toPromise()
-    //   .then((res) => {
-    //      console.log(res)
-    //   })
-    //   .catch((err) => {
-    //     console.log( err)
-    //   })
-    this.teamService.createTeam(this.teamName, this.teamEmails)
+    this.teamName = this.teamName.replace(/\s+/g, '-').toLowerCase();
+    console.log(this.teamName)
+    this.teamInvitation.teamName = this.teamName;
+    this.teamService.createTeam(this.teamInvitation)
   }
 }

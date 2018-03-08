@@ -15,7 +15,7 @@
             <div class="col-sm-offset-3 col-sm-6 text-center team__register-team-add">
                 <div class="team__register-team-add-text row" for="email">Invite team members via their email</div>
                 <div class="row team__register-team-members" *ngFor="let item of teamEmails; let i = index;">
-                        {{ item.email }}
+                        {{ item }}
                     <a (click)= "removeFromTeam(i)" class="team__remove-member">x</a>
                 </div>
             </div>
