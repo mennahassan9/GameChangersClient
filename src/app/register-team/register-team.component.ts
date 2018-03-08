@@ -21,8 +21,6 @@ export class RegisterTeamComponent implements OnInit {
   fb: FormBuilder;
   teamNumber: Array<number>;
   teamName: String;
-  
-
 
   ////////////////////
   public reqHeaders: Headers = new Headers();

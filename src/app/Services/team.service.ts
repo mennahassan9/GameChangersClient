@@ -9,30 +9,37 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class TeamService {
-  public reqHeaders: Headers = new Headers();
-  public currentToken: string;
-
-  constructor(private http: Http, private router: Router, private localStorageService: LocalStorageService) {
-    this.reqHeaders.append('Content-Type', 'application/json');
-    let currentToken = this.localStorageService.get('token');
-    this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-   }
+  constructor(private http: Http, private router: Router, private localStorageService: LocalStorageService) {}
 
    getTeam(): Observable<any> {
-    return this.http.get(environment.apiUrl + "/teams/view/member", { headers: this.reqHeaders });
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    return this.http.get(environment.apiUrl + "/teams/view/member", { headers: reqHeaders });
   }
 
   getTeamAsMember(): Observable<any> {
-    return this.http.get(environment.apiUrl + "/teams/view/team", { headers: this.reqHeaders });
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    return this.http.get(environment.apiUrl + "/teams/view/team", { headers: reqHeaders });
   }
 
   createTeam(teamName: String, teamEmails: Array<String> )
   {
+        const reqHeaders: Headers = new Headers();
+        reqHeaders.append('Content-Type', 'application/json');
+        const currentToken = this.localStorageService.get('token');
+        reqHeaders.append('Authorization', 'Bearer ' + currentToken);
         let body= {
           'teamName': teamName,
           'members': teamEmails
         }
-        return this.http.post(environment.apiUrl + "/teams/new", body, { headers: this.reqHeaders })
+        return this.http.post(environment.apiUrl + "/teams/new", body, { headers: reqHeaders })
           .toPromise()
           .then((res) => {
              console.log(res)

@@ -11,23 +11,22 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class UserService {
-  public reqHeaders: Headers = new Headers();
-  public currentToken: string;
   public alreadyExistingUser: boolean;
 
   constructor(
     private http: Http, 
     private router: Router, 
     private localStorageService: LocalStorageService
-  ) {
-    this.reqHeaders.append('Content-Type', 'application/json');
-    let currentToken = this.localStorageService.get('token');
-    this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-  }
+  ) {}
 
   checkIfInTeam(email: string) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
     let body= JSON.stringify(email);
-    return this.http.post(environment.apiUrl + "/users/checkIfInTeam", body, { headers: this.reqHeaders })
+    return this.http.post(environment.apiUrl + "/users/checkIfInTeam", body, { headers: reqHeaders })
       .toPromise()
       .then((isInTeam) => {
           isInTeam.json().teamMember;
@@ -38,16 +37,31 @@ export class UserService {
   }
 
   getAnotherUser(id): Observable<any> {
-    return this.http.post(environment.apiUrl + "/users/fetch/user", { id: id }, { headers: this.reqHeaders });
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    return this.http.post(environment.apiUrl + "/users/fetch/user", { id: id }, { headers: reqHeaders });
   }
 
   getUserTeamStatus(): Observable<any> {
-    return this.http.get(environment.apiUrl + "/users/team", { headers: this.reqHeaders });
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    return this.http.get(environment.apiUrl + "/users/team", { headers: reqHeaders });
   }
 
   register(user:RegistrationModel){
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
     let body= JSON.stringify(user);
-    return this.http.post(environment.apiUrl + "/users/signup",body, { headers: this.reqHeaders })
+    return this.http.post(environment.apiUrl + "/users/signup",body, { headers: reqHeaders })
               .toPromise();
   }
 
@@ -57,19 +71,34 @@ export class UserService {
   }
 
   forgotPassword(email){
-    return this.http.post(environment.apiUrl + "/users/forgot-password", { email }, { headers: this.reqHeaders });
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    return this.http.post(environment.apiUrl + "/users/forgot-password", { email }, { headers: reqHeaders });
   }
 
   resetPassword(token, newPassword, verifyPassword){
-    return this.http.post(environment.apiUrl + "/users/reset-password", { token, newPassword, verifyPassword }, { headers: this.reqHeaders });
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    return this.http.post(environment.apiUrl + "/users/reset-password", { token, newPassword, verifyPassword }, { headers: reqHeaders });
   }
 
   authenticate(userId: String) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
     const userIdObject = {
       "userId": userId
     }
     let body= JSON.stringify(userIdObject);
-    return this.http.post(environment.apiUrl + "/users/authenticate",body ,{ headers: this.reqHeaders })
+    return this.http.post(environment.apiUrl + "/users/authenticate",body ,{ headers: reqHeaders })
               .toPromise()
               .then( (success)=> {
                 this.router.navigate(['/signin']);

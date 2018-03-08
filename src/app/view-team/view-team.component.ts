@@ -36,6 +36,7 @@ export class ViewTeamComponent implements OnInit {
     this.teamService.getTeamAsMember().subscribe((res) => {
       if (JSON.parse(res["_body"])["team"] != null) {
         this.team = JSON.parse(res["_body"])["team"];
+        // console.log("TEAM --> ", this.team);
         this.userService.getAnotherUser(this.team["creator"]).subscribe((res) => {
           console.log("CREATOR OBJ --> ", JSON.parse(res["_body"]));
           this.creator = JSON.parse(res["_body"])["user"]["name"];
