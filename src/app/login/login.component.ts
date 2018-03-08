@@ -15,11 +15,12 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   formSubmitted: boolean;
   wrongCredentials: boolean;
+  
 
   constructor(
     private router: Router,
-    private loginService: LoginService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private loginService: LoginService
   ) {}
 
   // calls the end point for verifying credentials and redirects on success.
@@ -29,12 +30,10 @@ export class LoginComponent implements OnInit {
       // redirect to the landing page for the profile in case of valid user credentials
       let email = this.form.get('email').value;
       let password = this.form.get('password').value;
-
-      this.loginService.loginCheck(email, password).subscribe((res) => {
+      this.loginService.loginCheck(email, password).then((res) => {
         this.wrongCredentials = false;
-        this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
         this.router.navigate(['./profile']);
-        console.log(JSON.parse(res["_body"])["token"]);
+        // console.log(JSON.parse(this.localStorageService.get('token')));
       }, (err) => {
         this.wrongCredentials = true;
       });

@@ -10,24 +10,34 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class LoginService {
 
-  public reqHeaders: Headers = new Headers();
-  public currentToken: string;
-
+  
   constructor(
     private http: Http,
-    private localStorageService: LocalStorageService
-  ) {
-    this.reqHeaders.append('Content-Type', 'application/json');
-    let currentToken = this.localStorageService.get('token');
-    this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    private localStorageService: LocalStorageService) {
   }
 
-  loginCheck(email, password): Observable<any> {
-    return this.http.post(environment.apiUrl + "/users/login", { email, password }, { headers: this.reqHeaders });
+  loginCheck(email, password) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    return this.http.post(environment.apiUrl + "/users/login", { email, password }, { headers: reqHeaders })
+    .toPromise()
+    .then((res) => 
+    {
+      this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
+    })
+    ;
   }
 
   getUser(): Observable<any> {    
-    return this.http.get(environment.apiUrl + "/users/user", { headers: this.reqHeaders });
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    return this.http.get(environment.apiUrl + "/users/user", { headers: reqHeaders });
   }
 
 }
