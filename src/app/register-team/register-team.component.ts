@@ -29,11 +29,11 @@ export class RegisterTeamComponent implements OnInit {
   public reqOptions: RequestOptions;
   
   constructor(
-    private teamService : TeamService,
+    private teamService: TeamService,
     private http: Http, 
     private localStorageService: LocalStorageService,
     private userService: UserService,
-    private loginService: LoginService
+    private loginService: LoginService,
   ) { }
 
   ngOnInit() {
@@ -45,8 +45,8 @@ export class RegisterTeamComponent implements OnInit {
       teamName: new FormControl('', [Validators.compose([Validators.required])])
     });
   }
-  addEmployee(email)
-  { 
+  
+  addEmployee(email) { 
     this.alreadyInCurrentTeam = false;  
     if(this.checkEmployee(email.value)){
       this.alreadyInCurrentTeam = true;
@@ -59,8 +59,8 @@ export class RegisterTeamComponent implements OnInit {
     }
     console.log(this.alreadyInCurrentTeam)
   }
-  checkEmployee(email)
-  {
+
+  checkEmployee(email) {
     // console.log()
     for(var i = 0; i< this.teamEmails.length; i++)
     {
@@ -71,28 +71,27 @@ export class RegisterTeamComponent implements OnInit {
     return false;
 
   }
-  removeFromTeam(index)
-  {
+  removeFromTeam(index) {
     this.teamEmails.splice(index, 1)
   }
-  createTeam()
-  {
-    this.reqHeaders.append('Content-Type', 'application/json');
-    let currentToken = this.localStorageService.get('token');
-    this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    this.reqOptions = new RequestOptions({headers: this.reqHeaders, method: "POST"})
-    let body= {
-      'teamName': this.teamName,
-      'members': this.teamEmails
-    }
-    return this.http.post(environment.apiUrl + "/teams/new", body, this.reqOptions)
-      .toPromise()
-      .then((res) => {
-         console.log(res)
-      })
-      .catch((err) => {
-        console.log( err)
-      })
-    // this.teamService.createTeam(this.teamName, this.teamEmails)
+
+  createTeam() {
+    // this.reqHeaders.append('Content-Type', 'application/json');
+    // let currentToken = this.localStorageService.get('token');
+    // this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    // this.reqOptions = new RequestOptions({headers: this.reqHeaders, method: "POST"})
+    // let body= {
+    //   'teamName': this.teamName,
+    //   'members': this.teamEmails
+    // }
+    // return this.http.post(environment.apiUrl + "/teams/new", body, this.reqOptions)
+    //   .toPromise()
+    //   .then((res) => {
+    //      console.log(res)
+    //   })
+    //   .catch((err) => {
+    //     console.log( err)
+    //   })
+    this.teamService.createTeam(this.teamName, this.teamEmails)
   }
 }

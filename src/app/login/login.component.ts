@@ -32,9 +32,9 @@ export class LoginComponent implements OnInit {
 
       this.loginService.loginCheck(email, password).subscribe((res) => {
         this.wrongCredentials = false;
+        this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
         this.router.navigate(['./profile']);
         console.log(JSON.parse(res["_body"])["token"]);
-        this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
       }, (err) => {
         this.wrongCredentials = true;
       });

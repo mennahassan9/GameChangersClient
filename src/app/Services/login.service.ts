@@ -11,26 +11,23 @@ import { environment } from '../../environments/environment';
 export class LoginService {
 
   public reqHeaders: Headers = new Headers();
-  public reqOptions: RequestOptions;
+  public currentToken: string;
 
   constructor(
     private http: Http,
     private localStorageService: LocalStorageService
   ) {
     this.reqHeaders.append('Content-Type', 'application/json');
+    let currentToken = this.localStorageService.get('token');
+    this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
   }
 
   loginCheck(email, password): Observable<any> {
-      // need to be abstracted in an env file
-      this.reqOptions = new RequestOptions({ headers: this.reqHeaders });
-      return this.http.post(environment.apiUrl + "/users/login", { email, password }, this.reqOptions);
+    return this.http.post(environment.apiUrl + "/users/login", { email, password }, { headers: this.reqHeaders });
   }
 
-  getUser(): Observable<any> {
-    let currentToken = this.localStorageService.get('token');
-    this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    this.reqOptions = new RequestOptions({ headers: this.reqHeaders });
-    return this.http.get(environment.apiUrl + "/users/user", this.reqOptions);
+  getUser(): Observable<any> {    
+    return this.http.get(environment.apiUrl + "/users/user", { headers: this.reqHeaders });
   }
 
 }

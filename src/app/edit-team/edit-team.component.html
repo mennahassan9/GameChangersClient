@@ -1,1 +1,42 @@
-<h1 style="margin-top: 100px;">edit team</h1>
+<div class = "container-fluid team__body" >
+    <div class = " col-sm-offset-2 col-sm-8">
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6 text-center team__edit-header">
+                {{ team.name }}
+            </div>
+        </div>
+        <div class="row alert alert-success login__error-msg" *ngIf = "emailSent">
+            An email is sent to the supplied email.
+        </div>
+        <div class="row alert alert-danger login__error-msg" *ngIf = "error">
+            {{ errorMsg }}
+        </div>
+        <!-- <div class="row">
+            <div class="col-sm-offset-3 col-sm-6 text-center team__edit-team-name">-->
+                <!-- need to edit the ngModel -->
+                <!-- <input type="email" class="form-control team__edit-team-name-input" name="teamName" [(ngModel)] = "team.name" placeholder="Team name" />
+            </div>
+        </div> -->
+        <div class="row team__view-container">
+            <!-- already invited members -->
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-6 text-center team__view-team-add">
+                    <div class="team__view-team-add-text row" for="email">Edit team members via their email</div>
+                    <div class="row team__view-team-members" *ngFor="let item of team.members; let i = index;">
+                            {{ item.email }}
+                        <a (click)= "removeTeamMember(item.email)" class="team__remove-member">x</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row" class="team__edit-team-member-container">
+                <div class="col-sm-offset-3 col-sm-5 text-center">
+                    <!-- need to edit the ngModel -->
+                    <input type="email" class="form-control team__edit-team-member-input" [(ngModel)]="emailAdded" name="teamName" placeholder="New member" />
+                </div>
+                <div class="col-sm-2">
+                    <button class="team__edit-team-member-btn" (click)="addTeamMember()">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
