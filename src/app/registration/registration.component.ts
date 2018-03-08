@@ -5,6 +5,7 @@ import {DndModule} from 'ng2-dnd';
 import { IdeaModel } from '../../shared/Models/IdeaModel';
 import { UserService } from '../Services/user.service';
 import { RegistrationModel } from './Models/RegistrationModel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -20,7 +21,8 @@ export class RegistrationComponent implements OnInit {
   regions: Array<String>;
   ideas: Array<IdeaModel>;
   submit: boolean;
-  constructor(private fb : FormBuilder, private userSvc: UserService) { }
+  alreadyExisting: boolean;
+  constructor(private fb : FormBuilder, private userSvc: UserService, private router: Router) { }
 
   ngOnInit() {
     this.locations = new Array<String>()
@@ -70,7 +72,18 @@ export class RegistrationComponent implements OnInit {
     this.submit = true;
     if(this.form.valid){
       this.resortIdeas();
-      this.userSvc.register(this.form.value as RegistrationModel);
+      this.userSvc.register(this.form.value as RegistrationModel).then( (success)=> {
+        this.alreadyExisting = false;
+        this.router.navigate(['./signin']);
+      })
+      .catch((err)=> {
+        if (JSON.parse(err["_body"])["status"] === '409') {
+          this.alreadyExisting = true;
+          console.log("IN PROMISE", this.alreadyExisting);
+        }
+        console.log(err);
+      });
+      
     }
     else{
       }

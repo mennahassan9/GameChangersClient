@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 export class UserService {
   public reqHeaders: Headers = new Headers();
   public currentToken: string;
+  public alreadyExistingUser: boolean;
 
   constructor(
     private http: Http, 
@@ -36,6 +37,10 @@ export class UserService {
       });
   }
 
+  getAnotherUser(id): Observable<any> {
+    return this.http.post(environment.apiUrl + "/users/fetch/user", { id: id }, { headers: this.reqHeaders });
+  }
+
   getUserTeamStatus(): Observable<any> {
     return this.http.get(environment.apiUrl + "/users/team", { headers: this.reqHeaders });
   }
@@ -43,13 +48,12 @@ export class UserService {
   register(user:RegistrationModel){
     let body= JSON.stringify(user);
     return this.http.post(environment.apiUrl + "/users/signup",body, { headers: this.reqHeaders })
-              .toPromise()
-              .then( (success)=> {
-                this.router.navigate(['./signin']);
-              })
-              .catch((err)=> {
-                console.log(err);
-              });
+              .toPromise();
+  }
+
+  public getAlreadyExistingUser(): boolean {
+    console.log("IN GETTER ", this.alreadyExistingUser);
+    return this.alreadyExistingUser;
   }
 
   forgotPassword(email){

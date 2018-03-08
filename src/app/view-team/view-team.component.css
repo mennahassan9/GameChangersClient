@@ -1,0 +1,49 @@
+.team__body {
+    padding-top: 10%;
+    min-height: 100vh;
+    background-image: url("../../assets/images/home_ideas_background_alt7.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.team__edit-header {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.team__creator-header {
+    font-size: 1.75em;
+    margin-top: 2%;
+}
+
+.team__view-container {
+    border: 2px solid #000000;
+    padding: 25px 0px; 
+    margin-top: 5%;
+}
+
+.team__view-team-add-text {
+    font-size: 2em;
+    padding-top: 6%;
+    font-weight: bold;
+}
+
+.team__view-team-members {
+    font-size: 1.5em;
+    padding-top: 2%;
+}
+
+.team__view-btn {
+    font-size: 1.5em;
+    background-color: #CE1126;
+    border-color: #CE1126;
+    border-radius: 3%;
+    color: #ffffff;
+    padding: 20px 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.team__view-btn-container {
+    margin-top: 3%;
+}

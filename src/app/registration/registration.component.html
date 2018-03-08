@@ -5,6 +5,11 @@
         <div id="legend">
           <legend class="">Register</legend>
         </div>
+        <div class="row" *ngIf="alreadyExisting">
+          <div class="col-sm-offset-3 col-sm-6 alert alert-danger error__email">
+            Already exisiting email
+          </div>
+        </div>
         <div class="control-group">
           <!-- Username -->
           <label class="control-label">Name *</label>

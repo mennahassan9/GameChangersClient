@@ -22,22 +22,21 @@ export class ProfileComponent implements OnInit {
     public reqHeaders: Headers = new Headers();
     public reqOptions: RequestOptions;
     logout: boolean;
-    userCreatorTeam: String;
-    teamMember: boolean;
+    userCreatorTeam: string;
+    teamMember: string;
 
     constructor(
       private loginService: LoginService,
       private router: Router,
       private localStorageService: LocalStorageService,
-      private http: Http,
-      private location: Location
+      private http: Http
     ) {}
 
     redirectToTeam() {
-      if (!this.teamMember && this.userCreatorTeam === "-1") {
+      if (this.teamMember === "-1" && this.userCreatorTeam === "-1") {
         this.router.navigate(['./registerTeam']);
       }
-      else if (this.teamMember && this.userCreatorTeam == "-1") {
+      else if (this.teamMember !== "-1" && this.userCreatorTeam == "-1") {
         this.router.navigate(['./viewTeam']);
       }
       else if (this.userCreatorTeam != "-1") {
@@ -72,12 +71,8 @@ export class ProfileComponent implements OnInit {
         this.currentUser = JSON.parse(res["_body"]);
         this.teamMember = JSON.parse(res["_body"])["teamMember"];
         this.userCreatorTeam = JSON.parse(res["_body"])["creatorOf"];
+        console.log("TEAM MEMBER --> ", this.teamMember);
+        console.log("TEAM CREATOR --> ", this.userCreatorTeam);
       });
-      // this.loginService.getUser().subscribe((res) => {
-      //   console.log(res);
-      //   this.currentUser = JSON.parse(res["_body"]);
-      // }, (err) => {
-      //   console.log("ERR --> ", err);
-      // });
     }
 }

@@ -22,6 +22,10 @@ export class TeamService {
     return this.http.get(environment.apiUrl + "/teams/view/member", { headers: this.reqHeaders });
   }
 
+  getTeamAsMember(): Observable<any> {
+    return this.http.get(environment.apiUrl + "/teams/view/team", { headers: this.reqHeaders });
+  }
+
   createTeam(teamName: String, teamEmails: Array<String> )
   {
         let body= {
