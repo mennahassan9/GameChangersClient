@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       let password = this.form.get('password').value;
       this.loginService.loginCheck(email, password).then((res) => {
         this.wrongCredentials = false;
-        this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
+        // this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
         this.router.navigate(['./profile']);
       }, (err) => {
         this.wrongCredentials = true;
