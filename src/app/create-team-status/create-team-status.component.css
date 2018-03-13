@@ -1,0 +1,24 @@
+.team__body {
+    padding-top: 10%;
+    min-height: 100vh;
+    background-image: url("../../assets/images/home_ideas_background_alt7.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.team__body-btn {
+    font-size: 1.5em;
+    background-color: #CE1126;
+    border-color: #CE1126;
+    border-radius: 3%;
+    color: #ffffff;
+    padding: 20px 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.msg {
+    margin-top: 20%;
+    text-align: center;
+    font-size: 3em;
+}

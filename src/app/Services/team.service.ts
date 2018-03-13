@@ -40,14 +40,15 @@ export class TeamService {
           'teamName': teamInvitation.teamName,
           'members': teamInvitation.members
         }
-        console.log(body)
         return this.http.post(environment.apiUrl + "/teams/new", body, { headers: reqHeaders })
           .toPromise()
           .then((res) => {
              console.log(res)
+             return res;
           })
           .catch((err) => {
-            console.log( err)
+            console.log(err)
+            return err;
           })
   }
 }

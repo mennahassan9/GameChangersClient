@@ -4,6 +4,8 @@ import { TeamService } from '../Services/team.service';
 import { UserService } from '../Services/user.service';
 import { LoginService } from '../Services/login.service';
 
+import { Router } from '@angular/router';
+
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Headers, Http,RequestOptions,URLSearchParams } from '@angular/http';
 import { environment } from "../../environments/environment";
@@ -25,18 +27,13 @@ export class RegisterTeamComponent implements OnInit {
   teamName: String;
   teamInvitation: TeamInviteModel;
   
-
-
-  ////////////////////
-  public reqHeaders: Headers = new Headers();
-  public reqOptions: RequestOptions;
-  
   constructor(
     private teamService: TeamService,
     private http: Http, 
     private localStorageService: LocalStorageService,
     private userService: UserService,
     private loginService: LoginService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -70,7 +67,6 @@ export class RegisterTeamComponent implements OnInit {
   }
 
   checkEmployee(email) {
-    // console.log()
     for(var i = 0; i< this.teamEmails.length; i++)
     {
       console.log(email)
@@ -85,9 +81,27 @@ export class RegisterTeamComponent implements OnInit {
   }
 
   createTeam() {
-    this.teamName = this.teamName.replace(/\s+/g, '-').toLowerCase();
-    console.log(this.teamName)
-    this.teamInvitation.teamName = this.teamName;
-    this.teamService.createTeam(this.teamInvitation)
+    const reqHeaders = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    let currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    let body= {
+      'teamName': this.teamName,
+      'members': this.teamEmails
+    }
+    return this.http.post(environment.apiUrl + "/teams/new", body, { headers: reqHeaders })
+      .toPromise()
+      .then((res) => {
+        if (JSON.parse(res["_body"])["status"] === "400") {
+          console.log("already exisiting team")
+        }
+        else {
+          this.router.navigate(['./create-team-status']);
+        }
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log( err)
+      })
   }
 }

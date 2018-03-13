@@ -12,6 +12,7 @@ import { EditTeamComponent } from './edit-team/edit-team.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
+import { CreateTeamStatusComponent } from './create-team-status/create-team-status.component';
 
 export const AppRoutes : Routes= [
     { 
@@ -53,6 +54,10 @@ export const AppRoutes : Routes= [
     {
         path: '',
         component: HomeComponent
+    },
+    {
+        path: 'create-team-status',
+        component: CreateTeamStatusComponent
     },
     {
         path: 'authenticate/:id',

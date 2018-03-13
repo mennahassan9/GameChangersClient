@@ -28,15 +28,24 @@ export class ProfileComponent implements OnInit {
     ) {}
 
     redirectToTeam() {
-      if (this.teamMember === "-1" && this.userCreatorTeam === "-1") {
-        this.router.navigate(['./registerTeam']);
-      }
-      else if (this.teamMember !== "-1" && this.userCreatorTeam == "-1") {
-        this.router.navigate(['./viewTeam']);
-      }
-      else if (this.userCreatorTeam != "-1") {
-        this.router.navigate(['./editTeam']);
-      }
+      this.loginService.getUser().subscribe((res) => {
+        console.log("RESA --> ", JSON.parse(res["_body"]));
+        this.currentUser = JSON.parse(res["_body"]);
+        this.teamMember = JSON.parse(res["_body"])["teamMember"];
+        this.userCreatorTeam = JSON.parse(res["_body"])["creatorOf"];
+        console.log("TEAM MEMBER --> ", this.teamMember);
+        console.log("TEAM CREATOR --> ", this.userCreatorTeam);
+        if (this.teamMember === "-1" && this.userCreatorTeam === "-1") {
+          this.router.navigate(['./registerTeam']);
+        }
+        else if (this.teamMember !== "-1" && this.userCreatorTeam == "-1") {
+          this.router.navigate(['./viewTeam']);
+        }
+        else if (this.userCreatorTeam != "-1") {
+          this.router.navigate(['./editTeam']);
+        }
+      });
+      
     }
 
     redirectToHome() {

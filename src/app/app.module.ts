@@ -21,6 +21,8 @@ import { UserService } from './Services/user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { CreateTeamStatusComponent } from './create-team-status/create-team-status.component';
+
 /*************************************** */
 import { LoginService } from './Services/login.service';
 import { InviteTeamMemberComponent } from './invite-team-member/invite-team-member.component';
@@ -46,7 +48,8 @@ import { AuthenticateUserComponent } from './authenticate-user/authenticate-user
     PasswordResetComponent,
     AuthenticateUserComponent,
     EditTeamComponent,
-    ViewTeamComponent
+    ViewTeamComponent,
+    CreateTeamStatusComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes),
