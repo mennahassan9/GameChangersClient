@@ -7,6 +7,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterTeamComponent } from './register-team/register-team.component';
+import { RegisterIdeaComponent } from './register-idea/register-idea.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
 import { EditTeamComponent } from './edit-team/edit-team.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -34,6 +35,10 @@ export const AppRoutes : Routes= [
     {
         path:'registerTeam',
         component : RegisterTeamComponent
+    },
+    {
+        path:'registerIdea',
+        component : RegisterIdeaComponent
     },
     {
         path:'viewTeam',

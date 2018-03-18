@@ -22,13 +22,15 @@ import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { CreateTeamStatusComponent } from './create-team-status/create-team-status.component';
+import { RegisterTeamComponent } from './register-team/register-team.component';
+import { RegisterIdeaComponent } from './register-idea/register-idea.component';
+import { InviteTeamMemberComponent } from './invite-team-member/invite-team-member.component';
+import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
 
 /*************************************** */
 import { LoginService } from './Services/login.service';
-import { InviteTeamMemberComponent } from './invite-team-member/invite-team-member.component';
-import { RegisterTeamComponent } from './register-team/register-team.component';
-import { TeamService} from './Services/team.service'
-import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
+import { TeamService } from './Services/team.service';
+import { IdeaService } from './Services/idea.service';
 
 
 
@@ -49,7 +51,8 @@ import { AuthenticateUserComponent } from './authenticate-user/authenticate-user
     AuthenticateUserComponent,
     EditTeamComponent,
     ViewTeamComponent,
-    CreateTeamStatusComponent
+    CreateTeamStatusComponent,
+    RegisterIdeaComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes),
@@ -67,7 +70,8 @@ import { AuthenticateUserComponent } from './authenticate-user/authenticate-user
     UserService,
     LoginService,
     InviteTeamMemberComponent,
-    TeamService
+    TeamService,
+    IdeaService
   ],
   bootstrap: [AppComponent]
 })

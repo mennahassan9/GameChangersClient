@@ -48,6 +48,11 @@ export class ProfileComponent implements OnInit {
       
     }
 
+    redirectToIdea() {
+      // for now it drectly navigates to creating a new idea view
+      this.router.navigate(['./registerIdea']);
+    }
+
     redirectToHome() {
       this.localStorageService.remove('token');
       this.router.navigate(['./']);
