@@ -38,6 +38,7 @@
     color: #ffffff;
     border-radius: 3%;
     margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 .idea__error {
@@ -47,4 +48,9 @@
 .idea__error-msg {
     color: #CE1126;
     font-weight: bold;
+}
+
+.idea__select-input {
+    font-size: 2em;
+    height: 67px;
 }

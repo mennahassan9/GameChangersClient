@@ -16,6 +16,9 @@ export class RegisterIdeaComponent implements OnInit {
   slides: any;
   slidesName: string;
   emptyUpload: boolean;
+  challenges: Array<string> = [];
+  selectedChallenge: string;
+  ideaTitle: string;
 
   constructor(
     private router: Router,
@@ -35,22 +38,37 @@ export class RegisterIdeaComponent implements OnInit {
 
     // TODO: redirecting to profile or a view that only confirms the submission
     if (this.form.valid && !this.emptyUpload) {
-      this.ideaService.submitIdea(this.slides[0], this.slidesName);
+      this.ideaTitle = this.form.get('ideaTitle').value;
+      this.ideaService.submitIdea(this.slides[0], this.ideaTitle, this.selectedChallenge);
     }
   }
 
+  // saving the file uploaded by the user
   onUpload(event) {
-    console.log("UPLOAD SRC --> ", event.srcElement);
-    console.log("UPLOAD SRC FILES --> ", event.srcElement.files);
     this.slides = event.srcElement.files;
     if (this.slides.length > 0) {
       this.slidesName = this.form.controls.ideaTitle.value;
     }
   }
 
+  // saving the selecting option by the user
+  onSelectChallenge(value) {
+    this.selectedChallenge = value;
+  }
+
+  // setting the challenges for the user to see in the UI
+  initChallenges() {
+    this.challenges.push("Chief Customer Office – Customer Advocacy");
+    this.challenges.push("Automation of Service");
+    this.challenges.push("Culture Code");
+    this.challenges.push("Open Ended");
+  }
+
   ngOnInit() {
+    this.initChallenges();
     this.form = new FormGroup({
-      ideaTitle: new FormControl('', [Validators.required])
+      ideaTitle: new FormControl('', [Validators.required]),
+      challenge: new FormControl('', [Validators.required])
     });
   }
 

@@ -13,6 +13,19 @@
                         <div *ngIf = "form.get('ideaTitle').errors.required" class="idea__error-msg">You should write a title for the idea. </div>       
                     </div>
                     <div class="form-group">
+                        <div class="controls">
+                            <select [class.idea__error]="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)" class="form-control idea__select-input" formControlName="challenge" (change)="onSelectChallenge($event.target.value)">
+                                <option value="" disabled selected hidden>Select Related Challenge</option>
+                                <option class="" *ngFor="let challenge of challenges" [ngValue]="challenge">
+                                  {{ challenge }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div *ngIf = "(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)" class="alert alert-danger">
+                        <div *ngIf = "form.get('challenge').errors.required" class="idea__error-msg">You should select a challenge for the idea. </div>       
+                    </div>
+                    <div class="form-group">
                         <!-- change extensions accordingly -->
                         <input accept=".*" [class.idea__error]="(formSubmitted && emptyUpload)" type="file" id="ideaSlides" class="idea__upload" (change)="onUpload($event)">
                     </div>

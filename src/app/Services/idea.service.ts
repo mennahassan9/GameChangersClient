@@ -15,10 +15,11 @@ export class IdeaService {
     private localStorageService: LocalStorageService
   ) {}
 
-  submitIdea(file, title) {
+  submitIdea(file, title, challenge) {
     const data = new FormData();
     data.append('file', file);
     data.append('title', title);
+    data.append('challenge', challenge);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', environment.apiUrl + '/ideas/new');
     // xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=--BOUNDARY');
