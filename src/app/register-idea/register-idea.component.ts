@@ -44,8 +44,8 @@ export class RegisterIdeaComponent implements OnInit {
     console.log("UPLOAD SRC FILES --> ", event.srcElement.files);
     this.slides = event.srcElement.files;
     if (this.slides.length > 0) {
-      this.slidesName = this.slides[0].name;
-    }   
+      this.slidesName = this.form.controls.ideaTitle.value;
+    }
   }
 
   ngOnInit() {

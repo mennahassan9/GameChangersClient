@@ -10,23 +10,30 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class IdeaService {
 
-  
   constructor(
     private http: Http,
     private localStorageService: LocalStorageService
   ) {}
 
   submitIdea(file, title) {
-    const reqHeaders: Headers = new Headers();
-    reqHeaders.append('Content-Type', 'application/json');
+    const data = new FormData();
+    data.append('file', file);
+    data.append('title', title);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', environment.apiUrl + '/ideas/new');
+    // xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=--BOUNDARY');
     const currentToken = this.localStorageService.get('token');
-    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken);
 
-    // change the url accordingly
-    return this.http.post(environment.apiUrl + "/users/login", { file, title }, { headers: reqHeaders })
-    .toPromise()
-    .then((res) => {
-    })
-    ;
+    console.log(file);
+    console.log(title);
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log('REDIRECT');
+      } else {
+        console.log('Failed');
+      }
+    };
+    xhr.send(data);
   }
 }
