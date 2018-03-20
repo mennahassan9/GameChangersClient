@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://10.207.81.92:4040'
+  apiUrl: 'http://localhost:4040'
 };

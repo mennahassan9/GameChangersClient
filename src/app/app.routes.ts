@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterTeamComponent } from './register-team/register-team.component';
 import { RegisterIdeaComponent } from './register-idea/register-idea.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
+import { ViewIdeaComponent } from './view-idea/view-idea.component';
 import { EditTeamComponent } from './edit-team/edit-team.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
@@ -43,6 +44,10 @@ export const AppRoutes : Routes= [
     {
         path:'viewTeam',
         component : ViewTeamComponent
+    },
+    {
+        path:'viewIdea',
+        component : ViewIdeaComponent
     },
     {
         path:'editTeam',

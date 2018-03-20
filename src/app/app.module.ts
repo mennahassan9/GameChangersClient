@@ -26,6 +26,7 @@ import { RegisterTeamComponent } from './register-team/register-team.component';
 import { RegisterIdeaComponent } from './register-idea/register-idea.component';
 import { InviteTeamMemberComponent } from './invite-team-member/invite-team-member.component';
 import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
+import { ViewIdeaComponent } from './view-idea/view-idea.component';
 
 /*************************************** */
 import { LoginService } from './Services/login.service';
@@ -52,7 +53,8 @@ import { IdeaService } from './Services/idea.service';
     EditTeamComponent,
     ViewTeamComponent,
     CreateTeamStatusComponent,
-    RegisterIdeaComponent
+    RegisterIdeaComponent,
+    ViewIdeaComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes),

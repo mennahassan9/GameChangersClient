@@ -37,4 +37,9 @@ export class IdeaService {
     };
     xhr.send(data);
   }
+
+  // update idea from view idea view
+  changeIdea() {
+
+  }
 }
