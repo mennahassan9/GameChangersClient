@@ -34,20 +34,20 @@ export class RegistrationComponent implements OnInit {
     this.addIdeas();
     this.addRegions();
     this.form = new FormGroup({
-      name: new FormControl('' , [Validators.required]),
-      email : new FormControl('' , [Validators.required, Validators.pattern("^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(dell|emc|virtustream|rsa|pivotal|secureworks)\.com$")]),
-      password: new FormControl('' , [Validators.required, Validators.minLength(8)]),
-      passConf: new FormControl('' , [Validators.required]),
-      region: new FormControl('', Validators.required),
-      isRemote: new FormControl('' , [Validators.required]),
-      location: new FormControl('' , [Validators.required]),
+      name: new FormControl(''),
+      email : new FormControl(''),
+      password: new FormControl(''),
+      passConf: new FormControl(''),
+      region: new FormControl(''),
+      isRemote: new FormControl('' ),
+      location: new FormControl('' ),
       otherLocation: new FormControl(''),
-      position: new FormControl('' , [Validators.required]),
-      careerLevel: new FormControl('' , [Validators.required]),
-      age: new FormControl('' , [Validators.required]),
-      previousParticipation: new FormControl('' , [Validators.required]),
-      genNextMember: new FormControl('' , [Validators.required]),
-      ideasOrder: new FormControl('[1,2,3]' , [Validators.required]),
+      position: new FormControl('' ),
+      careerLevel: new FormControl(''),
+      age: new FormControl('' ),
+      previousParticipation: new FormControl(''),
+      genNextMember: new FormControl(''),
+      ideasOrder: new FormControl('[1,2,3]'),
       brief: new FormControl('')
     });
     this.form.get('passConf').valueChanges.subscribe(() => {
@@ -72,8 +72,11 @@ export class RegistrationComponent implements OnInit {
     this.submit = true;
     if(this.form.valid){
       this.resortIdeas();
+      console.log("SUBMITT")
       this.userSvc.register(this.form.value as RegistrationModel).then( (success)=> {
         this.alreadyExisting = false;
+        console.log("SUBMITT 22")
+
         this.router.navigate(['./signin']);
       })
       .catch((err)=> {
@@ -139,7 +142,7 @@ export class RegistrationComponent implements OnInit {
   }
   addRegions()
   {
-    this.regions.push("IMEA");
+    this.regions.push("EMEA");
     this.regions.push("APJ");
     this.regions.push("Americas");
   }

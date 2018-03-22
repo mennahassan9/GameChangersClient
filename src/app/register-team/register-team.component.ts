@@ -63,13 +63,11 @@ export class RegisterTeamComponent implements OnInit {
       else
       this.maxNumber = true;
     }
-    console.log(this.alreadyInCurrentTeam)
   }
 
   checkEmployee(email) {
     for(var i = 0; i< this.teamEmails.length; i++)
     {
-      console.log(email)
       if(this.teamEmails[i] == email)
       return true
     }

@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:4040'
+  apiUrl: 'http://egyptcoeapps/gamechanger/proxyphp/proxy.php?http://10.207.81.92:4040'
+  // apiUrl: 'http://10.207.81.92:4040'
 };

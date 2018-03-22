@@ -1,22 +1,23 @@
 <div class="container-fluid">
         <div class="idea__container row">
+            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
             <div class="idea__main-title col-sm-offset-3 col-sm-6 text-center">
-                Idea Review
+                Review Your Idea
             </div>
-            <div class="row">
+            <div class="row" class="loader-background" >
                 <div class="col-sm-offset-3 col-sm-6 text-center idea__form-container">
                     <form [formGroup]="form" (ngSubmit)="editIdea()">
                         <div class="form-group">
-                            <input [class.idea__error]="(form.get('ideaTitle').invalid && form.get('ideaTitle').touched) || (formSubmitted && form.get('ideaTitle').invalid)" formControlName="ideaTitle" class="form-control idea__regitser-idea-name-input" id="ideaTitle" placeholder="Enter Idea Title">
+                            <input [class.idea__error]="(form.get('ideaTitle').invalid && form.get('ideaTitle').touched) || (formSubmitted && form.get('ideaTitle').invalid)" formControlName="ideaTitle" class="form-control idea__regitser-idea-name-input" id="ideaTitle" [(ngModel)]="title" >
                         </div>
                         <div *ngIf = "(form.get('ideaTitle').invalid && form.get('ideaTitle').touched) || (formSubmitted && form.get('ideaTitle').invalid)" class="alert alert-danger">
                             <div *ngIf = "form.get('ideaTitle').errors.required" class="idea__error-msg">You should write a title for the idea. </div>       
                         </div>
                         <div class="form-group">
                             <div class="controls">
-                                <select [class.idea__error]="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)" class="form-control idea__select-input" formControlName="challenge" (change)="onSelectChallenge($event.target.value)">
-                                    <option value="" disabled selected hidden>Select Related Challenge</option>
-                                    <option class="" *ngFor="let challenge of challenges" [ngValue]="challenge">
+                                <select [class.idea__error]="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)" class="form-control idea__select-input" formControlName="challenge" (change)="onSelectChallenge($event.target.value)" >
+                                    <option class="" *ngFor="let challenge of challenges" [selected]="challenge == alreadyExistingChallenge" [ngValue]="challenge">
                                         {{ challenge }}
                                     </option>
                                 </select>
@@ -27,20 +28,23 @@
                         </div>
                         <div class="form-group">
                             <!-- change extensions accordingly -->
-                            <input accept=".*" [class.idea__error]="(formSubmitted && emptyUpload)" type="file" id="ideaSlides" class="idea__upload" (change)="onUpload($event)">
+                            <input accept=".*" [class.idea__error]="(formSubmitted && emptyUpload)" type="file" id="ideaSlides" class="idea__upload" (change)="onUpload($event)" [disabled]="loading">
                         </div>
                         <div *ngIf = "(formSubmitted && emptyUpload)" class="alert alert-danger">
                             <div class="idea__error-msg">You should upload slides for your idea. </div>       
                         </div>
                         <div class="idea__btn-container--additional">
-                            <button class="btn btn-default idea__submit-btn upload__btn">Upload</button>
-                            <button class="btn btn-default idea__submit-btn download__btn">Download</button>
-                        </div>
-                        <div class="idea__btn-container">
-                            <button class="btn btn-default idea__submit-btn">Change Idea</button>
+                            <button class="btn btn-default idea__submit-btn upload__btn" [disabled]="loading">Change Idea</button>
+                            <button type="button" class="btn btn-default idea__submit-btn download__btn" (click)="onDownload()" [disabled]="loading">Download</button>
                         </div>
                     </form>
+
                 </div>
             </div>
+            <div id = "loader" [hidden]="!loading" ></div>
+
         </div>
     </div>
+
+
+

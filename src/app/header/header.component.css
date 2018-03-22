@@ -11,8 +11,24 @@
     float: right;
     font-size: 1.5em;
     margin-top: 10px;
+    margin-right: 10px;
+
 }
+
+
 
 .clr {
     clear: both;
+}
+
+.header_btns{
+    background-color: transparent;
+    border-color: transparent;
+    -webkit-text-fill-color: snow;
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.header_btns:hover {
+    -webkit-text-fill-color: antiquewhite;
 }

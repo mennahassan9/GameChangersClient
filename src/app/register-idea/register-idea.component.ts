@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators, FormControlName } from
 import { Router } from '@angular/router';
 
 import { IdeaService } from './../Services/idea.service';
+import * as mime from 'mime-types'
 
 @Component({
   selector: 'app-register-idea',
@@ -19,27 +20,47 @@ export class RegisterIdeaComponent implements OnInit {
   challenges: Array<string> = [];
   selectedChallenge: string;
   ideaTitle: string;
+  loading: boolean;
 
   constructor(
     private router: Router,
     private ideaService: IdeaService
   ) {}
 
+  toggleLoading() {
+    this.loading = !this.loading;
+    if (this.loading) {
+      this.form.disable();
+    } else {
+       this.form.enable();
+    }
+  }
+
   submitIdea() {
     this.formSubmitted = true;
-
     // checking whether a file is uploaded or not
-    if (this.slides === undefined || this.slides.length == 0) {
+    if (this.slides === undefined || this.slides.length === 0) {
       this.emptyUpload = true;
-    }
-    else {
+    } else {
       this.emptyUpload = false;
     }
 
     // TODO: redirecting to profile or a view that only confirms the submission
     if (this.form.valid && !this.emptyUpload) {
       this.ideaTitle = this.form.get('ideaTitle').value;
-      this.ideaService.submitIdea(this.slides[0], this.ideaTitle, this.selectedChallenge);
+      this.toggleLoading();
+      this.ideaService.submitIdea(this.slides[0], this.ideaTitle, this.form.get('challenge').value).subscribe(
+        (res) => {
+          this.toggleLoading();
+          console.log(res);
+          if (res == '200') {
+            alert('Thank you for submitting your idea!');
+            this.router.navigate(['./profile']);
+          } else {
+            alert('There was an error in submitting your idea, please resubmit.');
+          }
+        }
+      );
     }
   }
 

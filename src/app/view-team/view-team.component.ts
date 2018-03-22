@@ -15,13 +15,13 @@ import { environment } from "../../environments/environment";
   styleUrls: ['./view-team.component.css']
 })
 export class ViewTeamComponent implements OnInit {
-  
+
   team: any = {};
   creator: string;
 
   constructor(
-    private teamService : TeamService,
-    private http: Http, 
+    private teamService: TeamService,
+    private http: Http,
     private localStorageService: LocalStorageService,
     private userService: UserService,
     private loginService: LoginService,

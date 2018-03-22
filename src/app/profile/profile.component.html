@@ -2,7 +2,7 @@
     <div class="profile__info row">
         <div class="row profile__logout-container">
             <div class="col-sm-offset-10 col-sm-2">
-                <button class="profile__logout-btn" (click)="redirectToHome()">Logout</button>
+                <!-- <button class="profile__logout-btn" (click)="redirectToHome()">Logout</button> -->
             </div>
         </div>
         <div class="row">
@@ -24,16 +24,16 @@
                             <li>Position: {{ currentUser.position }}</li>
                             <li>Location: {{ currentUser.location }}</li>
                             <li>Region: {{ currentUser.region }}</li>            
-                            <li>Remote User: {{ currentUser.isRemote }}</li>  
+                            <!-- <li>Remote User: {{ currentUser.isRemote }}</li>   -->
                         </ul>
                     </div>
                     <div class="col-sm-6">
                         <ul>
-                            <li>Team Member: {{ currentUser.teamMember === "-1"? false : currentUser.teamMember }}</li>
-                            <li>Team Creator: {{ currentUser.creatorOf === "-1"? false : currentUser.creatorOf }}</li>
+                            <li>Team Name: {{ currentUser.teamMember === "-1"? false : currentUser.teamMember }}</li>
+                            <!-- <li>Team Creator: {{ currentUser.creatorOf === "-1"? false : currentUser.creatorOf }}</li> -->
                             <li>Career Level: {{ currentUser.careerLevel }}</li>
-                            <li>Previous Participation: {{ currentUser.previousParticipation }}</li>            
-                            <li>GenNext Member: {{ currentUser.genNextMember }}</li>  
+                            <li>Previous Participation: {{ currentUser.previousParticipation === true? "Yes": "No" }}</li>            
+                            <li>GenNext Member: {{ currentUser.genNextMember === true? "Yes":"No" }}</li>  
                         </ul>
                     </div>
                 </div>

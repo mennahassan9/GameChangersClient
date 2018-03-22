@@ -32,6 +32,7 @@ import { ViewIdeaComponent } from './view-idea/view-idea.component';
 import { LoginService } from './Services/login.service';
 import { TeamService } from './Services/team.service';
 import { IdeaService } from './Services/idea.service';
+import { HeaderButtonsService } from './Services/headerButtons.service';
 
 
 
@@ -73,7 +74,8 @@ import { IdeaService } from './Services/idea.service';
     LoginService,
     InviteTeamMemberComponent,
     TeamService,
-    IdeaService
+    IdeaService,
+    HeaderButtonsService
   ],
   bootstrap: [AppComponent]
 })

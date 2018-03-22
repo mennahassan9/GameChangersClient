@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { LoginService } from './../Services/login.service';
+import { IdeaService } from './../Services/idea.service';
+import { HeaderButtonsService } from '../Services/headerButtons.service';
+
 import { LocalStorageService } from 'angular-2-local-storage';
 import { environment } from '../../environments/environment';
 
@@ -22,35 +25,27 @@ export class ProfileComponent implements OnInit {
 
     constructor(
       private loginService: LoginService,
+      private ideaService: IdeaService,
       private router: Router,
       private localStorageService: LocalStorageService,
-      private http: Http
+      private http: Http,
+      private headerButtonsService: HeaderButtonsService
     ) {}
 
     redirectToTeam() {
-      this.loginService.getUser().subscribe((res) => {
-        console.log("RESA --> ", JSON.parse(res["_body"]));
-        this.currentUser = JSON.parse(res["_body"]);
-        this.teamMember = JSON.parse(res["_body"])["teamMember"];
-        this.userCreatorTeam = JSON.parse(res["_body"])["creatorOf"];
-        console.log("TEAM MEMBER --> ", this.teamMember);
-        console.log("TEAM CREATOR --> ", this.userCreatorTeam);
-        if (this.teamMember === "-1" && this.userCreatorTeam === "-1") {
-          this.router.navigate(['./registerTeam']);
-        }
-        else if (this.teamMember !== "-1" && this.userCreatorTeam == "-1") {
           this.router.navigate(['./viewTeam']);
-        }
-        else if (this.userCreatorTeam != "-1") {
-          this.router.navigate(['./editTeam']);
-        }
-      });
-      
     }
 
     redirectToIdea() {
-      // for now it drectly navigates to creating a new idea view
-      this.router.navigate(['./registerIdea']);
+      this.ideaService.getIdea().subscribe((res) => {
+        if(JSON.parse(res['_body']).idea){
+          this.router.navigate(['./viewIdea']);
+        }else{
+          this.router.navigate(['./registerIdea']);
+        }
+      }, (err) => {
+        this.router.navigate(['./registerIdea']);
+      });
     }
 
     redirectToHome() {
@@ -60,12 +55,10 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
       this.loginService.getUser().subscribe((res) => {
-        console.log("RESA --> ", JSON.parse(res["_body"]));
         this.currentUser = JSON.parse(res["_body"]);
         this.teamMember = JSON.parse(res["_body"])["teamMember"];
         this.userCreatorTeam = JSON.parse(res["_body"])["creatorOf"];
-        console.log("TEAM MEMBER --> ", this.teamMember);
-        console.log("TEAM CREATOR --> ", this.userCreatorTeam);
       });
+      this.headerButtonsService.setIsSignedIn();
     }
 }

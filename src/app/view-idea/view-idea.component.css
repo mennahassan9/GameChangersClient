@@ -1,11 +1,12 @@
 .idea__container {
-    padding-top: 10%;
+    padding-top: 15%;
     min-height: 100vh;
     background-image: url("../../assets/images/register_idea.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     overflow-x: hidden;
+    
 }
 
 .idea__submit-btn {
@@ -20,17 +21,24 @@
 }
 
 .idea__main-title {
-    font-size: 3.5em;
-    font-weight: bold;
+    font-size: 2em;
+    font-family: 'Raleway', Helvetica, Arial, sans-serif;
+    font-size: 50px;
+    line-height: 70px;
+      font-style: inherit;
 }
 
 .idea__regitser-idea-name-input {
-    font-size: 2em;
-    padding: 30px 20px;
+    font-size: 1.2em;
+    padding: 20px 10px;
+    margin-top: 5%;
 }
 
 .idea__form-container {
-    margin-top: 3%;
+    margin-top: 1%;
+    width:45%;
+    position:center;
+    margin-left: 28%;
 }
 
 .idea__error {
@@ -43,26 +51,115 @@
 }
 
 .idea__upload {
-    font-size: 2em;
-    margin-top: 5%;
+    font-size: 1.2em;
+    margin-top: 3%;
     background-color: white;
     width: 100%;
-    padding: 30px 20px;
+    padding: 11px 5px;
 }
 
 .idea__select-input {
-    font-size: 2em;
-    height: 67px;
+    font-size: 1.2em;
+    height: 50px;
 }
 
 .download__btn {
-    width: 40%;
+  font-size: 1.2em;
     background-color: #EE6411;
     border-color: #EE6411;
-}
+    margin-top: 5%;
+  }
 
 .upload__btn {
-    width: 40%;
+    font-size: 1.2em;
     background-color: #00447C;
     border-color: #00447C;
+    margin-top: 5%;
 }
+
+.upload__btn:disabled, .download__btn:disabled {
+  background-color: dimgray;
+  border-color: dimgray;
+}
+
+  .loader-background {
+    background: rgb(122, 112, 112); 
+    opacity: 90%;
+  }
+  h4 {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    margin: 0;
+    font-weight: 200;
+    opacity: 1;
+      font-family: sans-serif;
+    color: #fff;
+  }
+  #loader {
+    animation: animate 1.5s linear infinite;
+    clip: rect(0, 80px, 80px, 40px); 
+    height: 80px;
+    width: 80px;
+    position: absolute;
+    left: calc(50% - 40px);
+    top: calc(50% - 40px);
+  }
+  @keyframes animate {
+    0% { 
+      transform: rotate(0deg)
+    }
+    100% { 
+      transform: rotate(220deg)
+    }
+  }
+  #loader:after {
+    animation: animate2 1.5s ease-in-out infinite;
+    clip: rect(0, 80px, 80px, 40px);
+    content:'';
+    border-radius: 50%; 
+    height: 80px;
+    width: 80px;
+    position: absolute; 
+  } 
+  @keyframes animate2 {
+    0% {
+      box-shadow: inset rgb(98, 175, 111) 0 0 0 17px;
+      transform: rotate(-140deg);
+    }
+    50% {
+      box-shadow: insetrgb(98, 175, 111) 0 0 0 2px;
+    }
+    100% {
+      box-shadow: inset rgb(98, 175, 111) 0 0 0 17px;
+      transform: rotate(140deg);
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,45 +1,89 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-
+import { Http, Response, Headers, RequestOptions, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from 'angular-2-local-storage';
-import "rxjs";
-
+import 'rxjs/Rx';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+import * as mime from 'mime-types'
 
 @Injectable()
 export class IdeaService {
 
   constructor(
     private http: Http,
-    private localStorageService: LocalStorageService
-  ) {}
-
-  submitIdea(file, title, challenge) {
-    const data = new FormData();
-    data.append('file', file);
-    data.append('title', title);
-    data.append('challenge', challenge);
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', environment.apiUrl + '/ideas/new');
-    // xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=--BOUNDARY');
+    private localStorageService: LocalStorageService,
+    private router: Router
+    ) {}
+  
+  getIdea(){
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
-    xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken);
-
-    console.log(file);
-    console.log(title);
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        console.log('REDIRECT');
-      } else {
-        console.log('Failed');
-      }
-    };
-    xhr.send(data);
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get(environment.apiUrl + "/ideas/", { headers: reqHeaders });
   }
+
+  submitIdea(file, title, challenge): Observable<string> {
+    return Observable.create( observer => 
+      {
+        const ext = '.' + mime.extension(mime.lookup(file.name));
+        const data = new FormData();
+        data.append('file', file);
+        data.append('title', title);
+        data.append('challenge', challenge);
+        data.append('extension', ext)
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', environment.apiUrl + '/ideas/new');
+        const currentToken = this.localStorageService.get('token');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken);
+        xhr.onload = () => {
+          observer.next(xhr.status);
+          observer.complete();
+        };
+        xhr.send(data);
+      });
+  }
+
+
 
   // update idea from view idea view
-  changeIdea() {
-
+  changeIdea(file, title, challenge, oldName) : Observable <string> {
+    
+    return Observable.create( observer => 
+    {
+      const data = new FormData();
+      data.append('file', file);
+      data.append('title', title);
+      data.append('challenge', challenge);
+      if(file)
+      {
+        data.append('extension', '.' + mime.extension(mime.lookup(file.name)));
+        data.append('oldName', oldName);
+      }
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', environment.apiUrl + '/ideas/edit');
+      const currentToken = this.localStorageService.get('token');
+      xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken); 
+      xhr.send(data);
+      xhr.onload = () => {
+          observer.next(xhr.status);
+          observer.complete();
+      };
+    });
   }
-}
+
+  downloadIdea(filename): any{
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    
+    return this.http.post(environment.apiUrl + '/ideas/download', {'file': filename}, {headers: reqHeaders, responseType: ResponseContentType.Blob })
+    .map(
+        (res) => {
+            return new Blob([res.blob()], { type: mime.lookup(filename) });
+        }
+      )
+    }
+  }
