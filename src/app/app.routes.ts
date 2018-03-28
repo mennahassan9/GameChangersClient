@@ -15,6 +15,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
 import { CreateTeamStatusComponent } from './create-team-status/create-team-status.component';
+import { JudgeHomeComponent } from './judge-home/judge-home.component';
+import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
 
 export const AppRoutes : Routes= [
     { 
@@ -72,5 +74,13 @@ export const AppRoutes : Routes= [
     {
         path: 'authenticate/:id',
         component: AuthenticateUserComponent
+    },
+    {
+        path: 'judge',
+        component: JudgeHomeComponent
+    },
+    {
+        path: 'judge/idea',
+        component: JudgeIdeaComponent
     }
 ] 

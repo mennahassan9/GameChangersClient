@@ -33,6 +33,8 @@ import { LoginService } from './Services/login.service';
 import { TeamService } from './Services/team.service';
 import { IdeaService } from './Services/idea.service';
 import { HeaderButtonsService } from './Services/headerButtons.service';
+import { JudgeHomeComponent } from './judge-home/judge-home.component';
+import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
 
 
 
@@ -55,7 +57,9 @@ import { HeaderButtonsService } from './Services/headerButtons.service';
     ViewTeamComponent,
     CreateTeamStatusComponent,
     RegisterIdeaComponent,
-    ViewIdeaComponent
+    ViewIdeaComponent,
+    JudgeHomeComponent,
+    JudgeIdeaComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes),

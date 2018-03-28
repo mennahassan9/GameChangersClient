@@ -1,0 +1,79 @@
+<div class="container-fluid judge__main-container">
+
+  <div class="judge__info row">
+    <div class="row judge__logout-container">
+      <div class="col-sm-offset-10 col-sm-2">
+        <!-- <button class="judge__logout-btn" (click)="redirectToHome()">Logout</button> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-3 col-sm-6 text-center judge__info-main-text">
+        {{idea.name}}
+        <br>
+        <button class="btn btn-default">Download idea</button>
+        
+      </div>
+      
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-3 col-sm-6 judge__info-details">
+        <div class="row judge__brief-container">
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            
+                <h2 style="text-decoration: underline;">Innovation Score</h2>
+           
+           
+            <div class="form-group">
+              <label for="innovationScore">Is the concept new? Will disrupt someting that currently exists?</label>
+              <input [class.judgeIdea__error]="(form.get('innovationScore').invalid && form.get('innovationScore').touched) || (formSubmitted && form.get('innovationScore').invalid)"
+                formControlName="innovationScore" type="number"  min="0" max="100" style="width: 5em" class="form-control" id="innovatioScore" placeholder="XX">
+            </div>
+            <div *ngIf="(form.get('innovationScore').invalid && form.get('innovationScore').touched) || (formSubmitted && form.get('innovationScore').invalid)"
+              class="alert alert-danger">
+              <div *ngIf="form.get('innovationScore').errors.required" class="judgeIdea__error-msg">You should not leave the innovation score entry. </div>
+            </div>
+
+            <div class="form-group">
+              <label for="innovationComments">Additional comments: </label>
+              <input [class.judgeIdea__error]="(form.get('innovationComments').invalid && form.get('innovationComments').touched) || (formSubmitted && form.get('innovationComments').invalid)"
+                formControlName="innovationComments" type="text" class="form-control" id="innovationComments" placeholder="Additional comments">
+            </div>
+            <div *ngIf="(form.get('innovationComments').invalid && form.get('innovationComments').touched) || (formSubmitted && form.get('innovationComments').invalid)"
+              class="alert alert-danger">
+              <div *ngIf="form.get('verifyPassword').errors.required" class="judgeIdea__error-msg">You should not leave comments entry. </div>
+            </div>
+            <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
+            <h2 style="text-decoration: underline;">Problem Solving Score</h2>
+            <div class="form-group">
+              <label for="problmeSolvingScore">Does the team undersatnds the problem statement? Does the solution efficiently solve the assigned Business Problem?</label>
+              <input [class.judgeIdea__error]="(form.get('problmeSolvingScore').invalid && form.get('problmeSolvingScore').touched) || (formSubmitted && form.get('problmeSolvingScore').invalid)"
+                formControlName="problmeSolvingScore" type="number"min="0" max="100" style="width: 5em" class="form-control" id="problmeSolvingScore" placeholder="XX">
+            </div>
+            <div *ngIf="(form.get('problmeSolvingScore').invalid && form.get('problmeSolvingScore').touched) || (formSubmitted && form.get('problmeSolvingScore').invalid)"
+              class="alert alert-danger">
+              <div *ngIf="form.get('problmeSolvingScore').errors.required" class="judgeIdea__error-msg">You should not leave the problem solving score entry. </div>
+            </div>
+
+            <div class="form-group">
+              <label for="problmeSolvingComments">Additional comments: </label>
+              <input [class.judgeIdea__error]="(form.get('problmeSolvingComments').invalid && form.get('problmeSolvingComments').touched) || (formSubmitted && form.get('problmeSolvingComments').invalid)"
+                formControlName="problmeSolvingComments" type="text" class="form-control" id="problmeSolvingComments" placeholder="Additional comments">
+            </div>
+            <div *ngIf="(form.get('problmeSolvingComments').invalid && form.get('problmeSolvingComments').touched) || (formSubmitted && form.get('problmeSolvingComments').invalid)"
+              class="alert alert-danger">
+              <div *ngIf="form.get('problmeSolvingComments').errors.required" class="judgeIdea__error-msg">You should not leave comments entry. </div>
+            </div>
+
+            <div class="judgeIdea__btn-container">
+            
+                    Total score: {{totalScore}}
+              <button [disabled]="formSubmitted" class="btn btn-default judgeIdea__btn">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+
+</div>
