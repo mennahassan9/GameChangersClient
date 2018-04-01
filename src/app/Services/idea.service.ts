@@ -32,7 +32,8 @@ export class IdeaService {
         data.append('file', file);
         data.append('title', title);
         data.append('challenge', challenge);
-        data.append('extension', ext)
+        data.append('extension', ext);
+        data.append('oldFilename', file.name);
         const xhr = new XMLHttpRequest();
         xhr.open('POST', environment.apiUrl + '/ideas/new');
         const currentToken = this.localStorageService.get('token');
@@ -60,6 +61,7 @@ export class IdeaService {
       {
         data.append('extension', '.' + mime.extension(mime.lookup(file.name)));
         data.append('oldName', oldName);
+        data.append('oldFilename', file.name);
       }
       const xhr = new XMLHttpRequest();
       xhr.open('POST', environment.apiUrl + '/ideas/edit');

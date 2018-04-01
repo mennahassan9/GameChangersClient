@@ -8,6 +8,7 @@
             <div class="row" class="loader-background" >
                 <div class="col-sm-offset-3 col-sm-6 text-center idea__form-container">
                     <form [formGroup]="form" (ngSubmit)="editIdea()">
+                        <i>Last submitted file: {{ oldFilename }}</i>
                         <div class="form-group">
                             <input [class.idea__error]="(form.get('ideaTitle').invalid && form.get('ideaTitle').touched) || (formSubmitted && form.get('ideaTitle').invalid)" formControlName="ideaTitle" class="form-control idea__regitser-idea-name-input" id="ideaTitle" [(ngModel)]="title" >
                         </div>

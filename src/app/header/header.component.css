@@ -32,3 +32,5 @@
 .header_btns:hover {
     -webkit-text-fill-color: antiquewhite;
 }
+
+img.image_click { cursor: pointer; }

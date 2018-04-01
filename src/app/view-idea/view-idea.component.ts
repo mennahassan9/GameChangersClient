@@ -30,6 +30,7 @@ export class ViewIdeaComponent implements OnInit {
   alreadyExistingChallenge: string;
   filename: string; 
   loading: boolean; 
+  oldFilename: string;
 
   constructor(
     private teamService: TeamService,
@@ -121,6 +122,7 @@ export class ViewIdeaComponent implements OnInit {
     this.ideaService.getIdea().subscribe((res) => {
       if (JSON.parse(res['_body']) != null) {
         this.title = JSON.parse(res['_body']).idea.title;
+        this.oldFilename = JSON.parse(res['_body']).idea.oldFilename;
         this.alreadyExistingChallenge = JSON.parse(res['_body']).idea.challenge;
         this.filename = JSON.parse(res['_body']).idea.filename;
         this.form.get('challenge').setValue(this.alreadyExistingChallenge);

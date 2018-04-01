@@ -14,16 +14,16 @@
             <div class="col-sm-offset-3 col-sm-6 profile__info-details">
                 <div class="row profile__brief-container" *ngIf="currentUser.brief !== ''">
                     <div class="col-sm-offset-3 col-sm-6 text-center">
-                        Bio: {{ currentUser.brief }}
+                        <!-- Bio: {{ currentUser.brief }} -->
+                        <li>Email: {{ currentUser.email }}</li>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <ul>
-                            <li>Email: {{ currentUser.email }}</li>
                             <li>Position: {{ currentUser.position }}</li>
                             <li>Location: {{ currentUser.location }}</li>
-                            <li>Region: {{ currentUser.region }}</li>            
+                            <!-- <li>Region: {{ currentUser.region }}</li>             -->
                             <!-- <li>Remote User: {{ currentUser.isRemote }}</li>   -->
                         </ul>
                     </div>
@@ -31,9 +31,9 @@
                         <ul>
                             <li>Team Name: {{ currentUser.teamMember === "-1"? false : currentUser.teamMember }}</li>
                             <!-- <li>Team Creator: {{ currentUser.creatorOf === "-1"? false : currentUser.creatorOf }}</li> -->
-                            <li>Career Level: {{ currentUser.careerLevel }}</li>
+                            <!-- <li>Career Level: {{ currentUser.careerLevel }}</li> -->
                             <li>Previous Participation: {{ currentUser.previousParticipation === true? "Yes": "No" }}</li>            
-                            <li>GenNext Member: {{ currentUser.genNextMember === true? "Yes":"No" }}</li>  
+                            <!-- <li>GenNext Member: {{ currentUser.genNextMember === true? "Yes":"No" }}</li>   -->
                         </ul>
                     </div>
                 </div>
