@@ -66,7 +66,8 @@ export class RegisterIdeaComponent implements OnInit {
 
   // saving the file uploaded by the user
   onUpload(event) {
-    this.slides = event.srcElement.files;
+    var target = event.target || event.srcElement;
+    this.slides = target.files;
     if (this.slides.length > 0) {
       this.slidesName = this.form.controls.ideaTitle.value;
     }

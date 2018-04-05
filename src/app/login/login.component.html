@@ -19,9 +19,9 @@
                 <div *ngIf = "(form.get('password').invalid && form.get('password').touched) || (formSubmitted && form.get('password').invalid)" class="alert alert-danger">
                     <div *ngIf = "form.get('password').errors.required" class="login__error-msg">You should not leave your password entry. </div>       
                 </div>
-                <!-- <div class="login__forget-password-msg-container">
-                    <a class="login__forget-password-msg" href="/forgot-password">Forgot your password? </a>
-                </div> -->
+                <div class="login__forget-password-msg-container">
+                    <a class="login__forget-password-msg" href="#/forgot-password">Forgot your password? </a>
+                </div>
                 <div class="login__btn-container">
                     <button class="btn btn-default login__btn">Login</button>
                 </div>

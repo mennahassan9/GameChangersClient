@@ -22,6 +22,11 @@ export class HeaderComponent implements OnInit {
     this.headerButtonsService.isSignedIn.subscribe(updateSignIn => {
       this.isSignedIn = updateSignIn;
     });
+    if(this.localStorageService.get('token')){
+      this.headerButtonsService.setIsSignedIn();
+    }else {
+      this.headerButtonsService.signOut();
+    }
   }
 
   navigateToHome(){
@@ -48,5 +53,8 @@ export class HeaderComponent implements OnInit {
     }, (err) => {
       this.router.navigate(['./registerIdea']);
     });
+  }
+  redirectToForgotPassword(){
+    this.router.navigate(['./forgot-password']);
   }
 }

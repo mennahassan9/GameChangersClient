@@ -35,6 +35,8 @@ import { IdeaService } from './Services/idea.service';
 import { HeaderButtonsService } from './Services/headerButtons.service';
 import { JudgeHomeComponent } from './judge-home/judge-home.component';
 import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
+import { AuthGuardService } from './Services/auth-guard.service';
+import { AuthService }      from './Services/auth.service'  
 
 
 
@@ -62,7 +64,7 @@ import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
     JudgeIdeaComponent
   ],
   imports: [
-    RouterModule.forRoot(AppRoutes),
+    RouterModule.forRoot(AppRoutes, {useHash: true}),
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
@@ -79,7 +81,9 @@ import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
     InviteTeamMemberComponent,
     TeamService,
     IdeaService,
-    HeaderButtonsService
+    HeaderButtonsService,
+    AuthGuardService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

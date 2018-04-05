@@ -83,7 +83,8 @@ export class ViewIdeaComponent implements OnInit {
   }
 
   onUpload(event) {
-    this.slides = event.srcElement.files;
+    var target = event.target || event.srcElement;
+    this.slides = target.files;
     if (this.slides.length > 0) { 
       this.slidesName = this.form.controls.ideaTitle.value;
     }
@@ -95,8 +96,7 @@ export class ViewIdeaComponent implements OnInit {
       (res) => {
         var fileURL = URL.createObjectURL(res);
         var win = window.open(fileURL);
-        this.toggleLoading()
-
+        this.toggleLoading();
       }
     );
   }

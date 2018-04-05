@@ -17,11 +17,13 @@ import { AuthenticateUserComponent } from './authenticate-user/authenticate-user
 import { CreateTeamStatusComponent } from './create-team-status/create-team-status.component';
 import { JudgeHomeComponent } from './judge-home/judge-home.component';
 import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
+import { AuthGuardService }   from './Services/auth-guard.service';
 
 export const AppRoutes : Routes= [
     { 
         path: 'users',      
-        component: UserComponent
+        component: UserComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path: 'signup',
@@ -33,27 +35,33 @@ export const AppRoutes : Routes= [
     },
     {
         path: 'profile',
-        component: ProfileComponent
+        component: ProfileComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path:'registerTeam',
-        component : RegisterTeamComponent
+        component : RegisterTeamComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path:'registerIdea',
-        component : RegisterIdeaComponent
+        component : RegisterIdeaComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path:'viewTeam',
-        component : ViewTeamComponent
+        component : ViewTeamComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path:'viewIdea',
-        component : ViewIdeaComponent
+        component : ViewIdeaComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path:'editTeam',
-        component : EditTeamComponent
+        component : EditTeamComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path: 'forgot-password',
@@ -69,18 +77,22 @@ export const AppRoutes : Routes= [
     },
     {
         path: 'create-team-status',
-        component: CreateTeamStatusComponent
+        component: CreateTeamStatusComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path: 'authenticate/:id',
-        component: AuthenticateUserComponent
+        component: AuthenticateUserComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path: 'judge',
-        component: JudgeHomeComponent
+        component: JudgeHomeComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path: 'judge/idea',
-        component: JudgeIdeaComponent
+        component: JudgeIdeaComponent,
+        canActivate: [AuthGuardService]
     }
 ] 

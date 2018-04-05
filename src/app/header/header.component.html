@@ -7,6 +7,7 @@
       <!-- content to be added in here -->
       <button class="header_btns" (click)="redirectToTeam()" [hidden]="!isSignedIn" >My Team</button>
       <button class="header_btns" (click)="redirectToIdea()" [hidden]="!isSignedIn" >My Idea</button>
+      <button class="header_btns" (click)="redirectToForgotPassword()" [hidden]="!isSignedIn" >Reset Password</button>
       <button class="header_btns" (click)="logout()" [hidden]="!isSignedIn" >Logout</button>
 
     </div>
