@@ -16,8 +16,11 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
 import { CreateTeamStatusComponent } from './create-team-status/create-team-status.component';
 import { JudgeHomeComponent } from './judge-home/judge-home.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
 import { AuthGuardService }   from './Services/auth-guard.service';
+import { AuthGuardJudgeService } from './Services/auth-guard-judge';
+import { DefaultGuardService } from './Services/default-guard.service'; 
 
 export const AppRoutes : Routes= [
     { 
@@ -25,13 +28,15 @@ export const AppRoutes : Routes= [
         component: UserComponent,
         canActivate: [AuthGuardService]
     },
-    {
-        path: 'signup',
-        component: RegistrationComponent
-    },
+    // {
+    //     path: 'signup',
+    //     component: RegistrationComponent
+    //     ca
+    // },
     {
         path: 'signin',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [DefaultGuardService]
     },
     {
         path: 'profile',
@@ -73,7 +78,8 @@ export const AppRoutes : Routes= [
     },
     {
         path: '',
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [DefaultGuardService]
     },
     {
         path: 'create-team-status',
@@ -88,11 +94,15 @@ export const AppRoutes : Routes= [
     {
         path: 'judge',
         component: JudgeHomeComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardJudgeService]
     },
     {
         path: 'judge/idea',
         component: JudgeIdeaComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardJudgeService]
+    },
+    {
+        path: 'unauthorized',
+        component: UnauthorizedComponent
     }
 ] 

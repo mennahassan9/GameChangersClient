@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormControl, Validators, FormControlName } from
 
 import { LoginService } from './../Services/login.service';
 import { LocalStorageService } from 'angular-2-local-storage';
-
+import { HeaderButtonsService } from '../Services/headerButtons.service';
 
 @Component({
   selector: 'login',
@@ -21,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private localStorageService: LocalStorageService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private headerButtonsService: HeaderButtonsService
   ) {}
 
   // calls the end point for verifying credentials and redirects on success.
@@ -33,8 +34,12 @@ export class LoginComponent implements OnInit {
       let password = this.form.get('password').value;
       this.loginService.loginCheck(email, password).then((res) => {
         this.wrongCredentials = false;
+        this.headerButtonsService.setIsSignedIn();
         // this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
-        this.router.navigate(['./profile']);
+        if (this.localStorageService.get("isJudge") == true)
+          this.router.navigate(['./judge']);
+        else
+          this.router.navigate(['./profile']);
       }, (err) => {
         this.wrongCredentials = true;
       });
@@ -44,6 +49,7 @@ export class LoginComponent implements OnInit {
   // binds the templates form to the customized validations, as defined here.
   ngOnInit() {
     this.localStorageService.remove("token");
+    this.localStorageService.remove("isJudge");
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),

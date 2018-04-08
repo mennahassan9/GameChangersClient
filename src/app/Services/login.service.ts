@@ -27,6 +27,7 @@ export class LoginService {
     .then((res) => 
     {
       this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
+      this.localStorageService.set("isJudge", JSON.parse(res["_body"])["isJudge"]);
     })
     ;
   }

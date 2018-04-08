@@ -5,6 +5,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { LoginService } from './../Services/login.service';
 import { IdeaService } from './../Services/idea.service';
 import { HeaderButtonsService } from '../Services/headerButtons.service';
+import { JudgingService } from './../Services/judging.service';
 
 import { LocalStorageService } from 'angular-2-local-storage';
 import { environment } from '../../environments/environment';
@@ -21,7 +22,7 @@ export class JudgeHomeComponent implements OnInit {
   logout: boolean;
   userCreatorTeam: string;
   teamMember: string;
-  ideas: any={};
+  ideas: any=[];
 
   constructor(
     private loginService: LoginService,
@@ -29,28 +30,22 @@ export class JudgeHomeComponent implements OnInit {
     private router: Router,
     private localStorageService: LocalStorageService,
     private http: Http,
-    private headerButtonsService: HeaderButtonsService
+    private headerButtonsService: HeaderButtonsService,
+    private judgingService:JudgingService
   ) { }
 
   ngOnInit() {
-    this.ideas = {
-      ideas: [
-        {
-          "teamName": "team#1",
-          "score": "20",
-        },
-        {
-          "teamName": "team#2",
-          "score": "-1"
-        }
-      ]
-    }
+
     this.loginService.getUser().subscribe((res) => {
       this.currentUser = JSON.parse(res["_body"]);
       console.log(this.currentUser);
+      this.judgingService.getIdeas().subscribe(res=>{
+          this.ideas = JSON.parse(res._body);
+        
+      })
       
     });
-    this.headerButtonsService.setIsSignedIn();
+    // this.headerButtonsService.signOut();
   }
 
 }

@@ -11,6 +11,7 @@ import { IdeaService } from '../Services/idea.service';
 export class HeaderComponent implements OnInit {
 
   isSignedIn: boolean;
+  isJudge: boolean;
   constructor(
     private router: Router,
     private localStorageService: LocalStorageService,
@@ -19,7 +20,9 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isJudge = this.localStorageService.get("isJudge") == true;
     this.headerButtonsService.isSignedIn.subscribe(updateSignIn => {
+      this.isJudge = this.localStorageService.get("isJudge") == true;
       this.isSignedIn = updateSignIn;
     });
     if(this.localStorageService.get('token')){
@@ -30,13 +33,20 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateToHome(){
-    if(this.localStorageService.get('token')){
-      this.router.navigate(['./profile']);
+    if(this.localStorageService.get('token') && this.isJudge){
+      this.router.navigate(['./judge']);
+    }else{
+      if(this.localStorageService.get('token') && !this.isJudge){
+        this.router.navigate(['./profile']);
+      }else{
+        this.router.navigate(['./']);
+      }
     }
   }
 
   logout(){
     this.localStorageService.remove('token');
+    this.localStorageService.remove('isJudge');
     this.headerButtonsService.signOut();
     this.router.navigate(['./']);
   }

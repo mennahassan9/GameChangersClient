@@ -35,8 +35,12 @@ import { IdeaService } from './Services/idea.service';
 import { HeaderButtonsService } from './Services/headerButtons.service';
 import { JudgeHomeComponent } from './judge-home/judge-home.component';
 import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
+import { JudgingService } from './Services/judging.service';
 import { AuthGuardService } from './Services/auth-guard.service';
-import { AuthService }      from './Services/auth.service'  
+import { AuthService }      from './Services/auth.service';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component'
+import { AuthGuardJudgeService } from './Services/auth-guard-judge';
+import { DefaultGuardService } from './Services/default-guard.service';  
 
 
 
@@ -61,7 +65,8 @@ import { AuthService }      from './Services/auth.service'
     RegisterIdeaComponent,
     ViewIdeaComponent,
     JudgeHomeComponent,
-    JudgeIdeaComponent
+    JudgeIdeaComponent,
+    UnauthorizedComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {useHash: true}),
@@ -82,8 +87,11 @@ import { AuthService }      from './Services/auth.service'
     TeamService,
     IdeaService,
     HeaderButtonsService,
+    JudgingService,
     AuthGuardService,
-    AuthService
+    AuthService,
+    AuthGuardJudgeService,
+    DefaultGuardService
   ],
   bootstrap: [AppComponent]
 })

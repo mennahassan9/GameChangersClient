@@ -5,8 +5,8 @@
     </div>
     <div class="header__stub-container">
       <!-- content to be added in here -->
-      <button class="header_btns" (click)="redirectToTeam()" [hidden]="!isSignedIn" >My Team</button>
-      <button class="header_btns" (click)="redirectToIdea()" [hidden]="!isSignedIn" >My Idea</button>
+      <button class="header_btns" (click)="redirectToTeam()" [hidden]="!isSignedIn || isJudge" >My Team</button>
+      <button class="header_btns" (click)="redirectToIdea()" [hidden]="!isSignedIn || isJudge" >My Idea</button>
       <button class="header_btns" (click)="redirectToForgotPassword()" [hidden]="!isSignedIn" >Reset Password</button>
       <button class="header_btns" (click)="logout()" [hidden]="!isSignedIn" >Logout</button>
 

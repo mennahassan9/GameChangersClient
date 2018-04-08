@@ -6,9 +6,15 @@ export class AuthService {
 
     public isAuthenticated(): boolean {
         const token = this.localStorageService.get('token');
-        console.log(token);
         if (token) return true;
         return false;
+    }
 
+    public isJudge(): boolean {
+        return this.localStorageService.get("isJudge") == true;
+    }
+
+    public isUser(): boolean {
+        return !(this.localStorageService.get("isJudge") == true);
     }
 }
