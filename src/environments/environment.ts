@@ -5,7 +5,8 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://egyptcoeapps/gamechanger/proxyphp/proxy.php?http://10.207.81.92:4040'
+  // Staging URL
+  //apiUrl:'http://ias00nan5eba.corp.emc.com/gamechanger/staging/proxyphp/proxy.php?http://10.207.81.92:4040'
   apiUrl: 'http://192.168.175.132:4040'
   // apiUrl: 'http://10.207.81.92:4040'
 };
