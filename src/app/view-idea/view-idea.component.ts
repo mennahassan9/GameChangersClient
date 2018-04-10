@@ -97,7 +97,10 @@ export class ViewIdeaComponent implements OnInit {
         var fileURL = URL.createObjectURL(res);
         var win = window.open(fileURL);
         this.toggleLoading();
-      }
+      } , (err) => {
+          alert("Download Failed! Try again later.");
+          this.toggleLoading();
+      }     
     );
   }
 

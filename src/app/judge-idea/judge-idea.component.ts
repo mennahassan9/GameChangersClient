@@ -35,10 +35,11 @@ export class JudgeIdeaComponent implements OnInit {
   ) { }
   
   submit() {
-    this.formSubmitted = true;
     console.log(this.form.value);
-    if(this.form.valid){
-      
+    if(this.form.valid && this.feasibilityScoreValid && this.financialImpactScoreValid && this.innovationScoreValid
+    && this.qualityOfPresentationScoreValid && this.problemSolvingScoreValid){
+      this.formSubmitted = true;
+
       this.judgingService.judge(this.form.value, this.ideaId, this.totalScore).then((success)=> {
         this.router.navigate(['/judge']);
       })
@@ -54,7 +55,7 @@ export class JudgeIdeaComponent implements OnInit {
   ngOnInit() {
     this.teamName = this.route.snapshot.queryParams['team'];
     this.idea = {
-      name: "Awesome Idea",
+      name: "",
       filename: this.teamName
     };
     this.form = new FormGroup({
@@ -75,7 +76,8 @@ export class JudgeIdeaComponent implements OnInit {
       this.idea.name = response['title'];
       this.idea.filename = response['filename'];
       this.ideaId = response['ideaId'];
-      this.totalScore = response['score'];
+      this.totalScore = Math.max(response['score'],0);
+      console.log('total score ', this.totalScore);
       console.log(response);
       this.form = new FormGroup({
         innovationScore: new FormControl(response['innovationScore'] == -1? '':response['innovationScore'] , [Validators.required]),
@@ -95,6 +97,7 @@ export class JudgeIdeaComponent implements OnInit {
       console.log(err);
       this.startCalculateScore();
     })
+
     // this.headerButtonsService.signOut();
   }
   onDownload() {
@@ -102,11 +105,23 @@ export class JudgeIdeaComponent implements OnInit {
     console.log("DOWN", this.idea.filename);
     this.ideaService.downloadIdea(this.idea.filename).subscribe(
       (res) => {
-        var fileURL = URL.createObjectURL(res);
-        var win = window.open(fileURL);
-        this.toggleLoading();
+          var fileURL = URL.createObjectURL(res);
+          var win = window.open(fileURL);
+          this.toggleLoading();
+      } , (err) => {
+          alert("Download Failed! Try again later.");
+          this.toggleLoading();
       }
     );
+  }
+  checkBtn() {
+    if(this.form.valid && this.feasibilityScoreValid && this.financialImpactScoreValid && this.innovationScoreValid
+      && this.qualityOfPresentationScoreValid && this.problemSolvingScoreValid) {
+          (<HTMLInputElement> document.getElementById("submit_btn")).disabled = false;
+      }else {
+        (<HTMLInputElement> document.getElementById("submit_btn")).disabled = true;
+      }
+
   }
   startCalculateScore(){
 
@@ -123,7 +138,8 @@ export class JudgeIdeaComponent implements OnInit {
         this.innovationScoreValid = true;
         this.totalScore = innovationScore + problmeSolvingScore + financialImpactScore + feasibilityScore + qualityOfPresentationScore;
       }
-      });
+      this.checkBtn();
+    });
     this.form.get('problmeSolvingScore').valueChanges.subscribe(() => {
         let innovationScore = isNaN(parseInt(this.form.get('innovationScore').value)) ? 0 : parseInt(this.form.get('innovationScore').value)
         let problmeSolvingScore = isNaN(parseInt(this.form.get('problmeSolvingScore').value)) ? 0 : parseInt(this.form.get('problmeSolvingScore').value)     
@@ -137,6 +153,7 @@ export class JudgeIdeaComponent implements OnInit {
           this.problemSolvingScoreValid = true;
           this.totalScore = innovationScore + problmeSolvingScore + financialImpactScore + feasibilityScore + qualityOfPresentationScore;
         }
+        this.checkBtn();
     });
     this.form.get('financialImpactScore').valueChanges.subscribe(() => {
       let innovationScore = isNaN(parseInt(this.form.get('innovationScore').value)) ? 0 : parseInt(this.form.get('innovationScore').value)
@@ -151,6 +168,7 @@ export class JudgeIdeaComponent implements OnInit {
         this.financialImpactScoreValid = true;
         this.totalScore = innovationScore + problmeSolvingScore + financialImpactScore + feasibilityScore + qualityOfPresentationScore;
       }
+      this.checkBtn();
     });
       this.form.get('feasibilityScore').valueChanges.subscribe(() => {
         let innovationScore = isNaN(parseInt(this.form.get('innovationScore').value)) ? 0 : parseInt(this.form.get('innovationScore').value)
@@ -165,6 +183,7 @@ export class JudgeIdeaComponent implements OnInit {
           this.feasibilityScoreValid = true;
           this.totalScore = innovationScore + problmeSolvingScore + financialImpactScore + feasibilityScore + qualityOfPresentationScore;
         }
+        this.checkBtn();
       });
       this.form.get('qualityOfPresentationScore').valueChanges.subscribe(() => {
         let innovationScore = isNaN(parseInt(this.form.get('innovationScore').value)) ? 0 : parseInt(this.form.get('innovationScore').value)
@@ -179,6 +198,7 @@ export class JudgeIdeaComponent implements OnInit {
           this.qualityOfPresentationScoreValid = true;
           this.totalScore = innovationScore + problmeSolvingScore + financialImpactScore + feasibilityScore + qualityOfPresentationScore;
         }
+        this.checkBtn();
       });
   }
   toggleLoading() {
