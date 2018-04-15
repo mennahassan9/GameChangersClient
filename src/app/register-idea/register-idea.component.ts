@@ -80,10 +80,10 @@ export class RegisterIdeaComponent implements OnInit {
 
   // setting the challenges for the user to see in the UI
   initChallenges() {
-    this.challenges.push("Chief Customer Office – Customer Advocacy");
-    this.challenges.push("Automation of Service");
-    this.challenges.push("Culture Code");
-    this.challenges.push("Open Ended");
+    this.challenges.push("Customer Advocacy/Ways to improve Ease of Doing Business (EoDB)");
+    this.challenges.push("Innovative ways of using Blockchain for customer support");
+    this.challenges.push("How do we make our #CultureCode really come to life?");
+    this.challenges.push("Open Ended – Innovative ways of using Dell products");
   }
 
   ngOnInit() {
