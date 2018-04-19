@@ -97,7 +97,6 @@ export class JudgeIdeaComponent implements OnInit {
       console.log(err);
       this.startCalculateScore();
     })
-
     // this.headerButtonsService.signOut();
   }
   onDownload() {

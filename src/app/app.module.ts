@@ -27,21 +27,23 @@ import { RegisterIdeaComponent } from './register-idea/register-idea.component';
 import { InviteTeamMemberComponent } from './invite-team-member/invite-team-member.component';
 import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
 import { ViewIdeaComponent } from './view-idea/view-idea.component';
+import { AdminViewIdeasComponent } from './admin/admin-view-ideas/admin-view-ideas.component';  
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component'
+import { JudgeHomeComponent } from './judge-home/judge-home.component';
+import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
 
 /*************************************** */
 import { LoginService } from './Services/login.service';
 import { TeamService } from './Services/team.service';
 import { IdeaService } from './Services/idea.service';
 import { HeaderButtonsService } from './Services/headerButtons.service';
-import { JudgeHomeComponent } from './judge-home/judge-home.component';
-import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
 import { JudgingService } from './Services/judging.service';
 import { AuthGuardService } from './Services/auth-guard.service';
 import { AuthService }      from './Services/auth.service';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component'
 import { AuthGuardJudgeService } from './Services/auth-guard-judge';
-import { DefaultGuardService } from './Services/default-guard.service';  
-
+import { DefaultGuardService } from './Services/default-guard.service';
+import { AdminService } from './Services/admin.service';  
+import { Ng2TableModule  } from 'ng2-table/ng2-table';
 
 
 @NgModule({
@@ -66,7 +68,8 @@ import { DefaultGuardService } from './Services/default-guard.service';
     ViewIdeaComponent,
     JudgeHomeComponent,
     JudgeIdeaComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    AdminViewIdeasComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {useHash: true}),
@@ -74,6 +77,7 @@ import { DefaultGuardService } from './Services/default-guard.service';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    Ng2TableModule,
     LocalStorageModule.withConfig({
         prefix: 'my-app',
         storageType: 'localStorage'
@@ -91,7 +95,8 @@ import { DefaultGuardService } from './Services/default-guard.service';
     AuthGuardService,
     AuthService,
     AuthGuardJudgeService,
-    DefaultGuardService
+    DefaultGuardService,
+    AdminService
   ],
   bootstrap: [AppComponent]
 })
