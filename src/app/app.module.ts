@@ -43,6 +43,8 @@ import { AuthService }      from './Services/auth.service';
 import { AuthGuardJudgeService } from './Services/auth-guard-judge';
 import { DefaultGuardService } from './Services/default-guard.service';
 import { AdminService } from './Services/admin.service';  
+import { AuthGuardAdminService } from './Services/auth-guard-admin';  
+
 import { Ng2TableModule  } from 'ng2-table/ng2-table';
 
 
@@ -96,7 +98,8 @@ import { Ng2TableModule  } from 'ng2-table/ng2-table';
     AuthService,
     AuthGuardJudgeService,
     DefaultGuardService,
-    AdminService
+    AdminService,
+    AuthGuardAdminService
   ],
   bootstrap: [AppComponent]
 })

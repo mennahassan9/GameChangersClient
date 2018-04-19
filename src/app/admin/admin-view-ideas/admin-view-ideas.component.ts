@@ -79,7 +79,7 @@ export class AdminViewIdeasComponent implements OnInit {
       for (let index = 0; index < element.judgments.length; index++) {
         const judgment = element.judgments[index];
         
-        object['judgesScore'] += judgment.score != "-1" ? judgment.judgeName + " : " + judgment.score + "\n" :judgment.judgeName + " : did not judge yet" + '\n';
+        object['judgesScore'] += judgment.score != "-1" ? judgment.judgeName + " : " + judgment.score + "<br\>" :judgment.judgeName + " : did not judge yet" + "<br\>";
       }
       retuenedData.push(object);
     });

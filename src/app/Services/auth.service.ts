@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
+
 @Injectable()
 export class AuthService {
-    constructor(private localStorageService: LocalStorageService) { }
+    constructor(private localStorageService: LocalStorageService) { 
+
+    }
 
     public isAuthenticated(): boolean {
         const token = this.localStorageService.get('token');
@@ -16,5 +19,9 @@ export class AuthService {
 
     public isUser(): boolean {
         return !(this.localStorageService.get("isJudge") == true);
+    }
+
+    public isAdmin(): boolean {
+        return this.localStorageService.get("email") == "ahmed.osama@dell.com"
     }
 }

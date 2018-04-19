@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AdminService {
-  constructor(private http: Http, private localStorageService: LocalStorageService) {}
+  constructor(
+    private http: Http, private localStorageService: LocalStorageService) {}
 
   getIdeas() {
     const reqHeaders: Headers = new Headers();

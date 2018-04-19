@@ -22,6 +22,7 @@ import { AuthGuardService }   from './Services/auth-guard.service';
 import { AuthGuardJudgeService } from './Services/auth-guard-judge';
 import { DefaultGuardService } from './Services/default-guard.service'; 
 import { AdminViewIdeasComponent } from './admin/admin-view-ideas/admin-view-ideas.component';
+import { AuthGuardAdminService } from './Services/auth-guard-admin'; 
 
 export const AppRoutes : Routes= [
     { 
@@ -32,6 +33,7 @@ export const AppRoutes : Routes= [
     { 
         path: 'admin',      
         component: AdminViewIdeasComponent,
+        canActivate: [AuthGuardAdminService]
     },
     // {
     //     path: 'signup',

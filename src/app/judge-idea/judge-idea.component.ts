@@ -114,6 +114,7 @@ export class JudgeIdeaComponent implements OnInit {
     );
   }
   checkBtn() {
+    console.log(this.form.valid, this.feasibilityScoreValid, this.financialImpactScoreValid, this.innovationScoreValid, this.problemSolvingScoreValid, this.qualityOfPresentationScoreValid);
     if(this.form.valid && this.feasibilityScoreValid && this.financialImpactScoreValid && this.innovationScoreValid
       && this.qualityOfPresentationScoreValid && this.problemSolvingScoreValid) {
           (<HTMLInputElement> document.getElementById("submit_btn")).disabled = false;

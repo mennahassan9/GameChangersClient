@@ -50,6 +50,8 @@ export class ProfileComponent implements OnInit {
 
     redirectToHome() {
       this.localStorageService.remove('token');
+      this.localStorageService.remove('email');
+      this.localStorageService.remove('isJudge');
       this.router.navigate(['./']);
     }
 
