@@ -23,6 +23,7 @@ import { AuthGuardJudgeService } from './Services/auth-guard-judge';
 import { DefaultGuardService } from './Services/default-guard.service'; 
 import { AdminViewIdeasComponent } from './admin/admin-view-ideas/admin-view-ideas.component';
 import { AuthGuardAdminService } from './Services/auth-guard-admin'; 
+import { JudgeControlComponent } from './judge-control/judge-control.component';
 
 export const AppRoutes : Routes= [
     { 
@@ -35,11 +36,11 @@ export const AppRoutes : Routes= [
         component: AdminViewIdeasComponent,
         canActivate: [AuthGuardAdminService]
     },
-    // {
-    //     path: 'signup',
-    //     component: RegistrationComponent
-    //     ca
-    // },
+    {
+        path: 'signup',
+        component: RegistrationComponent
+        // ca
+    },
     {
         path: 'signin',
         component: LoginComponent,
@@ -111,5 +112,10 @@ export const AppRoutes : Routes= [
     {
         path: 'unauthorized',
         component: UnauthorizedComponent
+    },
+    {
+        path: 'team-control',
+        component: JudgeControlComponent,
+        canActivate: [AuthGuardAdminService]
     }
 ] 

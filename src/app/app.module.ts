@@ -46,6 +46,8 @@ import { AdminService } from './Services/admin.service';
 import { AuthGuardAdminService } from './Services/auth-guard-admin';  
 
 import { Ng2TableModule  } from 'ng2-table/ng2-table';
+import { DeadlineComponent } from './deadline/deadline.component';
+import { JudgeControlComponent } from './judge-control/judge-control.component';
 
 
 @NgModule({
@@ -71,7 +73,9 @@ import { Ng2TableModule  } from 'ng2-table/ng2-table';
     JudgeHomeComponent,
     JudgeIdeaComponent,
     UnauthorizedComponent,
-    AdminViewIdeasComponent
+    AdminViewIdeasComponent,
+    DeadlineComponent,
+    JudgeControlComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {useHash: true}),

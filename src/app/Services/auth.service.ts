@@ -22,6 +22,6 @@ export class AuthService {
     }
 
     public isAdmin(): boolean {
-        return this.localStorageService.get("email") == "ahmed.osama@dell.com"
+        return this.localStorageService.get("email") == "admin@dell.com"
     }
 }

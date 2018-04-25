@@ -4,18 +4,22 @@
         <div class="idea__main-title col-sm-offset-3 col-sm-6 text-center">
             Idea Submission
         </div>
+        <div class="col-sm-offset-3 col-sm-6 text-center">
+                The deadline has reached
+            </div>
         <div class="row">
             <div class="col-sm-offset-3 col-sm-6 text-center idea__form-container">
+
                 <form [formGroup]="form" (ngSubmit)="submitIdea()">
                     <div class="form-group">
-                        <input [class.idea__error]="(form.get('ideaTitle').invalid && form.get('ideaTitle').touched) || (formSubmitted && form.get('ideaTitle').invalid)" formControlName="ideaTitle" class="form-control idea__regitser-idea-name-input" id="ideaTitle" placeholder="Enter Idea Title">
+                        <input disabled [class.idea__error]="(form.get('ideaTitle').invalid && form.get('ideaTitle').touched) || (formSubmitted && form.get('ideaTitle').invalid)" formControlName="ideaTitle" class="form-control idea__regitser-idea-name-input" id="ideaTitle" placeholder="Enter Idea Title">
                     </div>
                     <div *ngIf = "(form.get('ideaTitle').invalid && form.get('ideaTitle').touched) || (formSubmitted && form.get('ideaTitle').invalid)" class="alert alert-danger">
                         <div *ngIf = "form.get('ideaTitle').errors.required" class="idea__error-msg">You should write a title for the idea. </div>       
                     </div>
                     <div class="form-group">
                         <div class="controls">
-                            <select [class.idea__error]="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)" class="form-control idea__select-input" formControlName="challenge" (change)="onSelectChallenge($event.target.value)">
+                            <select disabled [class.idea__error]="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)" class="form-control idea__select-input" formControlName="challenge" (change)="onSelectChallenge($event.target.value)">
                                 <option value="" disabled selected hidden>Select Related Challenge</option>
                                 <option class="" *ngFor="let challenge of challenges" [ngValue]="challenge">
                                   {{ challenge }}
@@ -28,13 +32,13 @@
                     </div>
                     <div class="form-group">
                         <!-- change extensions accordingly -->
-                        <input accept=".*" [class.idea__error]="(formSubmitted && emptyUpload)" type="file" id="ideaSlides" class="idea__upload" (change)="onUpload($event)" [disabled] = "loading"> 
+                        <input disabled accept=".*" [class.idea__error]="(formSubmitted && emptyUpload)" type="file" id="ideaSlides" class="idea__upload" (change)="onUpload($event)" [disabled] = "true"> 
                     </div>
                     <div *ngIf = "(formSubmitted && emptyUpload)" class="alert alert-danger">
                         <div class="idea__error-msg">You should upload slides for your idea. </div>       
                     </div>
                     <div class="idea__btn-container">
-                        <button class="btn btn-default idea__submit-btn" [disabled] = "loading" >Submit Idea</button>
+                        <button class="btn btn-default idea__submit-btn" [disabled] = "true" >Submit Idea</button>
                     </div>
                 </form>
             </div>

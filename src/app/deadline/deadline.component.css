@@ -1,0 +1,79 @@
+.judge__main-container {
+    overflow-x: hidden;
+    background-image: url("../../assets/images/home_ideas_background_alt7.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0px 30px;
+    min-height: 100vh;
+}
+
+
+.judge__brief-container {
+    margin: 10px 0px;
+}
+
+.judge__info {
+    min-height: 65vh;
+    /* border-bottom: 2px solid #000000; */
+}
+
+.judge__info-main-text {
+    font-size: 2em;
+    color: #000000;
+    margin-top: 1%;
+}
+
+.judge__info-details {
+    font-size: 1.5em;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 10px;
+    margin-top: 2%;
+}
+
+.judge__control-panel {
+    min-height: 35vh;
+}
+
+.judge__btn-team, .judge__btn-idea {
+    color: #000000;
+    font-size: 3em;
+    padding: 3%;
+    width: 70%;
+}
+
+.judge__btn-team {
+    background-color: #007DB8;
+    border-color: #007DB8;
+}
+
+.judge__btn-idea {
+    background-color: #F2AF00;
+    border-color: #F2AF00;
+}
+
+.judge__btns-container--idea, .judge__btns-container--team {
+    margin-top: 5%;
+}
+
+.judge__btns-container--team {
+    border-right: 2px solid #000000;
+}
+
+.judge__btn-idea-desc, .judge__btn-team-desc {
+    font-size: 1.5em;
+    margin-top: 3%;
+    color: #000000;
+}
+
+.judge__logout-container {
+    margin-top: 5%;
+}
+
+.judge__logout-btn {
+    font-size: 1.25em;
+    color: #000000;
+    background-color: #CE1126;
+    border-color: #CE1126;
+    padding: 10px 20px;
+}
