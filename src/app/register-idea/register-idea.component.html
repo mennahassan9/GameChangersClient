@@ -22,7 +22,7 @@
                             <select disabled [class.idea__error]="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)" class="form-control idea__select-input" formControlName="challenge" (change)="onSelectChallenge($event.target.value)">
                                 <option value="" disabled selected hidden>Select Related Challenge</option>
                                 <option class="" *ngFor="let challenge of challenges" [ngValue]="challenge">
-                                  {{ challenge }}
+                                  {{ challenge.name }}
                                 </option>
                             </select>
                         </div>

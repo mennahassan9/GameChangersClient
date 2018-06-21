@@ -45,11 +45,14 @@ import { DefaultGuardService } from './Services/default-guard.service';
 import { AdminService } from './Services/admin.service';  
 import { AuthGuardAdminService } from './Services/auth-guard-admin'; 
 import { DomainService } from './Services/domain.service'; 
+import { IdeaChallengeService } from './Services/idea-challenge.service';
 
 import { Ng2TableModule  } from 'ng2-table/ng2-table';
 import { DeadlineComponent } from './deadline/deadline.component';
 import { JudgeControlComponent } from './judge-control/judge-control.component';
 import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-email-domain.component';
+import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-idea-challenge.component';
+
 
 
 
@@ -79,7 +82,8 @@ import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-emai
     AdminViewIdeasComponent,
     DeadlineComponent,
     JudgeControlComponent,
-    AdminEmailDomainComponent
+    AdminEmailDomainComponent,
+    AdminIdeaChallengeComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {useHash: true}),
@@ -108,7 +112,8 @@ import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-emai
     DefaultGuardService,
     AdminService,
     AuthGuardAdminService,
-    DomainService
+    DomainService,
+    IdeaChallengeService
 
   ],
   bootstrap: [AppComponent]
