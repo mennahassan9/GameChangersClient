@@ -24,6 +24,7 @@ import { DefaultGuardService } from './Services/default-guard.service';
 import { AdminViewIdeasComponent } from './admin/admin-view-ideas/admin-view-ideas.component';
 import { AuthGuardAdminService } from './Services/auth-guard-admin'; 
 import { JudgeControlComponent } from './judge-control/judge-control.component';
+import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-email-domain.component';
 
 export const AppRoutes : Routes= [
     { 
@@ -116,6 +117,11 @@ export const AppRoutes : Routes= [
     {
         path: 'team-control',
         component: JudgeControlComponent,
+        canActivate: [AuthGuardAdminService]
+    },
+    {
+        path: 'admin/domains',
+        component: AdminEmailDomainComponent,
         canActivate: [AuthGuardAdminService]
     }
 ] 

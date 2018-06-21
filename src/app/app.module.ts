@@ -43,11 +43,14 @@ import { AuthService }      from './Services/auth.service';
 import { AuthGuardJudgeService } from './Services/auth-guard-judge';
 import { DefaultGuardService } from './Services/default-guard.service';
 import { AdminService } from './Services/admin.service';  
-import { AuthGuardAdminService } from './Services/auth-guard-admin';  
+import { AuthGuardAdminService } from './Services/auth-guard-admin'; 
+import { DomainService } from './Services/domain.service'; 
 
 import { Ng2TableModule  } from 'ng2-table/ng2-table';
 import { DeadlineComponent } from './deadline/deadline.component';
 import { JudgeControlComponent } from './judge-control/judge-control.component';
+import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-email-domain.component';
+
 
 
 @NgModule({
@@ -75,7 +78,8 @@ import { JudgeControlComponent } from './judge-control/judge-control.component';
     UnauthorizedComponent,
     AdminViewIdeasComponent,
     DeadlineComponent,
-    JudgeControlComponent
+    JudgeControlComponent,
+    AdminEmailDomainComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {useHash: true}),
@@ -103,7 +107,9 @@ import { JudgeControlComponent } from './judge-control/judge-control.component';
     AuthGuardJudgeService,
     DefaultGuardService,
     AdminService,
-    AuthGuardAdminService
+    AuthGuardAdminService,
+    DomainService
+
   ],
   bootstrap: [AppComponent]
 })

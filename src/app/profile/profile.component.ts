@@ -52,6 +52,7 @@ export class ProfileComponent implements OnInit {
       this.localStorageService.remove('token');
       this.localStorageService.remove('email');
       this.localStorageService.remove('isJudge');
+      this.localStorageService.remove('isAdmin');
       this.router.navigate(['./']);
     }
 

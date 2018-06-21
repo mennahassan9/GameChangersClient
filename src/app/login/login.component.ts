@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.localStorageService.remove("token");
     this.localStorageService.remove("isJudge");
+    this.localStorageService.remove("isAdmin");
     this.localStorageService.remove("email");
     
     this.form = new FormGroup({

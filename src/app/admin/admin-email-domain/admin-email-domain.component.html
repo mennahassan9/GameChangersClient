@@ -1,0 +1,41 @@
+<div class="container-fluid admin-container">
+  <div class="row">
+      <div class="col-sm-offset-3 col-sm-3 title">
+        <h2>Domains</h2>
+      </div>
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+    {{ alertMsg }}
+  </div>
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-3 bottom-spacing--input">
+      <input class="form-control" type="text" #newDomain>
+    </div>
+    <div class="col-sm-3 bottom-spacing">
+      <button class="btn btn-primary btn--wide" (click)="addDomain(newDomain.value)">Add</button>
+    </div>
+  </div>
+  <ul class="domains">
+    <li class="row" *ngFor="let domain of domains">
+      <div  *ngIf="!domain.edit" class="col-sm-offset-3 col-sm-3 bottom-spacing--input">
+        <p>{{ domain.name }}</p>
+      </div>
+      <div *ngIf="!editFlag" class="col-sm-3 bottom-spacing">
+        <button class="btn btn-primary" (click)="edit(domain.name)">Update</button>
+        <button class="btn btn-danger" (click)="deleteDomain(domain.name)">Delete</button>
+      </div>
+      
+      <!--change label into input to edit required domain name !-->
+       <div *ngIf="domain.edit">
+          <div class="col-sm-offset-3 col-sm-3 bottom-spacing--input">
+            <input class="form-control"   type="text" [value]="domain.name" #newName>
+          </div>
+          <div class="col-sm-3 bottom-spacing">
+            <button class="btn btn-success" (click)="updateDomain(newName.value)">Save</button>
+            <button class="btn btn-danger" (click)="cancel(domain)">Cancel</button>
+          </div>
+       </div>
+    </li>
+  </ul>
+  <div>
+</div>
