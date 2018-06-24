@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IdeaChallengeService } from '../Services/idea-challenge.service';
 
 import { IdeaService } from './../Services/idea.service';
 import * as mime from 'mime-types'
@@ -24,7 +25,8 @@ export class RegisterIdeaComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private ideaService: IdeaService
+    private ideaService: IdeaService,
+    private challengeService: IdeaChallengeService
   ) {}
 
   toggleLoading() {
@@ -49,7 +51,7 @@ export class RegisterIdeaComponent implements OnInit {
     if (this.form.valid && !this.emptyUpload) {
       this.ideaTitle = this.form.get('ideaTitle').value;
       this.toggleLoading();
-      this.ideaService.submitIdea(this.slides[0], this.ideaTitle, this.form.get('challenge').value).subscribe(
+      this.ideaService.submitIdea(this.slides[0], this.ideaTitle, (this.form.get('challenge').value)["name"]).subscribe(
         (res) => {
           this.toggleLoading();
           console.log(res);
@@ -80,10 +82,15 @@ export class RegisterIdeaComponent implements OnInit {
 
   // setting the challenges for the user to see in the UI
   initChallenges() {
-    this.challenges.push("Customer Advocacy/Ways to improve Ease of Doing Business (EoDB)");
-    this.challenges.push("Innovative ways of using Blockchain for customer support");
-    this.challenges.push("How do we make our #CultureCode really come to life?");
-    this.challenges.push("Open Ended – Innovative ways of using Dell products");
+    this.challengeService.getChallenges().subscribe(res=>{
+      this.challenges = JSON.parse(res._body)["body"];
+      }, e => {
+        this.challenges = [];
+    })
+    // this.challenges.push("Customer Advocacy/Ways to improve Ease of Doing Business (EoDB)");
+    // this.challenges.push("Innovative ways of using Blockchain for customer support");
+    // this.challenges.push("How do we make our #CultureCode really come to life?");
+    // this.challenges.push("Open Ended – Innovative ways of using Dell products");
   }
 
   ngOnInit() {

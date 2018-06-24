@@ -1,0 +1,42 @@
+<div class="container-fluid admin-container">
+  <div class="row">
+      <div class="col-sm-offset-3 col-sm-3 title">
+        <h2>Idea Challenges</h2>
+      </div>
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+    {{ alertMsg }}
+  </div>
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-3 bottom-spacing--input">
+      <input class="form-control" type="text" #newChallenge>
+    </div>
+    <div class="col-sm-3 bottom-spacing">
+      <button class="btn btn-primary btn--wide" (click)="addChallenge(newChallenge.value)">Add</button>
+    </div>
+  </div>
+  <ul class="challenges">
+    <li class="row" *ngFor="let challenge of challenges">
+      <div  *ngIf="!challenge.edit" class="col-sm-offset-3 col-sm-3 bottom-spacing--input">
+        <p>{{ challenge.name }}</p>
+      </div>
+      <div *ngIf="!editFlag" class="col-sm-3 bottom-spacing">
+        <button class="btn btn-primary" (click)="edit(challenge.name)">Update</button>
+        <button class="btn btn-danger" (click)="deleteChallenge(challenge.name)">Delete</button>
+      </div>
+      
+      <!--change label into input to edit required challenge name !-->
+       <div *ngIf="challenge.edit">
+          <div class="col-sm-offset-3 col-sm-3 bottom-spacing--input">
+            <input class="form-control"   type="text" [value]="challenge.name" #newName>
+          </div>
+          <div class="col-sm-3 bottom-spacing">
+            <button class="btn btn-success" (click)="updateChallenge(newName.value)">Save</button>
+            <button class="btn btn-danger" (click)="cancel(challenge)">Cancel</button>
+          </div>
+       </div>
+    </li>
+  </ul>
+  <div>
+</div>
+
