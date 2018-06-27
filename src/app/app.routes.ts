@@ -24,6 +24,10 @@ import { DefaultGuardService } from './Services/default-guard.service';
 import { AdminViewIdeasComponent } from './admin/admin-view-ideas/admin-view-ideas.component';
 import { AuthGuardAdminService } from './Services/auth-guard-admin'; 
 import { JudgeControlComponent } from './judge-control/judge-control.component';
+import { AdminViewUsersComponent } from './admin/admin-view-users/admin-view-users.component';
+import { AdminViewUserComponent } from './admin/admin-view-user/admin-view-user.component';
+import { AdminViewUserTeamComponent } from './admin/admin-view-user-team/admin-view-user-team.component';
+import { AdminViewUserIdeaComponent } from './admin/admin-view-user-idea/admin-view-user-idea.component';
 import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-email-domain.component';
 import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-idea-challenge.component';
 
@@ -34,7 +38,7 @@ export const AppRoutes : Routes= [
         canActivate: [AuthGuardService]
     },
     { 
-        path: 'admin',      
+        path: 'admin/ideas',      
         component: AdminViewIdeasComponent,
         canActivate: [AuthGuardAdminService]
     },
@@ -42,6 +46,26 @@ export const AppRoutes : Routes= [
         path: 'signup',
         component: RegistrationComponent
         // ca
+    },
+    {
+        path: 'admin/users',
+        component: AdminViewUsersComponent,
+        canActivate: [AuthGuardAdminService]
+    },
+    {
+        path: 'admin/user',
+        component: AdminViewUserComponent,
+        canActivate: [AuthGuardAdminService]
+    },
+    {
+        path: 'admin/viewTeam/:id',
+        component: AdminViewUserTeamComponent,
+        canActivate: [AuthGuardAdminService]
+    },
+    {
+        path: 'admin/viewIdea/:id',
+        component: AdminViewUserIdeaComponent,
+        canActivate: [AuthGuardAdminService]
     },
     {
         path: 'signin',

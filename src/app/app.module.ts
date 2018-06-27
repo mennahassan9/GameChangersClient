@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DndModule } from 'ng2-dnd';
 import { HttpModule } from '@angular/http';
 import { LocalStorageModule } from 'angular-2-local-storage';
-
   /*************************************** */
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
@@ -31,7 +30,7 @@ import { AdminViewIdeasComponent } from './admin/admin-view-ideas/admin-view-ide
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component'
 import { JudgeHomeComponent } from './judge-home/judge-home.component';
 import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
-
+import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table/ng2-table';
 /*************************************** */
 import { LoginService } from './Services/login.service';
 import { TeamService } from './Services/team.service';
@@ -50,6 +49,10 @@ import { IdeaChallengeService } from './Services/idea-challenge.service';
 import { Ng2TableModule  } from 'ng2-table/ng2-table';
 import { DeadlineComponent } from './deadline/deadline.component';
 import { JudgeControlComponent } from './judge-control/judge-control.component';
+import { AdminViewUsersComponent } from './admin/admin-view-users/admin-view-users.component';
+import { AdminViewUserComponent } from './admin/admin-view-user/admin-view-user.component';
+import { AdminViewUserTeamComponent } from './admin/admin-view-user-team/admin-view-user-team.component';
+import { AdminViewUserIdeaComponent } from './admin/admin-view-user-idea/admin-view-user-idea.component';
 import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-email-domain.component';
 import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-idea-challenge.component';
 
@@ -82,6 +85,10 @@ import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-
     AdminViewIdeasComponent,
     DeadlineComponent,
     JudgeControlComponent,
+    AdminViewUsersComponent,
+    AdminViewUserComponent,
+    AdminViewUserTeamComponent,
+    AdminViewUserIdeaComponent,
     AdminEmailDomainComponent,
     AdminIdeaChallengeComponent
   ],

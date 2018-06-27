@@ -1,0 +1,25 @@
+<div class = "container-fluid team__body" >
+  <div class = " col-sm-offset-2 col-sm-8">
+      <div class="row">
+          <div class="col-sm-offset-3 col-sm-6 text-center team__edit-header">
+              {{ team.name }}
+          </div>
+        </div>
+      <div class="row team__view-container">
+          <!-- already invited members -->
+          <div class="row">
+              <div class="col-sm-offset-3 col-sm-6 text-center team__view-team-add">
+                  <div class="team__view-team-add-text row" for="email">Team Members</div>
+                  <div class="row team__view-team-members" *ngFor="let item of team.members; let i = index;">
+                      {{ item.email }}
+                  </div>
+              </div>
+          </div>
+          <div class="row team__view-btn-container">
+              <div class="col-sm-offset-4 col-sm-4">
+                  <!-- <input class="team__view-btn" value = "Back to profile" (click)= "backToProfile()"> -->
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

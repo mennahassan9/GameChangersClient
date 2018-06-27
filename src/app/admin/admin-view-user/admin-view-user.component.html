@@ -1,0 +1,62 @@
+<div class="container-fluid profile__main-container">
+  <div class="profile__info row">
+      <div class="row profile__logout-container">
+          <div class="col-sm-offset-10 col-sm-2">
+              <!-- <button class="profile__logout-btn" (click)="redirectToHome()">Logout</button> -->
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-offset-3 col-sm-6 text-center profile__info-main-text">
+              {{ currentUser.name }}
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-offset-3 col-sm-6 profile__info-details">
+              <div class="row profile__brief-container" *ngIf="currentUser.brief !== ''">
+                  <div class="col-sm-offset-3 col-sm-6 text-center">
+                    <li> Bio: {{ currentUser.brief }}</li>
+                      <li>Email: {{ currentUser.email }}</li>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                      <ul>
+                          <li>Position: {{ currentUser.position }}</li>
+                          <li>Location: {{ currentUser.location }}</li>
+                          <li>Region: {{ currentUser.region }}</li>            
+                          <!-- <li>Remote User: {{ currentUser.isRemote }}</li>   -->
+                      </ul>
+                  </div>
+                  <div class="col-sm-6">
+                      <ul>
+                          <li>Team Name: {{ currentUser.teamMember === "-1"? false : currentUser.teamMember }}</li>
+                          <li>Team Creator: {{ currentUser.creatorOf === "-1"? false : currentUser.creatorOf }}</li>
+                          <!-- <li>Career Level: {{ currentUser.careerLevel }}</li> -->
+                          <li>Previous Participation: {{ currentUser.previousParticipation === true? "Yes": "No" }}</li>            
+                          <!-- <li>GenNext Member: {{ currentUser.genNextMember === true? "Yes":"No" }}</li>   -->
+                      </ul>
+                  
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="profile__control-panel row">
+      <div class="profile__btns-container--team col-sm-offset-1 col-sm-5 text-center">
+          <div class="row">
+              <button class="profile__btn-team" (click)="redirectToTeam()">Team</button>
+          </div>
+          <div class="row profile__btn-team-desc">
+              View the team of the user!
+          </div>
+      </div>
+      <div class="profile__btns-container--idea col-sm-5 text-center">
+          <div class="row">
+              <button class="profile__btn-idea" (click)="redirectToIdea()">Idea</button>
+          </div>
+          <div class="row profile__btn-idea-desc">
+              View the submitted ideas!
+          </div>
+      </div>
+  </div>
+</div>

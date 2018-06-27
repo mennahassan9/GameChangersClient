@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Headers, Http,RequestOptions,URLSearchParams } from '@angular/http';
+import { Headers, Http,RequestOptions,URLSearchParams, ResponseContentType } from '@angular/http';
 import { LocalStorageService } from 'angular-2-local-storage';
-
+import * as mime from 'mime-types'
 import "rxjs";
 import { Observable } from 'rxjs';
 
@@ -20,6 +20,38 @@ export class AdminService {
     .map(res => res.json());
   }
 
+  getUsers() {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get(environment.apiUrl + "/admin/users", { headers: reqHeaders })
+    .map(res => res.json());
+  }
+  getUser(email) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get(environment.apiUrl + `/admin/user/${email}`, { headers: reqHeaders })
+    .map(res => res.json());
+  }
+  getTeamAsMember(email): Observable<any> {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get(environment.apiUrl + `/admin/user/viewTeam/${email}`, { headers: reqHeaders });
+  }
+
+  getUserIdea(email): Observable<any> {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get(environment.apiUrl + `/admin/user/viewIdea/${email}`, { headers: reqHeaders });
+  }
+
   getIdea(teamName){
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
@@ -28,6 +60,19 @@ export class AdminService {
     return this.http.get(environment.apiUrl + `/ideas/admin-ideas/${teamName}`, { headers: reqHeaders })
     .map(res => res.json());
   }
+
+  downloadIdea(filename): any{
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.post(environment.apiUrl + "/admin/user/viewIdea/download", {'file': filename}, {headers: reqHeaders, responseType: ResponseContentType.Blob })
+    .map(
+        (res) => {
+            return new Blob([res.blob()], { type: mime.lookup(filename) });
+        }
+      )
+    }
 
   isJudge(email){
     const reqHeaders: Headers = new Headers();
