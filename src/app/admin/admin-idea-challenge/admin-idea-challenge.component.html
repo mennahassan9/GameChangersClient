@@ -1,6 +1,7 @@
-<div class="container-fluid admin-container">
+<!-- <div class="container-fluid admin-container"> -->
+<div class="admin-container">
   <div class="row">
-      <div class="col-sm-offset-3 col-sm-3 title">
+      <div class="col-sm-12 title">
         <h2>Idea Challenges</h2>
       </div>
   </div>
@@ -8,29 +9,29 @@
     {{ alertMsg }}
   </div>
   <div class="row">
-    <div class="col-sm-offset-3 col-sm-3 bottom-spacing--input">
+      <div class="col-sm-6 bottom-spacing--input">
       <input class="form-control" type="text" #newChallenge>
     </div>
-    <div class="col-sm-3 bottom-spacing">
+    <div class="col-sm-6 bottom-spacing col-align-right">
       <button class="btn btn-primary btn--wide" (click)="addChallenge(newChallenge.value)">Add</button>
     </div>
   </div>
   <ul class="challenges">
     <li class="row" *ngFor="let challenge of challenges">
-      <div  *ngIf="!challenge.edit" class="col-sm-offset-3 col-sm-3 bottom-spacing--input">
+      <div  *ngIf="!challenge.edit" class="col-sm-6 bottom-spacing--input">
         <p>{{ challenge.name }}</p>
       </div>
-      <div *ngIf="!editFlag" class="col-sm-3 bottom-spacing">
+      <div *ngIf="!editFlag" class="col-sm-6 bottom-spacing col-align-right">
         <button class="btn btn-primary" (click)="edit(challenge.name)">Update</button>
         <button class="btn btn-danger" (click)="deleteChallenge(challenge.name)">Delete</button>
       </div>
       
       <!--change label into input to edit required challenge name !-->
        <div *ngIf="challenge.edit">
-          <div class="col-sm-offset-3 col-sm-3 bottom-spacing--input">
+          <div class="col-sm-6 bottom-spacing--input col-align-right">
             <input class="form-control"   type="text" [value]="challenge.name" #newName>
           </div>
-          <div class="col-sm-3 bottom-spacing">
+          <div class="col-sm-6 bottom-spacing">
             <button class="btn btn-success" (click)="updateChallenge(newName.value)">Save</button>
             <button class="btn btn-danger" (click)="cancel(challenge)">Cancel</button>
           </div>

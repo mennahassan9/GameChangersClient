@@ -111,5 +111,13 @@ export class AdminService {
     return this.http.post(environment.apiUrl + "/users/createNewjudge/",{email},{ headers: reqHeaders })
     .map(res => res.json());
   }
+  getStatistics(){
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get(environment.apiUrl + "/admin/stats/",{ headers: reqHeaders })
+    .map(res => res.json());
+  }
 
 }

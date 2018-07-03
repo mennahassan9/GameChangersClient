@@ -1,5 +1,6 @@
 .header__container {
     background-color: #444444;
+    z-index: 20;
 }
 
 .header__logo {

@@ -1,6 +1,9 @@
 .footer__main-contaienr {
     background-color: #444444;
     padding: 20px;
+    z-index: 20;
+    position: relative;
+
 }
 
 .footer__left-sub-container {

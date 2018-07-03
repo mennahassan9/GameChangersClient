@@ -30,6 +30,7 @@ import { AdminViewUserTeamComponent } from './admin/admin-view-user-team/admin-v
 import { AdminViewUserIdeaComponent } from './admin/admin-view-user-idea/admin-view-user-idea.component';
 import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-email-domain.component';
 import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-idea-challenge.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 
 export const AppRoutes : Routes= [
     { 
@@ -153,5 +154,10 @@ export const AppRoutes : Routes= [
         path: 'admin/idea-challenges',
         component: AdminIdeaChallengeComponent,
         canActivate: [AuthGuardAdminService]
+    },
+    {
+        path: 'admin/dashboard',
+        component: AdminDashboardComponent,
+        // canActivate: [AuthGuardAdminService]
     }
 ] 

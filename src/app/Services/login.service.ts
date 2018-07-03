@@ -6,6 +6,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import "rxjs";
 
 import { environment } from '../../environments/environment';
+import { HeaderButtonsService } from '../Services/headerButtons.service';
 
 @Injectable()
 export class LoginService {
@@ -13,7 +14,9 @@ export class LoginService {
   
   constructor(
     private http: Http,
-    private localStorageService: LocalStorageService) {
+    private localStorageService: LocalStorageService,
+    private headerButtonsService: HeaderButtonsService
+  ) {
   }
 
   loginCheck(email, password) {
@@ -29,6 +32,9 @@ export class LoginService {
       this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
       this.localStorageService.set("isJudge", JSON.parse(res["_body"])["isJudge"]);
       this.localStorageService.set("isAdmin", JSON.parse(res["_body"])["isAdmin"]);
+      if(JSON.parse(res["_body"])["isAdmin"]){
+        this.headerButtonsService.setIsSignedInAdmin();
+      }
       this.localStorageService.set("email", email);
     })
     ;

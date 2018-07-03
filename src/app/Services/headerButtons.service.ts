@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class HeaderButtonsService {
     public isSignedIn = new BehaviorSubject(false);
+    public isAdmin = new BehaviorSubject(false);
     constructor() { }
 
     setIsSignedIn() {
@@ -13,5 +14,14 @@ export class HeaderButtonsService {
     signOut()
     {
         this.isSignedIn.next(false); 
+    }
+
+    setIsSignedInAdmin() {
+        this.isAdmin.next(true);
+    }
+
+    signOutAdmin()
+    {
+        this.isAdmin.next(false); 
     }
 }

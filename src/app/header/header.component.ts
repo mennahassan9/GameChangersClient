@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit {
     this.localStorageService.remove('isAdmin');
     this.localStorageService.remove('email');
     this.headerButtonsService.signOut();
+    this.headerButtonsService.signOutAdmin();
     this.router.navigate(['./']);
   }
   redirectToTeam(){

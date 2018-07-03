@@ -1,0 +1,10 @@
+.header{
+    z-index: 20;
+}
+.footer{
+    z-index: 20px;
+}
+.nameg {
+    padding-left: 200px;
+    min-height: 100vh;
+}

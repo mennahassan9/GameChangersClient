@@ -35,11 +35,19 @@ export class LoginComponent implements OnInit {
       this.loginService.loginCheck(email, password).then((res) => {
         this.wrongCredentials = false;
         this.headerButtonsService.setIsSignedIn();
+        
         // this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
-        if (this.localStorageService.get("isJudge") == true)
-          this.router.navigate(['./judge']);
-        else
-          this.router.navigate(['./profile']);
+        if (this.localStorageService.get("isAdmin") == true)
+          this.router.navigate(['./admin/dashboard']);
+        else{
+          if(this.localStorageService.get("isJudge")){
+            this.router.navigate(['./judge']);
+          }else{
+            this.router.navigate(['./profile']);
+          }
+         
+        }
+          
       }, (err) => {
         this.wrongCredentials = true;
       });

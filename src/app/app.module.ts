@@ -47,6 +47,7 @@ import { DomainService } from './Services/domain.service';
 import { IdeaChallengeService } from './Services/idea-challenge.service';
 
 import { Ng2TableModule  } from 'ng2-table/ng2-table';
+import { ChartsModule } from 'ng2-charts';
 import { DeadlineComponent } from './deadline/deadline.component';
 import { JudgeControlComponent } from './judge-control/judge-control.component';
 import { AdminViewUsersComponent } from './admin/admin-view-users/admin-view-users.component';
@@ -55,6 +56,9 @@ import { AdminViewUserTeamComponent } from './admin/admin-view-user-team/admin-v
 import { AdminViewUserIdeaComponent } from './admin/admin-view-user-idea/admin-view-user-idea.component';
 import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-email-domain.component';
 import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-idea-challenge.component';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 
 
@@ -90,20 +94,26 @@ import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-
     AdminViewUserTeamComponent,
     AdminViewUserIdeaComponent,
     AdminEmailDomainComponent,
-    AdminIdeaChallengeComponent
+    AdminIdeaChallengeComponent,
+    AdminDashboardComponent,
+    SidenavComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {useHash: true}),
     BrowserModule,
     FormsModule,
+    ChartsModule,
+    Angular2FontawesomeModule,
     ReactiveFormsModule,
     HttpModule,
     Ng2TableModule,
+    Angular2FontawesomeModule,
     LocalStorageModule.withConfig({
         prefix: 'my-app',
         storageType: 'localStorage'
     }),
-    DndModule.forRoot()
+    DndModule.forRoot(),
+    LocalStorageModule
   ],
   providers: [
     UserService,

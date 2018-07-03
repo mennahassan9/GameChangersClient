@@ -1,0 +1,83 @@
+<div class="container-fluid dashboard-container">
+  <div class="row info-boxs">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="row info-box">
+          <span class="col-xs-3 info-box__icon bg-coral">
+              <fa [name]="'user'"></fa>
+          </span>
+          <div class="col-xs-9 info-box__content">
+            <span>Users</span>
+            <span class="info-box__number">{{users}}</span>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="row info-box ">
+          <span class="col-xs-3 info-box__icon bg-teal">
+              <fa [name]="'users'"></fa>
+          </span>
+          <div class="col-xs-9 info-box__content">
+            <span>Teams</span>
+            <span class="info-box__number">{{teams}}</span>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="row info-box ">
+            <span class="col-xs-3 info-box__icon bg-chartreuse">
+                <fa [name]="'gavel'"></fa>
+            </span>
+            <div class="col-xs-9 info-box__content">
+              <span>Judges</span>
+              <span class="info-box__number">{{judges}}</span>
+            </div>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2 col-xs-12">
+      <div class="dashboard-container__chart">
+          <div class="dashboard-container__chart__title">
+              <h4>Ideas</h4>
+            </div>
+            <div>
+              <canvas #ideasChart=base-chart baseChart
+                [data]="ideasChartData"
+                [labels]="ideasChartLabels"
+                [chartType]="ideasChartType"
+                [colors]="ideasChartColors">
+              </canvas>
+            </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="dashboard-container__chart">
+        <div class="dashboard-container__chart__title">
+            <h4>Teams</h4>
+          </div>
+          <div>
+            <canvas #teamsChart=base-chart baseChart 
+              [data]="teamsChartData"
+              [labels]="teamsChartLabels"
+              [chartType]="teamsChartType"
+              [colors]="teamsChartColors">
+            </canvas>
+          </div>
+      </div>
+    </div>
+  </div> 
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <div class="dashboard-container__section">
+        <app-admin-email-domain></app-admin-email-domain>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-md-offset-2 col-md-8">
+        <div class="dashboard-container__section">
+          <app-admin-idea-challenge></app-admin-idea-challenge>
+        </div>
+      </div>
+    </div>
+</div>
