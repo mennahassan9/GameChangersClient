@@ -1,63 +1,30 @@
-<div class="container-fluid judge__main-container">
-
-  <div class="user__info row">
-    <div class="row judge__logout-container">
-      <div class="col-sm-offset-10 col-sm-2">
-        <!-- <button class="judge__logout-btn" (click)="redirectToHome()">Logout</button> -->
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-offset-3 col-sm-6 text-center judge__info-main-text">
-        <!-- Hello, {{ currentUser.name }} -->
-        Hello, Admin
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-offset-1  col-sm-10 judge__info-details">
-        <div class="row judge__brief-container">
-          <!-- <table class="table">
-            <thead>
-              <tr>
-                <th>Team name</th>
-                <th>Idea title </th>
-                <th>Challenge name</th>
-                <th>Judges Score</th>
-              </tr>
-            </thead>
-            <tbody *ngFor="let idea of ideas">
-              <tr>
-
-                <td>
-                  {{idea.teamName}}
-                </td>
-
-                <td>{{idea.title}}</td>
-                <td>{{idea.challenge}}</td>
-                <td> 
-                  <div *ngFor= "let judgment of idea.judgments">
-                    {{judgment.judgeName? judgment.judgeName: 'No Name'}}:
-                    {{judgment.score == "-1"? 'Not judged yet' : judgment.score}}
-                  </div>
-                </td>
-              </tr>
-
-            </tbody>
-          </table> -->
-            
-          <ng-table [config]="config"
-          (tableChanged)="onChangeTable(config)"
-          (cellClicked)="onCellClick($event)"
-          [rows]="rows" [columns]="columns"
-          (page)="page"
-          (itemsPerPage)="itemsPerPage"
-          (numPages)="numPages"
-          (maxSize)="maxSize"
-          >
-        </ng-table>
-          <div id = "loader" [hidden]="!loading" ></div>
-        </div>
-      </div>
+<div class="container-fluid users__main-container">
+  <div class="row">
+      <div class="col-sm-offset-3 col-sm-6 text-center users__main-text">
+      Hello, Admin
     </div>
   </div>
-
+  <div class="row">
+    <div class="col-sm-offset-1  col-sm-10 users__table">
+          <div class="row users__brief-container"> 
+            <ng-table [config]="config"
+            (tableChanged)="onChangeTable(config)"
+            (cellClicked)="onCellClick($event)"
+            [rows]="rows" [columns]="columns">
+            </ng-table>
+            <pagination *ngIf="config.paging"
+                  class="pagination-sm"
+                  [(ngModel)]="page"
+                  [totalItems]="length"
+                  [itemsPerPage]="itemsPerPage"
+                  [maxSize]="maxSize"
+                  [boundaryLinks]="true"
+                  [rotate]="false"
+                  (pageChanged)="onChangeTable(config, $event)"
+                  (numPages)="numPages = $event">
+            </pagination>
+            <div id = "loader" [hidden]="!loading" ></div>
+        </div>
+    </div>
+  </div>
 </div>

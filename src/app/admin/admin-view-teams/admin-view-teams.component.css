@@ -1,18 +1,18 @@
-.users__main-container {
+.team__main-container {
     padding-top: 70px;
     padding-bottom: 20px;
 }
 
 
-.users__brief-container {
+.team__brief-container {
     margin: 10px 0px;
 }
-.users__main-text {
+.team__main-text {
     font-size: 2em;
     color: #000000;
     margin-top: 1%;
 }
-.users__table {
+.team__table {
     font-size: 1.2em;
     color: #000000;
     border: 1px solid #000000;

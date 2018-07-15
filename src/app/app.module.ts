@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DndModule } from 'ng2-dnd';
 import { HttpModule } from '@angular/http';
 import { LocalStorageModule } from 'angular-2-local-storage';
+import { PaginationModule } from 'ngx-bootstrap';
   /*************************************** */
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
@@ -59,6 +60,7 @@ import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-teams.component';
 
 
 
@@ -96,7 +98,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     AdminEmailDomainComponent,
     AdminIdeaChallengeComponent,
     AdminDashboardComponent,
-    SidenavComponent
+    SidenavComponent,
+    AdminViewTeamsComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {useHash: true}),
@@ -113,7 +116,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
         storageType: 'localStorage'
     }),
     DndModule.forRoot(),
-    LocalStorageModule
+    LocalStorageModule,
+    PaginationModule.forRoot()
   ],
   providers: [
     UserService,

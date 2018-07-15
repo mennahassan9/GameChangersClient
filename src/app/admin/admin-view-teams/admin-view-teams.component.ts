@@ -1,59 +1,58 @@
 import { Component, OnInit } from '@angular/core';
-
 import { AdminService} from '../../Services/admin.service';
 import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table/ng2-table';
-@Component({
-  selector: 'app-admin-view-users',
-  templateUrl: './admin-view-users.component.html',
-  styleUrls: ['./admin-view-users.component.css']
-})
-export class AdminViewUsersComponent implements OnInit {
 
-  ideas: any [];
+@Component({
+  selector: 'app-admin-view-teams',
+  templateUrl: './admin-view-teams.component.html',
+  styleUrls: ['./admin-view-teams.component.css']
+})
+export class AdminViewTeamsComponent implements OnInit {
+
+  teams: any [];
   loading: boolean; 
-  public data:Array<any> = [];
-  public columns:Array<any> = [
-    {title: 'User name', name: 'name', filtering: {filterString: '', placeholder: 'Filter by user name'}},
-    {title: 'email', name: 'email', filtering: {filterString: '', placeholder: 'Filter by email'}},
-    {title: 'Location', name: 'location', filtering: {filterString: '', placeholder: 'Filter by Location'}},
-    {title: 'Position', name: 'position'}
+  public rows:any[] = [];
+  public columns:any[] = [
+    {title:'Team Name', name:'team name', filtering: {filterString:'', placeholder: 'Filter by team name'}},
+    {title:'Members', name:'members'},
+    {title:'Creator', name:'creator'},
   ];
-  public config:any = {
-    paging: true,
-    sorting: {columns: this.columns},
-    className: ['table-striped', 'table-bordered']
-  };
   public page:number = 1;
   public itemsPerPage:number = 10;
   public maxSize:number = 5;
   public numPages:number;
   public length:number = 0;
-  private rows:Array<any> = [];
-  
-  constructor(private adminService: AdminService) { 
+  public config:any = {
+    paging: true,
+    sorting: {columns: this.columns},
+    filtering: {filterString: ''},
+    className: ['table-striped', 'table-bordered']
+  };
+    private data:any[];
 
-  }
+  constructor(private adminService: AdminService) {
+
+   }
+
   ngOnInit() {
-    this.adminService.getUsers().subscribe(res => {
-      this.ideas = res.body;
-      this.length = this.ideas.length;
-      this.parseResponse(res.body);
+    this.adminService.getTeams().subscribe(res => {
+      this.teams = res.body;
+      this.length = this.teams.length;
+      this.parseResponse(this.teams);
     })
   }
 
-  public parseResponse(data){
-    let returnedData = [];
-    data.forEach(element => {
+  public parseResponse(input){
+    let output = [];
+    input.forEach(element => {
       let object = {};
-      object['name'] = element.name == undefined ? "": element.name;
-      object['email'] = `<a href="#/admin/user?user=${element.email}">${element.email}</a>`;
-      object['location'] = element.location==undefined ? "" : element.location;
-      object['region'] = element.region==undefined ? "" : element.region;
-      object['position'] = element.position==undefined ? "" : element.position;
-      returnedData.push(object);
+      object['team name'] = element.name == undefined ? "" : `<a href="#/admin/viewTeam/${element.creator.email}">${element.name}</a>`;
+      object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
+      object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.name}</a>`;
+      output.push(object);
     });
-    this.rows = returnedData;
-    this.data = returnedData;
+    this.rows = output;
+    this.data = output;
     this.onChangeTable(this.config, {page: this.page, itemsPerPage: this.itemsPerPage});
   }
 
@@ -61,6 +60,7 @@ export class AdminViewUsersComponent implements OnInit {
     if (config.filtering) {
       Object.assign(this.config.filtering, config.filtering);
     }
+
     if (config.sorting) {
       Object.assign(this.config.sorting, config.sorting);
     }
@@ -83,7 +83,6 @@ export class AdminViewUsersComponent implements OnInit {
     let columns = this.config.sorting.columns || [];
     let columnName:string = void 0;
     let sort:string = void 0;
-
     for (let i = 0; i < columns.length; i++) {
       if (columns[i].sort !== '' && columns[i].sort !== false) {
         columnName = columns[i].name;
@@ -115,10 +114,12 @@ export class AdminViewUsersComponent implements OnInit {
     if (!config.filtering) {
       return filteredData;
     }
+
     if (config.filtering.columnName) {
       return filteredData.filter((item:any) =>
         item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
     }
+
     let tempArray:Array<any> = [];
     filteredData.forEach((item:any) => {
       let flag = false;
@@ -136,8 +137,6 @@ export class AdminViewUsersComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    if (data.column === 'addJudgeButton'){
-        let teamName = data.row.teamName;
-    }
+    return;
   }
 }
