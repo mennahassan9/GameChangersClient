@@ -1,0 +1,32 @@
+
+.bottom-spacing {
+    margin-bottom: 30px;
+}
+.bottom-spacing--input {
+    margin-bottom: 15px;
+}
+.admin-container {
+    min-height: calc(100vh - 80px);
+    min-height: 100vh;
+    padding-top: 70px;
+    padding: 0px 20px;
+}
+
+.btn--wide {
+    width: 140px;
+}
+
+.title {
+    text-align: center;
+    border-bottom: solid lightgray;
+    margin-bottom: 20px;
+    padding-top: 50px;
+}
+
+.title > h2 {
+    padding-bottom: 20px;
+}
+
+.col-align-right {
+    text-align: right;
+}

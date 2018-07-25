@@ -1,0 +1,110 @@
+<!-- <div class="/*container-fluid*/ admin-container"> -->
+  <div class="admin-container">
+    <div class="row">
+        <div class="col-sm-12 title">
+          <h2>Settings</h2>
+        </div>
+    </div>
+   
+      <div class="row">
+          <div class="col-sm-4 ">
+              <h3>Mail settings</h3>
+              <form [formGroup]="mailForm" (ngSubmit)="submitMailChanges()">
+                  <div class="form-group">
+                      <label for="exampleInputEmailHost">Email host</label>
+                      <input [class.login__error]="(mailForm.get('emailHost').invalid && mailForm.get('emailHost').touched) || (formSubmitted && mailForm.get('emailHost').invalid)" formControlName="emailHost" type="text" class="form-control" id="exampleInputEmailHost" placeholder="example smt.mailgun.org">
+                  </div>
+                  <div *ngIf = "(mailForm.get('emailHost').invalid && mailForm.get('emailHost').touched) || (formSubmitted && form.get('emailHost').invalid)" class="alert alert-danger">
+                      <div *ngIf = "mailForm.get('emailHost').errors.required" class="login__error-msg">You should not leave your email host entry. </div>       
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmailPort">Email port</label>
+                    <input [class.login__error]="(mailForm.get('emailPort').invalid && mailForm.get('emailPort').touched) || (formSubmitted && mailForm.get('emailPort').invalid)" formControlName="emailPort" type="number" class="form-control" id="exampleInputEmailPort" placeholder="example 587">
+                </div>
+                <div *ngIf = "(mailForm.get('emailPort').invalid && mailForm.get('emailPort').touched) || (formSubmitted && mailForm.get('emailPort').invalid)" class="alert alert-danger">
+                    <div *ngIf = "mailForm.get('emailPort').errors.required" class="login__error-msg">You should not leave your email port entry. </div>       
+                </div>
+
+
+                <div class="form-group">
+                    <label for="exampleInputEmailUserName">Email username</label>
+                    <input [class.login__error]="(mailForm.get('emailUserName').invalid && mailForm.get('emailUserName').touched) || (formSubmitted && mailForm.get('emailUserName').invalid)" formControlName="emailUserName" type="email" class="form-control" id="exampleInputEmailUsername" placeholder="example user@example.com">
+                </div>
+                <div *ngIf = "(mailForm.get('emailUserName').invalid && mailForm.get('emailUserName').touched) || (formSubmitted && mailForm.get('emailUserName').invalid)" class="alert alert-danger">
+                    <div *ngIf = "mailForm.get('emailUserName').errors.required" class="login__error-msg">You should not leave your email username entry. </div>       
+                </div>
+
+
+                <div class="form-group">
+                    <label for="exampleInputEmailPassword">Email password</label>
+                    <input [class.login__error]="(mailForm.get('emailPassword').invalid && mailForm.get('emailPassword').touched) || (formSubmitted && mailForm.get('emailPassword').invalid)" formControlName="emailPassword" type="password" class="form-control" id="exampleInputEmailPassword" placeholder="example secretPassword =D">
+                </div>
+                <div *ngIf = "(mailForm.get('emailPassword').invalid && mailForm.get('emailPassword').touched) || (formSubmitted && mailForm.get('emailPassword').invalid)" class="alert alert-danger">
+                    <div *ngIf = "mailForm.get('emailPassword').errors.required" class="login__error-msg">You should not leave your email password entry. </div>       
+                </div>
+
+
+              
+                  <div class="login__btn-container">
+                      <button class="btn btn-default login__btn">Save email settings</button>
+                  </div>
+              </form>
+          </div>
+
+          <div class="col-sm-4 ">
+                <h3>Deadline settings</h3>
+                <form [formGroup]="deadlinesForm" (ngSubmit)="submitDeadlineChanges()">
+                    
+                    <div class="form-group">
+                            <label>Registration deadline :</label>
+                            <input [formControl]="deadlinesForm.get('registrationDeadline')"
+                                   [owlDateTimeTrigger]="dtPicker2" [min]="min" [owlDateTime]="dtPicker2">
+                            <owl-date-time #dtPicker2></owl-date-time>
+                    </div>
+                    <div *ngIf = "(deadlinesForm.get('registrationDeadline').invalid && deadlinesForm.get('registrationDeadline').touched) || (formSubmitted && deadlinesForm.get('registrationDeadline').invalid)" class="alert alert-danger">
+                        <div *ngIf = "deadlinesForm.get('registrationDeadline').errors.required" class="login__error-msg">You should not leave your registration deadline entry. </div>       
+                    </div>
+
+                    <div class="form-group">
+                            <label>Registration deadline :</label>
+                            <input [formControl]="deadlinesForm.get('submissionDeadline')"
+                                   [owlDateTimeTrigger]="dtPicker1"  [min]="min" [owlDateTime]="dtPicker1">
+                            <owl-date-time #dtPicker1></owl-date-time>
+                    </div>
+                
+                        <div *ngIf = "(deadlinesForm.get('submissionDeadline').invalid && deadlinesForm.get('submissionDeadline').touched) || (formSubmitted && form.get('submissionDeadline').invalid)" class="alert alert-danger">
+                            <div *ngIf = "deadlinesForm.get('submissionDeadline').errors.required" class="login__error-msg">You should not leave your submission deadline entry. </div>       
+                    </div>
+
+                    <div class="form-group">
+                            <label>Judging deadline :</label>
+                            <input [formControl]="deadlinesForm.get('judgingDeadline')"
+                                   [owlDateTimeTrigger]="dtPicker4"  [min]="min" [owlDateTime]="dtPicker4">
+                            <owl-date-time #dtPicker4></owl-date-time>     
+                    </div>
+          
+
+               
+                        <div *ngIf = "(deadlinesForm.get('judgingDeadline').invalid && deadlinesForm.get('judgingDeadline').touched) || (formSubmitted && deadlinesForm.get('judgingDeadline').invalid)" class="alert alert-danger">
+                            <div *ngIf = "deadlinesForm.get('judgingDeadline').errors.required" class="login__error-msg">You should not leave your judging deadline entry. </div>       
+                    </div>
+
+                    <div class="form-group">
+                            <label>Forming teams deadline :</label>
+                            <input [formControl]="deadlinesForm.get('teamsDeadline')"
+                                   [owlDateTimeTrigger]="dtPicker5"  [min]="min" [owlDateTime]="dtPicker5">
+                            <owl-date-time #dtPicker5></owl-date-time>      
+                    </div>
+                        <div *ngIf = "(deadlinesForm.get('teamsDeadline').invalid && deadlinesForm.get('teamsDeadline').touched) || (formSubmitted && deadlinesForm.get('teamsDeadline').invalid)" class="alert alert-danger">
+                            <div *ngIf = "deadlinesForm.get('teamsDeadline').errors.required" class="login__error-msg">You should not leave your judging deadline entry. </div>       
+                    </div>
+                
+                    <div class="login__btn-container">
+                        <button class="btn btn-default login__btn">Save deadline settings</button>
+                    </div>
+                </form>
+            </div>
+    </div>
+  
+</div>

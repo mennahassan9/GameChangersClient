@@ -30,24 +30,25 @@ export class LoginComponent implements OnInit {
     this.formSubmitted = true;
     if (this.form.valid) {
       // redirect to the landing page for the profile in case of valid user credentials
-      let email = this.form.get('email').value;
+      const email = this.form.get('email').value;
       let password = this.form.get('password').value;
       this.loginService.loginCheck(email, password).then((res) => {
         this.wrongCredentials = false;
         this.headerButtonsService.setIsSignedIn();
         
         // this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
-        if (this.localStorageService.get("isAdmin") == true)
+        if (this.localStorageService.get("isAdmin") == true) {
           this.router.navigate(['./admin/dashboard']);
+        }
         else{
           if(this.localStorageService.get("isJudge")){
             this.router.navigate(['./judge']);
           }else{
             this.router.navigate(['./profile']);
           }
-         
+
         }
-          
+
       }, (err) => {
         this.wrongCredentials = true;
       });
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit {
     this.localStorageService.remove("isJudge");
     this.localStorageService.remove("isAdmin");
     this.localStorageService.remove("email");
-    
+
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),

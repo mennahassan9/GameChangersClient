@@ -27,8 +27,8 @@ import { RegisterIdeaComponent } from './register-idea/register-idea.component';
 import { InviteTeamMemberComponent } from './invite-team-member/invite-team-member.component';
 import { AuthenticateUserComponent } from './authenticate-user/authenticate-user.component';
 import { ViewIdeaComponent } from './view-idea/view-idea.component';
-import { AdminViewIdeasComponent } from './admin/admin-view-ideas/admin-view-ideas.component';  
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component'
+import { AdminViewIdeasComponent } from './admin/admin-view-ideas/admin-view-ideas.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { JudgeHomeComponent } from './judge-home/judge-home.component';
 import { JudgeIdeaComponent } from './judge-idea/judge-idea.component';
 import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table/ng2-table';
@@ -39,12 +39,12 @@ import { IdeaService } from './Services/idea.service';
 import { HeaderButtonsService } from './Services/headerButtons.service';
 import { JudgingService } from './Services/judging.service';
 import { AuthGuardService } from './Services/auth-guard.service';
-import { AuthService }      from './Services/auth.service';
+import { AuthService } from './Services/auth.service';
 import { AuthGuardJudgeService } from './Services/auth-guard-judge';
 import { DefaultGuardService } from './Services/default-guard.service';
-import { AdminService } from './Services/admin.service';  
-import { AuthGuardAdminService } from './Services/auth-guard-admin'; 
-import { DomainService } from './Services/domain.service'; 
+import { AdminService } from './Services/admin.service';
+import { AuthGuardAdminService } from './Services/auth-guard-admin';
+import { DomainService } from './Services/domain.service';
 import { IdeaChallengeService } from './Services/idea-challenge.service';
 
 import { Ng2TableModule  } from 'ng2-table/ng2-table';
@@ -57,9 +57,12 @@ import { AdminViewUserTeamComponent } from './admin/admin-view-user-team/admin-v
 import { AdminViewUserIdeaComponent } from './admin/admin-view-user-idea/admin-view-user-idea.component';
 import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-email-domain.component';
 import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-idea-challenge.component';
-import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-teams.component';
 
 
@@ -99,6 +102,7 @@ import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-tea
     AdminIdeaChallengeComponent,
     AdminDashboardComponent,
     SidenavComponent,
+    AdminSettingsComponent,
     AdminViewTeamsComponent
   ],
   imports: [
@@ -117,6 +121,9 @@ import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-tea
     }),
     DndModule.forRoot(),
     LocalStorageModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
+    BrowserAnimationsModule,
     PaginationModule.forRoot()
   ],
   providers: [
