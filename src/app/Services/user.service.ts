@@ -107,4 +107,14 @@ export class UserService {
                 console.log(err);
               });
   }
+
+  getDeadlines(){
+    const reqHeaders: Headers = new Headers();
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    reqHeaders.append('Content-Type', 'application/json');
+    return this.http.get(environment.apiUrl + `/users/deadlines/`, { headers: reqHeaders })
+            .toPromise();
+
+  }
 }

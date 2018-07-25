@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, FormControl, Validators, FormControlName } from
 import { JudgingService } from '../Services/judging.service';
 import { IdeaService } from '../Services/idea.service';
 import { HeaderButtonsService } from '../Services/headerButtons.service';
+import { UserService } from '../Services/user.service';
+
 @Component({
   selector: 'app-judge-idea',
   templateUrl: './judge-idea.component.html',
@@ -16,7 +18,7 @@ export class JudgeIdeaComponent implements OnInit {
   form: FormGroup;
   formSubmitted: boolean;
   loading: boolean; 
-
+  deadlineReached: boolean = false;
   innovationScoreValid: boolean = true;;
   problemSolvingScoreValid: boolean = true;
   financialImpactScoreValid: boolean = true;
@@ -31,7 +33,8 @@ export class JudgeIdeaComponent implements OnInit {
     private router: Router,
     private judgingService: JudgingService,
     private ideaService: IdeaService,
-    private headerButtonsService: HeaderButtonsService
+    private headerButtonsService: HeaderButtonsService,
+    private userService: UserService
   ) { }
   
   submit() {
@@ -45,6 +48,7 @@ export class JudgeIdeaComponent implements OnInit {
       })
       .catch((err)=> {
         console.log(err);
+        alert('something went wrong');
       });
     }
     else{
@@ -53,6 +57,19 @@ export class JudgeIdeaComponent implements OnInit {
     
   }
   ngOnInit() {
+    this.userService.getDeadlines().then((res) => {
+      const judgmentDeadline = new Date(JSON.parse(res['_body']).body.judge);
+      const now = new Date();
+      if(now > judgmentDeadline){
+        this.deadlineReached = true;
+        this.form.disable();
+      }else{
+        this.deadlineReached = false;
+      }
+    })
+    .catch((err)=>{
+      alert('Something went wrong, please try again later');
+    });
     this.teamName = this.route.snapshot.queryParams['team'];
     this.idea = {
       name: "",

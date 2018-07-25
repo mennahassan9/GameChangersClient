@@ -7,6 +7,9 @@
             </div>
             <div class="row" class="loader-background" >
                 <div class="col-sm-offset-3 col-sm-6 text-center idea__form-container">
+                        <div *ngIf = "deadlineReached" class="alert alert-danger">
+                                <div class="idea__error-msg">Sorry , deadline has reached. </div>       
+                        </div>
                     <form [formGroup]="form" (ngSubmit)="editIdea()">
                         <i>Last submitted file: {{ oldFilename }}</i>
                         <div class="form-group">
@@ -35,7 +38,7 @@
                             <div class="idea__error-msg">You should upload slides for your idea. </div>       
                         </div>
                         <div class="idea__btn-container--additional">
-                            <button class="btn btn-default idea__submit-btn upload__btn" [disabled]="loading">Change Idea</button>
+                            <button class="btn btn-default idea__submit-btn upload__btn" [disabled]="loading || deadlineReached">Change Idea</button>
                             <button type="button" class="btn btn-default idea__submit-btn download__btn" (click)="onDownload()" [disabled]="loading">Download</button>
                         </div>
                     </form>

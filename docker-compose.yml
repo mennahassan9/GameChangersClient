@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  game_changers_client:
+    container_name: game_changers_client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/usr/src/app'
+    ports:
+      - '4200:4200'

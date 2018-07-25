@@ -18,6 +18,10 @@
     <div class="row">
       <div class="col-sm-offset-3 col-sm-6 judge__info-details">
         <div class="row judge__brief-container">
+            <div
+            class="alert alert-danger" [hidden]="!deadlineReached">
+            <div  class="judgeIdea__error-msg">Sorry deadline has reached </div>
+          </div>
           <form [formGroup]="form" (ngSubmit)="submit()">
             
                 <h2 style="text-decoration: underline;">Innovation Score</h2>
@@ -154,7 +158,7 @@
             <div class="judgeIdea__btn-container">
             
                     Total score: {{totalScore}} / 100
-              <button [disabled]="formSubmitted" id="submit_btn" class="btn btn-default judgeIdea__btn">Submit</button>
+              <button [disabled]="formSubmitted || deadlineReached" id="submit_btn" class="btn btn-default judgeIdea__btn">Submit</button>
               <div *ngIf="!totalScoreValid" class="alert alert-danger judgeIdea__error-msg">The score should be less than 100. </div>
               
             </div>

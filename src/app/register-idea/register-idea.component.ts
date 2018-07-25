@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IdeaChallengeService } from '../Services/idea-challenge.service';
-
+import { UserService } from '../Services/user.service';
 import { IdeaService } from './../Services/idea.service';
 import * as mime from 'mime-types'
 
@@ -22,11 +22,13 @@ export class RegisterIdeaComponent implements OnInit {
   selectedChallenge: string;
   ideaTitle: string;
   loading: boolean;
+  deadlineReached: boolean = false;
 
   constructor(
     private router: Router,
     private ideaService: IdeaService,
-    private challengeService: IdeaChallengeService
+    private challengeService: IdeaChallengeService,
+    private userService: UserService,
   ) {}
 
   toggleLoading() {
@@ -95,6 +97,19 @@ export class RegisterIdeaComponent implements OnInit {
 
   ngOnInit() {
     this.initChallenges();
+    this.userService.getDeadlines().then((res) => {
+      const submissionDeadline = new Date(JSON.parse(res['_body']).body.submission);
+      const now = new Date();
+      if(now > submissionDeadline){
+        this.deadlineReached = true;
+        this.form.disable();
+      }else{
+        this.deadlineReached = false;
+      }
+    })
+    .catch((err)=>{
+      alert('Something went wrong, please try again later');
+    });
     this.form = new FormGroup({
       ideaTitle: new FormControl('', [Validators.required]),
       challenge: new FormControl('', [Validators.required])

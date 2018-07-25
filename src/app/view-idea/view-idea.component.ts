@@ -31,6 +31,7 @@ export class ViewIdeaComponent implements OnInit {
   filename: string; 
   loading: boolean; 
   oldFilename: string;
+  deadlineReached: boolean = false;
 
   constructor(
     private teamService: TeamService,
@@ -118,6 +119,19 @@ export class ViewIdeaComponent implements OnInit {
   ngOnInit() {
     this.initChallenges();
     this.loading = false;
+    this.userService.getDeadlines().then((res) => {
+      const submissionDeadline = new Date(JSON.parse(res['_body']).body.submission);
+      const now = new Date();
+      if(now > submissionDeadline){
+        this.deadlineReached = true;
+        this.form.disable();
+      }else{
+        this.deadlineReached = false;
+      }
+    })
+    .catch((err)=>{
+      alert('Something went wrong, please try again later');
+    });
     this.form = new FormGroup({
       ideaTitle: new FormControl('', [Validators.required]),
       challenge: new FormControl('', [Validators.required])

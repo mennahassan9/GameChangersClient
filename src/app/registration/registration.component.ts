@@ -22,6 +22,7 @@ export class RegistrationComponent implements OnInit {
   ideas: Array<IdeaModel>;
   submit: boolean;
   alreadyExisting: boolean;
+  deadlineReached: boolean = false;
   constructor(private fb : FormBuilder, private userSvc: UserService, private router: Router) { }
 
   ngOnInit() {
@@ -33,6 +34,19 @@ export class RegistrationComponent implements OnInit {
     this.addAges();
     this.addIdeas();
     this.addRegions();
+    this.userSvc.getDeadlines().then((res) => {
+      const registrationDeadline = new Date(JSON.parse(res['_body']).body.registration);
+      const now = new Date();
+      if(now > registrationDeadline){
+        this.deadlineReached = true;
+        this.form.disable();
+      }else{
+        this.deadlineReached = false;
+      }
+    })
+    .catch((err)=>{
+      alert('Something went wrong, please try again later');
+    });
     this.form = new FormGroup({
       name: new FormControl(''),
       email : new FormControl(''),
@@ -85,6 +99,7 @@ export class RegistrationComponent implements OnInit {
           console.log("IN PROMISE", this.alreadyExisting);
         }
         console.log(err);
+        alert('deadline has reached');
       });
       
     }

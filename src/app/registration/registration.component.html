@@ -1,6 +1,9 @@
 <div class = "container register__main-container">
   <div class = "jumbotron register__sub-container">
-    <form class="form-horizontal" [formGroup] = "form" (ngSubmit) = "register()">
+      <div [hidden]="!deadlineReached" class="row col-sm-offset-3 col-sm-6 alert alert-danger error__email" style="position: absolute;">
+          Sorry deadline has reached
+        </div>
+    <form class="row form-horizontal" [formGroup] = "form" (ngSubmit) = "register()">
       <fieldset>
         <div id="legend">
           <legend class="">Register</legend>
@@ -220,7 +223,7 @@
           </div>
         </div>
         <div class = "control-group">
-          <input type="submit" class = "btn btn-success">
+          <input  type="submit" class = "btn btn-success">
         </div>
       </fieldset>
     </form>
