@@ -1,0 +1,38 @@
+.invitations {
+    list-style: none;
+    padding-right: 15px;
+    font-size: 16px;
+    max-height: 320px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.bottom-spacing {
+    margin-bottom: 30px;
+}
+.bottom-spacing--input {
+    margin-bottom: 15px;
+}
+.invitations-container {
+    /* min-height: calc(100vh - 80px); view footer without scrolling */
+    /* min-height: 100vh;
+    padding-top: 70px;  old css for seperate page*/
+    padding: 0px 20px;
+}
+
+.btn--wide {
+    width: 140px;
+}
+
+.title {
+    text-align: center;
+    border-bottom: solid lightgray;
+    margin-bottom: 20px;
+}
+
+.title > h2 {
+    padding-bottom: 20px;
+}
+
+.col-align-right {
+    text-align: right;
+}

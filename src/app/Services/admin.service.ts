@@ -6,6 +6,7 @@ import * as mime from 'mime-types'
 import "rxjs";
 import { Observable } from 'rxjs';
 
+
 @Injectable()
 export class AdminService {
   constructor(
@@ -36,6 +37,16 @@ export class AdminService {
     return this.http.get(environment.apiUrl + `/admin/user/${email}`, { headers: reqHeaders })
     .map(res => res.json());
   }
+  
+  adminSearchUsers(email) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get(environment.apiUrl + `/admin/createTeam/search/${email}`, { headers: reqHeaders })
+    .map(res => res.json());
+  }
+
   getTeamAsMember(email): Observable<any> {
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');

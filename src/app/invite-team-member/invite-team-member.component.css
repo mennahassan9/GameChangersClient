@@ -26,7 +26,11 @@
     font-weight: bold;
     color: #000000;
 }
-
+.dropdown{
+    list-style: none;
+    text-align: left;
+    padding-left: 9px;
+}
 .team__add:hover {
     text-decoration: none;
     cursor: pointer;

@@ -33,6 +33,7 @@ import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.component';
 import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-teams.component';
+import { ViewInvitationsComponent } from './view-invitations/view-invitations.component';
 
 
 
@@ -55,6 +56,11 @@ export const AppRoutes: Routes = [
     {
         path: 'admin/users',
         component: AdminViewUsersComponent,
+        canActivate: [AuthGuardAdminService]
+    },
+    {
+        path: 'admin/user',
+        component: AdminViewUserComponent,
         canActivate: [AuthGuardAdminService]
     },
     {
@@ -93,7 +99,12 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuardService]
     },
     {
-        path: 'viewTeam',
+        path: 'view-invitations',
+        component: ViewInvitationsComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path:'viewTeam/:teamName',
         component : ViewTeamComponent,
         canActivate: [AuthGuardService]
     },

@@ -2,7 +2,7 @@
         <div class = " col-sm-offset-2 col-sm-8">
             <div class="row">
                 <div class="col-sm-offset-3 col-sm-6 text-center team__edit-header">
-                    {{ team.name }}
+                    Team Name: {{ team.name }}
                 </div>
             </div>
             <div class="row">
@@ -16,7 +16,7 @@
                     <div class="col-sm-offset-3 col-sm-6 text-center team__view-team-add">
                         <div class="team__view-team-add-text row" for="email">Team Members</div>
                         <div class="row team__view-team-members" *ngFor="let item of team.members; let i = index;">
-                            {{ item.email }}
+                            <label *ngIf="item.accepted == true">{{ item.email }}</label>
                         </div>
                     </div>
                 </div>

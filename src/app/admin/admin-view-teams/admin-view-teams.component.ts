@@ -46,7 +46,7 @@ export class AdminViewTeamsComponent implements OnInit {
     let output = [];
     input.forEach(element => {
       let object = {};
-      object['team name'] = element.name == undefined ? "" : `<a href="#/admin/viewTeam/${element.creator.email}">${element.name}</a>`;
+      object['team name'] = element.name == undefined ? "" : `<a href="#/viewTeam/${element.name}">${element.name}</a>`;
       object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
       object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.name}</a>`;
       output.push(object);

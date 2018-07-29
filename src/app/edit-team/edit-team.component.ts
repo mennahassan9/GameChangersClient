@@ -70,7 +70,7 @@ export class EditTeamComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.teamService.getTeam().subscribe((res) => {
+    this.teamService.getTeamMember().subscribe((res) => {
       console.log("HEY --> ", res)
       if (JSON.parse(res["_body"])["team"] != null) {
         this.team = JSON.parse(res["_body"])["team"];

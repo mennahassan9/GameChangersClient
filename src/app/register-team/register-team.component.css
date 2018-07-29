@@ -5,6 +5,9 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+.btn-primary{
+    margin-left: 5%;
+}
 
 .team__register-container {
     border: 2px solid #000000;
@@ -48,6 +51,7 @@
 
 .team__create-btn-container {
     padding-bottom: 5%;
+    text-align: center;
 }
 
 .team__remove-member {

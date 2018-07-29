@@ -3,8 +3,9 @@ import { Form, FormBuilder, FormGroup, FormControl, Validators } from '@angular/
 import { TeamService } from '../Services/team.service';
 import { UserService } from '../Services/user.service';
 import { LoginService } from '../Services/login.service';
+import { Params, ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../Services/auth.service';
 
-import { Router } from '@angular/router';
 
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Headers, Http,RequestOptions,URLSearchParams } from '@angular/http';
@@ -25,29 +26,23 @@ export class RegisterTeamComponent implements OnInit {
   fb: FormBuilder;
   teamNumber: Array<number>;
   teamName: String;
+  creator: String;
+  created: boolean = false;
+  myMail: String;
+  emptyName: boolean;
+
   teamInvitation: TeamInviteModel;
-  
   constructor(
-    private teamService: TeamService,
     private http: Http, 
     private localStorageService: LocalStorageService,
-    private userService: UserService,
-    private loginService: LoginService,
-    private router: Router
+    private route: ActivatedRoute,
+    private teamService: TeamService,
+    private auth: AuthService,
   ) { }
 
-  ngOnInit() {
-    this.teamInvitation = new TeamInviteModel();
-    this.teamNumber = new Array<number>();
-    this.teamNumber.push(1);
-    this.teamEmails = new Array<String>();
-    this.fb = new FormBuilder();
-    this.form = this.fb.group({
-      teamName: new FormControl('', [Validators.compose([Validators.required])])
-    });
-  }
-  
+
   addEmployee(email) {
+    this.created = false;
     var invitee: InviteeModel = new InviteeModel();
     invitee.email = email.value;
     invitee.email = invitee.email.toLowerCase();
@@ -58,13 +53,37 @@ export class RegisterTeamComponent implements OnInit {
     else{
       if(this.teamEmails.length < 6){
         this.teamInvitation.members.push(invitee);
-        this.teamEmails.push(email.value)
+        this.teamEmails.push(invitee.email)
       }
       else
       this.maxNumber = true;
     }
   }
 
+  createTeam() {
+    this.emptyName = false;
+    if(this.teamName){
+    this.teamInvitation.teamName = this.teamName;
+    //this.teamInvitation.creator = this.teamInvitation.members[0].email;
+    this.teamService.createTeam(this.teamInvitation).subscribe((res) => {
+       this.created = true;
+       this.teamInvitation = new TeamInviteModel();
+       this.teamNumber = new Array<number>();
+       this.teamEmails = new Array<String>();
+       this.teamName = "";
+       this.fb = new FormBuilder();
+      this.form = this.fb.group({
+      teamName: new FormControl('', [Validators.compose([Validators.required])])
+    });
+    }, (err) => {
+      console.log("ERR", err);
+    }) 
+   }else
+    this.emptyName = true;
+  }
+
+   
+    
   checkEmployee(email) {
     for(var i = 0; i< this.teamEmails.length; i++)
     {
@@ -74,32 +93,34 @@ export class RegisterTeamComponent implements OnInit {
     return false;
 
   }
-  removeFromTeam(index) {
-    this.teamEmails.splice(index, 1)
+
+  notAdmin(){
+    if(!this.auth.isAdmin()  )
+      return true;
+    else 
+      return false;
   }
 
-  createTeam() {
-    const reqHeaders = new Headers();
-    reqHeaders.append('Content-Type', 'application/json');
-    let currentToken = this.localStorageService.get('token');
-    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    let body= {
-      'teamName': this.teamName,
-      'members': this.teamEmails
-    }
-    return this.http.post(environment.apiUrl + "/teams/new", body, { headers: reqHeaders })
-      .toPromise()
-      .then((res) => {
-        if (JSON.parse(res["_body"])["status"] === "400") {
-          console.log("already exisiting team")
-        }
-        else {
-          this.router.navigate(['./create-team-status']);
-        }
-        console.log(res)
-      })
-      .catch((err) => {
-        console.log( err)
-      })
+  removeFromTeam(index) {
+    if(this.auth.isAdmin() || index != 0)
+    this.teamEmails.splice(index, 1)
   }
+  ngOnInit() {
+    this.teamInvitation = new TeamInviteModel();
+    this.teamNumber = new Array<number>();
+    this.teamNumber.push(1);
+    this.teamEmails = new Array<String>();
+    this.emptyName = false;
+    this.fb = new FormBuilder();
+    this.form = this.fb.group({
+      teamName: new FormControl('', [Validators.compose([Validators.required])])
+    });
+    if(this.notAdmin()){
+      this.myMail = this.localStorageService.get("email");
+      var invitee: InviteeModel = new InviteeModel();
+      invitee.email = this.myMail;
+      this.teamInvitation.members.push(invitee);
+    }
+  }
+
 }

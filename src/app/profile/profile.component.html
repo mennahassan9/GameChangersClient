@@ -41,21 +41,57 @@
             </div>
         </div>
     </div>
+    <div bsModal #invitationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+        <div class='modal-dialog modal-lg'>
+          <div id="transparent_div" class="modal-content">
+             <h1 align="center" *ngIf = "noInvitations == true">There is no Inviations</h1>
+             <h1 align="center" *ngIf ="teamMember != -1">You already have a team</h1>
+            <ul class="invitations" *ngIf ="teamMember == -1 && noInvitations == false">
+                <h3>Team Name</h3>
+                <li class="row" *ngFor="let team of teams">
+                  <div class=" teamName col-sm-6 bottom-spacing--input"  (click)="redirectToTeamInvitation(team.name)">
+                        <a>{{ team.name }}</a>
+                  </div>
+                  <div  class=" btns col-sm-6 bottom-spacing col-align-right">
+                    <button class="btn btn-primary" (click)="acceptInvitation(team.name)" >accept</button>
+                    <button class="btn btn-danger" (click)="rejectInvitation(team.name)" >reject</button>
+                  </div>
+                </li>
+            </ul>
+          </div>
+        </div>
+    </div>
     <div class="profile__control-panel row">
-        <div class="profile__btns-container--team col-sm-offset-1 col-sm-5 text-center">
+        <div class="profile__btns-container--border  col-sm-2 text-center">
             <div class="row">
-                <button class="profile__btn-team" (click)="redirectToTeam()">Team</button>
+                <button class="profile__btn-team col-xm-4" (click)="redirectToTeam()">Team</button>
             </div>
             <div class="row profile__btn-team-desc">
                 View your team members!
             </div>
         </div>
-        <div class="profile__btns-container--idea col-sm-5 text-center">
+        <div class="profile__btns-container--border col-sm-2 text-center">
             <div class="row">
                 <button class="profile__btn-idea" (click)="redirectToIdea()">Idea</button>
             </div>
             <div class="row profile__btn-idea-desc">
-                View and/or update your idea before deadline!
+                View your idea!
+            </div>
+        </div>
+        <div class="profile__btns-container--border col-sm-2 text-center">
+            <div class="row">
+                <button class="profile__btn-team" (click)="redirectToInvitation()">create Team</button>
+            </div>
+            <div class="row profile__btn-idea-desc">
+                Create your own team
+            </div>
+        </div>
+        <div class="profile__btns-container col-sm-2 text-center">
+            <div class="row">
+                <button class="profile__btn-idea " (click)="openEditModal(invitationModal)">Invitations</button>
+            </div>
+            <div class="row profile__btn-idea-desc">
+                View your invitations
             </div>
         </div>
     </div>

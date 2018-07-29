@@ -3,8 +3,13 @@
       <div class="form-group invite col-sm-offset-3 col-sm-6 text-center team__invite-container">
           <div class="row">
               <div class="col-sm-9">
-                  <input type="email" [readonly] = "disabled" class="form-control team__invite-field" name="email" formControlName="email" placeholder="Enter email" />
-              </div>
+                  <input type="email"  (keyup)="handleInput()" [readonly] = "disabled" autocomplete="off" [(ngModel)] = "email" class="form-control team__invite-field" name="email"  formControlName="email" placeholder="Enter email" />
+                  <div class="dropdown open">
+                        <ul  *ngIf="items !=null && items.length != 0"  class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li  *ngFor="let item of items" (click) = "enter(item['_source']['email'])" class="dropdown-item"><a>{{item['_source']['email']}}</a></li>
+                         </ul>
+                    </div>
+                </div>
               <div class="col-sm-3">
                 <a (click) = "checkIfInTeam()" class="team__add">
                     <!-- <img class= "invite-button-image" src = "assets/images/addIcon.png"> -->
@@ -17,9 +22,12 @@
             <div class="alert alert-danger" *ngIf="(send && !form.get('email').valid) || alreadyInvited">
                 <div *ngIf="form.get('email').errors.required">You should fill in this field</div>
                 <div *ngIf="alreadyInvited">This employee is already within your team</div>
-                <div *ngIf="form.get('email').errors.pattern">Please enter the employee's corporate email</div>
+]                <div *ngIf="form.get('email').errors.pattern">Please enter the employee's corporate email</div>
             </div>
           </div>
+          <div class="alert alert-danger" *ngIf="notMember" >
+            <div *ngIf="notMember">Invalid email address</div>
+        </div>
       </div>
   </div>
 </div>

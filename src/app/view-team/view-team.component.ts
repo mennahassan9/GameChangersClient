@@ -3,7 +3,7 @@ import { Form, FormBuilder, FormGroup, FormControl, Validators } from '@angular/
 import { TeamService } from '../Services/team.service';
 import { UserService } from '../Services/user.service';
 import { LoginService } from '../Services/login.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Headers, Http,RequestOptions,URLSearchParams } from '@angular/http';
@@ -18,6 +18,8 @@ export class ViewTeamComponent implements OnInit {
 
   team: any = {};
   creator: string;
+  teamName: String;
+  isAdmin: boolean;
 
   constructor(
     private teamService: TeamService,
@@ -25,7 +27,9 @@ export class ViewTeamComponent implements OnInit {
     private localStorageService: LocalStorageService,
     private userService: UserService,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+
   ) { }
 
   backToProfile() {
@@ -33,16 +37,12 @@ export class ViewTeamComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.teamService.getTeamAsMember().subscribe((res) => {
+    this.teamName = this.route.snapshot.params['teamName'];
+    this.teamService.getTeam(this.teamName).subscribe((res) => {
       if (JSON.parse(res["_body"])["team"] != null) {
         this.team = JSON.parse(res["_body"])["team"];
-        // console.log("TEAM --> ", this.team);
-        this.userService.getAnotherUser(this.team["creator"]).subscribe((res) => {
-          console.log("CREATOR OBJ --> ", JSON.parse(res["_body"]));
-          this.creator = JSON.parse(res["_body"])["user"]["name"];
-        }, (err) => {
-          console.log("ERROR FETCHING CREATOR --> ", err);
-        });
+        this.creator = this.team["creator"]["email"]
+        console.log(this.creator)
       } 
       else {
         console.log("NULL TEAM");

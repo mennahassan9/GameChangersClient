@@ -10,26 +10,37 @@
                 <input type="email" class="form-control team__regitser-team-name-input" name="teamName" [(ngModel)] = "teamName" placeholder="Team name" />
             </div>
         </div>
+        <div class="alert alert-danger" *ngIf="emptyName" >
+            <div *ngIf="emptyName">Please enter a team name</div>
+        </div>
         <div class="row team__register-container">
             <!-- already invited members -->
             <div class="col-sm-offset-3 col-sm-6 text-center team__register-team-add">
                 <div class="team__register-team-add-text row" for="email">Invite team members via their email</div>
+                <div class="row team__register-team-members" *ngIf="notAdmin;">
+                        {{ myMail}}
+                </div>
                 <div class="row team__register-team-members" *ngFor="let item of teamEmails; let i = index;">
                         {{ item }}
                     <a (click)= "removeFromTeam(i)" class="team__remove-member">x</a>
                 </div>
             </div>
+
             <app-invite-team-member  (employee) = "addEmployee($event)"></app-invite-team-member>
             <div class="alert alert-danger" *ngIf="alreadyInCurrentTeam || maxNumber">
                 <div *ngIf="alreadyInCurrentTeam">This employee is already within your team</div>
                 <div *ngIf="maxNumber">You have reached the maximum number of members per team</div>    
             </div>
-            <div class="row team__create-btn-container">
-                <div class="col-sm-offset-8 col-sm-2">
-                    <input class="team__create-btn" *ngIf = "teamEmails.length>0" type = "submit" value = "Create team" (click)= "createTeam()">
+            <div class="col-xs-12 team__create-btn-container">
+                <input class="team__create-btn" *ngIf = "teamEmails.length>0" type = "submit" value = "Create team" (click)= "createTeam()">
+            </div>
+            <div  *ngIf="created" class="row msg">
+                <div class="col-sm-offset-4 col-sm-6">
+                    You have just created a team!
                 </div>
             </div>
         </div>
+        
     </div>
     <div></div>
 </div>

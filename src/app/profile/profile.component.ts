@@ -5,9 +5,11 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { LoginService } from './../Services/login.service';
 import { IdeaService } from './../Services/idea.service';
 import { HeaderButtonsService } from '../Services/headerButtons.service';
-
 import { LocalStorageService } from 'angular-2-local-storage';
 import { environment } from '../../environments/environment';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { TeamService } from './../Services/team.service';
+
 
 @Component({
   selector: 'profile',
@@ -22,8 +24,12 @@ export class ProfileComponent implements OnInit {
     logout: boolean;
     userCreatorTeam: string;
     teamMember: string;
+    modalRef: ModalDirective;
+    teams: any;
+    noInvitations: boolean = false;
 
     constructor(
+      private teamService: TeamService,
       private loginService: LoginService,
       private ideaService: IdeaService,
       private router: Router,
@@ -32,9 +38,40 @@ export class ProfileComponent implements OnInit {
       private headerButtonsService: HeaderButtonsService
     ) {}
 
-    redirectToTeam() {
-          this.router.navigate(['./viewTeam']);
+
+    redirectToInvitation() {
+      this.router.navigate(['./registerTeam']);
     }
+
+    acceptInvitation(teamName){
+      this.teamService.acceptInvitation(teamName).subscribe((res) => {
+        if(res['status'] == 200){
+          this.teamMember = teamName;
+        }
+      });
+    }
+
+    rejectInvitation(teamName){
+      this.teamService.rejectInvitation(teamName).subscribe((res) => {
+        if(res['status'] == 200){
+          for (let index = 0; index <  this.teams.length; index++) {
+            const element =  this.teams[index];
+            if(element.name == teamName)
+            this.teams.splice(index,1)
+            if(this.teams.length == 0)
+              this.noInvitations = true;
+          }
+        }
+      });
+    }
+
+    redirectToTeam() {
+       this.router.navigate([`./viewTeam/${this.teamMember}`]);
+    }
+
+    redirectToTeamInvitation(teamName) {
+      this.router.navigate([`./viewTeam/${teamName}`]);
+   }
 
     redirectToIdea() {
       this.ideaService.getIdea().subscribe((res) => {
@@ -56,11 +93,27 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(['./']);
     }
 
+    openEditModal(modal: ModalDirective) {
+      if(!this.teams && this.noInvitations == false){
+        this.teamService.Invitations().subscribe((res) => {
+          this.teams = (res["teams"]);
+          if(!this.teams || this.teams.length == 0)
+          this.noInvitations = true;
+        });
+      }
+      this.modalRef = modal;
+      this.modalRef.show();
+    }
+
+
     ngOnInit() {
       this.loginService.getUser().subscribe((res) => {
         this.currentUser = JSON.parse(res["_body"]);
         this.teamMember = JSON.parse(res["_body"])["teamMember"];
         this.userCreatorTeam = JSON.parse(res["_body"])["creatorOf"];
+        console.log(this.teamMember);
+        if(this.teamMember == "-1")
+            this.noInvitations = true;
       });
       this.headerButtonsService.setIsSignedIn();
     }
