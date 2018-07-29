@@ -69,6 +69,11 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuardAdminService]
     },
     {
+        path: 'admin/user',
+        component: AdminViewUserComponent,
+        canActivate: [AuthGuardAdminService]
+    },
+    {
         path: 'admin/viewTeam/:id',
         component: AdminViewUserTeamComponent,
         canActivate: [AuthGuardAdminService]
