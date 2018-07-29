@@ -20,10 +20,10 @@ export class AdminViewUserTeamComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.route.snapshot.params['id'];
-    console.log(this.user);
+    console.log(this.user+"team name");
     this.adminService.getTeamAsMember(this.user).subscribe((res) => {
       if (JSON.parse(res["_body"])["team"] != null) {
-        this.team = JSON.parse(res["_body"])["team"];
+        this.team = JSON.parse(res["_body"]);
       } 
       else {
         console.log("NULL TEAM");

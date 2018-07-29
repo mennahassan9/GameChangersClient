@@ -17,13 +17,18 @@
                         <div class="team__view-team-add-text row" for="email">Team Members</div>
                         <div class="row team__view-team-members" *ngFor="let item of team.members; let i = index;">
                             <label *ngIf="item.accepted == true">{{ item.email }}</label>
+                            <a *ngIf="isAdmin == true && item.accepted == true" (click)="deleteMember(item.email)">x</a>
                         </div>
                     </div>
                 </div>
                 <div class="row team__view-btn-container">
-                    <div class="col-sm-offset-4 col-sm-4">
+                  
+                            <app-invite-team-member  (employee)= "addMember($event)"></app-invite-team-member>
+                            <!-- <app-invite-team-member  (employee) = "addEmployee($event)"></app-invite-team-member> -->
+                            <!-- <input type="email" class="form-control" id="email"
+                            [(ngModel)]="addedemail" name="addemail"> -->
                         <!-- <input class="team__view-btn" value = "Back to profile" (click)= "backToProfile()"> -->
-                    </div>
+                    
                 </div>
             </div>
         </div>
