@@ -25,6 +25,7 @@ import { AdminViewIdeasComponent } from './admin/admin-view-ideas/admin-view-ide
 import { AuthGuardAdminService } from './Services/auth-guard-admin';
 import { JudgeControlComponent } from './judge-control/judge-control.component';
 import { AdminViewUsersComponent } from './admin/admin-view-users/admin-view-users.component';
+import { AdminTopIdeasComponent } from './admin/admin-top-ideas/admin-top-ideas.component';
 import { AdminViewUserComponent } from './admin/admin-view-user/admin-view-user.component';
 import { AdminViewUserTeamComponent } from './admin/admin-view-user-team/admin-view-user-team.component';
 import { AdminViewUserIdeaComponent } from './admin/admin-view-user-idea/admin-view-user-idea.component';
@@ -47,6 +48,13 @@ export const AppRoutes: Routes = [
         path: 'admin/ideas',
         component: AdminViewIdeasComponent,
         canActivate: [AuthGuardAdminService]
+    },
+    { 
+        path: 'admin/topideas',  
+            
+        component: AdminTopIdeasComponent,
+        canActivate: [AuthGuardAdminService]
+        
     },
     {
         path: 'signup',

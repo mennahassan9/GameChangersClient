@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { AdminService} from '../../Services/admin.service';
 import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table/ng2-table';
 @Component({
