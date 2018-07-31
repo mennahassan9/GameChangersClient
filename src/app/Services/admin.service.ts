@@ -92,6 +92,14 @@ export class AdminService {
     .map(res => res.json());
   }
 
+  getTopIdea(){
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get(environment.apiUrl + `/admin/topideas/`, { headers: reqHeaders })
+    .map(res => res.json());
+  }
   downloadIdea(filename): any{
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
