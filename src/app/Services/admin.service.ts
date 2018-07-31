@@ -38,6 +38,25 @@ export class AdminService {
     return this.http.get(environment.apiUrl + `/admin/user/${email}`, { headers: reqHeaders })
     .map(res => res.json());
   }
+
+  addTeamMember(teamName, email) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.put(environment.apiUrl + `/admin/addTeamMember/${teamName}`,{'email':email} ,{ headers: reqHeaders })
+    .map(res => res.json());
+  }
+  deleteTeamMember(teamName, email) {
+ 
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.put(environment.apiUrl + `/admin/deleteTeamMember/${teamName}`,{'email': email} ,{ headers: reqHeaders })
+    .map(res => res.json());
+
+  }
   
   adminSearchUsers(email) {
     const reqHeaders: Headers = new Headers();
@@ -53,7 +72,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get(environment.apiUrl + `/admin/user/viewTeam/${email}`, { headers: reqHeaders });
+    return this.http.get(environment.apiUrl + `/admin/viewTeam/${email}`, { headers: reqHeaders });
   }
 
   getUserIdea(email): Observable<any> {
