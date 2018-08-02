@@ -1,72 +1,68 @@
 <div class="container-fluid judge__main-container">
-  
-    <div class="judge__info row">
-      <div class="row judge__logout-container">
-        <div class="col-sm-offset-10 col-sm-2">
-            </div>
+  <div class="alert alert-danger" role="alert" *ngIf="errorAlert">
+    {{ errorMessage }}
+  </div>
+  <div class="judge__info row">
+    <div class="row judge__logout-container">
+      <div class="col-sm-offset-10 col-sm-2">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-3 col-sm-6 text-center judge__info-main-text">
+        Hello, Admin
       </div>
       <div class="row">
         <div class="col-sm-offset-3 col-sm-6 text-center judge__info-main-text">
-          Hello, Admin
+          <br>
+          <button (click)="onDownload()" class="btn btn-default">Download idea</button>
         </div>
-        <div class="row">
-            <div class="col-sm-offset-3 col-sm-6 text-center judge__info-main-text">
-              <br>
-              <button (click)="onDownload()" class="btn btn-default">Download idea</button>
-              
-            </div>
-            
-          </div>
-        
       </div>
-      <div class="row">
-        <div class="col-sm-offset-1  col-sm-10 judge__info-details">
-          <div class="row judge__brief-container">
-            <h1>{{teaName}}</h1>
-            <h2>{{challengeName}}</h2>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>judge name</th>
-                  <th>Judge email</th>
-                  <th>Score</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let judge of judges">
-                <tr>
-                  <td>
-                    {{judge.name}}
-                  </td>
-  
-                  <td>{{judge.email}}</td>
-                  <td> 
-                    {{judge.score}}
-                 </td>
-                </tr>
-              </tbody>
-            </table>
-
-           <form [formGroup]="form" (ngSubmit)="addJudge()">
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-1  col-sm-10 judge__info-details">
+        <div class="row judge__brief-container">
+          <h1>{{teaName}}</h1>
+          <h2>{{challengeName}}</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>judge name</th>
+                <th>Judge email</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let judge of judges">
+              <tr>
+                <td>
+                  {{judge.name}}
+                </td>
+                <td>{{judge.email}}</td>
+                <td>
+                  {{judge.score}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <form [formGroup]="form" (ngSubmit)="addJudge()">
             <div class="control-group">
               <!-- E-mail -->
               <label class="control-label" for="email">E-mail *</label>
               <div class="controls">
-                <input type="text" id="email" formControlName = "email" name="email" placeholder="michael@dell.com" class="input-xlarge">
+                <input type="text" id="email" formControlName="email" name="email" placeholder="michael@dell.com" class="input-xlarge">
                 <i class="help-block">Please provide the judge email, if he/she doesn't have an account we will send to him/her a new account credentials.</i>
               </div>
-              <div *ngIf = "(form.get('email').invalid && form.get('email').touched || (submit && form.get('email').invalid))" class="alert alert-danger">
-                  <div *ngIf = "form.get('email').errors.required">Please enter your corporate email address. </div>
-                  <!-- <div *ngIf = "form.get('email').errors.required"> </div> -->
-                </div>
+              <div *ngIf="(form.get('email').invalid && form.get('email').touched || (submit && form.get('email').invalid))" class="alert alert-danger">
+                <div *ngIf="form.get('email').errors.required">Please enter your corporate email address. </div>
+                <!-- <div *ngIf = "form.get('email').errors.required"> </div> -->
+              </div>
             </div>
-                <div class="login__btn-container">
-                    <button class="btn btn-default login__btn">Add judge</button>
-                </div>
-            </form>
-          </div>
-          <div id = "loader" [hidden]="!loading" ></div>
+            <div class="login__btn-container">
+              <button class="btn btn-default login__btn">Add judge</button>
+            </div>
+          </form>
         </div>
+        <div id="loader" [hidden]="!loading"></div>
       </div>
     </div>
   </div>
-  
+</div>
