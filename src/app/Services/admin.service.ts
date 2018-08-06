@@ -118,13 +118,12 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get(environment.apiUrl + `/users/isJudge/${email}`, { headers: reqHeaders })
+    return this.http.get(environment.apiUrl + `/admin/users/${email}/isJudge`, { headers: reqHeaders })
     .map(res => res.json());
   }
 
 
   assignJudge(judgeId, ideaId) {
-    console.log(judgeId);
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
