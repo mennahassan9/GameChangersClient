@@ -94,7 +94,7 @@ export class ProfileComponent implements OnInit {
     }
 
     openEditModal(modal: ModalDirective) {
-      if(!this.teams && this.noInvitations == false){
+      if(!this.teams && this.noInvitations == false && this.teamMember == "-1" ){
         this.teamService.Invitations().subscribe((res) => {
           this.teams = (res["teams"]);
           if(!this.teams || this.teams.length == 0)
@@ -111,9 +111,7 @@ export class ProfileComponent implements OnInit {
         this.currentUser = JSON.parse(res["_body"]);
         this.teamMember = JSON.parse(res["_body"])["teamMember"];
         this.userCreatorTeam = JSON.parse(res["_body"])["creatorOf"];
-        console.log(this.teamMember);
-        if(this.teamMember == "-1")
-            this.noInvitations = true;
+        console.log(this.teamMember)
       });
       this.headerButtonsService.setIsSignedIn();
     }

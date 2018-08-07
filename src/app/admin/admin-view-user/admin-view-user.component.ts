@@ -23,8 +23,8 @@ export class AdminViewUserComponent implements OnInit {
   }
 
   redirectToTeam() {
-    this.router.navigate(['/admin/viewTeam',this.currentUser.teamMember]);
-}
+    this.router.navigate(['/viewTeam',this.currentUser.teamMember]);
+  } 
 
   ngOnInit() {
    this.user = this.route.snapshot.queryParams['user'];
