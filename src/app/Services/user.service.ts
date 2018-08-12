@@ -42,7 +42,7 @@ export class UserService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
 
-    return this.http.post(environment.apiUrl + "/users/fetch/user", { id: id }, { headers: reqHeaders });
+    return this.http.get(environment.apiUrl + `/users/${id}`, { headers: reqHeaders });
   }
 
   getUserTeamStatus(): Observable<any> {
