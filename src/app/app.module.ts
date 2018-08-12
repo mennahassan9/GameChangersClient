@@ -65,6 +65,7 @@ import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.co
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-teams.component';
+import { EditQuestionsComponent } from './edit-questions/edit-questions.component';
 import { ViewInvitationsComponent } from './view-invitations/view-invitations.component';
 
 
@@ -109,6 +110,7 @@ import { ViewInvitationsComponent } from './view-invitations/view-invitations.co
     AdminDashboardComponent,
     SidenavComponent,
     AdminViewTeamsComponent,
+    EditQuestionsComponent,
     ViewInvitationsComponent,
     AdminSettingsComponent,
     AdminViewTeamsComponent

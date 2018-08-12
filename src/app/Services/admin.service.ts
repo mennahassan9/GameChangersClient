@@ -174,6 +174,14 @@ export class AdminService {
     return this.http.get(environment.apiUrl + "/admin/teams/",{ headers: reqHeaders })
     .map(res => res.json());
   }
+  putQuestions(questions){
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.post(environment.apiUrl + "/admin/edit-questions", {questions},{ headers: reqHeaders })
+    .map(res => res.json());
+  }
 
   updateMailSettings(mail): Observable<any> {
     const reqHeaders: Headers = new Headers();
