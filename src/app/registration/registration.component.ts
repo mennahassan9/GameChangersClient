@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup,FormControl, Validators, FormControlName } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { VALID } from '@angular/forms/src/model';
-import {DndModule} from 'ng2-dnd';
+import { DndModule } from 'ng2-dnd';
 import { IdeaModel } from '../../shared/Models/IdeaModel';
 import { UserService } from '../Services/user.service';
 import { RegistrationModel } from './Models/RegistrationModel';
@@ -15,15 +15,16 @@ import { Router } from '@angular/router';
 export class RegistrationComponent implements OnInit {
   otherLocationField: boolean;
   match: boolean;
-  form : FormGroup;
+  form: FormGroup;
   locations: Array<String>;
   ages: Array<String>;
   regions: Array<String>;
   ideas: Array<IdeaModel>;
   submit: boolean;
-  alreadyExisting: boolean;
-  deadlineReached: boolean = false;
-  constructor(private fb : FormBuilder, private userSvc: UserService, private router: Router) { }
+  errorAlert: boolean;
+  errorMessage: String;
+
+  constructor(private fb: FormBuilder, private userSvc: UserService, private router: Router) { }
 
   ngOnInit() {
     this.locations = new Array<String>()
@@ -37,91 +38,76 @@ export class RegistrationComponent implements OnInit {
     this.userSvc.getDeadlines().then((res) => {
       const registrationDeadline = new Date(JSON.parse(res['_body']).body.registration);
       const now = new Date();
-      if(now > registrationDeadline){
-        this.deadlineReached = true;
+      if (now > registrationDeadline) {
+        this.showAlert('Deadline has been reached')
         this.form.disable();
-      }else{
-        this.deadlineReached = false;
-      }
+      } 
     })
-    .catch((err)=>{
-      alert('Something went wrong, please try again later');
-    });
+      .catch((err) => {
+        alert('Something went wrong, please try again later');
+      });
     this.form = new FormGroup({
       name: new FormControl(''),
-      email : new FormControl(''),
+      email: new FormControl(''),
       password: new FormControl(''),
       passConf: new FormControl(''),
       region: new FormControl(''),
-      isRemote: new FormControl('' ),
-      location: new FormControl('' ),
+      isRemote: new FormControl(''),
+      location: new FormControl(''),
       otherLocation: new FormControl(''),
-      position: new FormControl('' ),
+      position: new FormControl(''),
       careerLevel: new FormControl(''),
-      age: new FormControl('' ),
+      age: new FormControl(''),
       previousParticipation: new FormControl(''),
       genNextMember: new FormControl(''),
       ideasOrder: new FormControl('[1,2,3]'),
       brief: new FormControl('')
     });
     this.form.get('passConf').valueChanges.subscribe(() => {
-      if(this.form.get('password').value === this.form.get('passConf').value){
+      if (this.form.get('password').value === this.form.get('passConf').value) {
         this.match = true;
       }
-      else{
+      else {
         this.match = false;
       }
     });
     this.form.get('password').valueChanges.subscribe(() => {
-      if(this.form.get('password').value === this.form.get('passConf').value){
+      if (this.form.get('password').value === this.form.get('passConf').value) {
         this.match = true;
       }
-      else{
+      else {
         this.match = false;
       }
     });
   }
-  register()
-  {
+  register() {
     this.submit = true;
-    if(this.form.valid){
+    if (this.form.valid) {
       this.resortIdeas();
-      console.log("SUBMITT")
-      this.userSvc.register(this.form.value as RegistrationModel).then( (success)=> {
-        this.alreadyExisting = false;
-        console.log("SUBMITT 22")
-
+      this.userSvc.register(this.form.value as RegistrationModel).then((success) => {
         this.router.navigate(['./signin']);
-      })
-      .catch((err)=> {
-        if (JSON.parse(err["_body"])["status"] === '409') {
-          this.alreadyExisting = true;
-          console.log("IN PROMISE", this.alreadyExisting);
-        }
-        console.log(err);
-        alert('deadline has reached');
-      });
-      
+      }).catch((err) => {
+          err = err.json();
+          if(err.errors[0].messages){
+            this.showAlert(err.errors[0].messages[0]);
+          }else {
+            this.showAlert(err.errors[0].message);
+          }
+        });
     }
-    else{
-      }
   }
-  resortIdeas()
-  {
+  resortIdeas() {
     var newIdeasOrder = []
-    for(var i = 0; i < this.ideas.length; i++)
-    {
+    for (var i = 0; i < this.ideas.length; i++) {
       newIdeasOrder.push(this.ideas[i].id);
     }
     this.form.get('ideasOrder').setValue(newIdeasOrder);
   }
-
-  addLocations(){
+  addLocations() {
     this.locations.push("Others")
     this.locations.push("Other")
   }
-  addAges()
-  {
+  addAges() {
     this.ages.push("<25");
     this.ages.push("25-29");
     this.ages.push("30-34");
@@ -133,8 +119,7 @@ export class RegistrationComponent implements OnInit {
     this.ages.push("60-64");
     this.ages.push("65+");
   }
-  addIdeas()
-  {
+  addIdeas() {
     var idea = new IdeaModel();
     idea.id = "1";
     idea.title = "Chief Customer Office - Customer Advocacy";
@@ -153,31 +138,29 @@ export class RegistrationComponent implements OnInit {
     idea.owner = "Jennifer Saavedra (SVP, Talent and Culture)"
     idea.body = "How do we make #Culturecode really come to life, and be a consistent experience for all team member?"
     this.ideas.push(idea);
-
   }
-  addRegions()
-  {
+  addRegions() {
     this.regions.push("EMEA");
     this.regions.push("APJ");
     this.regions.push("Americas");
   }
-  detectNewIdeaOrder(ideas)
-  {
+  detectNewIdeaOrder(ideas) {
     ideas = ideas as IdeaModel;
     this.ideas = ideas;
   }
-  onSelect(data){
-    if(data == "Other")
-    {
+  onSelect(data) {
+    if (data == "Other") {
       this.otherLocationField = true;
       this.form.get('otherLocation').setValidators(Validators.required)
     }
-    else
-    {
+    else {
       this.otherLocationField = false;
       this.form.get('otherLocation').setValue("");
       this.form.get('otherLocation').clearValidators();
     }
   }
-
+showAlert(message) {
+  this.errorAlert = true;
+  this.errorMessage = message;
+}
 }
