@@ -39,7 +39,7 @@ export class PasswordResetComponent implements OnInit {
       }, (err) => {
         this.wrongCredentials = true;
         this.formSubmitted = false;        
-        this.error = JSON.parse(err["_body"])["message"];
+        this.error = JSON.parse(err["_body"]).errors[0].message;
       });
     }
   }

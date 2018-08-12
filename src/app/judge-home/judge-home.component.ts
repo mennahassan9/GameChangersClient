@@ -37,7 +37,7 @@ export class JudgeHomeComponent implements OnInit {
   ngOnInit() {
 
     this.loginService.getUser().subscribe((res) => {
-      this.currentUser = JSON.parse(res["_body"]);
+      this.currentUser = JSON.parse(res["_body"]).data;
       console.log(this.currentUser);
       this.judgingService.getIdeas().subscribe(res=>{
           this.ideas = JSON.parse(res._body);

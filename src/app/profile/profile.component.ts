@@ -108,9 +108,9 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
       this.loginService.getUser().subscribe((res) => {
-        this.currentUser = JSON.parse(res["_body"]);
-        this.teamMember = JSON.parse(res["_body"])["teamMember"];
-        this.userCreatorTeam = JSON.parse(res["_body"])["creatorOf"];
+        this.currentUser = JSON.parse(res["_body"]).data;
+        this.teamMember = JSON.parse(res["_body"]).data.teamMember;
+        this.userCreatorTeam = JSON.parse(res["_body"]).data.creatorOf;
         console.log(this.teamMember)
       });
       this.headerButtonsService.setIsSignedIn();
