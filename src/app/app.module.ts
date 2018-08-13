@@ -58,13 +58,14 @@ import { AdminViewUserTeamComponent } from './admin/admin-view-user-team/admin-v
 import { AdminViewUserIdeaComponent } from './admin/admin-view-user-idea/admin-view-user-idea.component';
 import { AdminEmailDomainComponent } from './admin/admin-email-domain/admin-email-domain.component';
 import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-idea-challenge.component';
-import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-teams.component';
+import { EditQuestionsComponent } from './edit-questions/edit-questions.component';
 import { ViewInvitationsComponent } from './view-invitations/view-invitations.component';
 
 
@@ -109,6 +110,7 @@ import { ViewInvitationsComponent } from './view-invitations/view-invitations.co
     AdminDashboardComponent,
     SidenavComponent,
     AdminViewTeamsComponent,
+    EditQuestionsComponent,
     ViewInvitationsComponent,
     AdminSettingsComponent,
     AdminViewTeamsComponent

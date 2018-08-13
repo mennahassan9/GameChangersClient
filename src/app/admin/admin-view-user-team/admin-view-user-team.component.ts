@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService} from '../../Services/admin.service';
+import { TeamService} from '../../Services/team.service';
 import { Params, ActivatedRoute , Router} from '@angular/router';
 
 
@@ -9,19 +9,19 @@ import { Params, ActivatedRoute , Router} from '@angular/router';
   styleUrls: ['./admin-view-user-team.component.css']
 })
 export class AdminViewUserTeamComponent implements OnInit {
-  user: string;
+  teamName: string;
   team: any = {};
   constructor(  
     private route: ActivatedRoute,
     private router: Router,
-    private adminService: AdminService
+    private teamService: TeamService
   ) {
    }
 
   ngOnInit() {
-    this.user = this.route.snapshot.params['id'];
-    console.log(this.user+"team name");
-    this.adminService.getTeamAsMember(this.user).subscribe((res) => {
+    this.teamName = this.route.snapshot.params['id'];
+    this.teamService.getTeam(this.teamName).subscribe((res) => {
+       console.log(res)
       if (JSON.parse(res["_body"])["team"] != null) {
         this.team = JSON.parse(res["_body"]);
       } 
@@ -31,7 +31,6 @@ export class AdminViewUserTeamComponent implements OnInit {
     }, (err) => {
       console.log("ERR", err);
     })
-    console.log(this.team);
   }
 
 }

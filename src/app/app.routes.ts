@@ -34,11 +34,11 @@ import { AdminIdeaChallengeComponent } from './admin/admin-idea-challenge/admin-
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.component';
 import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-teams.component';
+import {EditQuestionsComponent} from './edit-questions/edit-questions.component';
 import { ViewInvitationsComponent } from './view-invitations/view-invitations.component';
 
+export const AppRoutes : Routes= [
 
-
-export const AppRoutes: Routes = [
     {
         path: 'users',
         component: UserComponent,
@@ -84,6 +84,11 @@ export const AppRoutes: Routes = [
     {
         path: 'admin/viewTeam/:id',
         component: AdminViewUserTeamComponent,
+        canActivate: [AuthGuardAdminService]
+    },
+    {
+        path: 'admin/edit-questions',
+        component: EditQuestionsComponent,
         canActivate: [AuthGuardAdminService]
     },
     {

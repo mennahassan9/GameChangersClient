@@ -1,0 +1,19 @@
+.edit-questions-main{
+    background-image: url("../../assets/images/register_idea.jpg");
+
+    margin-top: 50px;
+    min-height: 100vh;
+}
+.form-group{
+    margin-top:10px;
+}
+.Question{
+    margin-top: 10px;
+}
+.rowButton{
+    margin-left:1%;
+}
+.questions{
+    padding: 10px;
+    margin-top: 2%;
+}

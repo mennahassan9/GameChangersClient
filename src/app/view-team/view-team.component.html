@@ -21,7 +21,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row team__view-btn-container">
+                <div class="row team__view-btn-container" *ngIf="isAdmin == true">
                   
                             <app-invite-team-member  (employee)= "addMember($event)"></app-invite-team-member>
                             <!-- <app-invite-team-member  (employee) = "addEmployee($event)"></app-invite-team-member> -->

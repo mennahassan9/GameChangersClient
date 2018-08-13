@@ -4,6 +4,7 @@ services:
 
   game_changers_client:
     container_name: game_changers_client
+    image: game_changers_client:latest
     build:
       context: .
       dockerfile: Dockerfile

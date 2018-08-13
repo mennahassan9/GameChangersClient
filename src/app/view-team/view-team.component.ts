@@ -76,8 +76,5 @@ export class ViewTeamComponent implements OnInit {
       console.log("ERR", err);
     })
     this.isAdmin = this.localStorageService.get('isAdmin');
-
-console.log(this.isAdmin);
-
   }
 }

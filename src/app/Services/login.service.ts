@@ -29,10 +29,10 @@ export class LoginService {
     .toPromise()
     .then((res) => 
     {
-      this.localStorageService.set("token", JSON.parse(res["_body"])["token"]);
-      this.localStorageService.set("isJudge", JSON.parse(res["_body"])["isJudge"]);
-      this.localStorageService.set("isAdmin", JSON.parse(res["_body"])["isAdmin"]);
-      if(JSON.parse(res["_body"])["isAdmin"]){
+      this.localStorageService.set("token", JSON.parse(res["_body"]).data.token);
+      this.localStorageService.set("isJudge", JSON.parse(res["_body"]).data.isJudge);
+      this.localStorageService.set("isAdmin", JSON.parse(res["_body"]).data.isAdmin);
+      if(JSON.parse(res["_body"]).data.isAdmin){
         this.headerButtonsService.setIsSignedInAdmin();
       }
       this.localStorageService.set("email", email);

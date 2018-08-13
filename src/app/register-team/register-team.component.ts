@@ -65,6 +65,7 @@ export class RegisterTeamComponent implements OnInit {
     if (this.teamName) {
       this.teamInvitation.teamName = this.teamName;
       //this.teamInvitation.creator = this.teamInvitation.members[0].email;
+      console.log(this.teamInvitation.members);
       this.teamService.createTeam(this.teamInvitation).subscribe((res) => {
         this.created = true;
         this.teamInvitation = new TeamInviteModel();
@@ -85,6 +86,8 @@ export class RegisterTeamComponent implements OnInit {
 
 
   checkEmployee(email) {
+    if(this.notAdmin() && email == this.myMail)
+      return true;
     for (var i = 0; i < this.teamEmails.length; i++) {
       if (this.teamEmails[i] == email)
         return true
@@ -101,8 +104,11 @@ export class RegisterTeamComponent implements OnInit {
   }
 
   removeFromTeam(index) {
-    if (this.auth.isAdmin() || index != 0)
-      this.teamEmails.splice(index, 1)
+    this.teamEmails.splice(index, 1)
+    if (this.notAdmin())
+        index++;
+    this.teamInvitation.members.splice(index, 1);
+    console.log(this.teamInvitation.members);
   }
   ngOnInit() {
     this.teamInvitation = new TeamInviteModel();

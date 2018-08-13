@@ -39,16 +39,14 @@ export class JudgingService{
         });
       }
 
-      judge(data, ideaId, score){
+      judge(questions, ideaId, teamName){
         return new Promise((resolve, reject)=>{
           const reqHeaders: Headers = new Headers();
           reqHeaders.append('Content-Type', 'application/json');
           const currentToken = this.localStorageService.get('token');
           reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-          let parsedData = this.parseJudgingData(data, ideaId,score);
-          console.log("RAW", data);
-          console.log("PARSED",parsedData);
-          this.http.post(environment.apiUrl + "/judge/submit/",parsedData, { headers: reqHeaders })
+         
+          this.http.post(environment.apiUrl + "/judge/submit/",{ideaId, questions, teamName}, { headers: reqHeaders })
             .map(res => res.json()).subscribe(response => {
               resolve(response)
             },
@@ -58,7 +56,7 @@ export class JudgingService{
         });
       }
 
-      parseJudgingData(data, ideaId, score){
+      parseJudgingData(data, ideaId,judgeId, score){
         return {
             innovationComment: data.innovationComments,
             problemSolvingComment: data.problmeSolvingComments,
@@ -66,6 +64,7 @@ export class JudgingService{
             feasibilityComment: data.feasibilityComments,
             qualityComment: data.qualityOfPresentationComments,
             ideaId,
+            judgeId,
             score,
             innovationScore: data.innovationScore,
             problemSolvingScore: data.problmeSolvingScore,
@@ -73,5 +72,12 @@ export class JudgingService{
             feasibilityScore: data.feasibilityScore,
             qualityScore: data.qualityOfPresentationScore
         }
+      }
+      getQuestions():Observable<any>{
+        const reqHeaders: Headers = new Headers();
+        reqHeaders.append('Content-Type', 'application/json');
+        const currentToken = this.localStorageService.get('token');
+        reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+        return this.http.get(environment.apiUrl + "/judge/get-questions", { headers: reqHeaders }); 
       }
 }

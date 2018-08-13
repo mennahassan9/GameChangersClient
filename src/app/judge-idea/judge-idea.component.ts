@@ -3,7 +3,9 @@ import { Params, ActivatedRoute , Router} from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { JudgingService } from '../Services/judging.service';
 import { IdeaService } from '../Services/idea.service';
+import {LoginService} from '../Services/login.service';
 import { HeaderButtonsService } from '../Services/headerButtons.service';
+import { Question } from '../edit-questions/models/question';
 import { UserService } from '../Services/user.service';
 
 @Component({
@@ -12,12 +14,15 @@ import { UserService } from '../Services/user.service';
   styleUrls: ['./judge-idea.component.css']
 })
 export class JudgeIdeaComponent implements OnInit {
-
+  questions: any[];
+  maxScore:number;
+  judgeId : any;
   teamName : string;
   idea: any = {};
   form: FormGroup;
   formSubmitted: boolean;
   loading: boolean; 
+  loaded: boolean = false;
   deadlineReached: boolean = false;
   innovationScoreValid: boolean = true;;
   problemSolvingScoreValid: boolean = true;
@@ -31,18 +36,29 @@ export class JudgeIdeaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private loginService:LoginService,
     private judgingService: JudgingService,
     private ideaService: IdeaService,
     private headerButtonsService: HeaderButtonsService,
     private userService: UserService
   ) { }
   
-  submit() {
-    console.log(this.form.value);
-    if(this.form.valid && this.feasibilityScoreValid && this.financialImpactScoreValid && this.innovationScoreValid
-    && this.qualityOfPresentationScoreValid && this.problemSolvingScoreValid){
-      this.formSubmitted = true;
+ async submit() {
+    console.log(this.questions,"questionsss");
 
+    
+    if(this.form.valid){
+      this.formSubmitted = true;
+        this.judgingService.judge(this.questions,this.ideaId, this.teamName).then((success)=> {
+          console.log(success);
+          
+          this.router.navigate(['/judge']);
+        }).catch((err)=> {
+          console.log(err);
+        });
+ 
+      
+      
       this.judgingService.judge(this.form.value, this.ideaId, this.totalScore).then((success)=> {
         this.router.navigate(['/judge']);
       })
@@ -56,7 +72,13 @@ export class JudgeIdeaComponent implements OnInit {
     }
     
   }
-  ngOnInit() {
+ ngOnInit() {
+  this.teamName = this.route.snapshot.queryParams['team'];
+  this.idea = {
+    name: "",
+    filename: this.teamName
+  };
+  this.maxScore = 0;
     this.userService.getDeadlines().then((res) => {
       const judgmentDeadline = new Date(JSON.parse(res['_body']).body.judge);
       const now = new Date();
@@ -87,35 +109,64 @@ export class JudgeIdeaComponent implements OnInit {
       qualityOfPresentationScore: new FormControl('', [Validators.required]),
       qualityOfPresentationComments: new FormControl('',[])
     });
-    this.judgingService.getIdea(this.teamName)
-    .then(response=>{
-
-      this.idea.name = response['title'];
-      this.idea.filename = response['filename'];
-      this.ideaId = response['ideaId'];
-      this.totalScore = Math.max(response['score'],0);
-      console.log('total score ', this.totalScore);
-      console.log(response);
+ 
+  this.judgingService.getIdea(this.teamName)
+  .then(response=>{
+    console.log("hereee", response);
+    this.idea.name = response['idea'].title;
+    this.ideaId = response['idea']._id;
+    if (response['ideajudgment']){
+      
+      this.loaded = false;
+      this.questions = []
+      for (let i = 0; i < response['ideajudgment'].questions.length; i++) {
+        this.questions.push(response['ideajudgment'].questions[i][0]); 
+      }
+      console.log(this.questions);
       this.form = new FormGroup({
-        innovationScore: new FormControl(response['innovationScore'] == -1? '':response['innovationScore'] , [Validators.required]),
-        innovationComments: new FormControl(response['innovationComment'], []),
-        problmeSolvingScore: new FormControl(response['problemSolvingScore'] == -1? '':response['problemSolvingScore'] , [Validators.required]),
-        problmeSolvingComments: new FormControl(response['problemSolvingComment'], []),
-        financialImpactScore: new FormControl(response['financialImpactScore'] == -1? '':response['financialImpactScore'],[Validators.required]),
-        financialImpactComments: new FormControl(response['financialImpactComment'], []),
-        feasibilityScore: new FormControl(response['feasibilityScore'] == -1? '':response['feasibilityScore'], [Validators.required]),
-        feasibilityComments: new FormControl(response['feasibilityComment'], []),
-        qualityOfPresentationScore: new FormControl(response['qualityScore'] == -1? '':response['qualityScore'], [Validators.required]),
-        qualityOfPresentationComments: new FormControl(response['qualityComment'],[])
+
       });
-      this.startCalculateScore();
-    })
-    .catch(err =>{
-      console.log(err);
-      this.startCalculateScore();
-    })
-    // this.headerButtonsService.signOut();
+      this.questions.forEach((question, index)=>{
+        console.log("INN");
+        
+        this.form.addControl(`${question.category}${index}Score`, new FormControl(question.currentScore, [Validators.required, Validators.max(question.rate), Validators.min(0)]))
+        this.form.addControl(`${question.category}${index}Comment`, new FormControl('', []))
+
+         this.loaded = (index == this.questions.length-1);
+         if(this.loaded)
+           this.startCalculateScore();
+           this.maxScore +=question.rate;
+        
+         
+       });
+    }else{
+      console.log("New questions");
+    this.judgingService.getQuestions().subscribe((response)=>{
+      console.log("QUESTIONS==>  ",response)      
+        this.questions = JSON.parse(response["_body"])["body"];
+        console.log(this.questions)
+        this.form = new FormGroup({
+        
+        });
+        this.questions.forEach((question, index)=>{
+          this.form.addControl(`${question.category}${index}Score`, new FormControl('', [Validators.required, Validators.max(question.rate), Validators.min(0)]))
+          this.form.addControl(`${question.category}${index}Comment`, new FormControl('', []))
+          console.log(
+          this.form.controls[`${question.category}${index}Score`]);
+            this.loaded = (index == this.questions.length-1);
+            this.startCalculateScore();
+            this.maxScore +=question.rate;
+          });
+        
+        })
+    }
+  })
+  .catch(err =>{
+
+  })
+  
   }
+
   onDownload() {
     this.toggleLoading()
     console.log("DOWN", this.idea.filename);
@@ -141,82 +192,17 @@ export class JudgeIdeaComponent implements OnInit {
 
   }
   startCalculateScore(){
+    Object.keys(this.form.controls).forEach(key => {
+      this.form.get(key).valueChanges.subscribe(() => {        
+        if(key.includes('Score')){
+          this.totalScore = 0;
+          this.questions.forEach((question) => {
+            this.totalScore += isNaN(question.currentScore) || question.currentScore > question.rate ? 0: question.currentScore;
+          });
+        }
+      });
+    });
 
-    this.form.get('innovationScore').valueChanges.subscribe(() => {
-      let innovationScore = isNaN(parseInt(this.form.get('innovationScore').value)) ? 0 : parseInt(this.form.get('innovationScore').value)
-      let problmeSolvingScore = isNaN(parseInt(this.form.get('problmeSolvingScore').value)) ? 0 : parseInt(this.form.get('problmeSolvingScore').value)
-      let financialImpactScore = isNaN(parseInt(this.form.get('financialImpactScore').value)) ? 0 : parseInt(this.form.get('financialImpactScore').value)
-      let feasibilityScore = isNaN(parseInt(this.form.get('feasibilityScore').value)) ? 0 : parseInt(this.form.get('feasibilityScore').value)     
-      let qualityOfPresentationScore = isNaN(parseInt(this.form.get('qualityOfPresentationScore').value)) ? 0 : parseInt(this.form.get('qualityOfPresentationScore').value)     
-      
-      if(innovationScore > 20) {
-        this.innovationScoreValid = false;
-      }else{
-        this.innovationScoreValid = true;
-        this.totalScore = innovationScore + problmeSolvingScore + financialImpactScore + feasibilityScore + qualityOfPresentationScore;
-      }
-      this.checkBtn();
-    });
-    this.form.get('problmeSolvingScore').valueChanges.subscribe(() => {
-        let innovationScore = isNaN(parseInt(this.form.get('innovationScore').value)) ? 0 : parseInt(this.form.get('innovationScore').value)
-        let problmeSolvingScore = isNaN(parseInt(this.form.get('problmeSolvingScore').value)) ? 0 : parseInt(this.form.get('problmeSolvingScore').value)     
-        let financialImpactScore = isNaN(parseInt(this.form.get('financialImpactScore').value)) ? 0 : parseInt(this.form.get('financialImpactScore').value)
-        let feasibilityScore = isNaN(parseInt(this.form.get('feasibilityScore').value)) ? 0 : parseInt(this.form.get('feasibilityScore').value)     
-        let qualityOfPresentationScore = isNaN(parseInt(this.form.get('qualityOfPresentationScore').value)) ? 0 : parseInt(this.form.get('qualityOfPresentationScore').value)     
-        
-        if(problmeSolvingScore > 20) {
-          this.problemSolvingScoreValid = false;
-        }else{
-          this.problemSolvingScoreValid = true;
-          this.totalScore = innovationScore + problmeSolvingScore + financialImpactScore + feasibilityScore + qualityOfPresentationScore;
-        }
-        this.checkBtn();
-    });
-    this.form.get('financialImpactScore').valueChanges.subscribe(() => {
-      let innovationScore = isNaN(parseInt(this.form.get('innovationScore').value)) ? 0 : parseInt(this.form.get('innovationScore').value)
-      let financialImpactScore = isNaN(parseInt(this.form.get('financialImpactScore').value)) ? 0 : parseInt(this.form.get('financialImpactScore').value)
-      let problmeSolvingScore = isNaN(parseInt(this.form.get('problmeSolvingScore').value)) ? 0 : parseInt(this.form.get('problmeSolvingScore').value)     
-      let feasibilityScore = isNaN(parseInt(this.form.get('feasibilityScore').value)) ? 0 : parseInt(this.form.get('feasibilityScore').value)     
-      let qualityOfPresentationScore = isNaN(parseInt(this.form.get('qualityOfPresentationScore').value)) ? 0 : parseInt(this.form.get('qualityOfPresentationScore').value)     
-      
-      if(financialImpactScore > 30) {
-        this.financialImpactScoreValid = false;
-      }else{
-        this.financialImpactScoreValid = true;
-        this.totalScore = innovationScore + problmeSolvingScore + financialImpactScore + feasibilityScore + qualityOfPresentationScore;
-      }
-      this.checkBtn();
-    });
-      this.form.get('feasibilityScore').valueChanges.subscribe(() => {
-        let innovationScore = isNaN(parseInt(this.form.get('innovationScore').value)) ? 0 : parseInt(this.form.get('innovationScore').value)
-        let financialImpactScore = isNaN(parseInt(this.form.get('financialImpactScore').value)) ? 0 : parseInt(this.form.get('financialImpactScore').value)
-        let problmeSolvingScore = isNaN(parseInt(this.form.get('problmeSolvingScore').value)) ? 0 : parseInt(this.form.get('problmeSolvingScore').value)     
-        let feasibilityScore = isNaN(parseInt(this.form.get('feasibilityScore').value)) ? 0 : parseInt(this.form.get('feasibilityScore').value)     
-        let qualityOfPresentationScore = isNaN(parseInt(this.form.get('qualityOfPresentationScore').value)) ? 0 : parseInt(this.form.get('qualityOfPresentationScore').value)     
-        
-        if(feasibilityScore > 20) {
-          this.feasibilityScoreValid = false;
-        }else{
-          this.feasibilityScoreValid = true;
-          this.totalScore = innovationScore + problmeSolvingScore + financialImpactScore + feasibilityScore + qualityOfPresentationScore;
-        }
-        this.checkBtn();
-      });
-      this.form.get('qualityOfPresentationScore').valueChanges.subscribe(() => {
-        let innovationScore = isNaN(parseInt(this.form.get('innovationScore').value)) ? 0 : parseInt(this.form.get('innovationScore').value)
-        let financialImpactScore = isNaN(parseInt(this.form.get('financialImpactScore').value)) ? 0 : parseInt(this.form.get('financialImpactScore').value)
-        let problmeSolvingScore = isNaN(parseInt(this.form.get('problmeSolvingScore').value)) ? 0 : parseInt(this.form.get('problmeSolvingScore').value)     
-        let feasibilityScore = isNaN(parseInt(this.form.get('feasibilityScore').value)) ? 0 : parseInt(this.form.get('feasibilityScore').value)     
-        let qualityOfPresentationScore = isNaN(parseInt(this.form.get('qualityOfPresentationScore').value)) ? 0 : parseInt(this.form.get('qualityOfPresentationScore').value)     
-        
-        if(qualityOfPresentationScore > 10) {
-          this.qualityOfPresentationScoreValid = false;
-        }else{
-          this.qualityOfPresentationScoreValid = true;
-          this.totalScore = innovationScore + problmeSolvingScore + financialImpactScore + feasibilityScore + qualityOfPresentationScore;
-        }
-        this.checkBtn();
-      });
   }
   toggleLoading() {
     this.loading = !this.loading;

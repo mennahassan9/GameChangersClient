@@ -146,7 +146,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.post(environment.apiUrl + "/users/createNewjudge/",{email},{ headers: reqHeaders })
+    return this.http.post(environment.apiUrl + "/admin/createNewjudge/",{email},{ headers: reqHeaders })
     .map(res => res.json());
   }
   getStatistics(){
@@ -172,6 +172,14 @@ export class AdminService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     return this.http.get(environment.apiUrl + "/admin/teams/",{ headers: reqHeaders })
+    .map(res => res.json());
+  }
+  putQuestions(questions){
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.post(environment.apiUrl + "/admin/edit-questions", {questions},{ headers: reqHeaders })
     .map(res => res.json());
   }
 
