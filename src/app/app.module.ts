@@ -67,6 +67,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-teams.component';
 import { EditQuestionsComponent } from './edit-questions/edit-questions.component';
 import { ViewInvitationsComponent } from './view-invitations/view-invitations.component';
+import { LowerCaseInputDirective } from './lowercase.directive';
+ 
 
 
 
@@ -113,7 +115,8 @@ import { ViewInvitationsComponent } from './view-invitations/view-invitations.co
     EditQuestionsComponent,
     ViewInvitationsComponent,
     AdminSettingsComponent,
-    AdminViewTeamsComponent
+    AdminViewTeamsComponent,
+    LowerCaseInputDirective
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {useHash: true}),

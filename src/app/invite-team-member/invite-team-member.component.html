@@ -3,7 +3,7 @@
       <div class="form-group invite col-sm-offset-3 col-sm-6 text-center team__invite-container">
           <div class="row">
               <div class="col-sm-9">
-                  <input type="email"  (keyup)="handleInput()" [readonly] = "disabled" autocomplete="off" [(ngModel)] = "email" class="form-control team__invite-field" name="email"  formControlName="email" placeholder="Enter email" />
+                  <input type="email"  (keyup)="handleInput()" [readonly] = "disabled" autocomplete="off" [(ngModel)] = "email" class="form-control team__invite-field" name="email"  formControlName="email" placeholder="Enter email" lowercase />
                   <div class="dropdown open">
                         <ul  *ngIf="items !=null && items.length != 0"  class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <li  *ngFor="let item of items" (click) = "enter(item['_source']['email'])" class="dropdown-item"><a>{{item['_source']['email']}}</a></li>
