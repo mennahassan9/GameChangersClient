@@ -98,6 +98,13 @@
 
 .home__btns--register {
     background-color: #CE1126;
+    color: #ffffff;
+    font-size: 2em;
+    border-radius: 3%;
+    padding: 2%;
+    width: 30%;
+    height: 25%;
+    margin-top: 0;
 }
 
 .home__calendar-container {
@@ -123,7 +130,41 @@
     margin-top: 10%;
 }
 
-@media only screen and (max-width: 600px) {
+.rule {
+    display: block;
+    padding: 2%;
+    text-align: center;
+}
+
+.rule>div {
+    display: inline-block;
+    white-space:nowrap;
+}
+
+.line>div {
+    border-bottom: 1px solid silver;
+    height: 1px;
+}
+
+.words {
+    padding: 0 5px;
+    text-transform: uppercase;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+}
+
+.line {
+    width: 5%;
+    vertical-align: middle;
+}
+
+ 
+.home__inside-dell {
+    color: #007DB8;
+}
+
+@media  (max-width: 600px) { 
     .home__main-text {
         font-size: 1.5em;
     }
@@ -135,8 +176,9 @@
     .home__calendar-deadlines, .home__btns {
         font-size: 1em;
     }
+
+    .words {
+        font-size: 8px;
+    }
 }
 
-.home__inside-dell {
-    color: #007DB8;
-}
