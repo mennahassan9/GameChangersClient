@@ -27,6 +27,10 @@ export class ProfileComponent implements OnInit {
     modalRef: ModalDirective;
     teams: any;
     noInvitations: boolean = false;
+    alertFlag:boolean
+    alertMsg: string;
+    acceptFlag:boolean
+    acceptMsg: string;
 
     constructor(
       private teamService: TeamService,
@@ -45,14 +49,20 @@ export class ProfileComponent implements OnInit {
 
     acceptInvitation(teamName){
       this.teamService.acceptInvitation(teamName).subscribe((res) => {
+        this.acceptFlag=false;
         if(res['status'] == 200){
           this.teamMember = teamName;
         }
+      }, e=>{
+        this.acceptFlag=true;
+        this.acceptMsg="An Error occured while accepting invitation"
+  
       });
     }
 
     rejectInvitation(teamName){
       this.teamService.rejectInvitation(teamName).subscribe((res) => {
+        this.acceptFlag=false;
         if(res['status'] == 200){
           for (let index = 0; index <  this.teams.length; index++) {
             const element =  this.teams[index];
@@ -62,6 +72,10 @@ export class ProfileComponent implements OnInit {
               this.noInvitations = true;
           }
         }
+      }, e=>{
+        this.acceptFlag=true;
+        this.acceptMsg="An Error occured while rejecting invitation"
+  
       });
     }
 
@@ -108,10 +122,15 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
       this.loginService.getUser().subscribe((res) => {
+        this.alertFlag=false;
         this.currentUser = JSON.parse(res["_body"]).data;
         this.teamMember = JSON.parse(res["_body"]).data.teamMember;
         this.userCreatorTeam = JSON.parse(res["_body"]).data.creatorOf;
         console.log(this.teamMember)
+      }, e=>{
+        this.alertFlag=true;
+        this.alertMsg="An Error occured while connecting to server"
+  
       });
       this.headerButtonsService.setIsSignedIn();
     }
