@@ -10,6 +10,8 @@ export class AdminViewUsersComponent implements OnInit {
 
   ideas: any [];
   loading: boolean; 
+  alertFlag: boolean;
+  alertMsg: string;
   public data:Array<any> = [];
   public columns:Array<any> = [
     {title: 'User name', name: 'name', filtering: {filterString: '', placeholder: 'Filter by user name'}},
@@ -34,9 +36,14 @@ export class AdminViewUsersComponent implements OnInit {
   }
   ngOnInit() {
     this.adminService.getUsers().subscribe(res => {
-      this.ideas = res.body;
+      this.ideas = res.data;
+      console.log(this.ideas[1])
       this.length = this.ideas.length;
-      this.parseResponse(res.body);
+      this.parseResponse(res.data);
+    }, e=>{
+      this.alertFlag=true;
+      this.alertMsg= "Couldn't connect to server";
+
     })
   }
 

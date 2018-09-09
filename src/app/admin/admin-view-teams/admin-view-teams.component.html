@@ -13,6 +13,9 @@
         [rows]="rows" [columns]="columns"
         >
         </ng-table>
+        <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+          {{ alertMsg }}
+        </div>
         <pagination *ngIf="config.paging"
               class="pagination-sm"
               [(ngModel)]="page"

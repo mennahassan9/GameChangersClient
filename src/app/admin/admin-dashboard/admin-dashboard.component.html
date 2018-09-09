@@ -34,6 +34,9 @@
           </div>
       </div>
   </div>
+  <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+    {{ alertMsg }}
+  </div>
   <div class="row">
     <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2 col-xs-12">
       <div class="dashboard-container__chart">

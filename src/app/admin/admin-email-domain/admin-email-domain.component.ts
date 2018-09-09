@@ -24,26 +24,31 @@ export class AdminEmailDomainComponent implements OnInit {
 
   ngOnInit() {
     this.domainService.getDomains().subscribe(res=>{
-      this.domains = JSON.parse(res._body)["body"];
+      this.domains = JSON.parse(res._body)["data"];
+      
       }, e => {
+        this.alertFlag=true;
+        this.alertMsg="couldn't connect to server"
         this.domains = [];
     })
   }
-
+ 
   addDomain(domain) {
+    if(this.domains.find(dom => dom.name === domain)!=null){
+      this.alertFlag = true;
+      this.alertMsg = "The domain you entered already exists";
+    }
+    else{
     this.domainService.addDomain(domain).subscribe(res => {
       this.domains.push({ name: domain, edit:false});
+    
       this.alertFlag = false;
     }, e => {
       this.alertFlag = true;
-      if(domain) {
-        this.alertMsg = "The domain you entered already exists";
-      }
-      else {
         this.alertMsg = "Please enter a valid domain";
       }
       
-    })
+    )}
   }
 
   deleteDomain(domain) {
@@ -62,6 +67,11 @@ export class AdminEmailDomainComponent implements OnInit {
         requiredDomain = value;
       }
     })
+    if(this.domains.find(dom => dom.name === newDomain)!=null){
+      this.alertFlag = true;
+      this.alertMsg = "The domain you entered already exists";
+    }
+    else{
     this.domainService.updateDomain(requiredDomain.name, newDomain).subscribe(res => {
       this.domains.map(value => {
         if (value.edit === true) {
@@ -75,6 +85,7 @@ export class AdminEmailDomainComponent implements OnInit {
       this.alertFlag = true;
       this.alertMsg = "An error occured while trying to update the domain";
     })
+  }
   }
   
   edit(domain) {

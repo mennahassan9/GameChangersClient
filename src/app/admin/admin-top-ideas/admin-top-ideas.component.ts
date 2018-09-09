@@ -9,7 +9,8 @@ import { AdminService} from '../../Services/admin.service';
 export class AdminTopIdeasComponent implements OnInit {
 
 
-  
+  alertFlag: boolean;
+  alertMsg: string;
   topIdeas: any [];
   loading: boolean; 
   newData: any[]=[];
@@ -29,6 +30,10 @@ export class AdminTopIdeasComponent implements OnInit {
       this.topIdeas = res.body;
       this.parseResponse(res.body);
       this.toggleLoading();
+    }, e=>{
+      this.alertFlag=true;
+      this.alertMsg= "Couldn't connect to server";
+
     })
   }
 

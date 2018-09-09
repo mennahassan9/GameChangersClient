@@ -11,6 +11,8 @@ export class AdminViewTeamsComponent implements OnInit {
 
   teams: any [];
   loading: boolean; 
+  alertFlag: boolean;
+  alertMsg: string;
   public rows:any[] = [];
   public columns:any[] = [
     {title:'Team Name', name:'team name', filtering: {filterString:'', placeholder: 'Filter by team name'}},
@@ -36,9 +38,13 @@ export class AdminViewTeamsComponent implements OnInit {
 
   ngOnInit() {
     this.adminService.getTeams().subscribe(res => {
-      this.teams = res.body;
+      this.teams = res.data;
       this.length = this.teams.length;
       this.parseResponse(this.teams);
+    }, e=>{
+      this.alertFlag=true;
+      this.alertMsg= "Couldn't connect to server";
+
     })
   }
 

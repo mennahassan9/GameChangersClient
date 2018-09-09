@@ -9,6 +9,8 @@ import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, Ng
 export class AdminViewIdeasComponent implements OnInit {
   ideas: any [];
   loading: boolean; 
+  alertFlag: boolean;
+  alertMsg: string;
   public data:Array<any> = [
     ];
   public columns:Array<any> = [
@@ -42,6 +44,10 @@ export class AdminViewIdeasComponent implements OnInit {
       this.ideas = res.body;
       this.parseResponse(res.body);
       this.toggleLoading();
+    }, e=>{
+      this.alertFlag=true;
+      this.alertMsg= "Couldn't connect to server";
+
     })
     // this.onChangeTable(this.config);
   }

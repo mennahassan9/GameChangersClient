@@ -5,6 +5,9 @@
               <!-- <button class="profile__logout-btn" (click)="redirectToHome()">Logout</button> -->
           </div>
       </div>
+      <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+        {{ alertMsg }}
+      </div>
       <div class="row">
           <div class="col-sm-offset-3 col-sm-6 text-center profile__info-main-text">
               {{ currentUser.name }}

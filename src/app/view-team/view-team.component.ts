@@ -22,6 +22,11 @@ export class ViewTeamComponent implements OnInit {
   teamName: String;
   isAdmin: boolean;
   addedemail: string;
+  editFlag:boolean;
+  alertFlag:boolean;
+  editMsg:string;
+  alertMsg: string;
+
 
   constructor(
     private teamService: TeamService,
@@ -43,6 +48,7 @@ export class ViewTeamComponent implements OnInit {
 
     this.adminService.addTeamMember(this.teamName,email.value).subscribe(res => {
     
+      this.editFlag=false;
 
       if (res!= null) {
         this.team.members =res.data.members;
@@ -50,20 +56,23 @@ export class ViewTeamComponent implements OnInit {
       }   
      
     }, (err) => {
-      console.log("ERR", err);
+      this.editFlag=true;
+      this.editMsg="couldn't add member to team"
     });
   }
 
   deleteMember(email) {
     this.adminService.deleteTeamMember(this.teamName,email).subscribe(res => {
     
+      this.editFlag=false;
       if (res!= null) {
         this.team.members=res.data.members;
         
        
       } 
     }, (err) => {
-      console.log("ERR", err);
+      this.editFlag=true;
+      this.editMsg="couldn't delete member to team"
     });
   }
 
