@@ -21,6 +21,9 @@
                         <button type="button" class="btn btn-default idea__submit-btn download__btn" (click)="onDownload()" [disabled]="loading">Download</button>
                     </div>
                 </form>
+                <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+                    {{ alertMsg }}
+                  </div>
 
             </div>
         </div>

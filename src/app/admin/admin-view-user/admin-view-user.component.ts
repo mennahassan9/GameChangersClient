@@ -11,6 +11,8 @@ import { AdminService} from '../../Services/admin.service';
 export class AdminViewUserComponent implements OnInit {
   user: string;
   currentUser: any = {};
+  alertFlag: boolean
+  alertMsg: string;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -29,7 +31,12 @@ export class AdminViewUserComponent implements OnInit {
   ngOnInit() {
    this.user = this.route.snapshot.queryParams['user'];
    this.adminService.getUser(this.user).subscribe(res => {
-   this.currentUser = res.body;
+     this.alertFlag=false;
+   this.currentUser = res.data;
+  }, e=>{ 
+    this.alertFlag=true;
+    this.alertMsg="Something went wrong, couldn't retrieve user's information"
+
   })
 }
 

@@ -12,6 +12,10 @@ export class AdminSettingsComponent implements OnInit {
   deadlinesForm: FormGroup;
   min: Date;
   mailFormSubmitted: boolean;
+  alertFlag: boolean;
+  alertMsg: string;
+  alertFlag1: boolean;
+  alertMsg1: string;
   deadlineFormSubmitted: boolean;
 
   constructor(
@@ -27,11 +31,13 @@ export class AdminSettingsComponent implements OnInit {
       password: this.mailForm.get('emailPassword').value,
     }
     this.adminService.updateMailSettings(mail).subscribe(res => {
+      this.alertFlag=false;
       this.mailFormSubmitted = false;
       console.log('UPDATED');
 
     }, e => {
-      alert('something went wrong');
+      this.alertFlag=true;
+      this.alertMsg="something went wrog while trying to update mail settings"
     });
 
   }
@@ -45,11 +51,13 @@ export class AdminSettingsComponent implements OnInit {
       teams: this.deadlinesForm.get('teamsDeadline').value,
     }
     this.adminService.updateDeadlines(deadlines).subscribe(res => {
+      this.alertFlag1=false;
       this.mailFormSubmitted = false;
       console.log('UPDATED');
 
     }, e => {
-      alert('something went wrong');
+      this.alertFlag1=true;
+      this.alertMsg1="something went wrog while trying to update the deadlines"
     });
   }
   ngOnInit() {
@@ -68,7 +76,9 @@ export class AdminSettingsComponent implements OnInit {
     });
 
     this.adminService.getMailSettings().subscribe(res => {
-      const mail = res.mail;
+      this.alertFlag =false;
+      console.log(res,"ggggggg")
+      const mail = res.data;
       this.mailForm = new FormGroup({
         emailHost: new FormControl(mail.host, [Validators.required]),
         emailPort: new FormControl(mail.port, [Validators.required]),
@@ -76,11 +86,12 @@ export class AdminSettingsComponent implements OnInit {
         emailPassword: new FormControl(mail.password, [Validators.required]),
       });
     }, e => {
-      alert('Something went wrong, please try again later');
+      this.alertFlag=true;
+      this.alertMsg="something went wrog while trying to retrieve mail settings"
     });
 
     this.adminService.getDeadlines().subscribe(res => {      
-      const deadlines = JSON.parse(res._body)["body"];    
+      const deadlines = JSON.parse(res._body)["data"];    
       this.deadlinesForm = new FormGroup({
         registrationDeadline: new FormControl(deadlines.registration, [Validators.required]),
         submissionDeadline: new FormControl(deadlines.submission, [Validators.required]),
@@ -88,7 +99,9 @@ export class AdminSettingsComponent implements OnInit {
         teamsDeadline: new FormControl(deadlines.teams, [Validators.required]),
       });
     }, e => {
-      alert('Something went wrong, please try again later');
+      
+      this.alertFlag1=true;
+      this.alertMsg1="something went wrog while trying to retrieve deadlines"
     });
 
     this.min = new Date();

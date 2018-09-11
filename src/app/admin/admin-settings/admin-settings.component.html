@@ -9,6 +9,9 @@
       <div class="row">
           <div class="col-sm-4 ">
               <h3>Mail settings</h3>
+              <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+                {{ alertMsg }}
+              </div>
               <form [formGroup]="mailForm" (ngSubmit)="submitMailChanges()">
                   <div class="form-group">
                       <label for="exampleInputEmailHost">Email host</label>
@@ -54,6 +57,9 @@
 
           <div class="col-sm-4 ">
                 <h3>Deadline settings</h3>
+                <div class="alert alert-danger" role="alert" *ngIf="alertFlag1">
+                    {{ alertMsg1 }}
+                  </div>
                 <form [formGroup]="deadlinesForm" (ngSubmit)="submitDeadlineChanges()">
                     
                     <div class="form-group">

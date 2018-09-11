@@ -24,25 +24,31 @@ export class AdminIdeaChallengeComponent implements OnInit {
     this.challengeService.getChallenges().subscribe(res=>{
       this.challenges = JSON.parse(res._body)["body"];
       }, e => {
+        this.alertFlag=true;
+        this.alertMsg="couldn't connect to server"
         this.challenges = [];
     })
   }
 
   addChallenge(challenge) {
+
+    if(this.challenges.find(chall => chall.name===challenge)!=null){
+      this.alertFlag = true;
+      this.alertMsg = "The challenge you entered already exists";
+    }
+    else{
+
     this.challengeService.addChallenge(challenge).subscribe(res => {
       this.challenges.push({ name: challenge, edit:false});
       this.alertFlag = false;
     }, e => {
       this.alertFlag = true;
-      if(challenge) {
-        this.alertMsg = "The challenge you entered already exists";
-      }
-      else {
-        this.alertMsg = "Please enter a valid challenge";
+      this.alertMsg = "An error occurred while trying to add the challenge"
       }
       
-    })
+    )}
   }
+  
 
   deleteChallenge(challenge) {
     this.challengeService.deleteChallenge(challenge).subscribe(res => {
@@ -60,6 +66,11 @@ export class AdminIdeaChallengeComponent implements OnInit {
         requiredChallenge = value;
       }
     })
+    if(this.challenges.find(chall => chall.name===newChallenge)!=null){
+      this.alertFlag = true;
+      this.alertMsg = "The challenge you entered already exists";
+    }
+    else{
     this.challengeService.updateChallenge(requiredChallenge.name, newChallenge).subscribe(res => {
       this.challenges.map(value => {
         if (value.edit === true) {
@@ -73,6 +84,7 @@ export class AdminIdeaChallengeComponent implements OnInit {
       this.alertFlag = true;
       this.alertMsg = "An error occured while trying to update the challenge";
     })
+  }
   }
   
   edit(challenge) {

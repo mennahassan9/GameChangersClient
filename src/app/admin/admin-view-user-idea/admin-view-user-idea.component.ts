@@ -25,6 +25,8 @@ export class AdminViewUserIdeaComponent implements OnInit {
   filename: string; 
   loading: boolean; 
   oldFilename: string;
+  ideaFlag: boolean;
+  ideaMsg: string;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -49,7 +51,8 @@ export class AdminViewUserIdeaComponent implements OnInit {
         var win = window.open(fileURL);
         this.toggleLoading();
       } , (err) => {
-          alert("Download Failed! Try again later.");
+        this.ideaFlag=true;
+        this.ideaMsg="error occurred while trying to download Idea "
           this.toggleLoading();
       }     
     );
@@ -61,9 +64,12 @@ export class AdminViewUserIdeaComponent implements OnInit {
       ideaTitle: new FormControl('', [Validators.required]),
       challenge: new FormControl('', [Validators.required])
     });
+    
     this.adminService.getUserIdea(this.user).subscribe((res) => {
-      if (JSON.parse(res["_body"])["idea"] != null) {
-        this.idea = JSON.parse(res["_body"])["idea"]["0"];
+
+      this.ideaFlag=false;
+      if (JSON.parse(res["_body"])["data"] != null) {
+        this.idea = JSON.parse(res["_body"])["data"]["0"];
         this.title = this.idea.title;
         this.oldFilename = this.idea.oldFilename;
         this.alreadyExistingChallenge = this.idea.challenge;
@@ -71,12 +77,14 @@ export class AdminViewUserIdeaComponent implements OnInit {
         this.form.get('challenge').setValue(this.alreadyExistingChallenge);
       }
       else {
-        console.log("NULL TEAM");
+        this.ideaFlag=true;
+        this.ideaMsg="No Idea found for this user"
       }
     }, (err) => {
-      console.log("ERR", err);
+        this.ideaFlag=true;
+        this.ideaMsg="error occurred while trying to retrieve Idea "
     })
-    console.log(this.idea);
+    
   }
 }
 

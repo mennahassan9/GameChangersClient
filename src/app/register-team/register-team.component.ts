@@ -30,6 +30,8 @@ export class RegisterTeamComponent implements OnInit {
   created: boolean = false;
   myMail: String;
   emptyName: boolean;
+  alertFlag: boolean
+  alertMsg: string;
 
   teamInvitation: TeamInviteModel;
   constructor(
@@ -65,7 +67,7 @@ export class RegisterTeamComponent implements OnInit {
     if (this.teamName) {
       this.teamInvitation.teamName = this.teamName;
       //this.teamInvitation.creator = this.teamInvitation.members[0].email;
-      console.log(this.teamInvitation.members);
+      console.log(this.teamInvitation);
       this.teamService.createTeam(this.teamInvitation).subscribe((res) => {
         this.created = true;
         this.teamInvitation = new TeamInviteModel();
@@ -77,7 +79,8 @@ export class RegisterTeamComponent implements OnInit {
           teamName: new FormControl('', [Validators.compose([Validators.required])])
         });
       }, (err) => {
-        console.log("ERR", err);
+        this.alertFlag=true;
+        this.alertMsg="couldn't create team"
       })
     } else
       this.emptyName = true;

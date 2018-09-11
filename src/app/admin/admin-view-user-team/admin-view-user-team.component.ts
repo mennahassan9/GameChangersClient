@@ -11,6 +11,8 @@ import { Params, ActivatedRoute , Router} from '@angular/router';
 export class AdminViewUserTeamComponent implements OnInit {
   teamName: string;
   team: any = {};
+  errorFlag: boolean;
+  errorMsg: string;
   constructor(  
     private route: ActivatedRoute,
     private router: Router,
@@ -21,15 +23,18 @@ export class AdminViewUserTeamComponent implements OnInit {
   ngOnInit() {
     this.teamName = this.route.snapshot.params['id'];
     this.teamService.getTeam(this.teamName).subscribe((res) => {
+      this.errorFlag=false;
        console.log(res)
       if (JSON.parse(res["_body"])["team"] != null) {
         this.team = JSON.parse(res["_body"]);
       } 
       else {
-        console.log("NULL TEAM");
+        this.errorFlag=true;
+        this.errorMsg="Could'nt retrieve team"
       }
     }, (err) => {
-      console.log("ERR", err);
+      this.errorFlag=true;
+      this.errorMsg="Could'nt retrieve team"
     })
   }
 

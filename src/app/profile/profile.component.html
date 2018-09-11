@@ -1,5 +1,8 @@
 <div class="container-fluid profile__main-container">
     <div class="profile__info row">
+            <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+                    {{ alertMsg }}
+                  </div>
         <div class="row profile__logout-container">
             <div class="col-sm-offset-10 col-sm-2">
                 <!-- <button class="profile__logout-btn" (click)="redirectToHome()">Logout</button> -->
@@ -56,6 +59,9 @@
                     <button class="btn btn-primary" (click)="acceptInvitation(team.name)" >accept</button>
                     <button class="btn btn-danger" (click)="rejectInvitation(team.name)" >reject</button>
                   </div>
+                  <div class="alert alert-danger" role="alert" *ngIf="acceptFlag">
+                        {{ alertMsg }}
+                      </div>
                 </li>
             </ul>
           </div>

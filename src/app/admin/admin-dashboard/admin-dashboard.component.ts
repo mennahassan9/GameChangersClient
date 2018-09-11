@@ -11,6 +11,8 @@ export class AdminDashboardComponent implements OnInit {
   @ViewChild('ideasChart') public ideasChart : BaseChartDirective
   @ViewChild('teamsChart') public teamsChart : BaseChartDirective
   
+  alertFlag: boolean;
+  alertMsg: string;
   
   public users: string = "";
   public teams: string = "";
@@ -39,21 +41,22 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit() {
 
     this.adminService.getStatistics().subscribe(res=>{
-      console.log(this.ideasChart);
-      
-      this.users = res.body.numberOfUsers;
-      this.teams = ""+parseInt(res.body.numberofTeamsThatDidntSubmittedIdeas) + parseInt(res.body.numberofTeamsThatSubmittedIdeas);
-      this.judges = res.body.numberOfJudges;
+      this.alertFlag=false;
+     
+      this.users = res.data.numberOfUsers;
+      this.teams = ""+parseInt(res.data.numberofTeamsThatDidntSubmittedIdeas) + parseInt(res.data.numberofTeamsThatSubmittedIdeas);
+      this.judges = res.data.numberOfJudges;
 
-      this.ideasChartData[0] = (res.body.numberOfJudgedIdeas);
-      this.ideasChartData[1] = (res.body.numberOfUnJudgedIdeas);
+      this.ideasChartData[0] = (res.data.numberOfJudgedIdeas);
+      this.ideasChartData[1] = (res.data.numberOfUnJudgedIdeas);
 
-      this.teamsChartData[0] = (res.body.numberofTeamsThatSubmittedIdeas);
-      this.teamsChartData[1] = (res.body.numberofTeamsThatDidntSubmittedIdeas);
+      this.teamsChartData[0] = (res.data.numberofTeamsThatSubmittedIdeas);
+      this.teamsChartData[1] = (res.data.numberofTeamsThatDidntSubmittedIdeas);
       this.ideasChart.chart.update();
       this.teamsChart.chart.update();
       }, e => {
-        console.log("ERROR", e);
+        this.alertFlag = true;
+        this.alertMsg = "An error occured while trying to retrieve users and teams data";
         
     })
   }
