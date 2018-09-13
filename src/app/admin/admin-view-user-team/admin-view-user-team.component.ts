@@ -24,7 +24,7 @@ export class AdminViewUserTeamComponent implements OnInit {
     this.teamName = this.route.snapshot.params['id'];
     this.teamService.getTeam(this.teamName).subscribe((res) => {
       this.errorFlag=false;
-       console.log(res)
+      
       if (JSON.parse(res["_body"])["team"] != null) {
         this.team = JSON.parse(res["_body"]);
       } 

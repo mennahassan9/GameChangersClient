@@ -41,7 +41,7 @@ export class EditTeamComponent implements OnInit {
   addTeamMember() {
     
     this.http.post(environment.apiUrl + "/teams/add/member", { email: this.emailAdded }, { headers: this.reqHeaders }).subscribe((res) => {
-      console.log("RESSSSSS", res);
+     
       this.emailSent = true;
       this.error = false;
       this.team = JSON.parse(res["_body"]).team;
@@ -57,7 +57,7 @@ export class EditTeamComponent implements OnInit {
 
   removeTeamMember(email) {
     this.http.post(environment.apiUrl + "/teams/delete/member", { email: email }, { headers: this.reqHeaders }).subscribe((res) => {
-      console.log("RESSSSSS", res);
+      
       this.emailSent = false;
       this.team = JSON.parse(res["_body"]).team;
       this.error = false;
@@ -65,7 +65,7 @@ export class EditTeamComponent implements OnInit {
       this.error = true;
       this.emailSent = false;
       this.errorMsg = JSON.parse(err["_body"])["errors"][0]["messages"][0];
-      console.log("ERROR --> ", this.errorMsg);
+      
     });
   }
 

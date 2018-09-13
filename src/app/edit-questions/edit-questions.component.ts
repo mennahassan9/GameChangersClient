@@ -30,10 +30,10 @@ export class EditQuestionsComponent implements OnInit {
   getQuestions(){
     
     this.judgeService.getQuestions().subscribe(res=>{
-    console.log(res['_body']);
+  
     this.alertFlag=false;
       
-      console.log(JSON.parse(res['_body']).body)
+      
       this.questions = JSON.parse(res['_body']).body;
     this.numberOfQuestions = this.questions.length
       
@@ -58,15 +58,15 @@ export class EditQuestionsComponent implements OnInit {
     this.questions = this.questions.slice(0, this.numberOfQuestions - 1);
     // }
     this.numberOfQuestions--;
-    console.log(this.questions);
+   
 
     // console.log(this.questions.length);
   }
   submit() {
-    console.log(this.questions)
+    
     this.adminService.putQuestions(this.questions).subscribe((res) => {
      this.alertFlag=false;
-      console.log(res);
+    
     }, e=>{
       this.alertFlag=true;
       this.alertMsg="An Error occured while editing the questions"

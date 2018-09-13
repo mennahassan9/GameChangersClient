@@ -126,7 +126,7 @@ export class ProfileComponent implements OnInit {
         this.currentUser = JSON.parse(res["_body"]).data;
         this.teamMember = JSON.parse(res["_body"]).data.teamMember;
         this.userCreatorTeam = JSON.parse(res["_body"]).data.creatorOf;
-        console.log(this.teamMember)
+        
       }, e=>{
         this.alertFlag=true;
         this.alertMsg="An Error occured while connecting to server"

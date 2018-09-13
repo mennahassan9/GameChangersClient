@@ -40,7 +40,7 @@ export class AdminViewIdeasComponent implements OnInit {
   ngOnInit() {
     this.toggleLoading();
     this.adminService.getIdeas().subscribe(res => {
-      console.log(res);
+     
       this.ideas = res.body;
       this.parseResponse(res.body);
       this.toggleLoading();
@@ -70,14 +70,14 @@ export class AdminViewIdeasComponent implements OnInit {
       object['judgesScore'] += element.judgments.length == 0 ? "" : "</ul>";
       retuenedData.push(object);
     });
-    console.log(retuenedData)
+ 
     this.rows = retuenedData;
     this.data = retuenedData;
     this.onChangeTable(this.config);
   }
 
   public onChangeTable(config:any):any {
-    console.log(config)
+    
     if (config.filtering) {
       Object.assign(this.config.filtering, config.filtering);
     }
@@ -160,7 +160,7 @@ export class AdminViewIdeasComponent implements OnInit {
   public onCellClick(data: any): any {
     if (data.column === 'addJudgeButton'){
         let teamName = data.row.teamName;
-        console.log(teamName);
+        
     }
   }
 

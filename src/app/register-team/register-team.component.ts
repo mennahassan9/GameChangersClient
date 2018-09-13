@@ -6,7 +6,7 @@ import { LoginService } from '../Services/login.service';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../Services/auth.service';
 
-
+import { IdeaChallengeService } from '../Services/idea-challenge.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
 import { environment } from "../../environments/environment";
@@ -32,6 +32,7 @@ export class RegisterTeamComponent implements OnInit {
   emptyName: boolean;
   alertFlag: boolean
   alertMsg: string;
+  challenges: Array<string> = [];
 
   teamInvitation: TeamInviteModel;
   constructor(
@@ -40,6 +41,7 @@ export class RegisterTeamComponent implements OnInit {
     private route: ActivatedRoute,
     private teamService: TeamService,
     private auth: AuthService,
+    private challengeService: IdeaChallengeService
   ) { }
 
 
@@ -106,6 +108,13 @@ export class RegisterTeamComponent implements OnInit {
       return false;
   }
 
+  initChallenges() {
+    this.challengeService.getChallenges().subscribe(res=>{
+      this.challenges = JSON.parse(res._body)["body"];
+      }, e => {
+        this.challenges = [];
+    })
+  }
   removeFromTeam(index) {
     this.teamEmails.splice(index, 1)
     if (this.notAdmin())
@@ -114,6 +123,7 @@ export class RegisterTeamComponent implements OnInit {
     console.log(this.teamInvitation.members);
   }
   ngOnInit() {
+    this.initChallenges();
     this.teamInvitation = new TeamInviteModel();
     this.teamNumber = new Array<number>();
     this.teamNumber.push(1);
