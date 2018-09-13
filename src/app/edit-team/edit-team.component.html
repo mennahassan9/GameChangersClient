@@ -8,6 +8,9 @@
         <div class="row alert alert-success login__error-msg" *ngIf = "emailSent">
             An email is sent to the supplied email.
         </div>
+        <div class="row alert alert-success login__error-msg" *ngIf = "success">
+            {{ successMsg }}
+        </div>
         <div class="row alert alert-danger login__error-msg" *ngIf = "error">
             {{ errorMsg }}
         </div>

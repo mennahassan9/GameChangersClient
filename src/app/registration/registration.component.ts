@@ -87,6 +87,7 @@ export class RegistrationComponent implements OnInit {
       this.userSvc.register(this.form.value as RegistrationModel).then((success) => {
         this.router.navigate(['./signin']);
       }).catch((err) => {
+        console.log(err);
           err = err.json();
           if(err.errors[0].messages){
             this.showAlert(err.errors[0].messages[0]);

@@ -22,9 +22,11 @@ export class ViewTeamComponent implements OnInit {
   teamName: String;
   isAdmin: boolean;
   addedemail: string;
-  editFlag:boolean;
-  alertFlag:boolean;
-  editMsg:string;
+  errAlert: boolean;
+  errMessage: string;
+  editFlag: boolean;
+  alertFlag: boolean;
+  editMsg: string;
   alertMsg: string;
 
 
@@ -46,50 +48,59 @@ export class ViewTeamComponent implements OnInit {
 
   addMember(email) {
 
-    this.adminService.addTeamMember(this.teamName,email.value).subscribe(res => {
-    
-      this.editFlag=false;
+    this.adminService.addTeamMember(this.teamName, email.value).subscribe(res => {
 
-      if (res!= null) {
-        this.team.members =res.data.members;
-        
-      }   
-     
+      this.editFlag = false;
+
+      if (res != null) {
+        this.team.members = res.data.members;
+
+      }
+
     }, (err) => {
-      this.editFlag=true;
-      this.editMsg="couldn't add member to team"
+      this.editFlag = true;
+      this.editMsg = "couldn't add member to team"
     });
   }
 
   deleteMember(email) {
-    this.adminService.deleteTeamMember(this.teamName,email).subscribe(res => {
-    
-      this.editFlag=false;
-      if (res!= null) {
-        this.team.members=res.data.members;
-        
-       
-      } 
+    this.adminService.deleteTeamMember(this.teamName, email).subscribe(res => {
+
+      this.editFlag = false;
+      if (res != null) {
+        this.team.members = res.data.members;
+
+
+      }
     }, (err) => {
-      this.editFlag=true;
-      this.editMsg="couldn't delete member to team"
+      this.editFlag = true;
+      this.editMsg = "couldn't delete member to team"
     });
   }
 
+  hideAlerts() {
+    this.errAlert = false;
+    this.errMessage = '';
+  }
+
+  setErrorMessage(message) {
+    this.errMessage = message;
+  }
 
   ngOnInit() {
+    this.hideAlerts();
     this.teamName = this.route.snapshot.params['teamName'];
     this.teamService.getTeam(this.teamName).subscribe((res) => {
-      if (JSON.parse(res["_body"])["team"] != null) {
-        this.team = JSON.parse(res["_body"])["team"];
-        this.creator = this.team["creator"]["email"]
-       
+      this.team = res.data.team;
+      this.creator = this.team.creator.email;
+    }, (err) => {
+      this.errAlert = true;
+      if (err.status == '404') {
+        this.setErrorMessage('Team not found!');
       }
       else {
-        console.log("NULL TEAM");
+        this.setErrorMessage('An error has occured Please try again!');
       }
-    }, (err) => {
-      console.log("ERR", err);
     })
     this.isAdmin = this.localStorageService.get('isAdmin');
   }

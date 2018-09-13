@@ -25,7 +25,7 @@ export class ViewInvitationsComponent implements OnInit {
 
   ngOnInit() {
     this.teamService.Invitations().subscribe((res) => {
-      this.teams = (res["teams"]);
+      this.teams = res.data.teams;
     });
   }
 

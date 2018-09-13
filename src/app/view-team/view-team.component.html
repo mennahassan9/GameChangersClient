@@ -1,38 +1,38 @@
-<div class = "container-fluid team__body" >
-        <div class = " col-sm-offset-2 col-sm-8">
-            <div class="row">
-                    <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
-                            {{ alertMsg }}
-                          </div>
-                <div class="col-sm-offset-3 col-sm-6 text-center team__edit-header">
-                    Team Name: {{ team.name }}
-                </div>
+<div class="container-fluid team__body">
+    <div class="alert alert-danger text-center" role="alert" *ngIf="errAlert">
+        <strong> {{ errMessage }} </strong>
+    </div>
+    <div class=" col-sm-offset-2 col-sm-8">
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6 text-center team__edit-header">
+                Team Name: {{ team.name }}
             </div>
-            <div class="row">
-                <div class="col-sm-offset-3 col-sm-6 text-center team__creator-header">
-                    Creator: {{ creator }}
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6 text-center team__creator-header">
+                Creator: {{ creator }}
             </div>
-            <div class="row team__view-container">
-                <!-- already invited members -->
-                <div class="row">
-                    <div class="col-sm-offset-3 col-sm-6 text-center team__view-team-add">
-                        <div class="team__view-team-add-text row" for="email">Team Members</div>
-                        <div class="row team__view-team-members" *ngFor="let item of team.members; let i = index;">
-                            <label *ngIf="item.accepted == true">{{ item.email }}</label>
-                            <a *ngIf="isAdmin == true && item.accepted == true" (click)="deleteMember(item.email)">x</a>
-                        </div>
+        </div>
+        <div class="row team__view-container">
+            <!-- already invited members -->
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-6 text-center team__view-team-add">
+                    <div class="team__view-team-add-text row" for="email">Team Members</div>
+                    <div class="row team__view-team-members" *ngFor="let item of team.members; let i = index;">
+                        <label *ngIf="item.accepted == true">{{ item.email }}</label>
+                        <a *ngIf="isAdmin == true && item.accepted == true" (click)="deleteMember(item.email)">x</a>
                     </div>
                 </div>
-                <div class="row team__view-btn-container" *ngIf="isAdmin == true">
-                  
-                            <app-invite-team-member  (employee)= "addMember($event)"></app-invite-team-member>
-                            <!-- <app-invite-team-member  (employee) = "addEmployee($event)"></app-invite-team-member> -->
-                            <!-- <input type="email" class="form-control" id="email"
+            </div>
+            <div class="row team__view-btn-container" *ngIf="isAdmin == true && !errAlert">
+
+                <app-invite-team-member (employee)="addMember($event)"></app-invite-team-member>
+                <!-- <app-invite-team-member  (employee) = "addEmployee($event)"></app-invite-team-member> -->
+                <!-- <input type="email" class="form-control" id="email"
                             [(ngModel)]="addedemail" name="addemail"> -->
-                        <!-- <input class="team__view-btn" value = "Back to profile" (click)= "backToProfile()"> -->
-                    
-                </div>
+                <!-- <input class="team__view-btn" value = "Back to profile" (click)= "backToProfile()"> -->
+
             </div>
         </div>
     </div>
+</div>

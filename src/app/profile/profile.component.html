@@ -35,10 +35,10 @@
                             <li>Team Name: {{ currentUser.teamMember === "-1"? false : currentUser.teamMember }}</li>
                             <!-- <li>Team Creator: {{ currentUser.creatorOf === "-1"? false : currentUser.creatorOf }}</li> -->
                             <!-- <li>Career Level: {{ currentUser.careerLevel }}</li> -->
-                            <li>Previous Participation: {{ currentUser.previousParticipation === true? "Yes": "No" }}</li>            
+                            <li>Previous Participation: {{ currentUser.previousParticipation === true? "Yes": "No" }}</li>
                             <!-- <li>GenNext Member: {{ currentUser.genNextMember === true? "Yes":"No" }}</li>   -->
                         </ul>
-                    
+
                     </div>
                 </div>
             </div>
@@ -46,25 +46,28 @@
     </div>
     <div bsModal #invitationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
         <div class='modal-dialog modal-lg'>
-          <div id="transparent_div" class="modal-content">
-             <h1 align="center" *ngIf = "noInvitations == true">There are no Inviations</h1>
-             <h1 align="center" *ngIf ="teamMember != -1">You already have a team</h1>
-            <ul class="invitations" *ngIf ="teamMember == -1 && noInvitations == false">
-                <h3>Team Name</h3>
-                <li class="row" *ngFor="let team of teams">
-                  <div class=" teamName col-sm-6 bottom-spacing--input"  (click)="redirectToTeamInvitation(team.name)">
-                        <a>{{ team.name }}</a>
-                  </div>
-                  <div  class=" btns col-sm-6 bottom-spacing col-align-right">
-                    <button class="btn btn-primary" (click)="acceptInvitation(team.name)" >accept</button>
-                    <button class="btn btn-danger" (click)="rejectInvitation(team.name)" >reject</button>
-                  </div>
-                  <div class="alert alert-danger" role="alert" *ngIf="acceptFlag">
-                        {{ alertMsg }}
-                      </div>
-                </li>
-            </ul>
-          </div>
+            <div id="transparent_div" class="modal-content">
+                <div class="alert alert-success text-center" *ngIf="successAlert">
+                    {{ successMsg }}
+                </div>
+                <div class="alert alert-danger text-center" *ngIf="errorAlert">
+                    {{ errorMsg }}
+                </div>
+                <h1 align="center" *ngIf="noInvitations == true">There are no Inviations</h1>
+                <h1 align="center" *ngIf="teamMember != -1">You already have a team</h1>
+                <ul class="invitations" *ngIf="teamMember == -1 && noInvitations == false">
+                    <h3>Team Name</h3>
+                    <li class="row" *ngFor="let team of teams">
+                        <div class=" teamName col-sm-6 bottom-spacing--input" (click)="redirectToTeamInvitation(team.name)">
+                            <a>{{ team.name }}</a>
+                        </div>
+                        <div class=" btns col-sm-6 bottom-spacing col-align-right">
+                            <button class="btn btn-primary" (click)="acceptInvitation(team.name)">accept</button>
+                            <button class="btn btn-danger" (click)="rejectInvitation(team.name)">reject</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="profile__control-panel row">

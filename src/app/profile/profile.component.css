@@ -108,3 +108,9 @@ h3{
         font-size: 10px;
     }
 }
+
+.alert-msg {
+    font-size: 1.5em;
+    text-align: center;
+    margin-top: 10px;
+}

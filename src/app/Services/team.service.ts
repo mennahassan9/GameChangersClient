@@ -12,13 +12,13 @@ import { TeamInviteModel } from '../register-team/Models/teamInviteModel';
 export class TeamService {
   constructor(private http: Http, private router: Router, private localStorageService: LocalStorageService) {}
 
-   getTeamMember(): Observable<any> {
+   getCreatedTeam(): Observable<any> {
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-
-    return this.http.get(environment.apiUrl + "/teams/view/member", { headers: reqHeaders });
+    return this.http.get(environment.apiUrl + "/teams/self", { headers: reqHeaders })
+    .map(res => res.json());
   }
 
   getTeam(teamName): Observable<any> {
@@ -26,8 +26,8 @@ export class TeamService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-
-    return this.http.get(environment.apiUrl + `/teams/view/team/${teamName}`, { headers: reqHeaders });
+    return this.http.get(environment.apiUrl + `/teams/${teamName}`, { headers: reqHeaders })
+    .map(res => res.json());
   }
 
   createTeam(teamInvitation : TeamInviteModel )
@@ -40,10 +40,9 @@ export class TeamService {
           'teamName': teamInvitation.teamName,
           'members': teamInvitation.members
         }
-        return this.http.post(environment.apiUrl + "/teams/new", body, { headers: reqHeaders })
+        return this.http.post(environment.apiUrl + "/teams", body, { headers: reqHeaders })
           .map(res => res.json());
   }
-
 
   SearchUsers(email) {
     const reqHeaders: Headers = new Headers();
@@ -54,38 +53,43 @@ export class TeamService {
     .map(res => res.json());
   }
 
-
   Invitations() {
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get(environment.apiUrl + `/teams/view/invitations`, { headers: reqHeaders })
+    return this.http.get(environment.apiUrl + `/teams/invitations`, { headers: reqHeaders })
     .map(res => res.json());
   }
 
-  acceptInvitation(teamName) {
+  respondToInvitations(teamName, accepted) {
+    {
+      const reqHeaders: Headers = new Headers();
+      reqHeaders.append('Content-Type', 'application/json');
+      const currentToken = this.localStorageService.get('token');
+      reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+      return this.http.put(environment.apiUrl + `/teams//invitations/${teamName}`, { accepted }, { headers: reqHeaders })
+      .map(res => res.json());
+    }
+  }
+
+  addTeamMember(email):Observable<any> {
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     let body = {
-      'teamName': teamName
+      email
     }
-    return this.http.post(environment.apiUrl + "/teams/accept/invitations", body, { headers: reqHeaders })
+    return this.http.post(environment.apiUrl + "/teams/self/members", body, { headers: reqHeaders })
     .map(res => res.json());
   }
 
-  rejectInvitation(teamName) {
+  deleteTeamMember(email):Observable<any> {
     const reqHeaders: Headers = new Headers();
-    reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    let body = {
-      'teamName': teamName
-    }
-    return this.http.post(environment.apiUrl + "/teams/reject/invitations", body, { headers: reqHeaders })
+    return this.http.delete(environment.apiUrl + `/teams/self/members/${email}`, { headers: reqHeaders })
     .map(res => res.json());
   }
-
 }
