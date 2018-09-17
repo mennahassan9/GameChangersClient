@@ -29,7 +29,7 @@ export class InviteTeamMemberComponent implements OnInit {
     this.fromList = false;
     if(this.email.length != 0){
       this.teamService.SearchUsers(this.email).subscribe((res) => {
-      this.items = res.body;
+      this.items = res.data;
       }, (err) => {
         console.log("ERR", err);
       })
@@ -54,7 +54,7 @@ export class InviteTeamMemberComponent implements OnInit {
   {
     if(this.email && this.email.length != 0){
       this.teamService.SearchUsers(this.email).subscribe((res) => {
-      if(res.body.length == 0)
+      if(res.data.length == 0)
         this.notMember = true;
         if(this.form.valid && !this.notMember){
           this.addEmployeeToPending.emit(this.form.get('email'));

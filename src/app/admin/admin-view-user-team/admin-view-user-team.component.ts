@@ -23,10 +23,8 @@ export class AdminViewUserTeamComponent implements OnInit {
   ngOnInit() {
     this.teamName = this.route.snapshot.params['id'];
     this.teamService.getTeam(this.teamName).subscribe((res) => {
-      this.errorFlag=false;
-      
-      if (JSON.parse(res["_body"])["team"] != null) {
-        this.team = JSON.parse(res["_body"]);
+      if (res.data.team != null) {
+        this.team = res.data.team;
       } 
       else {
         this.errorFlag=true;
@@ -37,5 +35,4 @@ export class AdminViewUserTeamComponent implements OnInit {
       this.errorMsg="Could'nt retrieve team"
     })
   }
-
 }

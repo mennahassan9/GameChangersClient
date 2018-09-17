@@ -19,6 +19,7 @@ import { TeamInviteModel } from './Models/teamInviteModel';
   styleUrls: ['./register-team.component.css']
 })
 export class RegisterTeamComponent implements OnInit {
+ 
   teamEmails: Array<String>;
   maxNumber: boolean = false;
   alreadyInCurrentTeam: boolean = false;
@@ -33,6 +34,9 @@ export class RegisterTeamComponent implements OnInit {
   alertFlag: boolean
   alertMsg: string;
   challenges: Array<string> = [];
+  challengeName: string;
+  challengeN: string;
+  challengeChosen: boolean;
 
   teamInvitation: TeamInviteModel;
   constructor(
@@ -66,7 +70,15 @@ export class RegisterTeamComponent implements OnInit {
 
   createTeam() {
     this.emptyName = false;
-    if (this.teamName) {
+    if(this.challengeChosen != true){
+
+      console.log("heeerrreeeeee")
+      this.alertMsg = " please select a challenge"
+      this.challengeChosen=false;
+      return;
+    }
+
+    if (this.teamName ) {
       this.teamInvitation.teamName = this.teamName;
       //this.teamInvitation.creator = this.teamInvitation.members[0].email;
       console.log(this.teamInvitation);
@@ -75,14 +87,16 @@ export class RegisterTeamComponent implements OnInit {
         this.teamInvitation = new TeamInviteModel();
         this.teamNumber = new Array<number>();
         this.teamEmails = new Array<String>();
+        
         this.teamName = "";
         this.fb = new FormBuilder();
         this.form = this.fb.group({
           teamName: new FormControl('', [Validators.compose([Validators.required])])
         });
       }, (err) => {
+        console.log(err)
         this.alertFlag=true;
-        this.alertMsg="couldn't create team"
+        this.alertMsg="an error occured while creating the team"
       })
     } else
       this.emptyName = true;
@@ -100,6 +114,12 @@ export class RegisterTeamComponent implements OnInit {
     return false;
 
   }
+  enter(name)
+  { 
+    this.challengeName = name;
+    this.challengeN = name;
+    this.challengeChosen = true;
+  }
 
   notAdmin() {
     if (!this.auth.isAdmin())
@@ -111,6 +131,7 @@ export class RegisterTeamComponent implements OnInit {
   initChallenges() {
     this.challengeService.getChallenges().subscribe(res=>{
       this.challenges = JSON.parse(res._body)["body"];
+      console.log(this.challenges);
       }, e => {
         this.challenges = [];
     })
@@ -124,6 +145,7 @@ export class RegisterTeamComponent implements OnInit {
   }
   ngOnInit() {
     this.initChallenges();
+    this.challengeN = "Select your challenge";
     this.teamInvitation = new TeamInviteModel();
     this.teamNumber = new Array<number>();
     this.teamNumber.push(1);

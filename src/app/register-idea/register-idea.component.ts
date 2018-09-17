@@ -83,20 +83,20 @@ export class RegisterIdeaComponent implements OnInit {
   }
 
   // setting the challenges for the user to see in the UI
-  initChallenges() {
-    this.challengeService.getChallenges().subscribe(res=>{
-      this.challenges = JSON.parse(res._body)["body"];
-      }, e => {
-        this.challenges = [];
-    })
+  // initChallenges() {
+  //   this.challengeService.getChallenges().subscribe(res=>{
+  //     this.challenges = JSON.parse(res._body)["body"];
+  //     }, e => {
+  //       this.challenges = [];
+  //   })
     // this.challenges.push("Customer Advocacy/Ways to improve Ease of Doing Business (EoDB)");
     // this.challenges.push("Innovative ways of using Blockchain for customer support");
     // this.challenges.push("How do we make our #CultureCode really come to life?");
     // this.challenges.push("Open Ended – Innovative ways of using Dell products");
-  }
+ // }
 
   ngOnInit() {
-    this.initChallenges();
+   // this.initChallenges();
     this.userService.getDeadlines().then((res) => {
       const submissionDeadline = new Date(JSON.parse(res['_body']).body.submission);
       const now = new Date();

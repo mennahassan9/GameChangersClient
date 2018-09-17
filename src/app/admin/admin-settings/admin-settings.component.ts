@@ -91,7 +91,8 @@ export class AdminSettingsComponent implements OnInit {
     });
 
     this.adminService.getDeadlines().subscribe(res => {      
-      const deadlines = JSON.parse(res._body)["data"];    
+      const deadlines = JSON.parse(res._body)["data"];   
+      console.log(deadlines); 
       this.deadlinesForm = new FormGroup({
         registrationDeadline: new FormControl(deadlines.registration, [Validators.required]),
         submissionDeadline: new FormControl(deadlines.submission, [Validators.required]),

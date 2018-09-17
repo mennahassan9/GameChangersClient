@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { LocalStorageService } from 'angular-2-local-storage';
-import { Headers, Http,RequestOptions,URLSearchParams } from '@angular/http';
+import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
 import { environment } from "../../environments/environment";
 
 @Component({
@@ -16,17 +16,19 @@ import { environment } from "../../environments/environment";
   styleUrls: ['./edit-team.component.css']
 })
 export class EditTeamComponent implements OnInit {
-  
+
   team: any = {};
   public reqHeaders: Headers = new Headers();
   emailAdded: string;
   emailSent: boolean;
   error: boolean;
+  success: boolean;
   errorMsg: string;
+  successMsg: string;
 
   constructor(
-    private teamService : TeamService,
-    private http: Http, 
+    private teamService: TeamService,
+    private http: Http,
     private localStorageService: LocalStorageService,
     private userService: UserService,
     private loginService: LoginService,
@@ -39,48 +41,47 @@ export class EditTeamComponent implements OnInit {
   }
 
   addTeamMember() {
-    
-    this.http.post(environment.apiUrl + "/teams/add/member", { email: this.emailAdded }, { headers: this.reqHeaders }).subscribe((res) => {
-     
+    this.hideAlerts();
+    this.teamService.addTeamMember(this.emailAdded).subscribe((res) => {
       this.emailSent = true;
-      this.error = false;
-      this.team = JSON.parse(res["_body"]).team;
+      this.team = res.data.team;
     }, (err) => {
+      err = err.json();
       this.emailSent = false;
       this.error = true;
-      this.errorMsg = JSON.parse(err["_body"])["errors"][0]["messages"][0];
-      if (this.errorMsg.indexOf("dell|emc|") !== -1) {
-        this.errorMsg = "Make sure the email domain is a valid one";
-      }
+      this.errorMsg = err.errors[0].message;
     });
   }
 
   removeTeamMember(email) {
-    this.http.post(environment.apiUrl + "/teams/delete/member", { email: email }, { headers: this.reqHeaders }).subscribe((res) => {
-      
-      this.emailSent = false;
-      this.team = JSON.parse(res["_body"]).team;
-      this.error = false;
+    this.hideAlerts();
+    this.teamService.deleteTeamMember(email).subscribe((res) => {
+      this.team = res.data.team;
+      this.success = true;
+      this.successMsg = `${email} has been removed!`;
     }, (err) => {
+      err = err.json();
       this.error = true;
-      this.emailSent = false;
-      this.errorMsg = JSON.parse(err["_body"])["errors"][0]["messages"][0];
-      
+      this.errorMsg = err.errors[0].message;
     });
   }
 
+  hideAlerts() {
+    this.emailSent = false;
+    this.error = false;
+    this.errorMsg = '';
+    this.success = false;
+    this.successMsg ='';
+  }
+
   ngOnInit() {
-    this.teamService.getTeamMember().subscribe((res) => {
-      console.log("HEY --> ", res)
-      if (JSON.parse(res["_body"])["team"] != null) {
-        this.team = JSON.parse(res["_body"])["team"];
-        console.log("team --> ", JSON.parse(res["_body"])["team"]);        
-      } 
-      else {
-        console.log("NULL TEAM");
-      }
+    this.hideAlerts();
+    this.teamService.getCreatedTeam().subscribe((res) => {
+      this.team = res.data.team;
     }, (err) => {
-      console.log("ERR", err);
-    })
+      err = err.json();
+      this.error = true;
+      this.errorMsg = err.status == 404 ? err.errors[0]['message'] : 'Something went wrong please try again!';
+    });
   }
 }

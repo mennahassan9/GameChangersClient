@@ -13,6 +13,36 @@
         <div class="alert alert-danger" *ngIf="emptyName" >
             <div *ngIf="emptyName">Please enter a team name</div>
         </div>
+            <!-- <div>
+                <select  (change)="onSelectChallenge($event.target.value)" >
+                    <option class="" *ngFor="let challenge of challenges" [selected]="challenge == alreadyExistingChallenge" [ngValue]="challenge">
+                        {{ challenge }}
+                    </option>
+                </select>
+            </div> -->
+       
+            <!-- <div class="btn-group">
+                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Large button
+                </button>
+                <div class="dropdown-menu">
+                  ...
+                </div>
+              </div> -->
+            <!-- <div class="btn-group">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Action
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Separated link</a>
+                </div>
+              </div> -->
+              
+              
         <div class="row team__register-container">
             <!-- already invited members -->
             <div class="col-sm-offset-3 col-sm-6 text-center team__register-team-add">
@@ -34,15 +64,33 @@
             <div class="col-xs-12 team__create-btn-container">
                 <input class="team__create-btn" *ngIf = "teamEmails.length>0" type = "submit" value = "Create team" (click)= "createTeam()">
             </div>
-            <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
-                    {{ alertMsg }}
-                  </div>
+           
             <div  *ngIf="created" class="row msg">
                 <div class="col-sm-offset-4 col-sm-6">
                     You have just created a team!
                 </div>
             </div>
+           
         </div>
+        <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+            {{ alertMsg }} 
+          </div>
+     <div class="row">
+        <div class="btn-group col-sm-offset3 col-sm-6 ">
+               
+            <button class="btn btn-secondary btn-lg dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{challengeN}}
+                  </button>
+        <div class="dropdown-menu">
+            <ul>
+                    <li  *ngFor="let challenge of challenges" (click) = "enter(challenge.name)" class="dropdown-item"><a>{{ challenge.name }}</a></li>
+            </ul>
+        </div>
+     </div>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="challengeChosen==false">
+            {{ alertMsg }}
+          </div>
         
     </div>
     <div></div>

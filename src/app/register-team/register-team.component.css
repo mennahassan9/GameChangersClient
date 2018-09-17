@@ -64,3 +64,11 @@
     text-decoration: none;
     cursor: pointer;
 }
+.btn-group{
+    margin-top: 5%;
+    width: 100px;
+}
+.dropdown-menu{
+    width: 100%;
+    margin-left: 15%;
+  }
