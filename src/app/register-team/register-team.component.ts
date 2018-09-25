@@ -64,26 +64,25 @@ export class RegisterTeamComponent implements OnInit {
 
   createTeam() {
     this.emptyName = false;
-    if (this.teamName) {
-      this.teamInvitation.teamName = this.teamName;
-      //this.teamInvitation.creator = this.teamInvitation.members[0].email;
-      console.log(this.teamInvitation);
-      this.teamService.createTeam(this.teamInvitation).subscribe((res) => {
-        this.created = true;
-        this.teamInvitation = new TeamInviteModel();
-        this.teamNumber = new Array<number>();
-        this.teamEmails = new Array<String>();
-        this.teamName = "";
-        this.fb = new FormBuilder();
-        this.form = this.fb.group({
-          teamName: new FormControl('', [Validators.compose([Validators.required])])
-        });
-      }, (err) => {
-        this.alertFlag=true;
-        this.alertMsg="couldn't create team"
-      })
-    } else
-      this.emptyName = true;
+      if (this.teamName) {
+        this.teamInvitation.teamName = this.teamName;
+        //this.teamInvitation.creator = this.teamInvitation.members[0].email;
+        this.teamService.createTeam(this.teamInvitation).subscribe((res) => {
+          this.created = true;
+          this.teamInvitation = new TeamInviteModel();
+          this.teamNumber = new Array<number>();
+          this.teamEmails = new Array<String>();
+          this.teamName = "";
+          this.fb = new FormBuilder();
+          this.form = this.fb.group({
+            teamName: new FormControl('', [Validators.compose([Validators.required])])
+          });
+        }, (err) => {
+          this.alertFlag = true;
+          this.alertMsg =  err.json().errors[0].message.toString()
+        })
+      } else
+        this.emptyName = true;
   }
 
 
@@ -125,9 +124,6 @@ export class RegisterTeamComponent implements OnInit {
     });
     if (this.notAdmin()) {
       this.myMail = this.localStorageService.get("email");
-      var invitee: InviteeModel = new InviteeModel();
-      invitee.email = this.myMail;
-      this.teamInvitation.members.push(invitee);
     }
   }
 
