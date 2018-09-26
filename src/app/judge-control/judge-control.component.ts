@@ -101,7 +101,7 @@ export class JudgeControlComponent implements OnInit {
         });
       } else {
         // make the user a judge
-        this.adminService.makeUserAJudge(this.form.value.email).subscribe(res => {
+        this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
           // assign to the idea
           this.adminService.assignJudge(res.body, this.ideaId).subscribe(res => {
             let judge = {}
