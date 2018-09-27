@@ -33,7 +33,7 @@ export class AdminSettingsComponent implements OnInit {
     this.adminService.updateMailSettings(mail).subscribe(res => {
       this.alertFlag=false;
       this.mailFormSubmitted = false;
-      console.log('UPDATED');
+      
 
     }, e => {
       this.alertFlag=true;
@@ -53,7 +53,7 @@ export class AdminSettingsComponent implements OnInit {
     this.adminService.updateDeadlines(deadlines).subscribe(res => {
       this.alertFlag1=false;
       this.mailFormSubmitted = false;
-      console.log('UPDATED');
+    
 
     }, e => {
       this.alertFlag1=true;
@@ -77,7 +77,7 @@ export class AdminSettingsComponent implements OnInit {
 
     this.adminService.getMailSettings().subscribe(res => {
       this.alertFlag =false;
-      console.log(res,"ggggggg")
+      
       const mail = res.data;
       this.mailForm = new FormGroup({
         emailHost: new FormControl(mail.host, [Validators.required]),
@@ -91,7 +91,8 @@ export class AdminSettingsComponent implements OnInit {
     });
 
     this.adminService.getDeadlines().subscribe(res => {      
-      const deadlines = JSON.parse(res._body)["data"];    
+      const deadlines = JSON.parse(res._body)["data"];   
+      console.log(deadlines); 
       this.deadlinesForm = new FormGroup({
         registrationDeadline: new FormControl(deadlines.registration, [Validators.required]),
         submissionDeadline: new FormControl(deadlines.submission, [Validators.required]),

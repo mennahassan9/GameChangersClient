@@ -96,7 +96,10 @@ export class ProfileComponent implements OnInit {
   }
 
   redirectToIdea() {
+    console.log("Idea")
     this.ideaService.getIdea().subscribe((res) => {
+      console.log(JSON.parse(res['_body']));
+     
       if (JSON.parse(res['_body']).idea) {
         this.router.navigate(['./viewIdea']);
       } else {

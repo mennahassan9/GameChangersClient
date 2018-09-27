@@ -21,7 +21,7 @@ export class IdeaService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get(environment.apiUrl + "/ideas/", { headers: reqHeaders });
+    return this.http.get(environment.apiUrl + "/ideas", { headers: reqHeaders });
   }
 
   submitIdea(file, title, challenge): Observable<string> {
