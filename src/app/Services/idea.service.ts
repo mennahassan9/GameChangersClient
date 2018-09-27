@@ -16,13 +16,14 @@ export class IdeaService {
     private router: Router
     ) {}
   
-  getIdea(){
+  getIdea(teamName=null){
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     return this.http.get(environment.apiUrl + "/ideas", { headers: reqHeaders });
   }
+  
 
   submitIdea(file, title, challenge): Observable<string> {
     return Observable.create( observer => 
