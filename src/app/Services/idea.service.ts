@@ -21,7 +21,10 @@ export class IdeaService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get(environment.apiUrl + "/ideas", { headers: reqHeaders });
+    if(teamName) {
+      return this.http.get(environment.apiUrl + `/ideas/${teamName}`, { headers: reqHeaders });
+    }
+    return this.http.get(environment.apiUrl + "/ideas/self", { headers: reqHeaders });
   }
   
 

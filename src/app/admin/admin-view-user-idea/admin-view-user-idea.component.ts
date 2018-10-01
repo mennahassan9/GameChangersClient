@@ -22,8 +22,8 @@ export class AdminViewUserIdeaComponent implements OnInit {
   title: string;
   challenges = [];
   alreadyExistingChallenge: string;
-  filename: string; 
-  loading: boolean; 
+  filename: string;
+  loading: boolean;
   oldFilename: string;
   ideaFlag: boolean;
   ideaMsg: string;
@@ -37,24 +37,24 @@ export class AdminViewUserIdeaComponent implements OnInit {
 
   toggleLoading() {
     this.loading = !this.loading;
-    if(this.loading)
+    if (this.loading)
       this.form.disable()
     else
-       this.form.enable()
+      this.form.enable()
   }
 
-    onDownload() {
+  onDownload() {
     this.toggleLoading()
     this.adminService.downloadIdea(this.filename).subscribe(
       (res) => {
         var fileURL = URL.createObjectURL(res);
         var win = window.open(fileURL);
         this.toggleLoading();
-      } , (err) => {
-        this.ideaFlag=true;
-        this.ideaMsg="error occurred while trying to download Idea "
-          this.toggleLoading();
-      }     
+      }, (err) => {
+        this.ideaFlag = true;
+        this.ideaMsg = "error occurred while trying to download Idea "
+        this.toggleLoading();
+      }
     );
   }
 
@@ -64,10 +64,9 @@ export class AdminViewUserIdeaComponent implements OnInit {
       ideaTitle: new FormControl('', [Validators.required]),
       challenge: new FormControl('', [Validators.required])
     });
-    
-    this.adminService.getUserIdea(this.user).subscribe((res) => {
 
-      this.ideaFlag=false;
+    this.adminService.getUserIdea(this.user).subscribe((res) => {
+      this.ideaFlag = false;
       if (JSON.parse(res["_body"])["data"] != null) {
         this.idea = JSON.parse(res["_body"])["data"]["0"];
         this.title = this.idea.title;
@@ -77,14 +76,14 @@ export class AdminViewUserIdeaComponent implements OnInit {
         this.form.get('challenge').setValue(this.alreadyExistingChallenge);
       }
       else {
-        this.ideaFlag=true;
-        this.ideaMsg="No Idea found for this user"
+        this.ideaFlag = true;
+        this.ideaMsg = "No Idea found for this user"
       }
     }, (err) => {
-        this.ideaFlag=true;
-        this.ideaMsg="error occurred while trying to retrieve Idea "
+      this.ideaFlag = true;
+      this.ideaMsg = err.json().message;
     })
-    
+
   }
 }
 
