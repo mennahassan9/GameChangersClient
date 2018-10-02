@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Params, ActivatedRoute , Router} from '@angular/router';
-import { AdminService} from '../../Services/admin.service';
+import { Params, ActivatedRoute, Router } from '@angular/router';
+import { AdminService } from '../../Services/admin.service';
 
 
 @Component({
@@ -18,26 +18,26 @@ export class AdminViewUserComponent implements OnInit {
     private router: Router,
     private adminService: AdminService
   ) { }
-  
+
 
   redirectToIdea() {
-    this.router.navigate(['/admin/viewIdea',this.user]);
+    this.router.navigate(['/admin/viewIdea', this.user]);
   }
 
   redirectToTeam() {
-    this.router.navigate(['/viewTeam',this.currentUser.teamMember]);
-  } 
+    this.router.navigate(['/viewTeam', this.currentUser.teamMember]);
+  }
 
   ngOnInit() {
-   this.user = this.route.snapshot.queryParams['user'];
-   this.adminService.getUser(this.user).subscribe(res => {
-     this.alertFlag=false;
-   this.currentUser = res.data;
-  }, e=>{ 
-    this.alertFlag=true;
-    this.alertMsg="Something went wrong, couldn't retrieve user's information"
+    this.user = this.route.snapshot.queryParams['user'];
+    this.adminService.getUser(this.user).subscribe(res => {
+      this.alertFlag = false;
+      this.currentUser = res.body;
+    }, e => {
+      this.alertFlag = true;
+      this.alertMsg = "Something went wrong, couldn't retrieve user's information"
 
-  })
-}
+    })
+  }
 
 }

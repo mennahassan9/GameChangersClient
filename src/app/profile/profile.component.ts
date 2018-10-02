@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
   successMsg: string;
   errorAlert: boolean;
   errorMsg: string;
+  alertFlag: boolean
 
   constructor(
     private teamService: TeamService,
@@ -44,12 +45,14 @@ export class ProfileComponent implements OnInit {
 
   hideAlerts() {
     this.errorAlert = false;
+    this.alertFlag = false;
     this.errorMsg = '';
     this.successAlert = false;
     this.successMsg = '';
   }
 
   redirectToInvitation() {
+    this.alertFlag = false;
     this.router.navigate(['./registerTeam']);
   }
 
@@ -88,29 +91,36 @@ export class ProfileComponent implements OnInit {
   }
 
   redirectToTeam() {
+    this.alertFlag = false;
     this.router.navigate([`./viewTeam/${this.teamMember}`]);
   }
 
   redirectToTeamInvitation(teamName) {
+    this.alertFlag = false;
     this.router.navigate([`./viewTeam/${teamName}`]);
   }
 
   redirectToIdea() {
-    console.log("Idea")
-    this.ideaService.getIdea().subscribe((res) => {
-      console.log(JSON.parse(res['_body']));
-     
+    this.alertFlag = false;
+    this.ideaService.getIdea(this.teamMember).subscribe((res) => {
       if (JSON.parse(res['_body']).idea) {
         this.router.navigate(['./viewIdea']);
       } else {
         this.router.navigate(['./registerIdea']);
       }
     }, (err) => {
-      this.router.navigate(['./registerIdea']);
+      if(err.json().status == 404)
+        this.router.navigate(['./registerIdea']);
+      else{
+      this.alertFlag = true;
+      this.errorMsg = err.json().errors[0].message.toString();
+    
+      }
     });
   }
 
   redirectToHome() {
+    this.alertFlag = false;
     this.localStorageService.remove('token');
     this.localStorageService.remove('email');
     this.localStorageService.remove('isJudge');

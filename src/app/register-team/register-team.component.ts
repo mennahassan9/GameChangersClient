@@ -71,8 +71,6 @@ export class RegisterTeamComponent implements OnInit {
   createTeam() {
     this.emptyName = false;
     if(this.challengeChosen != true){
-
-      console.log("heeerrreeeeee")
       this.alertMsg = " please select a challenge"
       this.challengeChosen=false;
       return;
@@ -82,7 +80,7 @@ export class RegisterTeamComponent implements OnInit {
       this.teamInvitation.teamName = this.teamName;
       //this.teamInvitation.creator = this.teamInvitation.members[0].email;
       console.log(this.teamInvitation);
-      this.teamService.createTeam(this.teamInvitation).subscribe((res) => {
+      this.teamService.createTeam(this.challengeName,this.teamInvitation).subscribe((res) => {
         this.created = true;
         this.teamInvitation = new TeamInviteModel();
         this.teamNumber = new Array<number>();
@@ -100,6 +98,7 @@ export class RegisterTeamComponent implements OnInit {
       })
     } else
       this.emptyName = true;
+
   }
 
 
@@ -157,9 +156,6 @@ export class RegisterTeamComponent implements OnInit {
     });
     if (this.notAdmin()) {
       this.myMail = this.localStorageService.get("email");
-      var invitee: InviteeModel = new InviteeModel();
-      invitee.email = this.myMail;
-      this.teamInvitation.members.push(invitee);
     }
   }
 

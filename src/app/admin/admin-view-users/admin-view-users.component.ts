@@ -8,7 +8,7 @@ import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, Ng
 })
 export class AdminViewUsersComponent implements OnInit {
 
-  ideas: any [];
+  users: any [];
   loading: boolean; 
   alertFlag: boolean;
   alertMsg: string;
@@ -36,10 +36,9 @@ export class AdminViewUsersComponent implements OnInit {
   }
   ngOnInit() {
     this.adminService.getUsers().subscribe(res => {
-      this.ideas = res.data;
-      
-      this.length = this.ideas.length;
-      this.parseResponse(res.data);
+      this.users = res.body;
+      this.length = this.users.length;
+      this.parseResponse(res.body);
     }, e=>{
       this.alertFlag=true;
       this.alertMsg= "Couldn't connect to server";

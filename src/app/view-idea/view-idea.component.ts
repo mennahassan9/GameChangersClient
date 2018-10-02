@@ -147,7 +147,9 @@ export class ViewIdeaComponent implements OnInit {
         console.log('idea is null');
       }
       }, (err) => {
-      console.log('ERR', err);
+        if(err.json().status == 404) {
+          this.router.navigate(['./registerIdea']);
+        }
     });
   }
 }

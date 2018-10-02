@@ -70,6 +70,9 @@
             </div>
         </div>
     </div>
+    <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+        {{ errorMsg }}
+      </div>
     <div class="profile__control-panel row">
         <div class="profile__btns-container--border  col-sm-2 text-center">
             <div class="row">

@@ -38,7 +38,7 @@ export class AdminViewTeamsComponent implements OnInit {
 
   ngOnInit() {
     this.adminService.getTeams().subscribe(res => {
-      this.teams = res.data;
+      this.teams = res.body;
       this.length = this.teams.length;
       this.parseResponse(this.teams);
     }, e=>{

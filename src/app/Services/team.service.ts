@@ -30,7 +30,7 @@ export class TeamService {
     .map(res => res.json());
   }
 
-  createTeam(teamInvitation : TeamInviteModel )
+  createTeam(challenge, teamInvitation : TeamInviteModel )
   {
         const reqHeaders: Headers = new Headers();
         reqHeaders.append('Content-Type', 'application/json');
@@ -38,7 +38,8 @@ export class TeamService {
         reqHeaders.append('Authorization', 'Bearer ' + currentToken);
         let body = {
           'teamName': teamInvitation.teamName,
-          'members': teamInvitation.members
+          'members': teamInvitation.members,
+          'challenge': challenge
         }
         return this.http.post(environment.apiUrl + "/teams", body, { headers: reqHeaders })
           .map(res => res.json());

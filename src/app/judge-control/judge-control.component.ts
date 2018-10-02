@@ -101,7 +101,7 @@ export class JudgeControlComponent implements OnInit {
         });
       } else {
         // make the user a judge
-        this.adminService.makeUserAJudge(this.form.value.email).subscribe(res => {
+        this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
           // assign to the idea
           this.adminService.assignJudge(res.body, this.ideaId).subscribe(res => {
             let judge = {}
@@ -114,22 +114,8 @@ export class JudgeControlComponent implements OnInit {
         });
       }
     }, err => {
-      if (err.status == 404) {
-        // create new judge 
-        this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
-          // assign to the idea
-          this.adminService.assignJudge(res.body, this.ideaId).subscribe(res => {
-            let judge = {}
-            judge['name'] = res.judge.name
-            judge['email'] = res.judge.email
-            judge['score'] = "not judged yet";
-            this.judges.push(judge);
-          });
-        });
-      } else {
         this.errorAlert = true;
-        this.errorMessage = err.errors[0].message;
-      }
+        this.errorMessage = err.json().errors[0].message;
       this.toggleLoading();
     });
   }
