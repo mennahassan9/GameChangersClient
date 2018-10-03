@@ -24,8 +24,7 @@ export class AdminEmailDomainComponent implements OnInit {
 
   ngOnInit() {
     this.domainService.getDomains().subscribe(res=>{
-      this.domains = JSON.parse(res._body)["data"];
-      
+      this.domains = res.json().body;
       }, e => {
         this.alertFlag=true;
         this.alertMsg="couldn't connect to server"

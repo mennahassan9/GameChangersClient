@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { HeaderButtonsService } from '../Services/headerButtons.service';
 import { IdeaService } from '../Services/idea.service';
+import { LoginService } from './../Services/login.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,39 +13,47 @@ export class HeaderComponent implements OnInit {
 
   isSignedIn: boolean;
   isJudge: boolean;
+  isAdmin: boolean;
   constructor(
     private router: Router,
     private localStorageService: LocalStorageService,
     private headerButtonsService: HeaderButtonsService,
-    private ideaService: IdeaService
+    private ideaService: IdeaService,
+    private loginService: LoginService,
   ) { }
 
   ngOnInit() {
     this.isJudge = this.localStorageService.get("isJudge") == true;
+    this.isAdmin = this.localStorageService.get("isAdmin") == true;
     this.headerButtonsService.isSignedIn.subscribe(updateSignIn => {
       this.isJudge = this.localStorageService.get("isJudge") == true;
       this.isSignedIn = updateSignIn;
     });
-    if(this.localStorageService.get('token')){
+    if (this.localStorageService.get('token')) {
       this.headerButtonsService.setIsSignedIn();
-    }else {
+    } else {
       this.headerButtonsService.signOut();
     }
   }
 
-  navigateToHome(){
-    if(this.localStorageService.get('token') && this.isJudge){
+  navigateToHome() {
+    if (this.localStorageService.get('token') && this.isJudge) {
       this.router.navigate(['./judge']);
-    }else{
-      if(this.localStorageService.get('token') && !this.isJudge){
-        this.router.navigate(['./profile']);
-      }else{
-        this.router.navigate(['./']);
+    } else {
+      if (this.localStorageService.get('token') && this.isAdmin) {
+        this.router.navigate(['./admin/dashboard']);
+      } else {
+        if (this.localStorageService.get('token') && !this.isAdmin && !this.isJudge) {
+          this.router.navigate(['./profile']);
+        }
+        else {
+          this.router.navigate(['./']);
+        }
       }
     }
   }
 
-  logout(){
+  logout() {
     this.localStorageService.remove('token');
     this.localStorageService.remove('isJudge');
     this.localStorageService.remove('isAdmin');
@@ -53,21 +62,24 @@ export class HeaderComponent implements OnInit {
     this.headerButtonsService.signOutAdmin();
     this.router.navigate(['./']);
   }
-  redirectToTeam(){
-    this.router.navigate(['./viewTeam']);
-  }
-  redirectToIdea(){
-    this.ideaService.getIdea().subscribe((res) => {
-      if(JSON.parse(res['_body']).idea){
-        this.router.navigate(['./viewIdea']);
-      } else {
-        this.router.navigate(['./registerIdea']);
-      }
+  redirectToTeam() {
+    this.loginService.getUser().subscribe((res) => {
+      let teamName = res.json().data.teamMember;
+      this.router.navigate([`./viewTeam/${teamName}`]);
     }, (err) => {
-      this.router.navigate(['./registerIdea']);
+      console.log(err.json());
     });
   }
-  redirectToForgotPassword(){
+  redirectToIdea() {
+    this.ideaService.getIdea().subscribe((res) => {
+      this.router.navigate(['./viewIdea']);
+    }, (err) => {
+      if (err.json().status == 404) {
+        this.router.navigate(['./registerIdea']);
+      }
+    });
+  }
+  redirectToForgotPassword() {
     this.router.navigate(['./forgot-password']);
   }
 }
