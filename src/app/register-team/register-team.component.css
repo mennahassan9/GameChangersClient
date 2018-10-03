@@ -5,7 +5,8 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
-.btn-primary{
+
+.btn-primary {
     margin-left: 5%;
 }
 
@@ -64,11 +65,36 @@
     text-decoration: none;
     cursor: pointer;
 }
-.btn-group{
+.btn-group {
     margin-top: 5%;
     width: 100px;
 }
-.dropdown-menu{
+
+.dropdown-menu {
     width: 100%;
-    margin-left: 15%;
-  }
+}
+
+.challenge-container {
+    margin: 20px 0px;
+}
+
+.challenge-container__btn {
+    color: white;
+    background-color: #007DB8;
+}
+
+.challenge-container__items {
+    list-style-type: none;
+    padding: 0px 5px;
+}
+
+.dropdown-item > a {
+    color: black;
+    font-size: 17px;
+}
+
+.dropdown-item > a:hover {
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+}

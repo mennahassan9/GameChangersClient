@@ -1,97 +1,99 @@
-<div class = "container-fluid team__body" >
-    <div class = " col-sm-offset-2 col-sm-8">
-        <div class="row">
-            <div class="col-sm-offset-3 col-sm-6 text-center team__regitser-header">
-                Create your team now!
+<div class="container-fluid team__body">
+    <div class="row">
+        <div class=" col-sm-offset-2 col-sm-8">
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-6 text-center team__regitser-header">
+                    Create your team now!
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-offset-3 col-sm-6 text-center team__regitser-team-name">
-                <input type="email" class="form-control team__regitser-team-name-input" name="teamName" [(ngModel)] = "teamName" placeholder="Team name" />
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-6 text-center team__regitser-team-name">
+                    <input type="email" class="form-control team__regitser-team-name-input text-center" name="teamName" [(ngModel)]="teamName"
+                        placeholder="Team name" />
+                </div>
             </div>
-        </div>
-        <div class="alert alert-danger" *ngIf="emptyName" >
-            <div *ngIf="emptyName">Please enter a team name</div>
-        </div>
+            <div class="row alert alert-danger text-center" *ngIf="emptyName">
+                <strong>Please enter a team name!</strong>
+            </div>
+            <div class="row challenge-container">
+                <div class="col-sm-offset-3 col-sm-6 text-center">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle challenge-container__btn" type="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        {{challengeN}}
+                    </button>
+                    <div class="dropdown-menu">
+                        <ul class="challenge-container__items">
+                            <li *ngFor="let challenge of challenges" (click)="enter(challenge.name)" class="dropdown-item text-center">
+                                <a>{{ challenge.name }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row alert alert-danger text-center" role="alert" *ngIf="challengeChosen==false">
+                <strong>{{ alertMsg }}</strong>
+            </div>
             <!-- <div>
-                <select  (change)="onSelectChallenge($event.target.value)" >
-                    <option class="" *ngFor="let challenge of challenges" [selected]="challenge == alreadyExistingChallenge" [ngValue]="challenge">
-                        {{ challenge }}
-                    </option>
-                </select>
-            </div> -->
-       
-            <!-- <div class="btn-group">
-                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Large button
-                </button>
-                <div class="dropdown-menu">
-                  ...
-                </div>
-              </div> -->
-            <!-- <div class="btn-group">
-                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Action
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Separated link</a>
-                </div>
-              </div> -->
-              
-              
-        <div class="row team__register-container">
-            <!-- already invited members -->
-            <div class="col-sm-offset-3 col-sm-6 text-center team__register-team-add">
-                <div class="team__register-team-add-text row" for="email">Invite team members via their email</div>
-                <div class="row team__register-team-members" *ngIf="notAdmin;">
-                        {{ myMail}}
-                </div>
-                <div class="row team__register-team-members" *ngFor="let item of teamEmails; let i = index;">
-                        {{ item }}
-                    <a (click)= "removeFromTeam(i)" class="team__remove-member">x</a>
-                </div>
-            </div>
+                            <select  (change)="onSelectChallenge($event.target.value)" >
+                                <option class="" *ngFor="let challenge of challenges" [selected]="challenge == alreadyExistingChallenge" [ngValue]="challenge">
+                                    {{ challenge }}
+                                </option>
+                            </select>
+                        </div> -->
 
-            <app-invite-team-member  (employee) = "addEmployee($event)"></app-invite-team-member>
-            <div class="alert alert-danger" *ngIf="alreadyInCurrentTeam || maxNumber">
-                <div *ngIf="alreadyInCurrentTeam">This employee is already within your team</div>
-                <div *ngIf="maxNumber">You have reached the maximum number of members per team</div>    
-            </div>
-            <div class="col-xs-12 team__create-btn-container">
-                <input class="team__create-btn" *ngIf = "teamEmails.length>0" type = "submit" value = "Create team" (click)= "createTeam()">
-            </div>
-           
-            <div  *ngIf="created" class="row msg">
-                <div class="col-sm-offset-4 col-sm-6">
-                    You have just created a team!
+            <!-- <div class="btn-group">
+                            <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Large button
+                            </button>
+                            <div class="dropdown-menu">
+                              ...
+                            </div>
+                          </div> -->
+            <!-- <div class="btn-group">
+                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Action
+                            </button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="#">Action</a>
+                              <a class="dropdown-item" href="#">Another action</a>
+                              <a class="dropdown-item" href="#">Something else here</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                          </div> -->
+            <div class="container-fluid team__register-container">
+                <div class="row alert alert-success text-center" *ngIf="created" role="alert">
+                    <strong>You have just created a team!</strong>
+                </div>
+                <div class="row alert alert-danger text-center" role="alert" *ngIf="alertFlag">
+                    <strong> {{ alertMsg }} </strong>
+                </div>
+                <!-- already invited members -->
+                <div class="row">
+                    <div class="col-sm-offset-3 col-sm-6 text-center team__register-team-add">
+                        <div class="team__register-team-add-text row" for="email">Invite team members via their email</div>
+                        <div class="row team__register-team-members" *ngIf="notAdmin;">
+                            {{ myMail}}
+                        </div>
+                        <div class="row team__register-team-members" *ngFor="let item of teamEmails; let i = index;">
+                            {{ item }}
+                            <a (click)="removeFromTeam(i)" class="team__remove-member">x</a>
+                        </div>
+                    </div>
+                    <app-invite-team-member (employee)="addEmployee($event)"></app-invite-team-member>
+                    <div class="col-sm-offset-3 col-sm-6 alert alert-danger" *ngIf="alreadyInCurrentTeam || maxNumber">
+                        <div class="text-center" *ngIf="alreadyInCurrentTeam">
+                            <strong>This employee is already within your team</strong>
+                        </div>
+                        <div class="text-center" *ngIf="maxNumber">
+                            <strong>You have reached the maximum number of members per team</strong>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 team__create-btn-container">
+                        <input class="team__create-btn" *ngIf="teamEmails.length>0" type="submit" value="Create team" (click)="createTeam()">
+                    </div>
                 </div>
             </div>
-           
         </div>
-        <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
-            {{ alertMsg }} 
-          </div>
-     <div class="row">
-        <div class="btn-group col-sm-offset3 col-sm-6 ">
-               
-            <button class="btn btn-secondary btn-lg dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{challengeN}}
-                  </button>
-        <div class="dropdown-menu">
-            <ul>
-                    <li  *ngFor="let challenge of challenges" (click) = "enter(challenge.name)" class="dropdown-item"><a>{{ challenge.name }}</a></li>
-            </ul>
-        </div>
-     </div>
-        </div>
-        <div class="alert alert-danger" role="alert" *ngIf="challengeChosen==false">
-            {{ alertMsg }}
-          </div>
-        
     </div>
-    <div></div>
 </div>

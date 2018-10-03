@@ -47,7 +47,7 @@ export class InviteTeamMemberComponent implements OnInit {
     this.fb = new FormBuilder(); 
     this.notMember = false;
     this.form = this.fb.group({
-      email: new FormControl('', [Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(dell|emc|virtustream|rsa|pivotal|secureworks)\.com$")])])
+      email: new FormControl('', [Validators.compose([Validators.required])])
     })
   }
   checkIfInTeam()
