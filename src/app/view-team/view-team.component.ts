@@ -28,6 +28,7 @@ export class ViewTeamComponent implements OnInit {
   alertFlag: boolean;
   editMsg: string;
   alertMsg: string;
+  user: string;
 
 
   constructor(
@@ -89,6 +90,7 @@ export class ViewTeamComponent implements OnInit {
 
   ngOnInit() {
     this.hideAlerts();
+    this.user = this.localStorageService.get('email');
     this.teamName = this.route.snapshot.params['teamName'];
     this.teamService.getTeam(this.teamName).subscribe((res) => {
       this.team = res.data.team;

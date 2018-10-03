@@ -47,3 +47,12 @@
 .team__view-btn-container {
     margin-top: 3%;
 }
+
+.profile__btn-team{
+    color: #ffffff;
+    font-size: 2em;
+    padding: 2%;
+    width: 50%;
+    background-color: #007DB8;
+    border-color: #007DB8;
+}

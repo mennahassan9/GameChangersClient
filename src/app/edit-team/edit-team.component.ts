@@ -25,6 +25,7 @@ export class EditTeamComponent implements OnInit {
   success: boolean;
   errorMsg: string;
   successMsg: string;
+  creator: string;
 
   constructor(
     private teamService: TeamService,
@@ -40,9 +41,9 @@ export class EditTeamComponent implements OnInit {
     this.reqHeaders.append('Authorization', 'Bearer ' + currentToken);
   }
 
-  addTeamMember() {
+  addTeamMember(email) {
     this.hideAlerts();
-    this.teamService.addTeamMember(this.emailAdded).subscribe((res) => {
+    this.teamService.addTeamMember(email.value).subscribe((res) => {
       this.emailSent = true;
       this.team = res.data.team;
     }, (err) => {
@@ -71,13 +72,14 @@ export class EditTeamComponent implements OnInit {
     this.error = false;
     this.errorMsg = '';
     this.success = false;
-    this.successMsg ='';
+    this.successMsg = '';
   }
 
   ngOnInit() {
     this.hideAlerts();
     this.teamService.getCreatedTeam().subscribe((res) => {
       this.team = res.data.team;
+      this.creator = res.data.team.creator;
     }, (err) => {
       err = err.json();
       this.error = true;
