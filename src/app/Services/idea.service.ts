@@ -48,16 +48,12 @@ export class IdeaService {
     });
   }
 
-
-
   // update idea from view idea view
-  changeIdea(file, title, challenge, oldName): Observable<string> {
-
+  changeIdea(file, title, oldName): Observable<string> {
     return Observable.create(observer => {
       const data = new FormData();
       data.append('file', file);
       data.append('title', title);
-      data.append('challenge', challenge);
       if (file) {
         data.append('extension', '.' + mime.extension(mime.lookup(file.name)));
         data.append('oldName', oldName);
@@ -80,7 +76,6 @@ export class IdeaService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-
     return this.http.post(environment.apiUrl + '/ideas/download', { 'file': filename }, { headers: reqHeaders, responseType: ResponseContentType.Blob })
       .map(
         (res) => {
