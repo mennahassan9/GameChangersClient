@@ -14,55 +14,51 @@ export class IdeaService {
     private http: Http,
     private localStorageService: LocalStorageService,
     private router: Router
-    ) {}
-  
-  getIdea(teamName=null){
+  ) { }
+
+  getIdea(teamName = null) {
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    if(teamName) {
+    if (teamName) {
       return this.http.get(environment.apiUrl + `/ideas/${teamName}`, { headers: reqHeaders });
     }
     return this.http.get(environment.apiUrl + "/ideas/self", { headers: reqHeaders });
   }
-  
 
-  submitIdea(file, title, challenge): Observable<string> {
-    return Observable.create( observer => 
-      {
-        const ext = '.' + mime.extension(mime.lookup(file.name));
-        const data = new FormData();
-        data.append('file', file);
-        data.append('title', title);
-        data.append('challenge', challenge);
-        data.append('extension', ext);
-        data.append('oldFilename', file.name);
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', environment.apiUrl + '/ideas/new');
-        const currentToken = this.localStorageService.get('token');
-        xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken);
-        xhr.onload = () => {
-          observer.next(xhr.status);
-          observer.complete();
-        };
-        xhr.send(data);
-      });
+
+  submitIdea(file, title): Observable<string> {
+    return Observable.create(observer => {
+      const ext = '.' + mime.extension(mime.lookup(file.name));
+      const data = new FormData();
+      data.append('file', file);
+      data.append('title', title);
+      data.append('extension', ext);
+      data.append('oldFilename', file.name);
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', environment.apiUrl + '/ideas/new');
+      const currentToken = this.localStorageService.get('token');
+      xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken);
+      xhr.onload = () => {
+        observer.next(xhr.status);
+        observer.complete();
+      };
+      xhr.send(data);
+    });
   }
 
 
 
   // update idea from view idea view
-  changeIdea(file, title, challenge, oldName) : Observable <string> {
-    
-    return Observable.create( observer => 
-    {
+  changeIdea(file, title, challenge, oldName): Observable<string> {
+
+    return Observable.create(observer => {
       const data = new FormData();
       data.append('file', file);
       data.append('title', title);
       data.append('challenge', challenge);
-      if(file)
-      {
+      if (file) {
         data.append('extension', '.' + mime.extension(mime.lookup(file.name)));
         data.append('oldName', oldName);
         data.append('oldFilename', file.name);
@@ -70,26 +66,26 @@ export class IdeaService {
       const xhr = new XMLHttpRequest();
       xhr.open('POST', environment.apiUrl + '/ideas/edit');
       const currentToken = this.localStorageService.get('token');
-      xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken); 
+      xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken);
       xhr.send(data);
       xhr.onload = () => {
-          observer.next(xhr.status);
-          observer.complete();
+        observer.next(xhr.status);
+        observer.complete();
       };
     });
   }
 
-  downloadIdea(filename): any{
+  downloadIdea(filename): any {
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    
-    return this.http.post(environment.apiUrl + '/ideas/download', {'file': filename}, {headers: reqHeaders, responseType: ResponseContentType.Blob })
-    .map(
+
+    return this.http.post(environment.apiUrl + '/ideas/download', { 'file': filename }, { headers: reqHeaders, responseType: ResponseContentType.Blob })
+      .map(
         (res) => {
-            return new Blob([res.blob()], { type: mime.lookup(filename) });
+          return new Blob([res.blob()], { type: mime.lookup(filename) });
         }
       )
-    }
   }
+}

@@ -134,15 +134,14 @@ export class ViewIdeaComponent implements OnInit {
     });
     this.form = new FormGroup({
       ideaTitle: new FormControl('', [Validators.required]),
-      challenge: new FormControl('', [Validators.required])
+      // challenge: new FormControl('', [Validators.required])
     });
     this.ideaService.getIdea().subscribe((res) => {
-      if (JSON.parse(res['_body']) != null) {
-        this.title = JSON.parse(res['_body']).idea.title;
-        this.oldFilename = JSON.parse(res['_body']).idea.oldFilename;
-        this.alreadyExistingChallenge = JSON.parse(res['_body']).idea.challenge;
-        this.filename = JSON.parse(res['_body']).idea.filename;
-        this.form.get('challenge').setValue(this.alreadyExistingChallenge);
+      let data = res.json().body;
+      if (data != null) {
+        this.title = data.title;
+        this.oldFilename = data.oldFilename;
+        this.filename = data.filename;
       } else {
         console.log('idea is null');
       }
