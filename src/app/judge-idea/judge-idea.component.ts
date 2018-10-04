@@ -80,7 +80,7 @@ export class JudgeIdeaComponent implements OnInit {
   };
   this.maxScore = 0;
     this.userService.getDeadlines().then((res) => {
-      const judgmentDeadline = new Date(JSON.parse(res['_body']).body.judge);
+      const judgmentDeadline = new Date(JSON.parse(res['_body']).data.judge);
       const now = new Date();
       if(now > judgmentDeadline){
         this.deadlineReached = true;

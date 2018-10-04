@@ -94,7 +94,7 @@ export class ViewTeamComponent implements OnInit {
     this.teamName = this.route.snapshot.params['teamName'];
     this.teamService.getTeam(this.teamName).subscribe((res) => {
       this.team = res.data.team;
-      this.creator = this.team.creator.email;
+      this.creator = this.team.creator === null ? '' : this.team.creator.email;
     }, (err) => {
       this.errAlert = true;
       if (err.status == '404') {

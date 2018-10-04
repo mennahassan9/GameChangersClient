@@ -38,7 +38,7 @@ export class AdminViewTeamsComponent implements OnInit {
 
   ngOnInit() {
     this.adminService.getTeams().subscribe(res => {
-      this.teams = res.body;
+      this.teams = res.data;
       this.length = this.teams.length;
       this.parseResponse(this.teams);
     }, e=>{
@@ -72,7 +72,7 @@ export class AdminViewTeamsComponent implements OnInit {
     }
     let filteredData = this.changeFilter(this.data, this.config);
     let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = this.page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.rows = this.page && config.paging ? this.changePage(page == null? this.page : page, sortedData) : sortedData;
     this.length = sortedData.length;
   }
 

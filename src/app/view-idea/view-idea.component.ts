@@ -124,7 +124,7 @@ export class ViewIdeaComponent implements OnInit {
     this.loading = false;
     this.hideAlerts();
     this.userService.getDeadlines().then((res) => {
-      const submissionDeadline = new Date(JSON.parse(res['_body']).body.submission);
+      const submissionDeadline = new Date(JSON.parse(res['_body']).data.submission);
       const now = new Date();
       if (now > submissionDeadline) {
         this.deadlineReached =true;

@@ -36,7 +36,7 @@ export class RegistrationComponent implements OnInit {
     this.addIdeas();
     this.addRegions();
     this.userSvc.getDeadlines().then((res) => {
-      const registrationDeadline = new Date(JSON.parse(res['_body']).body.registration);
+      const registrationDeadline = new Date(JSON.parse(res['_body']).data.registration);
       const now = new Date();
       if (now > registrationDeadline) {
         this.showAlert('Deadline has been reached')

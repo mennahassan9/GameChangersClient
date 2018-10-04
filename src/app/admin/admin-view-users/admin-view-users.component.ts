@@ -36,9 +36,9 @@ export class AdminViewUsersComponent implements OnInit {
   }
   ngOnInit() {
     this.adminService.getUsers().subscribe(res => {
-      this.users = res.body;
+      this.users = res.data;
       this.length = this.users.length;
-      this.parseResponse(res.body);
+      this.parseResponse(res.data);
     }, e=>{
       this.alertFlag=true;
       this.alertMsg= "Couldn't connect to server";
@@ -71,7 +71,7 @@ export class AdminViewUsersComponent implements OnInit {
     }
     let filteredData = this.changeFilter(this.data, this.config);
     let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = this.page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.rows = this.page && config.paging ? this.changePage(page == null? this.page : page, sortedData) : sortedData;
     this.length = sortedData.length;
   }
 
