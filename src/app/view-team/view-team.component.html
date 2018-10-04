@@ -24,6 +24,12 @@
                             <a *ngIf="isAdmin == true && item.accepted == true" (click)="deleteMember(item.email)">x</a>
                         </div>
                     </div>
+                    <div class="col-sm-offset-3 col-sm-6 text-center team__view-team-add">
+                        <div class="team__view-team-add-text row" for="email">Pending Team Members</div>
+                        <div class="row team__view-team-members" *ngFor="let item of team.members; let i = index;">
+                            <label *ngIf="item.accepted == false">{{ item.email }}</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="row team__view-btn-container" *ngIf="isAdmin == true && !errAlert">
                     <app-invite-team-member (employee)="addMember($event)"></app-invite-team-member>
@@ -37,7 +43,7 @@
     </div>
     <div class="row team__view-btn-container" *ngIf="creator == user">
         <div class="col-sm-offset-3 col-sm-6 text-center">
-                <button class="profile__btn-team" [routerLink]="['/editTeam']">Edit Team</button>
+            <button class="profile__btn-team" [routerLink]="['/editTeam']">Edit Team</button>
         </div>
     </div>
 </div>
