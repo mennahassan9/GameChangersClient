@@ -85,10 +85,10 @@ export class JudgeControlComponent implements OnInit {
     this.hideAlerts();
     this.adminService.isJudge(this.form.value.email).subscribe(res => {
       // already a judge
-      if (res.body.isJudge == true) {
-        let judgeId = res.body._id
+      if (res.data.isJudge == true) {
+        let judgeId = res.data._id
         this.adminService.assignJudge(judgeId, this.ideaId).subscribe(res => {
-          let judge = {};
+          let judge = {};          
           judge['name'] = res.judge.name;
           judge['email'] = res.judge.email;
           judge['score'] = "not judged yet";
@@ -105,8 +105,8 @@ export class JudgeControlComponent implements OnInit {
           // assign to the idea
           this.adminService.assignJudge(res.body, this.ideaId).subscribe(res => {
             let judge = {}
-            judge['name'] = res.judge.name
-            judge['email'] = res.judge.email
+            judge['name'] = res.body.judge.name
+            judge['email'] = res.body.judge.email
             judge['score'] = "not judged yet";
             this.judges.push(judge);
             this.toggleLoading();

@@ -76,9 +76,10 @@ export class AdminSettingsComponent implements OnInit {
     });
 
     this.adminService.getMailSettings().subscribe(res => {
+      const mail = res.data
+
       this.alertFlag =false;
       
-      const mail = res.data;
       this.mailForm = new FormGroup({
         emailHost: new FormControl(mail.host, [Validators.required]),
         emailPort: new FormControl(mail.port, [Validators.required]),
@@ -87,12 +88,11 @@ export class AdminSettingsComponent implements OnInit {
       });
     }, e => {
       this.alertFlag=true;
-      this.alertMsg="something went wrog while trying to retrieve mail settings"
+      this.alertMsg="something went wrong while trying to retrieve mail settings"
     });
 
     this.adminService.getDeadlines().subscribe(res => {      
-      const deadlines = JSON.parse(res._body)["data"];   
-      console.log(deadlines); 
+      const deadlines = JSON.parse(res._body)["data"];
       this.deadlinesForm = new FormGroup({
         registrationDeadline: new FormControl(deadlines.registration, [Validators.required]),
         submissionDeadline: new FormControl(deadlines.submission, [Validators.required]),

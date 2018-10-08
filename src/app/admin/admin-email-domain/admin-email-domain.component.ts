@@ -24,8 +24,7 @@ export class AdminEmailDomainComponent implements OnInit {
 
   ngOnInit() {
     this.domainService.getDomains().subscribe(res=>{
-      this.domains = JSON.parse(res._body)["data"];
-      
+      this.domains = JSON.parse(res._body).data;
       }, e => {
         this.alertFlag=true;
         this.alertMsg="couldn't connect to server"
@@ -83,7 +82,7 @@ export class AdminEmailDomainComponent implements OnInit {
       this.editFlag = false;
     }, e => {
       this.alertFlag = true;
-      this.alertMsg = "An error occured while trying to update the domain";
+      this.alertMsg = "An error occurred while trying to update the domain";
     })
   }
   }

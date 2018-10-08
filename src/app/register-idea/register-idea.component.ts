@@ -23,24 +23,27 @@ export class RegisterIdeaComponent implements OnInit {
   ideaTitle: string;
   loading: boolean;
   deadlineReached: boolean = false;
+  submissionErr: boolean;
+  errorMessage: string;
 
   constructor(
     private router: Router,
     private ideaService: IdeaService,
     private challengeService: IdeaChallengeService,
     private userService: UserService,
-  ) {}
+  ) { }
 
   toggleLoading() {
     this.loading = !this.loading;
     if (this.loading) {
       this.form.disable();
     } else {
-       this.form.enable();
+      this.form.enable();
     }
   }
 
   submitIdea() {
+    this.hideAlerts();
     this.formSubmitted = true;
     // checking whether a file is uploaded or not
     if (this.slides === undefined || this.slides.length === 0) {
@@ -48,22 +51,18 @@ export class RegisterIdeaComponent implements OnInit {
     } else {
       this.emptyUpload = false;
     }
-
-    // TODO: redirecting to profile or a view that only confirms the submission
     if (this.form.valid && !this.emptyUpload) {
       this.ideaTitle = this.form.get('ideaTitle').value;
+      // this.selectedChallenge = (this.form.get('challenge').value)["name"];
       this.toggleLoading();
-      this.ideaService.submitIdea(this.slides[0], this.ideaTitle, (this.form.get('challenge').value)["name"]).subscribe(
-        (res) => {
-          this.toggleLoading();
-          console.log(res);
-          if (res == '200') {
-            alert('Thank you for submitting your idea!');
-            this.router.navigate(['./profile']);
-          } else {
-            alert('There was an error in submitting your idea, please resubmit.');
-          }
-        }
+      this.ideaService.submitIdea(this.slides[0], this.ideaTitle).subscribe((res) => {
+        this.toggleLoading();
+        this.router.navigate(['./viewIdea']);
+      }, (err) => {
+        this.toggleLoading();
+        this.submissionErr = true;
+        this.errorMessage = 'An error as occured while submitting your idea. Please try again.';
+      }
       );
     }
   }
@@ -77,43 +76,38 @@ export class RegisterIdeaComponent implements OnInit {
     }
   }
 
-  // saving the selecting option by the user
-  onSelectChallenge(value) {
-    this.selectedChallenge = value;
-  }
-
   // setting the challenges for the user to see in the UI
-  // initChallenges() {
-  //   this.challengeService.getChallenges().subscribe(res=>{
-  //     this.challenges = JSON.parse(res._body)["body"];
-  //     }, e => {
-  //       this.challenges = [];
-  //   })
-    // this.challenges.push("Customer Advocacy/Ways to improve Ease of Doing Business (EoDB)");
-    // this.challenges.push("Innovative ways of using Blockchain for customer support");
-    // this.challenges.push("How do we make our #CultureCode really come to life?");
-    // this.challenges.push("Open Ended – Innovative ways of using Dell products");
- // }
+  initChallenges() {
+    this.challengeService.getChallenges().subscribe(res => {
+      this.challenges = res.json().body;
+    }, e => {
+      this.challenges = [];
+    })
+  }
 
   ngOnInit() {
-   // this.initChallenges();
     this.userService.getDeadlines().then((res) => {
-      const submissionDeadline = new Date(JSON.parse(res['_body']).body.submission);
+      const submissionDeadline = new Date(JSON.parse(res['_body']).data.submission);
       const now = new Date();
-      if(now > submissionDeadline){
+      if (now > submissionDeadline) {
         this.deadlineReached = true;
+        this.errorMessage = 'Sorry , deadline has been reached.';
         this.form.disable();
-      }else{
+      } else {
         this.deadlineReached = false;
+        // this.initChallenges();
       }
     })
-    .catch((err)=>{
-      alert('Something went wrong, please try again later');
-    });
+      .catch((err) => {
+        alert('Something went wrong, please try again later');
+      });
     this.form = new FormGroup({
       ideaTitle: new FormControl('', [Validators.required]),
-      challenge: new FormControl('', [Validators.required])
+      // challenge: new FormControl('', [Validators.required])
     });
   }
 
+  hideAlerts() {
+    this.submissionErr = false;
+  }
 }

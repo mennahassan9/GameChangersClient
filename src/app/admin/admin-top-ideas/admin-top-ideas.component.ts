@@ -27,8 +27,8 @@ export class AdminTopIdeasComponent implements OnInit {
 
     this.toggleLoading();
     this.adminService.getTopIdea().subscribe(res => {
-      this.topIdeas = res.body;
-      this.parseResponse(res.body);
+      this.topIdeas = res.data.body;
+      this.parseResponse(res.data.body);
       this.toggleLoading();
     }, e=>{
       this.alertFlag=true;

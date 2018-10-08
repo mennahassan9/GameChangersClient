@@ -66,7 +66,6 @@ export class ProfileComponent implements OnInit {
       err = err.json();
       this.errorAlert = true;
       this.errorMsg = 'An error has occured. Please try again later!';
-      console.log(err);
     });
   }
 
@@ -86,7 +85,6 @@ export class ProfileComponent implements OnInit {
       err = err.json();
       this.errorAlert = true;
       this.errorMsg = 'An error has occured. Please try again later!';
-      console.log(err);
     });
   }
 
@@ -103,18 +101,14 @@ export class ProfileComponent implements OnInit {
   redirectToIdea() {
     this.alertFlag = false;
     this.ideaService.getIdea(this.teamMember).subscribe((res) => {
-      if (JSON.parse(res['_body']).idea) {
-        this.router.navigate(['./viewIdea']);
-      } else {
-        this.router.navigate(['./registerIdea']);
-      }
+      this.router.navigate(['./viewIdea']);
     }, (err) => {
-      if(err.json().status == 404)
+      if (err.json().status == 404)
         this.router.navigate(['./registerIdea']);
-      else{
-      this.alertFlag = true;
-      this.errorMsg = err.json().errors[0].message.toString();
-    
+      else {
+        this.alertFlag = true;
+        this.errorMsg = err.json().errors[0].message.toString();
+
       }
     });
   }
@@ -148,7 +142,6 @@ export class ProfileComponent implements OnInit {
       this.currentUser = JSON.parse(res["_body"]).data;
       this.teamMember = JSON.parse(res["_body"]).data.teamMember;
       this.userCreatorTeam = JSON.parse(res["_body"]).data.creatorOf;
-      console.log(this.teamMember)
     });
     this.headerButtonsService.setIsSignedIn();
   }

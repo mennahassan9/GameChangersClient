@@ -1,8 +1,8 @@
 <div class="container-fluid profile__main-container">
     <div class="profile__info row">
-            <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
-                    {{ alertMsg }}
-                  </div>
+        <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+            {{ alertMsg }}
+        </div>
         <div class="row profile__logout-container">
             <div class="col-sm-offset-10 col-sm-2">
                 <!-- <button class="profile__logout-btn" (click)="redirectToHome()">Logout</button> -->
@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ul>
-                            <li>Team Name: {{ currentUser.teamMember === "-1"? false : currentUser.teamMember }}</li>
+                            <li>Team Name: {{ currentUser.teamMember === "-1"? " " : currentUser.teamMember }}</li>
                             <!-- <li>Team Creator: {{ currentUser.creatorOf === "-1"? false : currentUser.creatorOf }}</li> -->
                             <!-- <li>Career Level: {{ currentUser.careerLevel }}</li> -->
                             <li>Previous Participation: {{ currentUser.previousParticipation === true? "Yes": "No" }}</li>
@@ -72,17 +72,17 @@
     </div>
     <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
         {{ errorMsg }}
-      </div>
+    </div>
     <div class="profile__control-panel row">
-        <div class="profile__btns-container--border  col-sm-2 text-center">
+        <!-- <div class="profile__btns-container--border  col-sm-2 text-center">
             <div class="row">
                 <button class="profile__btn-team col-xm-4" (click)="redirectToTeam()">Team</button>
             </div>
             <div class="row profile__btn-team-desc">
                 View your team members!
             </div>
-        </div>
-        <div class="profile__btns-container--border col-sm-2 text-center">
+        </div> -->
+        <div class="profile__btns-container--border col-sm-3 text-center">
             <div class="row">
                 <button class="profile__btn-idea" (click)="redirectToIdea()">Idea</button>
             </div>
@@ -90,15 +90,19 @@
                 View your idea!
             </div>
         </div>
-        <div class="profile__btns-container--border col-sm-2 text-center">
+        <div class="profile__btns-container--border col-sm-3 text-center">
             <div class="row">
-                <button class="profile__btn-team" (click)="redirectToInvitation()">create Team</button>
+                <button class="profile__btn-team" (click)="redirectToInvitation()" *ngIf="teamMember == -1">create Team</button>
+                <button class="profile__btn-team" (click)="redirectToTeam()" *ngIf="teamMember != -1">Team</button>
             </div>
-            <div class="row profile__btn-idea-desc">
+            <div class="row profile__btn-idea-desc" *ngIf="teamMember == -1">
                 Create your own team
             </div>
+            <div class="row profile__btn-team-desc" *ngIf="teamMember != -1">
+                View your team members!
+            </div>
         </div>
-        <div class="profile__btns-container col-sm-2 text-center">
+        <div class="profile__btns-container col-sm-3 text-center">
             <div class="row">
                 <button class="profile__btn-idea " (click)="openEditModal(invitationModal)">Invitations</button>
             </div>

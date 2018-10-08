@@ -29,15 +29,16 @@ export class AdminViewUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.route.snapshot.queryParams['user'];
-    this.adminService.getUser(this.user).subscribe(res => {
-      this.alertFlag = false;
-      this.currentUser = res.body;
-    }, e => {
-      this.alertFlag = true;
-      this.alertMsg = "Something went wrong, couldn't retrieve user's information"
+   this.user = this.route.snapshot.queryParams['user'];
+   this.adminService.getUser(this.user).subscribe(res => {
+  //  this.currentUser = res.body.data;
+     this.alertFlag=false;
+   this.currentUser = res.data;
+  }, e=>{ 
+    this.alertFlag=true;
+    this.alertMsg="Something went wrong, couldn't retrieve user's information"
 
-    })
-  }
+  })
+}
 
 }

@@ -46,7 +46,7 @@ h3{
 
 .profile__control-panel {
     min-height: 35vh;
-    margin-left: 20%;
+    margin-left: 12.5%;
 }
 
 .profile__btn-team, .profile__btn-idea {
@@ -102,10 +102,10 @@ h3{
     opacity: 1;
 }
 
-@media (max-width: 980px) 
+@media (max-width: 980px) and (min-width: 768px) 
   {
     .profile__btn-idea, .profile__btn-team {
-        font-size: 10px;
+        font-size: 1.2em;
     }
 }
 

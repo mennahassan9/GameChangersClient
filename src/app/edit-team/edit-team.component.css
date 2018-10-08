@@ -64,3 +64,7 @@
     text-align: center;
     margin-top: 10px;
 }
+
+.team__remove-member:hover {
+    cursor: pointer;
+}

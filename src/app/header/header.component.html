@@ -1,14 +1,21 @@
 <nav class="navbar navbar-default navbar-fixed-top header__container">
   <div class="container-fluid">
     <div class="header__logo">
-        <img class = "image_click" src="assets/images/dell_logo.png" (click)="navigateToHome()" height="25" width="200" />
+      <img class="image_click" src="assets/images/dell_logo.png" (click)="navigateToHome()" height="25" width="200" />
     </div>
-    <div class="header__stub-container">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+      aria-expanded="false">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <div class="header__stub-container collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <!-- content to be added in here -->
-      <button class="header_btns" (click)="redirectToTeam()" [hidden]="!isSignedIn || isJudge" >My Team</button>
-      <button class="header_btns" (click)="redirectToIdea()" [hidden]="!isSignedIn || isJudge" >My Idea</button>
-      <button class="header_btns" (click)="redirectToForgotPassword()" [hidden]="!isSignedIn" >Reset Password</button>
-      <button class="header_btns" (click)="logout()" [hidden]="!isSignedIn" >Logout</button>
+      <button class="header_btns" (click)="redirectToTeam()" [hidden]="!isSignedIn || isJudge || isAdmin">My Team</button>
+      <button class="header_btns" (click)="redirectToIdea()" [hidden]="!isSignedIn || isJudge || isAdmin">My Idea</button>
+      <button class="header_btns" (click)="redirectToForgotPassword()" [hidden]="!isSignedIn">Reset Password</button>
+      <button class="header_btns" (click)="logout()" [hidden]="!isSignedIn">Logout</button>
 
     </div>
     <div class="clr"></div>

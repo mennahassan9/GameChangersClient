@@ -1,11 +1,12 @@
 .team__body {
-    padding-top: 10%;
+    padding: 10% 0px;
     min-height: 100vh;
     background-image: url("../../assets/images/home_ideas_background_alt7.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 }
-.btn-primary{
+
+.btn-primary {
     margin-left: 5%;
 }
 
@@ -42,7 +43,7 @@
 
 .team__create-btn {
     font-size: 2em;
-    padding: 20px 15px;
+    padding: 15px 15px;
     background-color: #6EA204;
     border-color: #6EA204;
     color: #ffffff;
@@ -64,11 +65,40 @@
     text-decoration: none;
     cursor: pointer;
 }
-.btn-group{
+.btn-group {
     margin-top: 5%;
     width: 100px;
 }
-.dropdown-menu{
+
+.dropdown-menu {
     width: 100%;
-    margin-left: 15%;
-  }
+}
+
+.challenge-container {
+    margin: 20px 0px;
+}
+
+.challenge-container__btn {
+    color: white;
+    background-color: #007DB8;
+}
+
+.challenge-container__items {
+    list-style-type: none;
+    padding: 0px 5px;
+}
+
+.dropdown-item > a {
+    color: black;
+    font-size: 17px;
+}
+
+.dropdown-item > a:hover {
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.team-name__alert {
+    margin-top: 10px;
+}

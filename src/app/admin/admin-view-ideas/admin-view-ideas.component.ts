@@ -15,8 +15,7 @@ export class AdminViewIdeasComponent implements OnInit {
     ];
   public columns:Array<any> = [
     {title: 'Team name', name: 'teamName', filtering: {filterString: '', placeholder: 'Filter by team name'}},
-    {title: 'Idea name',name: 'ideaName',sort: false,filtering: {filterString: '', placeholder: 'Filter by idea name'}},
-    {title: 'Location', name: 'location', sort: 'asc',filtering: {filterString: '', placeholder: 'Filter by location'}},    
+    {title: 'Idea name',name: 'ideaName',sort: false,filtering: {filterString: '', placeholder: 'Filter by idea name'}},   
     {title: 'Challenge name', name: 'challenge', sort: 'asc'},
     {title: 'Judges score.', name: 'judgesScore'}
   ];
@@ -40,7 +39,7 @@ export class AdminViewIdeasComponent implements OnInit {
   ngOnInit() {
     this.toggleLoading();
     this.adminService.getIdeas().subscribe(res => {
-     
+     console.log(res,"0000")
       this.ideas = res.body;
       this.parseResponse(res.body);
       this.toggleLoading();
@@ -61,7 +60,6 @@ export class AdminViewIdeasComponent implements OnInit {
       object['teamName'] = `<a href="#/team-control?team=${element.teamName}">${element.teamName}</a>`;
       object['ideaName'] = element.title == undefined ? "": element.title;
       object['challenge'] = element.challenge == undefined? "": element.challenge;
-      object['location'] = element.location;
       object['judgesScore'] = element.judgments.length == 0 ? "No judges assigned yet" : "<ul>";
       for (let index = 0; index < element.judgments.length; index++) {
         const judgment = element.judgments[index];
@@ -128,6 +126,8 @@ export class AdminViewIdeasComponent implements OnInit {
     this.columns.forEach((column:any) => {
       if (column.filtering) {
         filteredData = filteredData.filter((item:any) => {
+        
+        
           return item[column.name].toLowerCase().match(column.filtering.filterString.toLowerCase());
         });
       }
