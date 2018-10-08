@@ -41,14 +41,14 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit() {
 
     this.adminService.getStatistics().subscribe(res=>{
-
+        console.log(res.data)
       this.alertFlag=false;
       this.users = res.data.numberOfUsers;
       this.teams = parseInt(res.data.numberofTeamsThatDidntSubmittedIdeas) + parseInt(res.data.numberofTeamsThatSubmittedIdeas);
       this.judges = res.data.numberOfJudges;
 
       this.ideasChartData[0] = (res.data.numberOfJudgedIdeas);
-      this.ideasChartData[1] = (res.data.numberOfUnJudgedIdeas);
+      this.ideasChartData[1] = (res.data.numberOfUnjudgedIdeas);
 
       this.teamsChartData[0] = (res.data.numberofTeamsThatSubmittedIdeas);
       this.teamsChartData[1] = (res.data.numberofTeamsThatDidntSubmittedIdeas);
