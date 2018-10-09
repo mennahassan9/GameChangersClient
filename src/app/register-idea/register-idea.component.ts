@@ -25,6 +25,7 @@ export class RegisterIdeaComponent implements OnInit {
   deadlineReached: boolean = false;
   submissionErr: boolean;
   errorMessage: string;
+  
 
   constructor(
     private router: Router,
@@ -41,6 +42,13 @@ export class RegisterIdeaComponent implements OnInit {
       this.form.enable();
     }
   }
+  // initChallenges() {
+  //   this.challengeService.getChallenges().subscribe(res => {
+  //     this.challenges = JSON.parse(res._body)["body"];
+  //   }, e => {
+  //     this.challenges = [];
+  //   })
+  // }
 
   submitIdea() {
     this.hideAlerts();
@@ -53,9 +61,9 @@ export class RegisterIdeaComponent implements OnInit {
     }
     if (this.form.valid && !this.emptyUpload) {
       this.ideaTitle = this.form.get('ideaTitle').value;
-      // this.selectedChallenge = (this.form.get('challenge').value)["name"];
+       this.selectedChallenge = (this.form.get('challenge').value)["name"];
       this.toggleLoading();
-      this.ideaService.submitIdea(this.slides[0], this.ideaTitle).subscribe((res) => {
+      this.ideaService.submitIdea(this.slides[0], this.ideaTitle, this.selectedChallenge).subscribe((res) => {
         this.toggleLoading();
         this.router.navigate(['./viewIdea']);
       }, (err) => {
@@ -103,8 +111,9 @@ export class RegisterIdeaComponent implements OnInit {
       });
     this.form = new FormGroup({
       ideaTitle: new FormControl('', [Validators.required]),
-      // challenge: new FormControl('', [Validators.required])
+      challenge: new FormControl('', [Validators.required]),
     });
+    this.initChallenges();
   }
 
   hideAlerts() {

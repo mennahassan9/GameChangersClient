@@ -28,7 +28,7 @@ export class IdeaService {
   }
 
 
-  submitIdea(file, title): Observable<string> {
+  submitIdea(file, title, challenge): Observable<string> {
     return Observable.create(observer => {
       const ext = '.' + mime.extension(mime.lookup(file.name));
       const data = new FormData();
@@ -36,6 +36,7 @@ export class IdeaService {
       data.append('title', title);
       data.append('extension', ext);
       data.append('oldFilename', file.name);
+      data.append('challenge', challenge);
       const xhr = new XMLHttpRequest();
       xhr.open('POST', environment.apiUrl + '/ideas/new');
       const currentToken = this.localStorageService.get('token');

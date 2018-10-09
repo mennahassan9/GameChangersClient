@@ -30,15 +30,14 @@ export class TeamService {
       .map(res => res.json());
   }
 
-  createTeam(teamInvitation: TeamInviteModel, challenge:string) {
+  createTeam(teamInvitation: TeamInviteModel) {
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     let body = {
       teamName: teamInvitation.teamName,
-      members: teamInvitation.members,
-      challenge
+      members: teamInvitation.members
     }
     return this.http.post(environment.apiUrl + "/teams", body, { headers: reqHeaders })
       .map(res => res.json());

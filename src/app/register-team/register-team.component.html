@@ -15,21 +15,7 @@
             <div class="alert alert-danger team-name__alert text-center" *ngIf="emptyName">
                 <strong>Please enter a team name!</strong>
             </div>
-            <div class="row challenge-container">
-                <div class="col-sm-offset-3 col-sm-6 text-center">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle challenge-container__btn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        {{challengeN}}
-                    </button>
-                    <div class="dropdown-menu">
-                        <ul class="challenge-container__items">
-                            <li *ngFor="let challenge of challenges" (click)="enter(challenge.name)" class="dropdown-item text-center">
-                                <a>{{ challenge.name }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+           
             <div class="row alert alert-danger text-center" role="alert" *ngIf="challengeChosen==false">
                 <strong>{{ alertMsg }}</strong>
             </div>
