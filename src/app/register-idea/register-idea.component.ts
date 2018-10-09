@@ -25,7 +25,6 @@ export class RegisterIdeaComponent implements OnInit {
   deadlineReached: boolean = false;
   submissionErr: boolean;
   errorMessage: string;
-  
 
   constructor(
     private router: Router,

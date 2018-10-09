@@ -106,6 +106,8 @@ export class RegisterTeamComponent implements OnInit {
     return false;
   }
 
+ 
+
   // enter(name) {
   //   this.challengeName = name;
   //   this.challengeN = name;

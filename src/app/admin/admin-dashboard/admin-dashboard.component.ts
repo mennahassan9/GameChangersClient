@@ -41,7 +41,6 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit() {
 
     this.adminService.getStatistics().subscribe(res=>{
-        console.log(res.data)
       this.alertFlag=false;
       this.users = res.data.numberOfUsers;
       this.teams = parseInt(res.data.numberofTeamsThatDidntSubmittedIdeas) + parseInt(res.data.numberofTeamsThatSubmittedIdeas);
