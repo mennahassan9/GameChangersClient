@@ -19,7 +19,8 @@ export class AdminViewIdeasComponent implements OnInit {
     { title: 'Idea name', name: 'ideaName', sort: false, filtering: { filterString: '', placeholder: 'Filter by idea name' } },
     {title: 'Location', name: 'location', sort: 'asc',filtering: {filterString: '', placeholder: 'Filter by location'}},    
     { title: 'Challenge name', name: 'challenge', sort: 'asc' },
-    { title: 'Judges score.', name: 'judgesScore' }
+    { title: 'Judges score.', name: 'judgesScore' },
+    { title: 'Overall score', name: 'score' }
   ];
   public config: any = {
     paging: false,
@@ -41,6 +42,7 @@ export class AdminViewIdeasComponent implements OnInit {
   ngOnInit() {
     this.toggleLoading();
     this.adminService.getIdeas().subscribe(res => {
+      console.log(res)
       this.parseResponse(res.body);
       this.toggleLoading();
     }, e => {
@@ -61,6 +63,7 @@ export class AdminViewIdeasComponent implements OnInit {
       object['ideaName'] = element.title == undefined ? "" : element.title;
       object['challenge'] = element.category;
       object['location'] = element.location;
+      object['score'] = element.score;
       object['judgesScore'] = element.judgments.length == 0 ? "No judges assigned yet" : "<ul>";
       for (let index = 0; index < element.judgments.length; index++) {
         const judgment = element.judgments[index];
