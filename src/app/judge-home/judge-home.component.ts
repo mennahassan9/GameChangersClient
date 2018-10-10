@@ -22,7 +22,9 @@ export class JudgeHomeComponent implements OnInit {
   logout: boolean;
   userCreatorTeam: string;
   teamMember: string;
-  ideas: any=[];
+  ideas: any = [];
+  errorAlert:boolean;
+  errorMsg: string;
 
   constructor(
     private loginService: LoginService,
@@ -31,21 +33,21 @@ export class JudgeHomeComponent implements OnInit {
     private localStorageService: LocalStorageService,
     private http: Http,
     private headerButtonsService: HeaderButtonsService,
-    private judgingService:JudgingService
+    private judgingService: JudgingService
   ) { }
 
   ngOnInit() {
-
     this.loginService.getUser().subscribe((res) => {
       this.currentUser = JSON.parse(res["_body"]).data;
-      console.log(this.currentUser);
-      this.judgingService.getIdeas().subscribe(res=>{
-          this.ideas = JSON.parse(res._body);
-        
-      })
-      
+    }, (err) => {
+      this.errorAlert = true;
+      this.errorMsg = "Something went wrong please try again!"
     });
-    // this.headerButtonsService.signOut();
+    this.judgingService.getIdeas().subscribe((res) => {
+      this.ideas = JSON.parse(res["_body"]).data;
+    }, (err) => {
+      this.errorAlert = true;
+      this.errorMsg = err.json().errors[0].message
+    });
   }
-
 }

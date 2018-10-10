@@ -1,7 +1,4 @@
 <div class="container-fluid judge__main-container">
-  <div class="alert alert-danger" role="alert" *ngIf="errorAlert">
-    {{ errorMessage }}
-  </div>
   <div class="judge__info row">
     <div class="row judge__logout-container">
       <div class="col-sm-offset-10 col-sm-2">
@@ -18,6 +15,9 @@
         </div>
       </div>
     </div>
+    <div class="alert alert-danger text-center" role="alert" *ngIf="errorAlert">
+        {{ errorMessage }}
+      </div>
     <div class="row">
       <div class="col-sm-offset-1  col-sm-10 judge__info-details">
         <div class="row judge__brief-container">

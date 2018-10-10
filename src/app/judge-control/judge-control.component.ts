@@ -46,7 +46,7 @@ export class JudgeControlComponent implements OnInit {
     judgments.forEach(judgment => {
       let object = {};
       object['name'] = judgment.judgeName;
-      object['email'] = judgment.judgeEmail == undefined ? 'judge@emc.com' : judgment.judgeEmail;
+      object['email'] = judgment.judgeEmail;
       object['score'] = judgment.score == -1 ? "not judged yet" : judgment.score;
       this.judges.push(object);
     });
@@ -55,19 +55,14 @@ export class JudgeControlComponent implements OnInit {
   toggleLoading() {
     this.loading = !this.loading;
     if (this.loading)
-      this.form.disable()
+      this.form.disable();
     else
-      this.form.enable()
-  }
-
-  removeJudge(judge) {
-    console.log(judge);
+      this.form.enable();
   }
 
   onDownload() {
     this.toggleLoading()
     this.hideAlerts();
-    console.log(this.fileName);
     this.ideaService.downloadIdea(this.fileName).subscribe(
       (res) => {
         var fileURL = URL.createObjectURL(res);
@@ -85,38 +80,50 @@ export class JudgeControlComponent implements OnInit {
     this.hideAlerts();
     this.adminService.isJudge(this.form.value.email).subscribe(res => {
       // already a judge
-      if (res.data.isJudge == true) {
-        let judgeId = res.data._id
-        this.adminService.assignJudge(judgeId, this.ideaId).subscribe(res => {
-          let judge = {};          
-          judge['name'] = res.judge.name;
-          judge['email'] = res.judge.email;
-          judge['score'] = "not judged yet";
-          this.judges.push(judge);
-          this.toggleLoading();
+      let judgeId = res.data._id
+      this.adminService.assignJudge(judgeId, this.ideaId).subscribe(res => {
+        let judge = {};
+        const judgment = res.data.idea.judgments.filter(judgment => judgment.judgeId == judgeId)[0];
+        judge['name'] = judgment.judgeName;
+        judge['email'] = judgment.judgeEmail;
+        judge['score'] = 'not judged yet';
+        this.judges.push(judge);
+        this.toggleLoading();
+      }, err => {
+        this.errorAlert = true;
+        this.errorMessage = err.json().errors[0].message;
+        this.toggleLoading();
+      });
+    }, err => {
+      err = err.json();
+      if (err.status == 404) {
+        // make the user a judge
+        this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
+          let judgeId = res.data;
+          // assign to the idea
+          this.adminService.assignJudge(judgeId, this.ideaId).subscribe(res => {
+            let judge = {}
+            const judgment = res.data.idea.judgments.filter((judgment) => judgment.judgeId === judgeId)[0];
+            judge['name'] = judgment.judgeName;
+            judge['email'] = judgment.judgeEmail;
+            judge['score'] = 'not judged yet';
+            this.judges.push(judge);
+            this.toggleLoading();
+          }, err => {
+            this.errorAlert = true;
+            this.errorMessage = err.json().errors[0].message;
+            this.toggleLoading();
+          });
         }, err => {
           this.errorAlert = true;
-          this.errorMessage = err.json().errors[0].messages[0];
+          this.errorMessage = err.json().errors[0].message;
           this.toggleLoading();
         });
       } else {
-        // make the user a judge
-        this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
-          // assign to the idea
-          this.adminService.assignJudge(res.body, this.ideaId).subscribe(res => {
-            let judge = {}
-            judge['name'] = res.body.judge.name
-            judge['email'] = res.body.judge.email
-            judge['score'] = "not judged yet";
-            this.judges.push(judge);
-            this.toggleLoading();
-          });
-        });
-      }
-    }, err => {
         this.errorAlert = true;
-        this.errorMessage = err.json().errors[0].message;
-      this.toggleLoading();
+        this.errorMessage = err.errors[0].message;
+        this.toggleLoading();
+      }
     });
   }
 

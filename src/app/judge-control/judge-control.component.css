@@ -1,12 +1,12 @@
 .judge__main-container {
     overflow-x: hidden;
     /* background-image: url("../../../assets/images/home_ideas_background_alt7.jpg"); */
-    background-size: cover;
+    /* background-size: cover;
     background-color: beige;
     background-repeat: no-repeat;
     background-position: 0px 30px;
-    min-height: 100vh;
-    padding-top: 50px;
+    min-height: 100vh; */
+    padding: 50px 0px;
 }
 
 

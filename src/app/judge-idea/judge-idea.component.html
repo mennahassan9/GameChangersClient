@@ -1,67 +1,55 @@
 <div class="container-fluid judge__main-container">
-
-  <div class="judge__info row">
-    <div class="row judge__logout-container">
-      <div class="col-sm-offset-10 col-sm-2">
-        <!-- <button class="judge__logout-btn" (click)="redirectToHome()">Logout</button> -->
-      </div>
+  <div class="judge__info">
+    <div class="alert alert-danger text-center" role="alert" *ngIf="deadlineReached">
+      <strong>Sorry, the judging deadline has been reached!</strong>
     </div>
+    <div class="alert alert-danger text-center" role="alert" *ngIf="errAlert">
+      <strong> {{ errMsg }}</strong>
+    </div>
+    <!-- <div class="row judge__logout-container">
+      <div class="col-sm-offset-10 col-sm-2">
+        <button class="judge__logout-btn" (click)="redirectToHome()">Logout</button>
+      </div>
+    </div> -->
     <div class="row">
       <div class="col-sm-offset-3 col-sm-6 text-center judge__info-main-text">
         {{idea.name}}
         <br>
         <button (click)="onDownload()" class="btn btn-default">Download idea</button>
-        
       </div>
-      
     </div>
     <div class="row">
       <div class="col-sm-offset-3 col-sm-6 judge__info-details">
         <div class="row judge__brief-container">
-          
           <form *ngIf="loaded" [formGroup]="form" (ngSubmit)="submit()">
-            <div *ngFor = 'let question of questions;let i = index;'>
-               
-                <h2 style="text-decoration: underline;">{{question.category}}</h2>
-
-            <div class="form-group">
-              
-              <label >{{question.question}}?</label>
-              <input [class.judgeIdea__error]="(form.get(question.category+i+'Score').invalid && form.get(question.category+i+'Score').touched) || (formSubmitted )"
-                [(ngModel)]="question.currentScore" formControlName="{{question.category+i+'Score'}}" type="number"  min="0" max="{{question.rate}}" style="display:inline-block;margin-right:10px;  width: 5em" class="form-control" placeholder="XX"> <div style="display:inline-block;" >/ {{question.rate}}</div>
-            </div>
-          
-            
+            <div *ngFor='let question of questions;let i = index;'>
+              <h2 style="text-decoration: underline;">{{question.category}}</h2>
+              <div class="form-group">
+                <label>{{question.question}}?</label>
+                <input [class.judgeIdea__error]="(form.get(question.category+i+'Score').invalid && form.get(question.category+i+'Score').touched) || (formSubmitted )"
+                  [(ngModel)]="question.currentScore" formControlName="{{question.category+i+'Score'}}" type="number" min="0"
+                  max="{{question.rate}}" style="display:inline-block;margin-right:10px;  width: 5em" class="form-control"
+                  placeholder="XX">
+                <div style="display:inline-block;">/ {{question.rate}}</div>
+              </div>
               <div *ngIf="form.get(question.category+i+'Score').errors?.required && form.get(question.category+i+'Score').touched" class="alert alert-danger judgeIdea__error-msg">You should not leave the entry. </div>
-  
-            
-        
-            <div *ngIf="form.get(question.category+i+'Score').errors?.max" class="alert alert-danger judgeIdea__error-msg">The score should be less than or equal {{question.rate}}. </div>
-          
-
-            <div class="form-group">
-              <label for="innovationComments">Additional comments: </label>
-              <input [class.judgeIdea__error]="(form.get(question.category+i+'Comment').invalid && form.get(question.category+i+'Comment').touched) || (formSubmitted && form.get(question.category+i+'Comment').invalid)"
-                formControlName="{{question.category+i+'Comment'}}" [(ngModel)]="question.comment"  type="text" class="form-control" id="innovationComments" placeholder="Additional comment">
+              <div *ngIf="form.get(question.category+i+'Score').errors?.max" class="alert alert-danger judgeIdea__error-msg">The score should be less than or equal {{question.rate}}. </div>
+              <div class="form-group">
+                <label for="innovationComments">Additional comments: </label>
+                <input [class.judgeIdea__error]="(form.get(question.category+i+'Comment').invalid && form.get(question.category+i+'Comment').touched) || (formSubmitted && form.get(question.category+i+'Comment').invalid)"
+                  formControlName="{{question.category+i+'Comment'}}" [(ngModel)]="question.comment" type="text" class="form-control"
+                  id="innovationComments" placeholder="Additional comment">
+              </div>
+              <div *ngIf="(form.get(question.category+i+'Comment').invalid && form.get(question.category+i+'Comment').touched) || (formSubmitted && form.get(question.category+i+'Comment').invalid)"
+                class="alert alert-danger">
+                <div *ngIf="form.get(question.category+i+'Comment').errors.required" class="judgeIdea__error-msg">You should not leave comments entry. </div>
+              </div>
+              <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
             </div>
-            <div *ngIf="(form.get(question.category+i+'Comment').invalid && form.get(question.category+i+'Comment').touched) || (formSubmitted && form.get(question.category+i+'Comment').invalid)"
-              class="alert alert-danger">
-              <div *ngIf="form.get(question.category+i+'Comment').errors.required" class="judgeIdea__error-msg">You should not leave comments entry. </div>
-            </div>
-            <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
-          </div>
-
             <div class="judgeIdea__btn-container">
-            
-<<<<<<< HEAD
-                    Total score: {{totalScore}} / {{this.maxScore}}
-              <button [disabled]="formSubmitted" id="submit_btn" class="btn btn-default judgeIdea__btn">Submit</button>
-=======
-                    Total score: {{totalScore}} / 100
+              Total score: {{totalScore}} / {{ maxScore }}
               <button [disabled]="formSubmitted || deadlineReached" id="submit_btn" class="btn btn-default judgeIdea__btn">Submit</button>
->>>>>>> 4ce140566230de994cc7610ddadaf21963becc47
-              <div *ngIf="!totalScoreValid" class="alert alert-danger judgeIdea__error-msg">The score should be less than 100. </div>
-              
+              <div *ngIf="!totalScoreValid" class="alert alert-danger judgeIdea__error-msg">The score should be less than {{ maxScore }}. </div>
             </div>
           </form>
         </div>
@@ -69,5 +57,5 @@
       <br>
     </div>
   </div>
-  <div id = "loader" [hidden]="!loading" ></div>
+  <div id="loader" [hidden]="!loading"></div>
 </div>

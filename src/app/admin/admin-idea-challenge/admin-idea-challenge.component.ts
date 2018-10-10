@@ -21,7 +21,9 @@ export class AdminIdeaChallengeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
     this.challengeService.getChallenges().subscribe(res=>{
+      console.log(res)
       this.challenges = JSON.parse(res._body)["body"];
       }, e => {
         this.alertFlag=true;

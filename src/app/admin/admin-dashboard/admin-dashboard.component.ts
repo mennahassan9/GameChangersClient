@@ -48,7 +48,7 @@ export class AdminDashboardComponent implements OnInit {
       this.judges = res.data.numberOfJudges;
 
       this.ideasChartData[0] = (res.data.numberOfJudgedIdeas);
-      this.ideasChartData[1] = (res.data.numberOfUnJudgedIdeas);
+      this.ideasChartData[1] = (res.data.numberOfUnjudgedIdeas);
 
       this.teamsChartData[0] = (res.data.numberofTeamsThatSubmittedIdeas);
       this.teamsChartData[1] = (res.data.numberofTeamsThatDidntSubmittedIdeas);
