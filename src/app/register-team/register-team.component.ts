@@ -50,6 +50,7 @@ export class RegisterTeamComponent implements OnInit {
 
 
   addEmployee(email) {
+    this.alertFlag = false
     this.created = false;
     var invitee: InviteeModel = new InviteeModel();
     invitee.email = email.value;
@@ -66,6 +67,8 @@ export class RegisterTeamComponent implements OnInit {
       else
         this.maxNumber = true;
     }
+
+    console.log(this.teamEmails)
   }
 
   createTeam() {
@@ -75,6 +78,7 @@ export class RegisterTeamComponent implements OnInit {
     //   this.challengeChosen = false;
     //   return;
     // }
+    this.alertFlag = false;
     if (this.teamName) {
       this.teamInvitation.teamName = this.teamName;
       // this.teamInvitation.challenge = this.challengeName;      
@@ -131,10 +135,14 @@ export class RegisterTeamComponent implements OnInit {
   // }
 
   removeFromTeam(index) {
+    this.alertFlag = false
     this.teamEmails.splice(index, 1)
+    console.log(this.teamEmails, this.teamInvitation.members)
+   
     if (this.notAdmin())
-      index++;
+      // index++;
     this.teamInvitation.members.splice(index, 1);
+    console.log(this.teamInvitation.members)
   }
 
   ngOnInit() {

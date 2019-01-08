@@ -29,6 +29,7 @@
                             </select>
                         </div>
                     </div>
+                </form>
             </div>
             <div *ngIf="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)"
                 class="alert alert-danger">
@@ -49,7 +50,7 @@
 
 
             <div id="loader" [hidden]="!loading"></div>
-            </form>
+           
         </div>
     </div>
 </div>
