@@ -126,7 +126,7 @@ export class ProfileComponent implements OnInit {
     this.hideAlerts();
     if (!this.teams && this.noInvitations == false && this.teamMember == "-1") {
       this.teamService.Invitations().subscribe((res) => {
-        this.teams = (res.data.teams);
+        this.teams = (res.data);
         if (!this.teams || this.teams.length == 0)
           this.noInvitations = true;
       });

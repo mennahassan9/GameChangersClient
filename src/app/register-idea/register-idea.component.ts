@@ -102,7 +102,7 @@ export class RegisterIdeaComponent implements OnInit {
         this.form.disable();
       } else {
         this.deadlineReached = false;
-        // this.initChallenges();
+         this.initChallenges();
       }
     })
       .catch((err) => {

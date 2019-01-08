@@ -57,10 +57,12 @@
                 <h1 align="center" *ngIf="teamMember != -1">You already have a team</h1>
                 <ul class="invitations" *ngIf="teamMember == -1 && noInvitations == false">
                     <h3>Team Name</h3>
+                    
                     <li class="row" *ngFor="let team of teams">
                         <div class=" teamName col-sm-6 bottom-spacing--input" (click)="redirectToTeamInvitation(team.name)">
-                            <a>{{ team.name }}</a>
+                            <a>{{ team.name }}({{ team.creatorName}})</a>
                         </div>
+                        
                         <div class=" btns col-sm-6 bottom-spacing col-align-right">
                             <button class="btn btn-primary" (click)="acceptInvitation(team.name)">accept</button>
                             <button class="btn btn-danger" (click)="rejectInvitation(team.name)">reject</button>
@@ -74,7 +76,7 @@
         {{ errorMsg }}
     </div>
     <div class="profile__control-panel row">
-        <!-- <div class="profile__btns-container--border  col-sm-2 text-center">
+        <!-- <div class="profile__btns-containerborder  col-sm-2 text-center">
             <div class="row">
                 <button class="profile__btn-team col-xm-4" (click)="redirectToTeam()">Team</button>
             </div>

@@ -11,6 +11,9 @@
         Hello, {{ currentUser.name }}
       </div>
     </div>
+    <div class="alert alert-danger text-center" *ngIf="errorAlert">
+      <strong>{{ errorMsg }}</strong>
+    </div>
     <div class="row">
       <div class="col-sm-offset-2  col-sm-8 judge__info-details">
         <div class="row judge__brief-container">
@@ -23,19 +26,15 @@
                 <th>Total Score</th>
               </tr>
             </thead>
-            <tbody *ngFor="let team of ideas">
+            <tbody *ngFor="let idea of ideas">
               <tr>
-
                 <td>
-                  <a href="#/judge/idea?team={{team.teamName}}">{{team.teamName}}</a>
+                  <a href="#/judge/idea?team={{idea.teamName}}">{{idea.teamName}}</a>
                 </td>
-
-                <td>{{team.title}}</td>
-                <td>{{team.challenge}}</td>
-                <td>{{team.score == "-1"? 'Not judged yet' : team.score}}</td>
-
+                <td>{{idea.title}}</td>
+                <td>{{idea.challenge}}</td>
+                <td>{{idea.score == "-1"? 'Not judged yet' : idea.score}}</td>
               </tr>
-
             </tbody>
           </table>
         </div>

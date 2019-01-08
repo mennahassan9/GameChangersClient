@@ -76,7 +76,8 @@ export class RegisterTeamComponent implements OnInit {
     //   return;
     // }
     if (this.teamName) {
-      this.teamInvitation.teamName = this.teamName;   
+      this.teamInvitation.teamName = this.teamName;
+      // this.teamInvitation.challenge = this.challengeName;      
       //this.teamInvitation.creator = this.teamInvitation.members[0].email;
       this.teamService.createTeam(this.teamInvitation).subscribe((res) => {
         this.created = true;

@@ -29,27 +29,27 @@
                             </select>
                         </div>
                     </div>
-                    <div *ngIf="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)"
-                        class="alert alert-danger">
-                        <div *ngIf="form.get('challenge').errors.required" class="idea__error-msg">You should select a challenge for the idea. </div>
-                    </div>
-                    <div class="form-group">
-                        change extensions accordingly
-                        <input accept=".*" [class.idea__error]="(formSubmitted && emptyUpload)" type="file" id="ideaSlides" class="idea__upload"
-                            (change)="onUpload($event)" [disabled]="deadlineReached">
-                    </div>
-                    <div *ngIf="(formSubmitted && emptyUpload)" class="alert alert-danger">
-                        <div class="idea__error-msg">You should upload slides for your idea. </div>
-                    </div>
-                    <div class="idea__btn-container">
-                        <button class="btn btn-default idea__submit-btn" [disabled]="deadlineReached">Submit Idea</button>
-                    </div>
-
-
-
-                    <div id="loader" [hidden]="!loading"></div>
-                </form>
             </div>
+            <div *ngIf="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)"
+                class="alert alert-danger">
+                <div *ngIf="form.get('challenge').errors.required" class="idea__error-msg">You should select a challenge for the idea. </div>
+            </div>
+            <div class="form-group">
+                change extensions accordingly
+                <input accept=".*" [class.idea__error]="(formSubmitted && emptyUpload)" type="file" id="ideaSlides" class="idea__upload"
+                    (change)="onUpload($event)" [disabled]="deadlineReached">
+            </div>
+            <div *ngIf="(formSubmitted && emptyUpload)" class="alert alert-danger">
+                <div class="idea__error-msg">You should upload slides for your idea. </div>
+            </div>
+            <div class="idea__btn-container">
+                <button class="btn btn-default idea__submit-btn" [disabled]="deadlineReached">Submit Idea</button>
+            </div>
+
+
+
+            <div id="loader" [hidden]="!loading"></div>
+            </form>
         </div>
     </div>
 </div>

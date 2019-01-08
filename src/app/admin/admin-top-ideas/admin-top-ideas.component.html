@@ -2,49 +2,49 @@
   <div class="judge__info-details">
     <div class="top_Ideas__brief-container">
       <h2 class="center">Ideas leaderboard</h2>
-        <div class ="row">
-          <div class="col-sm-6" *ngFor="let ideas of newData; let j = index;">
-      <table class="table"  >
-       
-        <thead  >
-          <tr>
-            <th colspan="8" class="center">{{ideas[0].category}}</th>
-          </tr>
-        </thead>
-        <tbody  >
-          <tr *ngFor="let row of ideas; let i = index; ">
-            <ng-container *ngIf="i == 0">
-              <td>
-                <span class="glyphicon glyphicon-glass gold"></span>
-              </td>
-            </ng-container>
-            <ng-container *ngIf="i == 1">
-              <td>
-                <span class="	glyphicon glyphicon-glass silver"></span>
-              </td>
-            </ng-container>
-            <ng-container *ngIf="i == 2" >
-              <td>
-                <span class="glyphicon glyphicon-glass bronze"></span>
-              </td>
-            </ng-container>
-            <ng-container *ngIf="i != 0 && i != 1 && i != 2" >
-              <td>
-                <span class="glyphicon glyphicon-bookmark red"></span>
-              </td>
-            </ng-container>
-            <td  ><a href="#/admin/viewIdea/{{row.team[0].email}}">{{row.title}}</a></td>
-            <td>{{row.averageScore}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
-        {{ alertMsg }}
+      <div class="row">
+        <div class="col-sm-6" *ngFor="let ideas of newData; let j = index;">
+          <table class="table">
+
+            <thead>
+              <tr>
+                <th colspan="8" class="center">{{ideas[0].category}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of ideas; let i = index; ">
+                <ng-container *ngIf="i == 0">
+                  <td>
+                    <span class="glyphicon glyphicon-glass gold"></span>
+                  </td>
+                </ng-container>
+                <ng-container *ngIf="i == 1">
+                  <td>
+                    <span class="	glyphicon glyphicon-glass silver"></span>
+                  </td>
+                </ng-container>
+                <ng-container *ngIf="i == 2">
+                  <td>
+                    <span class="glyphicon glyphicon-glass bronze"></span>
+                  </td>
+                </ng-container>
+                <ng-container *ngIf="i != 0 && i != 1 && i != 2">
+                  <td>
+                    <span class="glyphicon glyphicon-bookmark red"></span>
+                  </td>
+                </ng-container>
+                <td><a href="#/admin/viewIdea/{{row.team[0].email}}">{{row.title}}</a></td>
+                <td>{{row.averageScore}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+            {{ alertMsg }}
+          </div>
+        </div>
       </div>
-      </div>
-      </div>
-      
-     
+
+
       <!-- <div class=" col-sm-6 judge__info-details">
       <div class="top_Ideas__brief-container">
      
@@ -85,5 +85,5 @@
         </div>
       </div> -->
     </div>
-    </div>
+  </div>
 </div>
