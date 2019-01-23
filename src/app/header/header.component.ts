@@ -58,6 +58,7 @@ export class HeaderComponent implements OnInit {
     this.localStorageService.remove('isJudge');
     this.localStorageService.remove('isAdmin');
     this.localStorageService.remove('email');
+    this.localStorageService.remove('teamName');
     this.headerButtonsService.signOut();
     this.headerButtonsService.signOutAdmin();
     this.router.navigate(['./']);
@@ -71,7 +72,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   redirectToIdea() {
-    this.ideaService.getIdea().subscribe((res) => {
+    this.ideaService.getIdea(this.localStorageService.get('teamName')).subscribe((res) => {
       this.router.navigate(['./viewIdea']);
     }, (err) => {
       if (err.json().status == 404) {

@@ -40,8 +40,12 @@ export class TeamService {
       members: teamInvitation.members
     }
     return this.http.post(environment.apiUrl + "/teams", body, { headers: reqHeaders })
-      .map(res => res.json());
-  }
+    .toPromise()
+    .then((res) => 
+    {
+      this.localStorageService.set("teamName", body.teamName)
+  })
+}
 
   SearchUsers(email) {
     const reqHeaders: Headers = new Headers();
