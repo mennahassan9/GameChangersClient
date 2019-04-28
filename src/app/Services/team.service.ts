@@ -106,6 +106,7 @@ export class TeamService {
   }
   
   joinTeam(teamName) {
+    console.log("HEERE YAAAAAY")
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');

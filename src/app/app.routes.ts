@@ -36,6 +36,7 @@ import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.co
 import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-teams.component';
 import {EditQuestionsComponent} from './edit-questions/edit-questions.component';
 import { ViewInvitationsComponent } from './view-invitations/view-invitations.component';
+import { JoinTeamComponent } from './join-team/join-team.component';
 
 export const AppRoutes : Routes= [
 
@@ -134,6 +135,11 @@ export const AppRoutes : Routes= [
     {
         path: 'editTeam',
         component : EditTeamComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'teams',
+        component : JoinTeamComponent,
         canActivate: [AuthGuardService]
     },
     {

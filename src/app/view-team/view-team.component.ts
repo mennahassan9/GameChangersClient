@@ -47,6 +47,10 @@ export class ViewTeamComponent implements OnInit {
     this.router.navigate(['./profile']);
   }
 
+  viewAllTeams() {
+    this.router.navigate(['./teams']);
+  }
+
   addMember(email) {
 
     this.adminService.addTeamMember(this.teamName, email.value).subscribe(res => {
@@ -88,6 +92,7 @@ export class ViewTeamComponent implements OnInit {
     this.errMessage = message;
   }
 
+
   ngOnInit() {
     this.hideAlerts();
     this.user = this.localStorageService.get('email');
@@ -95,6 +100,9 @@ export class ViewTeamComponent implements OnInit {
     this.teamService.getTeam(this.teamName).subscribe((res) => {
       this.team = res.data.team;
       this.creator = this.team.creator === null ? '' : this.team.creator.email;
+      if (this.team == null) {
+        this.viewAllTeams()
+      }
     }, (err) => {
       this.errAlert = true;
       if (err.status == '404') {
