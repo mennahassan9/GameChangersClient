@@ -1,5 +1,6 @@
 export class InviteeModel
 {
     email: String;
-    accepted: Boolean = false;
+    name: String;
+   
 }

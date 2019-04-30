@@ -1,8 +1,11 @@
 <div class = "container-fluid invite-body">
   <div [formGroup]="form" class="row">
-      <div class="form-group invite col-sm-offset-3 col-sm-6 text-center team__invite-container">
+      <div class="form-group invite col-sm-offset-1 col-sm-10 text-center team__invite-container">
           <div class="row">
-              <div class="col-xs-9">
+                <div class="col-xs-5 ">
+                    <input type="text" name="name"  formControlName="name" placeholder="Enter member's name" [(ngModel)] ="name" class="form-control team__invite-field">
+                </div>
+              <div class="col-xs-5">
                   <input type="email"  (keyup)="handleInput()" [readonly] = "disabled" autocomplete="off" [(ngModel)] = "email" class="form-control team__invite-field" name="email"  formControlName="email" placeholder="Enter email" lowercase />
                   <div class="dropdown open">
                         <ul  *ngIf="items !=null && items.length != 0"  class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -10,7 +13,7 @@
                          </ul>
                     </div>
                 </div>
-              <div class="col-xs-3">
+              <div class="col-xs-2">
                 <a (click) = "checkIfInTeam()" class="team__add">
                     <!-- <img class= "invite-button-image" src = "assets/images/addIcon.png"> -->
                     +

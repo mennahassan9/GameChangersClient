@@ -33,6 +33,8 @@ export class RegisterTeamComponent implements OnInit {
   emptyName: boolean;
   alertFlag: boolean
   alertMsg: string;
+  allowOthers: boolean = false;
+  lookingFor: String;
   // challenges: Array<string> = [];
   // challengeName: string;
   // challengeN: string;
@@ -49,19 +51,22 @@ export class RegisterTeamComponent implements OnInit {
   ) { }
 
 
-  addEmployee(email) {
+  addEmployee(x) {
+    console.log(x,"PPPPPPPP")
     this.alertFlag = false
     this.created = false;
     var invitee: InviteeModel = new InviteeModel();
-    invitee.email = email.value;
+    invitee.email = x.email.value;
     invitee.email = invitee.email.toLowerCase();
+    invitee.name= x.name.value;
     this.alreadyInCurrentTeam = false;
-    if (this.checkEmployee(email.value)) {
+    if (this.checkEmployee(x.email.value)) {
       this.alreadyInCurrentTeam = true;
     }
     else {
       if (this.teamEmails.length < 6) {
         this.teamInvitation.members.push(invitee);
+        
         this.teamEmails.push(invitee.email)
       }
       else
@@ -72,6 +77,7 @@ export class RegisterTeamComponent implements OnInit {
   }
 
   createTeam() {
+    console.log(this.allowOthers,"PPPPPPPP")
     this.emptyName = false;
     // if (this.challengeChosen != true) {
     //   this.alertMsg = " Please select a challenge"
@@ -81,6 +87,8 @@ export class RegisterTeamComponent implements OnInit {
     this.alertFlag = false;
     if (this.teamName) {
       this.teamInvitation.teamName = this.teamName;
+      this.teamInvitation.lookingFor=this.lookingFor
+      this.teamInvitation.allowOthers=this.allowOthers
       // this.teamInvitation.challenge = this.challengeName;      
       //this.teamInvitation.creator = this.teamInvitation.members[0].email;
       this.teamService.createTeam(this.teamInvitation).then((res) => {

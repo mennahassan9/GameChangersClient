@@ -29,6 +29,11 @@
     font-size: 2em;
     padding: 30px 20px;
 }
+.team__regitser-desc-input{
+    font-size: 1.2em;
+    padding: 15px ;
+    max-height: max-content;
+}
 
 .team__register-team-add-text {
     font-size: 1.6em;

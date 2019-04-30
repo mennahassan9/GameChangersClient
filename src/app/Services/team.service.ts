@@ -37,7 +37,9 @@ export class TeamService {
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     let body = {
       teamName: teamInvitation.teamName,
-      members: teamInvitation.members
+      members: teamInvitation.members,
+      lookingFor: teamInvitation.lookingFor,
+      allowOthers: teamInvitation.allowOthers
     }
     return this.http.post(environment.apiUrl + "/teams", body, { headers: reqHeaders })
     .toPromise()
