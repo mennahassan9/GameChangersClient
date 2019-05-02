@@ -29,6 +29,7 @@ export class IdeaService {
 
 
   submitIdea(file, title, challenge): Observable<string> {
+    console.log("HIIIIII")
     return Observable.create(observer => {
       const ext = '.' + mime.extension(mime.lookup(file.name));
       const data = new FormData();

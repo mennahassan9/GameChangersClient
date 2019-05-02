@@ -29,6 +29,9 @@
                             </select>
                         </div>
                     </div>
+                    <div class="idea__btn-container">
+                        <button class="btn btn-default idea__submit-btn" [disabled]="deadlineReached">Submit Idea</button>
+                    </div>
                 </form>
             </div>
             <div *ngIf="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)"
@@ -42,9 +45,6 @@
             </div>
             <div *ngIf="(formSubmitted && emptyUpload)" class="alert alert-danger">
                 <div class="idea__error-msg">You should upload slides for your idea. </div>
-            </div>
-            <div class="idea__btn-container">
-                <button class="btn btn-default idea__submit-btn" [disabled]="deadlineReached">Submit Idea</button>
             </div>
 
 

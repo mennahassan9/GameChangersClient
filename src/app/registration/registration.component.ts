@@ -6,6 +6,8 @@ import { IdeaModel } from '../../shared/Models/IdeaModel';
 import { UserService } from '../Services/user.service';
 import { RegistrationModel } from './Models/RegistrationModel';
 import { Router } from '@angular/router';
+import { LoginService } from '../Services/login.service';
+import { HeaderButtonsService } from '../Services/headerButtons.service';
 
 @Component({
   selector: 'app-registration',
@@ -23,8 +25,10 @@ export class RegistrationComponent implements OnInit {
   submit: boolean;
   errorAlert: boolean;
   errorMessage: String;
+  hasIdea: boolean;
 
-  constructor(private fb: FormBuilder, private userSvc: UserService, private router: Router) { }
+  constructor(private fb: FormBuilder, private userSvc: UserService, private router: Router, private loginService: LoginService, 
+    private headerButtonsService: HeaderButtonsService) { }
 
   ngOnInit() {
     this.chapters = new Array<String>()
@@ -82,10 +86,18 @@ export class RegistrationComponent implements OnInit {
   }
   register() {
     this.submit = true;
+    console.log(this.hasIdea)
     if (this.form.valid) {
       // this.resortIdeas();
       this.userSvc.register(this.form.value as RegistrationModel).then((success) => {
-        this.router.navigate(['./signin']);
+        if(this.hasIdea) {
+          this.loginService.loginCheck(this.form.get('email').value, this.form.get('password').value).then((res) => {
+            this.headerButtonsService.setIsSignedIn();
+          });
+          this.router.navigate(['/registerTeam'])
+        }
+        else 
+          this.router.navigate(['./signin']);
       }).catch((err) => {
         console.log(err);
           err = err.json();
@@ -142,7 +154,7 @@ export class RegistrationComponent implements OnInit {
     this.ideas.push(idea);
   }
   addRegions() {
-    this.regions.push("EMEA");
+    this.regions.push("MENA");
     this.regions.push("APJ");
     this.regions.push("Americas");
   }
