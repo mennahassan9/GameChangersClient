@@ -1,34 +1,20 @@
 <div class="container-fluid team__main-container">
-  <div class="row">
-      <!-- <div class="col-sm-offset-3 col-sm-6 text-center team__main-text">
-        Hello, 
-      </div> -->
-    </div>
-  <div class="row">
+  <div class="profile__info row">
     <div class="col-sm-offset-1  col-sm-10 team__table">
-      <div class="row team__brief-container"> 
-        <ng-table [config]="config"
-        (tableChanged)="onChangeTable(config)"
-        (cellClicked)="onCellClick($event)"
-        [rows]="rows" [columns]="columns"
-        >
-        </ng-table>
-        <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
-          {{ alertMsg }}
-        </div>
-        <pagination *ngIf="config.paging"
-              class="pagination-sm"
-              [(ngModel)]="page"
-              [totalItems]="length"
-              [itemsPerPage]="itemsPerPage"
-              [maxSize]="maxSize"
-              [boundaryLinks]="true"
-              [rotate]="false"
-              (pageChanged)="onChangeTable(config, $event)"
-              (numPages)="numPages = $event">
-        </pagination>
-        <div id = "loader" [hidden]="!loading" ></div>
+      <div *ngIf="teamMember != -1">
+        <h2>You are being directed to team page. </h2>
+        <h4>Click here if you are not automatically redirected <a href="#/viewTeam/{{teamName}}">{{teamName}}</a></h4>
+      </div>
+      <div *ngIf="teamMember == -1">
+        <h2>Great! You are now a member of team </h2>
+        <h2> <a href="#/viewTeam/{{teamName}}">{{teamName}}</a></h2>
+      </div>
+      <div *ngIf="teamMember != teamName && teamMember != -1">
+        <h2>Oops! You are already a member of team {{teamMember}}.</h2>
+        <h2> If you wish to Join team <a href="#/viewTeam/{{teamName}}">{{teamName}}</a>,
+          you must leave team <a href="#/viewTeam/{{teamMember}}">{{teamMember}}</a> first.</h2>
       </div>
     </div>
   </div>
+
 </div>

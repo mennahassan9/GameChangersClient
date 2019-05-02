@@ -20,8 +20,8 @@
                     <div class="col-sm-offset-3 col-sm-6 text-center team__view-team-add">
                         <div class="team__view-team-add-text row" for="email">Team Members</div>
                         <div class="row team__view-team-members" *ngFor="let item of team.members; let i = index;">
-                            <label *ngIf="item.accepted == true">{{ item.email }}</label>
-                            <a *ngIf="isAdmin == true && item.accepted == true" (click)="deleteMember(item.email)">x</a>
+                            <label >{{ item.email }}</label>
+                            <a *ngIf="isAdmin == true " (click)="deleteMember(item.email)">x</a>
                         </div>
                     </div>
                     <div class="col-sm-offset-3 col-sm-6 text-center team__view-team-add">

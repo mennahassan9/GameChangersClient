@@ -69,6 +69,7 @@ import { EditQuestionsComponent } from './edit-questions/edit-questions.componen
 import { ViewInvitationsComponent } from './view-invitations/view-invitations.component';
 import { LowerCaseInputDirective } from './lowercase.directive';
 import { JoinTeamComponent } from './join-team/join-team.component';
+import { ViewAllTeamsComponent } from './view-all-teams/view-all-teams.component';
  
 
 
@@ -118,7 +119,8 @@ import { JoinTeamComponent } from './join-team/join-team.component';
     AdminSettingsComponent,
     AdminViewTeamsComponent,
     LowerCaseInputDirective,
-    JoinTeamComponent
+    JoinTeamComponent,
+    ViewAllTeamsComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {useHash: true}),

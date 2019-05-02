@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { Form, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TeamService } from '../Services/team.service';
 import { UserService } from '../Services/user.service';
@@ -99,9 +99,10 @@ export class ViewTeamComponent implements OnInit {
     this.teamName = this.route.snapshot.params['teamName'];
     this.teamService.getTeam(this.teamName).subscribe((res) => {
       this.team = res.data.team;
+      console.log(this.team.members)
       this.creator = this.team.creator === null ? '' : this.team.creator.email;
       if (this.team == null) {
-        this.viewAllTeams()
+        // this.viewAllTeams()
       }
     }, (err) => {
       this.errAlert = true;

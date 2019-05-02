@@ -1,61 +1,12 @@
+
+.profile__info {
+  padding-top: 7%;
+  min-height: 65vh;
+  border-bottom: 2px solid #ffffff;
+}
 .team__main-container {
-    padding-top: 70px;
-    padding-bottom: 20px;
+  background-color: rgba(238, 238, 238, 0.842);
+  margin-top: 5%;
+  margin-left: 3%;
+  margin-right: 3%;
 }
-
-
-.team__brief-container {
-    margin: 10px 0px;
-}
-.team__main-text {
-    font-size: 2em;
-    color: #000000;
-    margin-top: 1%;
-}
-.team__table {
-    font-size: 1.2em;
-    color: #000000;
-    /* border: 1px solid #000000; */
-    padding: 10px;
-    margin-top: 2%;
-}
- #loader {
-    animation: animate 1.5s linear infinite;
-    clip: rect(0, 80px, 80px, 40px); 
-    height: 80px;
-    width: 80px;
-    position: absolute;
-    left: calc(50% - 40px);
-    top: calc(50% - 40px);
-  }
-  @keyframes animate {
-    0% { 
-      transform: rotate(0deg)
-    }
-    100% { 
-      transform: rotate(220deg)
-    }
-  }
-  
-  #loader:after {
-    animation: animate2 1.5s ease-in-out infinite;
-    clip: rect(0, 80px, 80px, 40px);
-    content:'';
-    border-radius: 50%; 
-    height: 80px;
-    width: 80px;
-    position: absolute; 
-  } 
-  @keyframes animate2 {
-    0% {
-      box-shadow: inset rgb(98, 175, 111) 0 0 0 17px;
-      transform: rotate(-140deg);
-    }
-    50% {
-      box-shadow: insetrgb(98, 175, 111) 0 0 0 2px;
-    }
-    100% {
-      box-shadow: inset rgb(98, 175, 111) 0 0 0 17px;
-      transform: rotate(140deg);
-    }
-  }
