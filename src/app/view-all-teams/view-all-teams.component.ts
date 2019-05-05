@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ViewAllTeamsComponent implements OnInit {
 
   teams: any [];
+  allowOthers: boolean;
   loading: boolean; 
   alertFlag: boolean;
   alertMsg: string;
@@ -18,7 +19,8 @@ export class ViewAllTeamsComponent implements OnInit {
     {title:'Team Name', name:'team name', filtering: {filterString:'', placeholder: 'Filter by team name'}},
     {title:'Members', name:'members'},
     {title:'Creator', name:'creator'},
-    {name: 'submitJoin'}
+    //{title:'Looking for', class:'allowOthers', filtering: {filterString:''}},
+    {title:'Looking for', name: 'submitJoin'}
   ];
   public page:number = 1;
   public itemsPerPage:number = 10;
@@ -58,7 +60,14 @@ export class ViewAllTeamsComponent implements OnInit {
       object['team name'] = element.name == undefined ? "" : `<a href="#/viewTeam/${element.name}">${element.name}</a>`;
       object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
       object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.name}</a>`;
-      object['submitJoin'] = `<a href='#/teams/join/${element.name}'><button style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;" >Join</button></a href='#'>`;
+     // object['allowOthers'] = element.lookingFor == undefined ? "" : `<p></p>`;
+      if (element.allowOthers == undefined)
+      {
+        element.allowOthers = false
+      } else {
+        element.allowOthers=true
+      }
+     object['submitJoin'] = (this.allowOthers && element.allowOthers) == true ? "" : `<td title="'Name'" ng-if="true"> <a href='#/teams/join/${element.name}'><button style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;" >Join</button></a href='#'></td>`;
       // console.log('')
       output.push(object);
     });
@@ -151,8 +160,12 @@ export class ViewAllTeamsComponent implements OnInit {
     return;
   }
 
+  public checkAllowOthers(inp){
+    //console.log(this.allowOthers)
+    this.parseResponse(this.teams);
+  }
+
   public submitJoin(teamName){
-    console.log("**************88")
     console.log(teamName)
     this.teamService.joinTeam(teamName).subscribe((res) => {
       //this.team = res.

@@ -1,5 +1,5 @@
 <div class="jumbotron team__main-container">
-  <div class="container-fluid " >
+  <div class="container-fluid ">
     <div class="row">
       <!-- <div class="col-sm-offset-3 col-sm-6 text-center team__main-text">
         Hello, 
@@ -8,6 +8,9 @@
     <div class="row">
       <div class="col-sm-offset-1  col-sm-10 team__table" style="padding-top: 5%">
         <div class="row team__brief-container">
+          <label class="checkbox-inline">
+            <input [(ngModel)]="allowOthers" type="checkbox" (change)="checkAllowOthers()" />Allow Others
+          </label>
           <ng-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)"
             [rows]="rows" [columns]="columns">
           </ng-table>
