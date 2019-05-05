@@ -1,0 +1,153 @@
+.judge__main-container {
+    overflow-x: hidden;
+    /* background-image: url("../../../assets/images/home_ideas_background_alt7.jpg"); */
+    background-size: cover;
+    /* background-color: beige; */
+    background-repeat: no-repeat;
+    background-position: 0px 30px;
+    min-height: 100vh;
+}
+
+
+.judge__brief-container {
+    margin: 10px 0px;
+}
+
+.judge__info {
+    min-height: 65vh;
+    /* border-bottom: 2px solid #000000; */
+}
+
+.judge__info-main-text {
+    font-size: 2em;
+    color: #000000;
+    margin-top: 1%;
+}
+
+.judge__info-details {
+    /* font-size: 1.5em; */
+    color: #000000;
+    /* border: 1px solid #000000; */
+    padding: 10px;
+    margin-top: 2%;
+}
+
+.judge__control-panel {
+    min-height: 35vh;
+}
+
+.judge__btn-team, .judge__btn-idea {
+    color: #000000;
+    font-size: 3em;
+    padding: 3%;
+    width: 70%;
+}
+
+.judge__btn-team {
+    background-color: #007DB8;
+    border-color: #007DB8;
+}
+
+.judge__btn-idea {
+    background-color: #F2AF00;
+    border-color: #F2AF00;
+}
+
+.judge__btns-container--idea, .judge__btns-container--team {
+    margin-top: 5%;
+}
+
+.judge__btns-container--team {
+    border-right: 2px solid #000000;
+}
+
+.judge__btn-idea-desc, .judge__btn-team-desc {
+    font-size: 1.5em;
+    margin-top: 3%;
+    color: #000000;
+}
+
+.judge__logout-container {
+    margin-top: 5%;
+}
+
+.judge__logout-btn {
+    font-size: 1.25em;
+    color: #000000;
+    background-color: #CE1126;
+    border-color: #CE1126;
+    padding: 10px 20px;
+}
+
+.judgeIdea__form-container {
+    margin-top: 15%;
+    font-size: 2em;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 5%;
+}
+
+.judgeIdea__btn-container {
+    text-align: right;
+}
+
+.judgeIdea__btn {
+    background-color: #6EA204;
+    color: #ffffff;
+    font-size: 0.75em;
+    padding: 4%;
+    border-color: #6EA204;
+}
+
+.judgeIdea__error {
+    border: 2px solid #CE1126;
+}
+
+.judgeIdea__error-msg {
+    font-size: 0.5em;
+}
+.half-rule { 
+    margin-left: 0;
+    text-align: left;
+    width: 50%;
+    color: black;
+ }
+ #loader {
+    animation: animate 1.5s linear infinite;
+    clip: rect(0, 80px, 80px, 40px); 
+    height: 80px;
+    width: 80px;
+    position: absolute;
+    left: calc(50% - 40px);
+    top: calc(50% - 40px);
+  }
+  @keyframes animate {
+    0% { 
+      transform: rotate(0deg)
+    }
+    100% { 
+      transform: rotate(220deg)
+    }
+  }
+  #loader:after {
+    animation: animate2 1.5s ease-in-out infinite;
+    clip: rect(0, 80px, 80px, 40px);
+    content:'';
+    border-radius: 50%; 
+    height: 80px;
+    width: 80px;
+    position: absolute; 
+  } 
+  @keyframes animate2 {
+    0% {
+      box-shadow: inset rgb(98, 175, 111) 0 0 0 17px;
+      transform: rotate(-140deg);
+    }
+    50% {
+      box-shadow: insetrgb(98, 175, 111) 0 0 0 2px;
+    }
+    100% {
+      box-shadow: inset rgb(98, 175, 111) 0 0 0 17px;
+      transform: rotate(140deg);
+    }
+  }

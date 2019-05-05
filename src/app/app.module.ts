@@ -70,6 +70,7 @@ import { ViewInvitationsComponent } from './view-invitations/view-invitations.co
 import { LowerCaseInputDirective } from './lowercase.directive';
 import { JoinTeamComponent } from './join-team/join-team.component';
 import { ViewAllTeamsComponent } from './view-all-teams/view-all-teams.component';
+import { ViewAllIdeasComponent } from './view-all-ideas/view-all-ideas.component';
  
 
 
@@ -120,7 +121,8 @@ import { ViewAllTeamsComponent } from './view-all-teams/view-all-teams.component
     AdminViewTeamsComponent,
     LowerCaseInputDirective,
     JoinTeamComponent,
-    ViewAllTeamsComponent
+    ViewAllTeamsComponent,
+    ViewAllIdeasComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {useHash: true}),
