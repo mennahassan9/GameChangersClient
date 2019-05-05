@@ -93,6 +93,7 @@ export class ViewTeamComponent implements OnInit {
     this.user = this.localStorageService.get('email');
     this.teamName = this.route.snapshot.params['teamName'];
     this.teamService.getTeam(this.teamName).subscribe((res) => {
+      console.log(res)
       this.team = res.data.team;
       this.creator = this.team.creator === null ? '' : this.team.creator.email;
     }, (err) => {
