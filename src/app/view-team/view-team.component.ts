@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { Form, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TeamService } from '../Services/team.service';
 import { UserService } from '../Services/user.service';
@@ -29,6 +29,7 @@ export class ViewTeamComponent implements OnInit {
   editMsg: string;
   alertMsg: string;
   user: string;
+  enableJoin: boolean;
 
 
   constructor(
@@ -45,6 +46,10 @@ export class ViewTeamComponent implements OnInit {
 
   backToProfile() {
     this.router.navigate(['./profile']);
+  }
+
+  viewAllTeams() {
+    this.router.navigate(['./teams']);
   }
 
   addMember(email) {
@@ -88,13 +93,25 @@ export class ViewTeamComponent implements OnInit {
     this.errMessage = message;
   }
 
+
   ngOnInit() {
     this.hideAlerts();
     this.user = this.localStorageService.get('email');
     this.teamName = this.route.snapshot.params['teamName'];
+    this.enableJoin = true
     this.teamService.getTeam(this.teamName).subscribe((res) => {
       this.team = res.data.team;
+      console.log(this.team.members)
       this.creator = this.team.creator === null ? '' : this.team.creator.email;
+      console.log(this.user)
+      this.team.members.forEach(member => {
+        if (member.email == this.user) {
+          this.enableJoin = false
+        }
+      });
+      if (this.team.members.includes(this.user)){
+        console.log('user in team', this.user)
+      }
     }, (err) => {
       this.errAlert = true;
       if (err.status == '404') {

@@ -19,6 +19,7 @@ export class InviteTeamMemberComponent implements OnInit {
   email:string
   items:any;
   notMember: boolean
+  name: String
   fromList: boolean = false;
   @Output('employee') addEmployeeToPending: EventEmitter<any> = new EventEmitter();
   constructor(private userService: UserService 
@@ -47,20 +48,27 @@ export class InviteTeamMemberComponent implements OnInit {
     this.fb = new FormBuilder(); 
     this.notMember = false;
     this.form = this.fb.group({
-      email: new FormControl('', [Validators.compose([Validators.required])])
+      email: new FormControl('', [Validators.compose([Validators.required])]),
+      name: new FormControl('')
     })
   }
   checkIfInTeam()
   {
     if(this.email && this.email.length != 0){
       this.teamService.SearchUsers(this.email).subscribe((res) => {
-      if(res.data.length == 0)
-        this.notMember = true;
-        if(this.form.valid && !this.notMember){
-          this.addEmployeeToPending.emit(this.form.get('email'));
+        console.log(res.data)
+     
+       // this.notMember = true;
+        if(this.form.valid ){
+         let  x= {email: this.form.get('email'),
+        name:this.form.get('name')}
+        console.log(x,"xxxxxxxxxx")
+          this.addEmployeeToPending.emit(x);
           this.form.get('email').setValue(" ");
+          this.form.get('name').setValue(" ");
           this.send = false;
         }
+     
       }, (err) => {
         console.log("ERR", err);
       })

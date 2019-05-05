@@ -88,11 +88,16 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  redirectToTeam() {
+  redirectToTeam() { 
     this.alertFlag = false;
     this.router.navigate([`./viewTeam/${this.teamMember}`]);
   }
 
+  redirectToJoinTeam(){
+    this.alertFlag = false;
+    this.router.navigate([`./teams`]);
+  }
+  
   redirectToTeamInvitation(teamName) {
     this.alertFlag = false;
     this.router.navigate([`./viewTeam/${teamName}`]);
