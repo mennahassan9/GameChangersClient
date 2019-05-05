@@ -1,8 +1,8 @@
 <div class="container-fluid team__main-container">
   <div class="profile__info row">
     <div class="col-sm-offset-1  col-sm-10 team__table">
-      <div *ngIf="teamMember != -1">
-        <h2>You are being directed to team page. </h2>
+      <div *ngIf="teamMember == teamName && teamMember != -1">
+        <h2>You are being redirected to team page. </h2>
         <h4>Click here if you are not automatically redirected <a href="#/viewTeam/{{teamName}}">{{teamName}}</a></h4>
       </div>
       <div *ngIf="teamMember == -1">
