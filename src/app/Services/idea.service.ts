@@ -16,6 +16,15 @@ export class IdeaService {
     private router: Router
   ) { }
 
+  getIdeas() {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get(environment.apiUrl + "/ideas/allIdeas", { headers: reqHeaders })
+    .map(res => res.json());
+  }
+
   getIdea(teamName = null) {
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
