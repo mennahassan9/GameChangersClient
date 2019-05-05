@@ -164,15 +164,4 @@ export class ViewAllTeamsComponent implements OnInit {
     //console.log(this.allowOthers)
     this.parseResponse(this.teams);
   }
-
-  public submitJoin(teamName){
-    console.log(teamName)
-    this.teamService.joinTeam(teamName).subscribe((res) => {
-      //this.team = res.
-    }, (err) => {
-      err = err.json();
-      console.log(err)
-      //this.error = 
-    })    
-  }
 }

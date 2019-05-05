@@ -29,6 +29,7 @@ export class ViewTeamComponent implements OnInit {
   editMsg: string;
   alertMsg: string;
   user: string;
+  enableJoin: boolean;
 
 
   constructor(
@@ -97,12 +98,19 @@ export class ViewTeamComponent implements OnInit {
     this.hideAlerts();
     this.user = this.localStorageService.get('email');
     this.teamName = this.route.snapshot.params['teamName'];
+    this.enableJoin = true
     this.teamService.getTeam(this.teamName).subscribe((res) => {
       this.team = res.data.team;
       console.log(this.team.members)
       this.creator = this.team.creator === null ? '' : this.team.creator.email;
-      if (this.team == null) {
-        // this.viewAllTeams()
+      console.log(this.user)
+      this.team.members.forEach(member => {
+        if (member.email == this.user) {
+          this.enableJoin = false
+        }
+      });
+      if (this.team.members.includes(this.user)){
+        console.log('user in team', this.user)
       }
     }, (err) => {
       this.errAlert = true;

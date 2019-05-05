@@ -50,7 +50,7 @@ export class JoinTeamComponent implements OnInit {
       this.alertFlag = true;
       this.alertMsg = 'An error has occured. Please try again later!';
     });
-    //this.submitJoin(this.teamName)
+    this.submitJoin(this.teamName)
     console.log('wslt hna')
     // this.teamService.getTeam(this.teamName).subscribe((res) => {
     // this.team = res.data.team;
