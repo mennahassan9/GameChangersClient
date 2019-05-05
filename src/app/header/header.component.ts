@@ -91,4 +91,7 @@ export class HeaderComponent implements OnInit {
   redirectToForgotPassword() {
     this.router.navigate(['./forgot-password']);
   }
+  redirectToViewIdeas(){
+    this.router.navigate([`./ideas`]);
+  }
 }
