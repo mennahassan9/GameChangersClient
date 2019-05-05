@@ -66,10 +66,18 @@ export class HeaderComponent implements OnInit {
   redirectToTeam() {
     this.loginService.getUser().subscribe((res) => {
       let teamName = res.json().data.teamMember;
-      this.router.navigate([`./viewTeam/${teamName}`]);
+      if (teamName == "-1"){
+        this.redirectToJoinTeam()
+      }
+      else {
+        this.router.navigate([`./viewTeam/${teamName}`]);
+      }
     }, (err) => {
       console.log(err.json());
     });
+  }
+  redirectToJoinTeam(){
+    this.router.navigate([`./teams`]);
   }
   redirectToIdea() {
     this.ideaService.getIdea(this.localStorageService.get('teamName')).subscribe((res) => {
