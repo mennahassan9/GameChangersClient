@@ -109,12 +109,10 @@ export const AppRoutes : Routes= [
     {
         path: 'registerTeam',
         component : RegisterTeamComponent,
-        canActivate: [AuthGuardService]
     },
     {
         path: 'registerIdea',
         component : RegisterIdeaComponent,
-        canActivate: [AuthGuardService]
     },
     {
         path: 'view-invitations',
