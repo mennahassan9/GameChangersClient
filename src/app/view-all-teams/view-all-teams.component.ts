@@ -53,8 +53,7 @@ export class ViewAllTeamsComponent implements OnInit {
     })
   }
 
-  public parseResponse(input){
-    
+  public parseResponse(input){    
     let output = [];
     input.forEach(element => {
       let object = {};
