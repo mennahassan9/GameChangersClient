@@ -38,6 +38,7 @@ import {EditQuestionsComponent} from './edit-questions/edit-questions.component'
 import { ViewInvitationsComponent } from './view-invitations/view-invitations.component';
 import { JoinTeamComponent } from './join-team/join-team.component';
 import { ViewAllTeamsComponent } from './view-all-teams/view-all-teams.component';
+import { ViewAllIdeasComponent } from './view-all-ideas/view-all-ideas.component';
 
 
 export const AppRoutes : Routes= [
@@ -140,6 +141,11 @@ export const AppRoutes : Routes= [
     {
         path: 'teams',
         component : ViewAllTeamsComponent,
+        canActivate: [AuthGuardService],
+    },
+    {
+        path: 'ideas',
+        component : ViewAllIdeasComponent,
         canActivate: [AuthGuardService],
     },
     {
