@@ -43,6 +43,7 @@ export class ViewAllTeamsComponent implements OnInit {
   ngOnInit() {
     this.teamService.getTeams().subscribe(res => {
       console.log(res)
+      this.allowOthers=true
       this.teams = res.data;
       this.length = this.teams.length;
       this.parseResponse(this.teams);
@@ -56,20 +57,19 @@ export class ViewAllTeamsComponent implements OnInit {
   public parseResponse(input){    
     let output = [];
     input.forEach(element => {
-      let object = {};
-      object['team name'] = element.name == undefined ? "" : `<a href="#/viewTeam/${element.name}">${element.name}</a>`;
-      object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
-      object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.name}</a>`;
-     // object['allowOthers'] = element.lookingFor == undefined ? "" : `<p></p>`;
-      if (element.allowOthers == undefined)
-      {
-        element.allowOthers = false
-      } else {
-        element.allowOthers=true
+      if (!(this.allowOthers && !element.allowOthers)){
+        let object = {};
+        object['team name'] = element.name == undefined ? "" : `<a href="#/viewTeam/${element.name}">${element.name}</a>`;
+        object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
+        object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.name}</a>`;
+        if (element.allowOthers == undefined)
+        {
+          element.allowOthers = false
+        }
+       object['submitJoin'] = element.allowOthers == false ? "" : `<span>${element.lookingFor}</span> <a href='#/teams/join/${element.name}'><button style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;" >Join</button></a>`;
+        // console.log('')
+        output.push(object);
       }
-     object['submitJoin'] = (this.allowOthers && element.allowOthers) == true ? "" : `<td title="'Name'" ng-if="true"> <a href='#/teams/join/${element.name}'><button style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;" >Join</button></a href='#'></td>`;
-      // console.log('')
-      output.push(object);
     });
     this.rows = output;
     this.data = output;
