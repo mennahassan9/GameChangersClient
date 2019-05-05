@@ -133,7 +133,7 @@ export class ViewIdeaComponent implements OnInit {
         this.form.disable();
       }
     })
-      .catch((err) => {
+      .catch((err) => { console.log("DEADLINE",err)
         this.errorAlert = true;
         this.errorMessage = 'Something went wrong, please try again later.';
       });
@@ -151,6 +151,7 @@ export class ViewIdeaComponent implements OnInit {
         this.errorMessage = 'No idea was submitted.';
       }
     }, (err) => {
+      console.log("ERROOORRR IDEA" , err)
       if (err.json().status == 404) {
         this.router.navigate(['./registerIdea']);
       } else {

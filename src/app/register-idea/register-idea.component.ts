@@ -87,13 +87,14 @@ export class RegisterIdeaComponent implements OnInit {
   initChallenges() {
     this.challengeService.getChallenges().subscribe(res => {
       this.challenges = res.json().body;
-    }, e => {
+    }, e => {console.log("chanllenge")
       this.challenges = [];
     })
   }
 
   ngOnInit() {
     this.userService.getDeadlines().then((res) => {
+      console.log(res,"SUBMISSION")
       const submissionDeadline = new Date(JSON.parse(res['_body']).data.submission);
       const now = new Date();
       if (now > submissionDeadline) {
@@ -106,6 +107,7 @@ export class RegisterIdeaComponent implements OnInit {
       }
     })
       .catch((err) => {
+        console.log(err,"ERRORHERE")
         alert('Something went wrong, please try again later');
       });
     this.form = new FormGroup({

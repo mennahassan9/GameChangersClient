@@ -1,0 +1,20 @@
+<div class="container-fluid team__main-container">
+  <div class="profile__info row">
+    <div class="col-sm-offset-1  col-sm-10 team__table">
+      <div *ngIf="teamMember == teamName && teamMember != -1">
+        <h2>You are being redirected to team page. </h2>
+        <h4>Click here if you are not automatically redirected <a href="#/viewTeam/{{teamName}}">{{teamName}}</a></h4>
+      </div>
+      <div *ngIf="teamMember == -1">
+        <h2>Great! You are now a member of team </h2>
+        <h2> <a href="#/viewTeam/{{teamName}}">{{teamName}}</a></h2>
+      </div>
+      <div *ngIf="teamMember != teamName && teamMember != -1">
+        <h2>Oops! You are already a member of team {{teamMember}}.</h2>
+        <h2> If you wish to Join team <a href="#/viewTeam/{{teamName}}">{{teamName}}</a>,
+          you must leave team <a href="#/viewTeam/{{teamMember}}">{{teamMember}}</a> first.</h2>
+      </div>
+    </div>
+  </div>
+
+</div>
