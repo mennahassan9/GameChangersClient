@@ -47,7 +47,8 @@ export class RegisterTeamComponent implements OnInit {
     private route: ActivatedRoute,
     private teamService: TeamService,
     private auth: AuthService,
-    private challengeService: IdeaChallengeService
+    private challengeService: IdeaChallengeService,
+    private router: Router
   ) { }
 
 
@@ -100,7 +101,9 @@ export class RegisterTeamComponent implements OnInit {
         this.fb = new FormBuilder();
         this.form = this.fb.group({
           teamName: new FormControl('', [Validators.compose([Validators.required])])
+          
         });
+        this.router.navigate(['./registerIdea'])
       }, (err) => {
         this.alertFlag = true;
         this.alertMsg = "An error occured while creating the team"

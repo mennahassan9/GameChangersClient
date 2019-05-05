@@ -57,7 +57,7 @@ export class InviteTeamMemberComponent implements OnInit {
     if(this.email && this.email.length != 0){
       this.teamService.SearchUsers(this.email).subscribe((res) => {
         console.log(res.data)
-      if(res.data.length == 0)
+     
        // this.notMember = true;
         if(this.form.valid ){
          let  x= {email: this.form.get('email'),
@@ -68,6 +68,7 @@ export class InviteTeamMemberComponent implements OnInit {
           this.form.get('name').setValue(" ");
           this.send = false;
         }
+     
       }, (err) => {
         console.log("ERR", err);
       })
