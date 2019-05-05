@@ -100,6 +100,7 @@ export class ViewTeamComponent implements OnInit {
     this.teamName = this.route.snapshot.params['teamName'];
     this.enableJoin = true
     this.teamService.getTeam(this.teamName).subscribe((res) => {
+      console.log(res)
       this.team = res.data.team;
       console.log(this.team.members)
       this.creator = this.team.creator === null ? '' : this.team.creator.email;
@@ -108,7 +109,11 @@ export class ViewTeamComponent implements OnInit {
         if (member.email == this.user) {
           this.enableJoin = false
         }
+      
       });
+      if(this.team.creator.email==this.user){
+      this.enableJoin = false}
+
       if (this.team.members.includes(this.user)){
         console.log('user in team', this.user)
       }

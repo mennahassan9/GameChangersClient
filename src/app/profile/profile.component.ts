@@ -106,10 +106,15 @@ export class ProfileComponent implements OnInit {
   redirectToIdea() {
     this.alertFlag = false;
     this.ideaService.getIdea(this.teamMember).subscribe((res) => {
+      console.log(res,"RESPONSE")
       this.router.navigate(['./viewIdea']);
-    }, (err) => {
-      if (err.json().status == 404)
-        this.router.navigate(['./registerIdea']);
+    }, (err) => { console.log(err.json(),"REDIRECT",err.json().status)
+      if (err.json().status == 404 && this.teamMember == "-1")
+       { this.router.navigate(['./registerTeam']);}
+       else if(err.json().status == 404 && this.teamMember !== "-1")
+        {
+          this.router.navigate(['./registerIdea']);
+        }
       else {
         this.alertFlag = true;
         this.errorMsg = err.json().errors[0].message.toString();
