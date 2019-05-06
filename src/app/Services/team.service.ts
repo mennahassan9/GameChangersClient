@@ -42,11 +42,16 @@ export class TeamService {
       allowOthers: teamInvitation.allowOthers
     }
     return this.http.post(environment.apiUrl + "/teams", body, { headers: reqHeaders })
-    .toPromise()
-    .then((res) => 
-    {
+    .map(res => {
+      console.log(res.json())
       this.localStorageService.set("teamName", body.teamName)
-  })
+      this.localStorageService.set("token", res.json().data.token)
+    })
+  //   .then((res) => 
+  //   {
+  //     // console.log(res._body.data.token)
+      
+  // })
 }
 
   SearchUsers(email) {
