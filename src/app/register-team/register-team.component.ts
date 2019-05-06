@@ -92,7 +92,7 @@ export class RegisterTeamComponent implements OnInit {
       this.teamInvitation.allowOthers=this.allowOthers
       // this.teamInvitation.challenge = this.challengeName;      
       //this.teamInvitation.creator = this.teamInvitation.members[0].email;
-      this.teamService.createTeam(this.teamInvitation).then((res) => {
+      this.teamService.createTeam(this.teamInvitation).subscribe((res) => {
         this.created = true;
         this.teamInvitation = new TeamInviteModel();
         this.teamNumber = new Array<number>();
@@ -103,6 +103,7 @@ export class RegisterTeamComponent implements OnInit {
           teamName: new FormControl('', [Validators.compose([Validators.required])])
           
         });
+        // console.log(res.data.token)
         this.router.navigate(['./registerIdea'])
       }, (err) => {
         this.alertFlag = true;
@@ -164,6 +165,7 @@ export class RegisterTeamComponent implements OnInit {
     this.teamNumber.push(1);
     this.teamEmails = new Array<String>();
     this.emptyName = false;
+    this.creator=this.localStorageService.get("email")
     this.fb = new FormBuilder();
     this.form = this.fb.group({
       teamName: new FormControl('', [Validators.compose([Validators.required])])
