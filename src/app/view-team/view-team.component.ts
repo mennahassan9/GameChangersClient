@@ -34,6 +34,7 @@ export class ViewTeamComponent implements OnInit {
   ideaTitle: string;
   ideaDescription: string;
   ideaFile: string;
+  userIsMember: boolean;
 
 
   constructor(
@@ -89,6 +90,16 @@ export class ViewTeamComponent implements OnInit {
     });
   }
 
+  leaveTeam() {
+    this.userService.leaveTeam().subscribe((res) => {
+      window.location.reload();
+      // this.router.navigate([`./viewTeam/${this.teamName}`]);
+    }, (err) => {
+      this.errAlert = true;
+      this.errMessage = 'Something went wrong, please try again later.';
+    })
+  }
+
   hideAlerts() {
     this.errAlert = false;
     this.errMessage = '';
@@ -113,6 +124,7 @@ export class ViewTeamComponent implements OnInit {
       this.team.members.forEach(member => {
         if (member.email == this.user) {
           this.enableJoin = false
+          this.userIsMember = true
         }
       
       });

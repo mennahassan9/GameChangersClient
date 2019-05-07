@@ -22,6 +22,7 @@
                         <div class="row team__view-team-members" *ngFor="let item of team.members; let i = index;">
                             <label>{{ item.email }}</label>
                             <a *ngIf="isAdmin == true " (click)="deleteMember(item.email)">x</a>
+                            <!-- <a *ngIf="item.email == user" (click)="leaveTeam(item.email)">x</a> -->
                         </div>
                     </div>
                 </div>
@@ -47,11 +48,16 @@
                     <!-- <input class="team__view-btn" value = "Back to profile" (click)= "backToProfile()"> -->
                 </div>
             </div>
-            <br/>
+            <br />
             <div class="col-sm-offset-3 col-sm-6 text-center team__creator-header">
                 <a *ngIf="team.allowOthers == true && enableJoin == true" href='#/teams/join/{{teamName}}'>
-                    <button style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;">Join
+                    <button class="join_btn joinLeave_btn">Join
                         Team</button>
+                </a>
+                <a *ngIf="userIsMember" (click)="leaveTeam()">
+                    <button class="leave_btn joinLeave_btn" >
+                        Leave team
+                    </button>
                 </a>
             </div>
 
