@@ -56,16 +56,16 @@ export class RegistrationComponent implements OnInit {
       password: new FormControl(''),
       passConf: new FormControl(''),
       region: new FormControl(''),
-      // isRemote: new FormControl(''),
-      chapter: new FormControl(''),
-      otherChapter: new FormControl(''),
-    //   position: new FormControl(''),
-    //   careerLevel: new FormControl(''),
-    //   age: new FormControl(''),
-    //   previousParticipation: new FormControl(''),
-    //   genNextMember: new FormControl(''),
-    //   ideasOrder: new FormControl('[1,2,3]'),
-    //   brief: new FormControl('')
+    //  isRemote: new FormControl(''),
+        chapter: new FormControl(''),
+    //  otherChapter: new FormControl(''),
+    //  position: new FormControl(''),
+    //  careerLevel: new FormControl(''),
+    //  age: new FormControl(''),
+    //  previousParticipation: new FormControl(''),
+    //  genNextMember: new FormControl(''),
+    //  ideasOrder: new FormControl('[1,2,3]'),
+    //  brief: new FormControl('')
     });
     this.form.get('passConf').valueChanges.subscribe(() => {
       if (this.form.get('password').value === this.form.get('passConf').value) {
