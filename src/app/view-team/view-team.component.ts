@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
 import { environment } from "../../environments/environment";
+import { IdeaService } from '../Services/idea.service';
 
 @Component({
   selector: 'app-view-team',
@@ -30,11 +31,16 @@ export class ViewTeamComponent implements OnInit {
   alertMsg: string;
   user: string;
   enableJoin: boolean;
+  ideaTitle: string;
+  ideaDescription: string;
+  ideaFile: string;
+  userIsMember: boolean;
 
 
   constructor(
     private teamService: TeamService,
     private adminService: AdminService,
+    private ideaService: IdeaService,
     private http: Http,
     private localStorageService: LocalStorageService,
     private userService: UserService,
@@ -84,6 +90,16 @@ export class ViewTeamComponent implements OnInit {
     });
   }
 
+  leaveTeam() {
+    this.userService.leaveTeam().subscribe((res) => {
+      window.location.reload();
+      // this.router.navigate([`./viewTeam/${this.teamName}`]);
+    }, (err) => {
+      this.errAlert = true;
+      this.errMessage = 'Something went wrong, please try again later.';
+    })
+  }
+
   hideAlerts() {
     this.errAlert = false;
     this.errMessage = '';
@@ -108,6 +124,7 @@ export class ViewTeamComponent implements OnInit {
       this.team.members.forEach(member => {
         if (member.email == this.user) {
           this.enableJoin = false
+          this.userIsMember = true
         }
       
       });
@@ -127,5 +144,27 @@ export class ViewTeamComponent implements OnInit {
       }
     })
     this.isAdmin = this.localStorageService.get('isAdmin');
+    this.ideaService.getIdea(this.teamName).subscribe((res) => {
+      let data = res.json().body;
+      
+      if (data != null) {
+        this.ideaTitle = data.title;
+        this.ideaDescription = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.";//data.ideaDescription;
+        this.ideaFile = data.filename;
+      } else {
+        this.errAlert = true;
+        this.errMessage = 'No idea was submitted.';
+      }
+    }, (err) => {
+      console.log("ERROOORRR IDEA" , err)
+      if (err.json().status == 404) {
+        this.errAlert = true;
+        this.errMessage = 'No idea was submitted.';
+        //this.router.navigate(['./registerIdea']);
+      } else {
+        this.errAlert = true;
+        this.errMessage = 'Something went wrong, please try again later.';
+      }
+    });
   }
 }
