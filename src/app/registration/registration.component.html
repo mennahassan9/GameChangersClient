@@ -82,7 +82,7 @@
 
         <div class="control-group">
           <!-- office location -->
-          <label class="control-label">Where is your office chapter? *</label>
+          <label class="control-label">Where is your chapter? *</label>
           <div class="controls">
             <select class="form-control" formControlName="chapter" (ngModelChange)="onSelect($event)">
               <option *ngFor="let chapter of chapters" [ngValue]="chapter">
@@ -95,14 +95,14 @@
               <div *ngIf="(form.get('otherChapter').touched && form.get('otherChapter').invalid) || (form.get('otherChapter').invalid && submit)">
                 <br>
                 <div class="alert alert-danger">
-                  Please enter your office chapter.
+                  Please enter your chapter.
                 </div>
               </div>
             </div>
-            <i class="help-block chapter">If we missed your office chapter, it does not mean you are excluded; select "Other" and specify your office
+            <i class="help-block chapter">If we missed your chapter, it does not mean you are excluded; select "Other" and specify your office
               chapter. If remote, select closest chapter.</i>
             <div *ngIf="(form.get('chapter').invalid && form.get('chapter').touched || (submit && form.get('chapter').invalid))" class="alert alert-danger">
-              <div *ngIf="form.get('chapter').errors.required">Please select your office chapter. </div>
+              <div *ngIf="form.get('chapter').errors.required">Please select your chapter. </div>
             </div>
           </div>
         </div>
