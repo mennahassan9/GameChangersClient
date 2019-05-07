@@ -72,7 +72,6 @@
                 {{region}}
               </option>
             </select>
-            <br>
             <i class="help-block chapter">Please specify your region.</i>
             <div *ngIf="(form.get('region').invalid && form.get('region').touched || (submit && form.get('region').invalid))" class="alert alert-danger">
               <div *ngIf="form.get('region').errors.required">Please specify your region. </div>
@@ -89,18 +88,7 @@
                 {{chapter}}
               </option>
             </select>
-            <br>
-            <div *ngIf="otherChapterField == true">
-              <input type="text" placeholder="City, Country" formControlName="otherChapter" class="input-xlarge">
-              <div *ngIf="(form.get('otherChapter').touched && form.get('otherChapter').invalid) || (form.get('otherChapter').invalid && submit)">
-                <br>
-                <div class="alert alert-danger">
-                  Please enter your chapter.
-                </div>
-              </div>
-            </div>
-            <i class="help-block chapter">If we missed your chapter, it does not mean you are excluded; select "Other" and specify your office
-              chapter. If remote, select closest chapter.</i>
+            <i class="help-block chapter">Select your chapter or the chapter that is closest to you.</i>
             <div *ngIf="(form.get('chapter').invalid && form.get('chapter').touched || (submit && form.get('chapter').invalid))" class="alert alert-danger">
               <div *ngIf="form.get('chapter').errors.required">Please select your chapter. </div>
             </div>
