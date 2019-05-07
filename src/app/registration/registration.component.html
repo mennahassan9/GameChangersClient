@@ -83,7 +83,7 @@
           <!-- office location -->
           <label class="control-label">Where is your chapter? *</label>
           <div class="controls">
-            <select class="form-control" formControlName="chapter" (ngModelChange)="onSelect($event)">
+            <select class="form-control" formControlName="chapter">
               <option *ngFor="let chapter of chapters" [ngValue]="chapter">
                 {{chapter}}
               </option>

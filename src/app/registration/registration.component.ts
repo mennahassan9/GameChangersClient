@@ -15,7 +15,6 @@ import { HeaderButtonsService } from '../Services/headerButtons.service';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  otherChapterField: boolean;
   match: boolean;
   form: FormGroup;
   chapters: Array<String>;
@@ -162,17 +161,6 @@ export class RegistrationComponent implements OnInit {
   detectNewIdeaOrder(ideas) {
     ideas = ideas as IdeaModel;
     this.ideas = ideas;
-  }
-  onSelect(data) {
-    if (data == "Other") {
-      this.otherChapterField = true;
-      this.form.get('otherChapter').setValidators(Validators.required)
-    }
-    else {
-      this.otherChapterField = false;
-      this.form.get('otherChapter').setValue("");
-      this.form.get('otherChapter').clearValidators();
-    }
   }
 showAlert(message) {
   this.errorAlert = true;
