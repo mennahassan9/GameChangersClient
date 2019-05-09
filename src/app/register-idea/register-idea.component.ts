@@ -63,6 +63,7 @@ export class RegisterIdeaComponent implements OnInit {
       this.ideaTitle = this.form.get('ideaTitle').value;
       this.selectedChallenge = (this.form.get('challenge').value)["name"];
       this.description = this.form.get('description').value;
+      console.log('Form description' + this.description)
       this.toggleLoading();
       this.ideaService.submitIdea(this.slides[0], this.ideaTitle, this.selectedChallenge, this.description).subscribe((res) => {
         this.toggleLoading();

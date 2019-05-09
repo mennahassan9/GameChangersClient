@@ -48,6 +48,7 @@ export class IdeaService {
       data.append('oldFilename', file.name);
       data.append('challenge', challenge);
       data.append('description', description);
+      console.log('Service description' + description)
       const xhr = new XMLHttpRequest();
       xhr.open('POST', environment.apiUrl + '/ideas/new');
       const currentToken = this.localStorageService.get('token');
