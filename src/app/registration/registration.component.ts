@@ -15,7 +15,6 @@ import { HeaderButtonsService } from '../Services/headerButtons.service';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  otherChapterField: boolean;
   match: boolean;
   form: FormGroup;
   chapters: Array<String>;
@@ -56,16 +55,16 @@ export class RegistrationComponent implements OnInit {
       password: new FormControl(''),
       passConf: new FormControl(''),
       region: new FormControl(''),
-      // isRemote: new FormControl(''),
-      chapter: new FormControl(''),
-      otherChapter: new FormControl(''),
-    //   position: new FormControl(''),
-    //   careerLevel: new FormControl(''),
-    //   age: new FormControl(''),
-    //   previousParticipation: new FormControl(''),
-    //   genNextMember: new FormControl(''),
-    //   ideasOrder: new FormControl('[1,2,3]'),
-    //   brief: new FormControl('')
+    //  isRemote: new FormControl(''),
+        chapter: new FormControl(''),
+    //  otherChapter: new FormControl(''),
+    //  position: new FormControl(''),
+    //  careerLevel: new FormControl(''),
+    //  age: new FormControl(''),
+    //  previousParticipation: new FormControl(''),
+    //  genNextMember: new FormControl(''),
+    //  ideasOrder: new FormControl('[1,2,3]'),
+    //  brief: new FormControl('')
     });
     this.form.get('passConf').valueChanges.subscribe(() => {
       if (this.form.get('password').value === this.form.get('passConf').value) {
@@ -162,17 +161,6 @@ export class RegistrationComponent implements OnInit {
   detectNewIdeaOrder(ideas) {
     ideas = ideas as IdeaModel;
     this.ideas = ideas;
-  }
-  onSelect(data) {
-    if (data == "Other") {
-      this.otherChapterField = true;
-      this.form.get('otherChapter').setValidators(Validators.required)
-    }
-    else {
-      this.otherChapterField = false;
-      this.form.get('otherChapter').setValue("");
-      this.form.get('otherChapter').clearValidators();
-    }
   }
 showAlert(message) {
   this.errorAlert = true;
