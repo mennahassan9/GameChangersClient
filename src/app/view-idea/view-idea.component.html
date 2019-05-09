@@ -26,9 +26,9 @@
                     <div class="form-group">
                         <div class="controls">
                             <select [class.idea__error]="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)"
-                                class="form-control idea__select-input" formControlName="challenge" [(ngModel)] = "selectedChallenge">
-                                <!-- <option value="" selected hidden>{{selectedChallenge}}</option> -->
-                                <option class="" *ngFor="let challenge of challenges" [ngValue]="challenge" [selected]="challenge.name == selectedChallenge">
+                                class="form-control idea__select-input" formControlName="challenge">
+                                <option value="" selected hidden>{{selectedChallenge}}</option>
+                                <option class="" *ngFor="let challenge of challenges" [ngValue]="challenge">
                                     {{ challenge.name }}
                                 </option>
                             </select>
