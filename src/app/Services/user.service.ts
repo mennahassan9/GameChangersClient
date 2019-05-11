@@ -117,6 +117,22 @@ export class UserService {
             .toPromise();
 
   }
+  getRegions(){
+    const reqHeaders: Headers = new Headers();
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    reqHeaders.append('Content-Type', 'application/json');
+    return this.http.get(environment.apiUrl + `/users/regions/`, { headers: reqHeaders })
+            .map(res=> res.json());
+  }
+  getChapters(){
+    const reqHeaders: Headers = new Headers();
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    reqHeaders.append('Content-Type', 'application/json');
+    return this.http.get(environment.apiUrl + `/users/chapters/`, { headers: reqHeaders })
+            .map(res=>res.json());
+  }
 
   leaveTeam(){
     const reqHeaders: Headers = new Headers();

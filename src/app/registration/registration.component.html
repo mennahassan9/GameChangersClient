@@ -67,8 +67,8 @@
           <!-- office location -->
           <label class="control-label">What is your region? *</label>
           <div class="controls">
-            <select class="form-control" formControlName="region">
-              <option *ngFor="let region of regions" [ngValue]="region">
+            <select class="form-control" formControlName="region" (click)="getChapters()">
+              <option *ngFor="let region of regions" [ngValue]="region" >
                 {{region}}
               </option>
             </select>
