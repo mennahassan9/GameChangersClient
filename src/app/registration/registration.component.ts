@@ -18,6 +18,7 @@ export class RegistrationComponent implements OnInit {
   match: boolean;
   form: FormGroup;
   chapters: Array<String>;
+  chapter: Array<String>;
   ages: Array<String>;
   regions: Array<String>;
   ideas: Array<IdeaModel>;
@@ -31,13 +32,29 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.chapters = new Array<String>()
+    this.chapter = new Array<String>()
     this.ages = new Array<String>();
     this.ideas = new Array<IdeaModel>();
     this.regions = new Array<String>();
-    this.addChapters();
+    //this.addChapters();
     this.addAges();
     this.addIdeas();
-    this.addRegions();
+    //this.addRegions();
+    this.userSvc.getRegions().subscribe((res)=>
+  {
+    console.log("REGIONS",res)
+    res.data.forEach(element => {
+      this.regions.push(element.name)
+      
+    });
+    console.log(this.regions)
+  })
+  this.userSvc.getChapters().subscribe((res)=>
+  {
+    console.log("CHAPTERS",res)
+    this.chapter= res.data
+    console.log(this.chapters)
+  })
     this.userSvc.getDeadlines().then((res) => {
       const registrationDeadline = new Date(JSON.parse(res['_body']).data.registration);
       const now = new Date();
@@ -165,5 +182,15 @@ export class RegistrationComponent implements OnInit {
 showAlert(message) {
   this.errorAlert = true;
   this.errorMessage = message;
+}
+
+getChapters(){
+  this.chapters=[]
+  console.log(this.form.get('region').value)
+ this.chapter.forEach(chapter=> {
+   if(chapter.region.name == this.form.get('region').value)
+  {this.chapters.push(chapter.name)}
+})
+
 }
 }
