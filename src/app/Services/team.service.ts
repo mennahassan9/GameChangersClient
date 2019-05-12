@@ -113,7 +113,6 @@ export class TeamService {
   }
   
   joinTeam(teamName) {
-    console.log("HEERE YAAAAAY")
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
@@ -122,6 +121,20 @@ export class TeamService {
       teamName
     }
     return this.http.post(environment.apiUrl + "/teams/join", body, { headers: reqHeaders })
+      .map(res => res.json());
+  }
+
+  editTeam(teamName, allowOthers, lookingFor){
+    const reqHeaders:Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    let body = {
+      teamName: teamName,
+      allowOthers: allowOthers,
+      lookingFor: lookingFor
+    }
+    return this.http.post(environment.apiUrl + "/teams/self/edit", body, { headers: reqHeaders })
       .map(res => res.json());
   }
 }
