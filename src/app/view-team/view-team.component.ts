@@ -113,6 +113,7 @@ export class ViewTeamComponent implements OnInit {
   ngOnInit() {
     this.hideAlerts();
     this.user = this.localStorageService.get('email');
+    this.user = this.user.toLowerCase();
     this.teamName = this.route.snapshot.params['teamName'];
     this.enableJoin = true
     this.teamService.getTeam(this.teamName).subscribe((res) => {
