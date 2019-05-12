@@ -72,7 +72,7 @@ export class ViewAllTeamsComponent implements OnInit {
        object['submitJoin'] = element.allowOthers == false ? "" : `<div class="row">
           <div class="col-sm-9">${element.lookingFor}</div> 
           <div class="col-sm-3" style="padding-left: 0px;"> 
-            <a  href='#/teams/join/${element.name}'>
+            <a  href="#/teams/join/${element.name}">
               <button class="btn " style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;" >
                 Join
               </button>
