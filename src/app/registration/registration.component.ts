@@ -17,8 +17,8 @@ import { HeaderButtonsService } from '../Services/headerButtons.service';
 export class RegistrationComponent implements OnInit {
   match: boolean;
   form: FormGroup;
-  chapters: Array<String>;
-  chapter: Array<String>;
+  chapters: Array<any>;
+  chapter: Array<any>;
   ages: Array<String>;
   regions: Array<String>;
   ideas: Array<IdeaModel>;
@@ -31,8 +31,8 @@ export class RegistrationComponent implements OnInit {
     private headerButtonsService: HeaderButtonsService) { }
 
   ngOnInit() {
-    this.chapters = new Array<String>()
-    this.chapter = new Array<String>()
+    this.chapters = new Array<any>()
+    this.chapter = new Array<any>()
     this.ages = new Array<String>();
     this.ideas = new Array<IdeaModel>();
     this.regions = new Array<String>();
