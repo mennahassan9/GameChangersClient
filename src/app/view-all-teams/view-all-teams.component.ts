@@ -19,6 +19,8 @@ export class ViewAllTeamsComponent implements OnInit {
     {title:'Team Name', name:'team name', filtering: {filterString:'', placeholder: 'Filter by team name'}},
     {title:'Members', name:'members'},
     {title:'Creator', name:'creator'},
+    {title:'Region', name:'region', filtering: {filterString:'', placeholder: 'Filter by team region'}},
+   // {title:}
     //{title:'Looking for', class:'allowOthers', filtering: {filterString:''}},
     {title:'Looking for', name: 'submitJoin'}
   ];
@@ -62,12 +64,20 @@ export class ViewAllTeamsComponent implements OnInit {
         object['team name'] = element.name == undefined ? "" : `<a href="#/viewTeam/${element.name}">${element.name}</a>`;
         object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
         object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.name}</a>`;
+        object['region'] = element.region
         if (element.allowOthers == undefined)
         {
           element.allowOthers = false
         }
-       object['submitJoin'] = element.allowOthers == false ? "" : `<span>${element.lookingFor}</span> <a href='#/teams/join/${element.name}'><button style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;" >Join</button></a>`;
-        // console.log('')
+       object['submitJoin'] = element.allowOthers == false ? "" : `<div class="row">
+          <div class="col-sm-9">${element.lookingFor}</div> 
+          <div class="col-sm-3" style="padding-left: 0px;"> 
+            <a  href='#/teams/join/${element.name}'>
+              <button class="btn " style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;" >
+                Join
+              </button>
+            </a>
+          </div></div></div>`;
         output.push(object);
       }
     });

@@ -15,10 +15,10 @@ import { HeaderButtonsService } from '../Services/headerButtons.service';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  otherChapterField: boolean;
   match: boolean;
   form: FormGroup;
   chapters: Array<String>;
+  chapter: Array<String>;
   ages: Array<String>;
   regions: Array<String>;
   ideas: Array<IdeaModel>;
@@ -32,13 +32,29 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.chapters = new Array<String>()
+    this.chapter = new Array<String>()
     this.ages = new Array<String>();
     this.ideas = new Array<IdeaModel>();
     this.regions = new Array<String>();
-    this.addChapters();
+    //this.addChapters();
     this.addAges();
     this.addIdeas();
-    this.addRegions();
+    //this.addRegions();
+    this.userSvc.getRegions().subscribe((res)=>
+  {
+    console.log("REGIONS",res)
+    res.data.forEach(element => {
+      this.regions.push(element.name)
+      
+    });
+    console.log(this.regions)
+  })
+  this.userSvc.getChapters().subscribe((res)=>
+  {
+    console.log("CHAPTERS",res)
+    this.chapter= res.data
+    console.log(this.chapters)
+  })
     this.userSvc.getDeadlines().then((res) => {
       const registrationDeadline = new Date(JSON.parse(res['_body']).data.registration);
       const now = new Date();
@@ -56,16 +72,16 @@ export class RegistrationComponent implements OnInit {
       password: new FormControl(''),
       passConf: new FormControl(''),
       region: new FormControl(''),
-      // isRemote: new FormControl(''),
-      chapter: new FormControl(''),
-      otherChapter: new FormControl(''),
-    //   position: new FormControl(''),
-    //   careerLevel: new FormControl(''),
-    //   age: new FormControl(''),
-    //   previousParticipation: new FormControl(''),
-    //   genNextMember: new FormControl(''),
-    //   ideasOrder: new FormControl('[1,2,3]'),
-    //   brief: new FormControl('')
+    //  isRemote: new FormControl(''),
+        chapter: new FormControl(''),
+    //  otherChapter: new FormControl(''),
+    //  position: new FormControl(''),
+    //  careerLevel: new FormControl(''),
+    //  age: new FormControl(''),
+    //  previousParticipation: new FormControl(''),
+    //  genNextMember: new FormControl(''),
+    //  ideasOrder: new FormControl('[1,2,3]'),
+    //  brief: new FormControl('')
     });
     this.form.get('passConf').valueChanges.subscribe(() => {
       if (this.form.get('password').value === this.form.get('passConf').value) {
@@ -163,19 +179,18 @@ export class RegistrationComponent implements OnInit {
     ideas = ideas as IdeaModel;
     this.ideas = ideas;
   }
-  onSelect(data) {
-    if (data == "Other") {
-      this.otherChapterField = true;
-      this.form.get('otherChapter').setValidators(Validators.required)
-    }
-    else {
-      this.otherChapterField = false;
-      this.form.get('otherChapter').setValue("");
-      this.form.get('otherChapter').clearValidators();
-    }
-  }
 showAlert(message) {
   this.errorAlert = true;
   this.errorMessage = message;
+}
+
+getChapters(){
+  this.chapters=[]
+  console.log(this.form.get('region').value)
+ this.chapter.forEach(chapter=> {
+   if(chapter.region.name == this.form.get('region').value)
+  {this.chapters.push(chapter.name)}
+})
+
 }
 }
