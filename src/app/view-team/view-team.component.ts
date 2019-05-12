@@ -150,7 +150,7 @@ export class ViewTeamComponent implements OnInit {
       
       if (data != null) {
         this.ideaTitle = data.title;
-        this.ideaDescription = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.";//data.ideaDescription;
+        this.ideaDescription = data.description;
         this.ideaFile = data.filename;
       } else {
         this.errAlert = true;

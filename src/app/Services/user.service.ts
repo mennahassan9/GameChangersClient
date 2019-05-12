@@ -143,6 +143,9 @@ export class UserService {
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     let body= JSON.stringify(email);
     return this.http.post(environment.apiUrl+ "/users/leave-team", {body}, {headers: reqHeaders})
-    .map(res => res.json());
+    .map(res => {
+      res.json()
+      this.localStorageService.set("token", res.json().data.token)
+    });
   }
 }

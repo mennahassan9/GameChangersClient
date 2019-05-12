@@ -20,8 +20,7 @@ export class ViewAllTeamsComponent implements OnInit {
     {title:'Members', name:'members'},
     {title:'Creator', name:'creator'},
     {title:'Region', name:'region', filtering: {filterString:'', placeholder: 'Filter by team region'}},
-   // {title:}
-    //{title:'Looking for', class:'allowOthers', filtering: {filterString:''}},
+    {title:'Chapter', name:'chapter', filtering: {filterString:'', placeholder: 'Filter by team chapter'}},
     {title:'Looking for', name: 'submitJoin'}
   ];
   public page:number = 1;
@@ -63,8 +62,9 @@ export class ViewAllTeamsComponent implements OnInit {
         let object = {};
         object['team name'] = element.name == undefined ? "" : `<a href="#/viewTeam/${element.name}">${element.name}</a>`;
         object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
-        object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.name}</a>`;
+        object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.email}</a>`;
         object['region'] = element.region
+        object['chapter'] = element.chapter
         if (element.allowOthers == undefined)
         {
           element.allowOthers = false
