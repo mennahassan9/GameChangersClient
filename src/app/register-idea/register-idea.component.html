@@ -22,7 +22,7 @@
                         <div class="controls">
                             <select [class.idea__error]="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)"
                                 class="form-control idea__select-input" formControlName="challenge">
-                                <option value="" selected hidden>Select Related Challenge</option>
+                                <option value="" selected hidden>Select Related Category</option>
                                 <option class="" *ngFor="let challenge of challenges" [ngValue]="challenge">
                                     {{ challenge.name }}
                                 </option>
@@ -39,7 +39,7 @@
             </div>
             <div *ngIf="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)"
                 class="alert alert-danger">
-                <div *ngIf="form.get('challenge').errors.required" class="idea__error-msg">You should select a challenge for the idea. </div>
+                <div *ngIf="form.get('challenge').errors.required" class="idea__error-msg">You should select a category for the idea. </div>
             </div>
             <div class="form-group">
                 change extensions accordingly

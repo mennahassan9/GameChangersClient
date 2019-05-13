@@ -59,25 +59,14 @@
         </div> -->
         <div class="profile__btns-container--border col-sm-5 text-center">
             <div class="row">
-                <button class="profile__btn-idea" (click)="redirectToIdea()">Idea</button>
-            </div>
-            <div class="row profile__btn-idea-desc" *ngIf="teamMember == -1">
-                Submit an idea!
-            </div>
-            <div class="row profile__btn-idea-desc" *ngIf="teamMember != -1">
-                View your idea!
+                <button class="profile__btn-idea" (click)="redirectToIdea()" *ngIf="teamMember != -1">View idea</button>
+                <button class="profile__btn-idea" (click)="redirectToIdea()" *ngIf="teamMember == -1">Submit Idea</button>
             </div>
         </div>
         <div class="profile__btns-container--border col-sm-5 text-center">
             <div class="row">
-                <button class="profile__btn-team" (click)="redirectToJoinTeam()" *ngIf="teamMember == -1">Join Team</button>
-                <button class="profile__btn-team" (click)="redirectToTeam()" *ngIf="teamMember != -1">Team</button>
-            </div>
-            <div class="row profile__btn-idea-desc" *ngIf="teamMember == -1">
-                Join a team!
-            </div>
-            <div class="row profile__btn-team-desc" *ngIf="teamMember != -1">
-                View your team members!
+                <button class="profile__btn-team" (click)="redirectToJoinTeam()" *ngIf="teamMember == -1">Join a team</button>
+                <button class="profile__btn-team" (click)="redirectToTeam()" *ngIf="teamMember != -1">View team</button>
             </div>
         </div>
         <!-- <div class="profile__btns-container col-sm-3 text-center">

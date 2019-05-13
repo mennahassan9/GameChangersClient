@@ -121,7 +121,10 @@ export class TeamService {
       teamName
     }
     return this.http.post(environment.apiUrl + "/teams/join", body, { headers: reqHeaders })
-      .map(res => res.json());
+      .map(res => {
+        res.json()
+        this.localStorageService.set("token", res.json().data.token)
+      });
   }
 
   editTeam(teamName, allowOthers, lookingFor){

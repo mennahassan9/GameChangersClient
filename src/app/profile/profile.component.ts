@@ -109,7 +109,7 @@ export class ProfileComponent implements OnInit {
       console.log(res,"RESPONSE")
       this.router.navigate(['./viewIdea']);
     }, (err) => { console.log(err.json(),"REDIRECT",err.json().status)
-      if (err.json().status == 404 && this.teamMember == "-1")
+      if ((err.json().status == 404 || err.json().status == 400) && this.teamMember == "-1")
        { this.router.navigate(['./registerTeam']);}
        else if(err.json().status == 404 && this.teamMember !== "-1")
         {
