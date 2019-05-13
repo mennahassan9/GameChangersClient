@@ -25,7 +25,7 @@ export class LoginService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
 
-    return this.http.post(environment.apiUrl + "/users/login", { email, password }, { headers: reqHeaders })
+    return this.http.post( "/users/login", { email, password }, { headers: reqHeaders })
     .toPromise()
     .then((res) => 
     {
@@ -45,7 +45,7 @@ export class LoginService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get(environment.apiUrl + "/users/user", { headers: reqHeaders });
+    return this.http.get( "/users/user", { headers: reqHeaders });
   }
 
 }

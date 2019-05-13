@@ -114,6 +114,7 @@ export class RegistrationComponent implements OnInit {
       
         }
         else 
+        console.log("HEERREEE")
           this.router.navigate(['./signin']);
       }).catch((err) => {
         console.log(err);
