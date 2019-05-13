@@ -19,7 +19,7 @@ export class ViewAllIdeasComponent implements OnInit {
     { title: 'Team name', name: 'teamName', filtering: { filterString: '', placeholder: 'Filter by team name' } },
     { title: 'Idea name', name: 'ideaName', sort: false, filtering: { filterString: '', placeholder: 'Filter by idea name' } },
     // {title: 'Location', name: 'location', sort: 'asc',filtering: {filterString: '', placeholder: 'Filter by location'}},    
-    { title: 'Challenge name', name: 'challenge', sort: 'asc' },
+    { title: 'Category', name: 'challenge', sort: 'asc' },
     { title: 'Judges score.', name: 'judgesScore' },
     { title: 'Overall score', name: 'score' }
   ];
