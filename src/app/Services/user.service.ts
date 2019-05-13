@@ -139,10 +139,12 @@ export class UserService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     const email = this.localStorageService.get('email');
-    console.log(currentToken)
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     let body= JSON.stringify(email);
+
     return this.http.post("/users/leave-team", {body}, {headers: reqHeaders})
-    .map(res => res.json());
+    .map(res => {res.json()
+      this.localStorageService.set("token", res.json().data.token)});
+
   }
 }

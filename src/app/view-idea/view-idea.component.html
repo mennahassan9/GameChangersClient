@@ -14,7 +14,7 @@
                         <strong>{{ successMessage }}</strong>
                 </div>
                 <form [formGroup]="form" (ngSubmit)="editIdea()">
-                    <i>Last submitted file: {{ oldFilename }}</i>
+                    <br/>
                     <div class="form-group">
                         <input [class.idea__error]="(form.get('ideaTitle').invalid && form.get('ideaTitle').touched) || (formSubmitted && form.get('ideaTitle').invalid)"
                             formControlName="ideaTitle" class="form-control idea__regitser-idea-name-input" id="ideaTitle" [(ngModel)]="title">
@@ -57,6 +57,7 @@
                     <div *ngIf="(formSubmitted && emptyUpload)" class="alert alert-danger">
                         <div class="idea__error-msg">You should upload slides for your idea. </div>
                     </div>
+                    <i>Last submitted file: {{ oldFilename }}</i>
                     <div class="idea__btn-container--additional">
                         <button class="btn btn-default idea__submit-btn upload__btn" [disabled]="loading || deadlineReached">Change Idea</button>
                         <button type="button" class="btn btn-default idea__submit-btn download__btn" (click)="onDownload()" [disabled]="loading || deadlineReached">Download</button>
