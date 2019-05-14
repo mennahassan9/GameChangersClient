@@ -46,9 +46,9 @@
                 <input accept=".*" [class.idea__error]="(formSubmitted && emptyUpload)" type="file" id="ideaSlides" class="idea__upload"
                     (change)="onUpload($event)" [disabled]="deadlineReached">
             </div>
-            <div *ngIf="(formSubmitted && emptyUpload)" class="alert alert-danger">
+            <!-- <div *ngIf="(formSubmitted && emptyUpload)" class="alert alert-danger">
                 <div class="idea__error-msg">You should upload slides for your idea. </div>
-            </div>
+            </div> -->
 
             <div id="loader" [hidden]="!loading"></div>
            

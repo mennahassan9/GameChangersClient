@@ -38,14 +38,18 @@ export class IdeaService {
 
 
   submitIdea(file, title, challenge, description): Observable<string> {
-    console.log("HIIIIII")
     return Observable.create(observer => {
-      const ext = '.' + mime.extension(mime.lookup(file.name));
       const data = new FormData();
       data.append('file', file);
       data.append('title', title);
-      data.append('extension', ext);
-      data.append('oldFilename', file.name);
+      if (file == '' || file ==  undefined || file == null) {
+        data.append('extension', '');
+        data.append('oldFilename', '');
+      } else {
+        const ext = '.' + mime.extension(mime.lookup(file.name));
+        data.append('extension', ext);
+        data.append('oldFilename', file.name);
+      }
       data.append('challenge', challenge);
       data.append('description', description);
       const xhr = new XMLHttpRequest();

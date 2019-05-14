@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DndModule } from 'ng2-dnd';
 import { HttpModule } from '@angular/http';
@@ -125,7 +125,7 @@ import { ViewAllIdeasComponent } from './view-all-ideas/view-all-ideas.component
     ViewAllIdeasComponent
   ],
   imports: [
-    RouterModule.forRoot(AppRoutes, {useHash: true}),
+    RouterModule.forRoot(AppRoutes, {preloadingStrategy:PreloadAllModules, useHash: true}),
     BrowserModule,
     FormsModule,
     ChartsModule,
