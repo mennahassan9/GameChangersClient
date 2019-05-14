@@ -92,8 +92,8 @@ export class ViewTeamComponent implements OnInit {
 
   leaveTeam() {
     this.userService.leaveTeam().subscribe((res) => {
-      window.location.reload();
-      // this.router.navigate([`./viewTeam/${this.teamName}`]);
+      // window.location.reload();
+      // this.router.navigate([`./profile`]);
     }, (err) => {
       this.errAlert = true;
       this.errMessage = 'Something went wrong, please try again later.';
@@ -157,7 +157,7 @@ export class ViewTeamComponent implements OnInit {
         this.errMessage = 'No idea was submitted.';
       }
     }, (err) => {
-      console.log("ERROOORRR IDEA" , err)
+      console.log("ERROR IDEA" , err)
       if (err.json().status == 404) {
         this.errAlert = true;
         this.errMessage = 'No idea was submitted.';

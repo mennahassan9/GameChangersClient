@@ -54,7 +54,7 @@
                     <button class="join_btn joinLeave_btn">Join
                         Team</button>
                 </a>
-                <a *ngIf="userIsMember" (click)="leaveTeam()">
+                <a *ngIf="userIsMember" (click)="leaveTeam()"[routerLink]="['/profile']">
                     <button class="leave_btn joinLeave_btn" >
                         Leave team
                     </button>
