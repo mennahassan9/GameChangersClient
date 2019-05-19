@@ -61,7 +61,7 @@ export class ViewAllIdeasComponent implements OnInit {
     let retuenedData = [];
     data.forEach(element => {
       let object = {};
-      object['teamName'] = `<a href="#/team-control?team=${element.teamName}">${element.teamName}</a>`;
+      object['teamName'] = `<a href="#/viewTeam/${element.teamName}">${element.teamName}</a>`;
       object['ideaName'] = element.title == undefined ? "" : element.title;
       object['challenge'] = element.category;
       // object['location'] = element.location;
