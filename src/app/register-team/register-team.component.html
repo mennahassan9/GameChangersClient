@@ -10,12 +10,15 @@
                 <div class="col-sm-offset-3 col-sm-6 text-center team__regitser-team-name">
                     <input type="email" class="form-control team__regitser-team-name-input text-center" name="teamName" [(ngModel)]="teamName"
                         placeholder="Team name" />
-                </div>
+                    <div class="col-sm-offset-3 col-sm-6 text-center team__regitser-team-name">
+
+                    </div>
+                </div>                                      
             </div>
             <div class="alert alert-danger team-name__alert text-center" *ngIf="emptyName">
                 <strong>Please enter a team name!</strong>
             </div>
-           
+
             <!-- <div class="row challenge-container">
                 <div class="col-sm-offset-3 col-sm-6 text-center">
                     <button class="btn btn-secondary btn-lg dropdown-toggle challenge-container__btn" type="button" data-toggle="dropdown" aria-haspopup="true"
@@ -71,7 +74,7 @@
                 </div>
                 <!-- already invited members -->
                 <div class="row">
-                    <div class="col-sm-offset-3 col-sm-6 text-center team__register-team-add">
+                    <div class="col-sm-offset-1 col-sm-10 text-center team__register-team-add">
                         <div class="team__register-team-add-text row" for="email">Invite team members via their email</div>
                         <div class="row team__register-team-members" *ngIf="notAdmin;">
                             {{ myMail}}
@@ -90,6 +93,19 @@
                             <strong>You have reached the maximum number of members per team</strong>
                         </div>
                     </div>
+
+                    <div class="col-sm-offset-1 col-sm-10 text-center team__register-team-add">
+                        <div class="custom-control custom-radio">
+                            <input type="checkbox" class="custom-control-input" id="allowOthers" name="allowOthers" value=true [(ngModel)]="allowOthers">
+                            <label class="custom-control-label" for="defaultUnchecked">Check this box to enter skills you are seeking for your team, and invite entrants with those skills to add themselves to your team.</label>
+                        </div>                        
+
+                        <div class="col-sm-offset-2 col-sm-8 text-center team__regitser-team-name">
+                            <input *ngIf="allowOthers" type="email" class="form-control team__regitser-desc-input text-center" name="lookingFor" [(ngModel)]="lookingFor"
+                                placeholder="What are you looking for in you team members" />
+                        </div>
+                    </div>
+
                     <div class="col-xs-12 team__create-btn-container">
                         <input class="team__create-btn" *ngIf="teamEmails.length>0" type="submit" value="Create team" (click)="createTeam()">
                     </div>

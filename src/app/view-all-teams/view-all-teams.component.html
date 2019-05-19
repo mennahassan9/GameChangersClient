@@ -1,0 +1,29 @@
+<div class="jumbotron team__main-container">
+  <div class="container-fluid ">
+    <div class="row">
+      <!-- <div class="col-sm-offset-3 col-sm-6 text-center team__main-text">
+        Hello, 
+      </div> -->
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-1  col-sm-10 team__table" style="padding-top: 5%">
+        <div class="row team__brief-container">
+          <label class="checkbox-inline">
+            <input [(ngModel)]="allowOthers" type="checkbox" (change)="checkAllowOthers()" />Allow Others
+          </label>
+          <ng-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)"
+            [rows]="rows" [columns]="columns">
+          </ng-table>
+          <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+            {{ alertMsg }}
+          </div>
+          <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length"
+            [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+            (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+          </pagination>
+          <div id="loader" [hidden]="!loading"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

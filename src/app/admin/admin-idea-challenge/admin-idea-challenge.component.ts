@@ -23,7 +23,6 @@ export class AdminIdeaChallengeComponent implements OnInit {
   ngOnInit() {
     
     this.challengeService.getChallenges().subscribe(res=>{
-      console.log(res)
       this.challenges = JSON.parse(res._body)["body"];
       }, e => {
         this.alertFlag=true;
@@ -36,7 +35,7 @@ export class AdminIdeaChallengeComponent implements OnInit {
 
     if(this.challenges.find(chall => chall.name===challenge)!=null){
       this.alertFlag = true;
-      this.alertMsg = "The challenge you entered already exists";
+      this.alertMsg = "The category you entered already exists";
     }
     else{
 
@@ -45,7 +44,7 @@ export class AdminIdeaChallengeComponent implements OnInit {
       this.alertFlag = false;
     }, e => {
       this.alertFlag = true;
-      this.alertMsg = "An error occurred while trying to add the challenge"
+      this.alertMsg = "An error occurred while trying to add the category"
       }
       
     )}
@@ -58,7 +57,7 @@ export class AdminIdeaChallengeComponent implements OnInit {
       this.alertFlag = false;
     }, e => {
       this.alertFlag = true;
-      this.alertMsg = "An error occured while trying to delete the challenge";
+      this.alertMsg = "An error occured while trying to delete the category";
     })
   }
   updateChallenge(newChallenge) {
@@ -70,7 +69,7 @@ export class AdminIdeaChallengeComponent implements OnInit {
     })
     if(this.challenges.find(chall => chall.name===newChallenge)!=null){
       this.alertFlag = true;
-      this.alertMsg = "The challenge you entered already exists";
+      this.alertMsg = "The category you entered already exists";
     }
     else{
     this.challengeService.updateChallenge(requiredChallenge.name, newChallenge).subscribe(res => {
@@ -84,7 +83,7 @@ export class AdminIdeaChallengeComponent implements OnInit {
       this.editFlag = false;
     }, e => {
       this.alertFlag = true;
-      this.alertMsg = "An error occured while trying to update the challenge";
+      this.alertMsg = "An error occured while trying to update the category";
     })
   }
   }

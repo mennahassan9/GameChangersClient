@@ -77,7 +77,7 @@ h3{
 }
 
 .profile__btns-container--border {
-    border-right: 1px solid #ffffff;
+    /* border-right: 1px solid #ffffff; */
 }
 
 .profile__btn-idea-desc, .profile__btn-team-desc {

@@ -33,6 +33,8 @@ export class RegisterTeamComponent implements OnInit {
   emptyName: boolean;
   alertFlag: boolean
   alertMsg: string;
+  allowOthers: boolean = false;
+  lookingFor: String;
   // challenges: Array<string> = [];
   // challengeName: string;
   // challengeN: string;
@@ -45,30 +47,32 @@ export class RegisterTeamComponent implements OnInit {
     private route: ActivatedRoute,
     private teamService: TeamService,
     private auth: AuthService,
-    private challengeService: IdeaChallengeService
+    private challengeService: IdeaChallengeService,
+    private router: Router
   ) { }
 
 
-  addEmployee(email) {
+  addEmployee(x) {
     this.alertFlag = false
     this.created = false;
     var invitee: InviteeModel = new InviteeModel();
-    invitee.email = email.value;
+    invitee.email = x.email.value;
     invitee.email = invitee.email.toLowerCase();
+    invitee.name= x.name.value;
     this.alreadyInCurrentTeam = false;
-    if (this.checkEmployee(email.value)) {
+    if (this.checkEmployee(x.email.value)) {
       this.alreadyInCurrentTeam = true;
     }
     else {
       if (this.teamEmails.length < 6) {
         this.teamInvitation.members.push(invitee);
+        
         this.teamEmails.push(invitee.email)
       }
       else
         this.maxNumber = true;
     }
 
-    console.log(this.teamEmails)
   }
 
   createTeam() {
@@ -81,9 +85,11 @@ export class RegisterTeamComponent implements OnInit {
     this.alertFlag = false;
     if (this.teamName) {
       this.teamInvitation.teamName = this.teamName;
+      this.teamInvitation.lookingFor=this.lookingFor
+      this.teamInvitation.allowOthers=this.allowOthers
       // this.teamInvitation.challenge = this.challengeName;      
       //this.teamInvitation.creator = this.teamInvitation.members[0].email;
-      this.teamService.createTeam(this.teamInvitation).then((res) => {
+      this.teamService.createTeam(this.teamInvitation).subscribe((res) => {
         this.created = true;
         this.teamInvitation = new TeamInviteModel();
         this.teamNumber = new Array<number>();
@@ -92,7 +98,10 @@ export class RegisterTeamComponent implements OnInit {
         this.fb = new FormBuilder();
         this.form = this.fb.group({
           teamName: new FormControl('', [Validators.compose([Validators.required])])
+          
         });
+        // console.log(res.data.token)
+        this.router.navigate(['./registerIdea'])
       }, (err) => {
         this.alertFlag = true;
         this.alertMsg = "An error occured while creating the team"
@@ -137,12 +146,10 @@ export class RegisterTeamComponent implements OnInit {
   removeFromTeam(index) {
     this.alertFlag = false
     this.teamEmails.splice(index, 1)
-    console.log(this.teamEmails, this.teamInvitation.members)
    
     if (this.notAdmin())
       // index++;
     this.teamInvitation.members.splice(index, 1);
-    console.log(this.teamInvitation.members)
   }
 
   ngOnInit() {
@@ -153,6 +160,7 @@ export class RegisterTeamComponent implements OnInit {
     this.teamNumber.push(1);
     this.teamEmails = new Array<String>();
     this.emptyName = false;
+    this.creator=this.localStorageService.get("email")
     this.fb = new FormBuilder();
     this.form = this.fb.group({
       teamName: new FormControl('', [Validators.compose([Validators.required])])

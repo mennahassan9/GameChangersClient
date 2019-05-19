@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DndModule } from 'ng2-dnd';
 import { HttpModule } from '@angular/http';
@@ -68,6 +68,9 @@ import { AdminViewTeamsComponent } from './admin/admin-view-teams/admin-view-tea
 import { EditQuestionsComponent } from './edit-questions/edit-questions.component';
 import { ViewInvitationsComponent } from './view-invitations/view-invitations.component';
 import { LowerCaseInputDirective } from './lowercase.directive';
+import { JoinTeamComponent } from './join-team/join-team.component';
+import { ViewAllTeamsComponent } from './view-all-teams/view-all-teams.component';
+import { ViewAllIdeasComponent } from './view-all-ideas/view-all-ideas.component';
  
 
 
@@ -116,10 +119,13 @@ import { LowerCaseInputDirective } from './lowercase.directive';
     ViewInvitationsComponent,
     AdminSettingsComponent,
     AdminViewTeamsComponent,
-    LowerCaseInputDirective
+    LowerCaseInputDirective,
+    JoinTeamComponent,
+    ViewAllTeamsComponent,
+    ViewAllIdeasComponent
   ],
   imports: [
-    RouterModule.forRoot(AppRoutes, {useHash: true}),
+    RouterModule.forRoot(AppRoutes, {preloadingStrategy:PreloadAllModules, useHash: true}),
     BrowserModule,
     FormsModule,
     ChartsModule,

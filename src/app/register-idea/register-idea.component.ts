@@ -21,6 +21,7 @@ export class RegisterIdeaComponent implements OnInit {
   challenges: Array<string> = [];
   selectedChallenge: string;
   ideaTitle: string;
+  description: string;
   loading: boolean;
   deadlineReached: boolean = false;
   submissionErr: boolean;
@@ -54,15 +55,16 @@ export class RegisterIdeaComponent implements OnInit {
     this.formSubmitted = true;
     // checking whether a file is uploaded or not
     if (this.slides === undefined || this.slides.length === 0) {
-      this.emptyUpload = true;
+      this.slides='';
     } else {
       this.emptyUpload = false;
     }
     if (this.form.valid && !this.emptyUpload) {
       this.ideaTitle = this.form.get('ideaTitle').value;
-       this.selectedChallenge = (this.form.get('challenge').value)["name"];
+      this.selectedChallenge = (this.form.get('challenge').value)["name"];
+      this.description = this.form.get('description').value;
       this.toggleLoading();
-      this.ideaService.submitIdea(this.slides[0], this.ideaTitle, this.selectedChallenge).subscribe((res) => {
+      this.ideaService.submitIdea(this.slides[0], this.ideaTitle, this.selectedChallenge, this.description).subscribe((res) => {
         this.toggleLoading();
         this.router.navigate(['./viewIdea']);
       }, (err) => {
@@ -111,6 +113,7 @@ export class RegisterIdeaComponent implements OnInit {
     this.form = new FormGroup({
       ideaTitle: new FormControl('', [Validators.required]),
       challenge: new FormControl('', [Validators.required]),
+      description: new FormControl('', []),
     });
     this.initChallenges();
   }

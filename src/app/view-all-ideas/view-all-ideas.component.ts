@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../../Services/admin.service';
+import {IdeaService} from '../Services/idea.service';
 import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table/ng2-table';
+
 @Component({
-  selector: 'app-admin-view-ideas',
-  templateUrl: './admin-view-ideas.component.html',
-  styleUrls: ['./admin-view-ideas.component.css'],
+  selector: 'app-view-all-ideas',
+  templateUrl: './view-all-ideas.component.html',
+  styleUrls: ['./view-all-ideas.component.css']
 })
-export class AdminViewIdeasComponent implements OnInit {
+export class ViewAllIdeasComponent implements OnInit {
   ideas: any[];
   loading: boolean;
   alertFlag: boolean;
@@ -17,7 +18,7 @@ export class AdminViewIdeasComponent implements OnInit {
   public columns: Array<any> = [
     { title: 'Team name', name: 'teamName', filtering: { filterString: '', placeholder: 'Filter by team name' } },
     { title: 'Idea name', name: 'ideaName', sort: false, filtering: { filterString: '', placeholder: 'Filter by idea name' } },
-    {title: 'Location', name: 'location', sort: 'asc',filtering: {filterString: '', placeholder: 'Filter by location'}},    
+    // {title: 'Location', name: 'location', sort: 'asc',filtering: {filterString: '', placeholder: 'Filter by location'}},    
     { title: 'Category', name: 'challenge', sort: 'asc' },
     { title: 'Judges score.', name: 'judgesScore' },
     { title: 'Overall score', name: 'score' }
@@ -37,11 +38,12 @@ export class AdminViewIdeasComponent implements OnInit {
   ];
 
 
-  constructor(private adminService: AdminService) { this.length = this.data.length; }
+  constructor(private adminService: IdeaService) { this.length = this.data.length; }
 
   ngOnInit() {
     this.toggleLoading();
     this.adminService.getIdeas().subscribe(res => {
+     console.log(res,"0000")
       this.ideas = res.body;
       this.parseResponse(res.body);
       this.toggleLoading();
@@ -62,7 +64,7 @@ export class AdminViewIdeasComponent implements OnInit {
       object['teamName'] = `<a href="#/team-control?team=${element.teamName}">${element.teamName}</a>`;
       object['ideaName'] = element.title == undefined ? "" : element.title;
       object['challenge'] = element.category;
-      object['location'] = element.location;
+      // object['location'] = element.location;
       object['score'] = element.score == '-1' ? 'Not judged yet': element.score;
       object['judgesScore'] = element.judgments.length == 0 ? "No judges assigned yet" : "<ul>";
       for (let index = 0; index < element.judgments.length; index++) {
@@ -130,6 +132,7 @@ export class AdminViewIdeasComponent implements OnInit {
     this.columns.forEach((column: any) => {
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => {
+          console.log(column)
           return item[column.name].toLowerCase().match(column.filtering.filterString.toLowerCase());
         });
       }
@@ -144,6 +147,7 @@ export class AdminViewIdeasComponent implements OnInit {
     }
 
     let tempArray: Array<any> = [];
+    console.log(filteredData, "ress")
     filteredData.forEach((item: any) => {
       let flag = false;
       this.columns.forEach((column: any) => {

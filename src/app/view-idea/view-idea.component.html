@@ -14,7 +14,7 @@
                         <strong>{{ successMessage }}</strong>
                 </div>
                 <form [formGroup]="form" (ngSubmit)="editIdea()">
-                    <i>Last submitted file: {{ oldFilename }}</i>
+                    <br/>
                     <div class="form-group">
                         <input [class.idea__error]="(form.get('ideaTitle').invalid && form.get('ideaTitle').touched) || (formSubmitted && form.get('ideaTitle').invalid)"
                             formControlName="ideaTitle" class="form-control idea__regitser-idea-name-input" id="ideaTitle" [(ngModel)]="title">
@@ -22,6 +22,20 @@
                     <div *ngIf="(form.get('ideaTitle').invalid && form.get('ideaTitle').touched) || (formSubmitted && form.get('ideaTitle').invalid)"
                         class="alert alert-danger">
                         <div *ngIf="form.get('ideaTitle').errors.required" class="idea__error-msg">You should write a title for the idea. </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls">
+                            <select [class.idea__error]="(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)"
+                                class="form-control idea__select-input" formControlName="challenge">
+                                <option value="" selected hidden>{{selectedChallenge}}</option>
+                                <option class="" *ngFor="let challenge of challenges" [ngValue]="challenge">
+                                    {{ challenge.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control idea__regitser-idea-description" formControlName="description" id="description" rows="3" [(ngModel)]="description"></textarea>
                     </div>
                     <!-- <div class="form-group">
                             <div class="controls">
@@ -31,7 +45,7 @@
                                     </option>
                                 </select>
                             </div>
-                        </div> -->
+                    </div> -->
                     <!-- <div *ngIf = "(form.get('challenge').invalid && form.get('challenge').touched) || (formSubmitted && form.get('challenge').invalid)" class="alert alert-danger">
                             <div *ngIf = "form.get('challenge').errors.required" class="idea__error-msg">You should select a challenge for the idea. </div>       
                         </div> -->
@@ -43,6 +57,7 @@
                     <div *ngIf="(formSubmitted && emptyUpload)" class="alert alert-danger">
                         <div class="idea__error-msg">You should upload slides for your idea. </div>
                     </div>
+                    <i>Last submitted file: {{ oldFilename }}</i>
                     <div class="idea__btn-container--additional">
                         <button class="btn btn-default idea__submit-btn upload__btn" [disabled]="loading || deadlineReached">Change Idea</button>
                         <button type="button" class="btn btn-default idea__submit-btn download__btn" (click)="onDownload()" [disabled]="loading || deadlineReached">Download</button>

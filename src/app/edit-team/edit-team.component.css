@@ -68,3 +68,9 @@
 .team__remove-member:hover {
     cursor: pointer;
 }
+
+.join_btn{
+    background-color: rgb(53, 138, 177); 
+    border-color: rgb(53, 138, 177);
+    color: #ffffff;
+ }

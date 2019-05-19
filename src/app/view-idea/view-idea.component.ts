@@ -11,6 +11,8 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
 import { environment } from '../../environments/environment';
 import * as mime from 'mime-types'
+import { IdeaChallengeService } from '../Services/idea-challenge.service';
+import { stringify } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-view-idea',
@@ -32,6 +34,9 @@ export class ViewIdeaComponent implements OnInit {
   successAlert: boolean;
   successMessage: string;
   deadlineReached: boolean;
+  challenges: Array<string> = [];
+  selectedChallenge: string;
+  description: string;
 
 
   constructor(
@@ -41,7 +46,8 @@ export class ViewIdeaComponent implements OnInit {
     private userService: UserService,
     private loginService: LoginService,
     private router: Router,
-    private ideaService: IdeaService
+    private ideaService: IdeaService,
+    private challengeService: IdeaChallengeService,
   ) { }
 
   hideAlerts() {
@@ -60,10 +66,19 @@ export class ViewIdeaComponent implements OnInit {
   editIdea() {
     this.hideAlerts();
     this.formSubmitted = true;
+    let returnedChallenge;
     if (this.form.valid) {
+      if((this.form.get('challenge').value)["name"] == undefined){
+        returnedChallenge = this.selectedChallenge;
+      }
+      else{
+        returnedChallenge = (this.form.get('challenge').value)["name"];
+      }
       if (this.slides) {
         this.toggleLoading()
-        this.ideaService.changeIdea(this.slides[0], this.form.get('ideaTitle').value, this.filename).subscribe(
+        this.ideaService.changeIdea(this.slides[0], this.form.get('ideaTitle').value, this.filename,
+          returnedChallenge, this.form.get('description').value).subscribe(
+
           (res) => {
             this.toggleLoading()
             if (res == '200') {
@@ -78,7 +93,9 @@ export class ViewIdeaComponent implements OnInit {
         );
       }
       else {
-        this.ideaService.changeIdea(null, this.form.get('ideaTitle').value, this.filename).subscribe(
+        this.ideaService.changeIdea(null, this.form.get('ideaTitle').value, this.filename,
+        returnedChallenge, this.form.get('description').value).subscribe(
+
           (res) => {
             if (res == '200') {
               this.successAlert = true;
@@ -132,13 +149,16 @@ export class ViewIdeaComponent implements OnInit {
         this.errorMessage = 'Submission deadline has been reached.'
         this.form.disable();
       }
+      this.initChallenges();
     })
-      .catch((err) => {
+      .catch((err) => { console.log("DEADLINE",err)
         this.errorAlert = true;
         this.errorMessage = 'Something went wrong, please try again later.';
       });
     this.form = new FormGroup({
       ideaTitle: new FormControl('', [Validators.required]),
+      challenge: new FormControl('', []),
+      description: new FormControl('', []),
     });
     this.ideaService.getIdea().subscribe((res) => {
       let data = res.json().body;
@@ -146,11 +166,14 @@ export class ViewIdeaComponent implements OnInit {
         this.title = data.title;
         this.oldFilename = data.oldFilename;
         this.filename = data.filename;
+        this.selectedChallenge = data.category;
+        this.description = data.description;
       } else {
         this.errorAlert = true;
         this.errorMessage = 'No idea was submitted.';
       }
     }, (err) => {
+      console.log("ERROOORRR IDEA" , err)
       if (err.json().status == 404) {
         this.router.navigate(['./registerIdea']);
       } else {
@@ -159,4 +182,13 @@ export class ViewIdeaComponent implements OnInit {
       }
     });
   }
+
+    // setting the challenges for the user to see in the UI
+    initChallenges() {
+      this.challengeService.getChallenges().subscribe(res => {
+        this.challenges = res.json().body;
+      }, e => {console.log("chanllenge")
+        this.challenges = [];
+      })
+    }
 }

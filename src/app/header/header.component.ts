@@ -66,21 +66,43 @@ export class HeaderComponent implements OnInit {
   redirectToTeam() {
     this.loginService.getUser().subscribe((res) => {
       let teamName = res.json().data.teamMember;
-      this.router.navigate([`./viewTeam/${teamName}`]);
+      if (teamName == "-1"){
+        this.redirectToJoinTeam()
+      }
+      else {
+        this.router.navigate([`./viewTeam/${teamName}`]);
+      }
     }, (err) => {
       console.log(err.json());
     });
   }
+  redirectToJoinTeam(){
+    this.router.navigate([`./teams`]);
+  }
   redirectToIdea() {
-    this.ideaService.getIdea(this.localStorageService.get('teamName')).subscribe((res) => {
-      this.router.navigate(['./viewIdea']);
-    }, (err) => {
-      if (err.json().status == 404) {
-        this.router.navigate(['./registerIdea']);
+    this.loginService.getUser().subscribe((res) => {
+      let teamName = res.json().data.teamMember;
+      if (teamName == "-1"){
+        alert('You need to join a team first, or create your own team');
+        this.redirectToJoinTeam()
       }
+      else {
+        this.ideaService.getIdea(this.localStorageService.get('teamName')).subscribe((res) => {
+          this.router.navigate(['./viewIdea']);
+        }, (err) => {
+          if (err.json().status == 404) {
+            this.router.navigate(['./registerIdea']);
+          }
+        });
+      }
+    }, (err) => {
+      console.log(err.json());
     });
   }
   redirectToForgotPassword() {
     this.router.navigate(['./forgot-password']);
+  }
+  redirectToViewIdeas(){
+    this.router.navigate([`./ideas`]);
   }
 }
