@@ -42,7 +42,7 @@ export class UserService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
 
-    return this.http.get( environment.apiUrl +`/users/${id}`, { headers: reqHeaders });
+    return this.http.get( `/users/${id}`, { headers: reqHeaders });
   }
 
   getUserTeamStatus(): Observable<any> {
@@ -85,7 +85,7 @@ export class UserService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
 
-    return this.http.post( environment.apiUrl +"/users/reset-password", { token, newPassword, verifyPassword }, { headers: reqHeaders });
+    return this.http.post( "/users/reset-password", { token, newPassword, verifyPassword }, { headers: reqHeaders });
   }
 
   authenticate(userId: String) {
@@ -142,7 +142,7 @@ export class UserService {
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     let body= JSON.stringify(email);
 
-    return this.http.post( environment.apiUrl +"/users/leave-team", {body}, {headers: reqHeaders})
+    return this.http.post( "/users/leave-team", {body}, {headers: reqHeaders})
     .map(res => {res.json()
       this.localStorageService.set("token", res.json().data.token)});
 
