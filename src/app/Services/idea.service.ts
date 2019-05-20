@@ -53,7 +53,7 @@ export class IdeaService {
       data.append('challenge', challenge);
       data.append('description', description);
       const xhr = new XMLHttpRequest();
-      xhr.open('POST',  '/ideas/new');
+      xhr.open('POST', '/ideas/new');
       const currentToken = this.localStorageService.get('token');
       xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken);
       xhr.onload = () => {
@@ -78,7 +78,7 @@ export class IdeaService {
         data.append('oldFilename', file.name);
       }
       const xhr = new XMLHttpRequest();
-      xhr.open('POST',  '/ideas/edit');
+      xhr.open('POST', '/ideas/edit');
       const currentToken = this.localStorageService.get('token');
       xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken);
       xhr.send(data);
