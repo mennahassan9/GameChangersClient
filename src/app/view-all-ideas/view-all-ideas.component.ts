@@ -61,11 +61,11 @@ export class ViewAllIdeasComponent implements OnInit {
     let retuenedData = [];
     data.forEach(element => {
       let object = {};
-      object['teamName'] = `<a href="#/team-control?team=${element.teamName}">${element.teamName}</a>`;
+      object['teamName'] = `<a href="#/viewTeam/${element.teamName}">${element.teamName}</a>`;
       object['ideaName'] = element.title == undefined ? "" : element.title;
       object['challenge'] = element.category;
       // object['location'] = element.location;
-      object['score'] = element.score;
+      object['score'] = element.score == '-1' ? 'Not judged yet': element.score;
       object['judgesScore'] = element.judgments.length == 0 ? "No judges assigned yet" : "<ul>";
       for (let index = 0; index < element.judgments.length; index++) {
         const judgment = element.judgments[index];

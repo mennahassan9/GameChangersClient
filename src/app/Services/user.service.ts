@@ -42,7 +42,7 @@ export class UserService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
 
-    return this.http.get(`/users/${id}`, { headers: reqHeaders });
+    return this.http.get( `/users/${id}`, { headers: reqHeaders });
   }
 
   getUserTeamStatus(): Observable<any> {
@@ -142,7 +142,7 @@ export class UserService {
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     let body= JSON.stringify(email);
 
-    return this.http.post("/users/leave-team", {body}, {headers: reqHeaders})
+    return this.http.post( "/users/leave-team", {body}, {headers: reqHeaders})
     .map(res => {res.json()
       this.localStorageService.set("token", res.json().data.token)});
 

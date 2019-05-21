@@ -88,11 +88,11 @@ export class EditTeamComponent implements OnInit {
     if (this.allowOthers != this.team.allowOthers){
       this.editView= true;
     }
-    console.log(this.allowOthers, this.team.allowOthers);
+    // console.log(this.allowOthers, this.team.allowOthers);
   }
 
   submitEdits(){
-    console.log('submitted')
+    // console.log('submitted')
     if (!this.allowOthers) {
       this.lookingFor='';
     }
@@ -123,7 +123,7 @@ export class EditTeamComponent implements OnInit {
       this.creator = res.data.team.creator;
       this.allowOthers = this.team.allowOthers;
       this.lookingFor = this.team.lookingFor;
-      console.log(this.allowOthers, this.team.allowOthers)
+      // console.log(this.allowOthers, this.team.allowOthers)
     }, (err) => {
       err = err.json();
       this.error = true;
