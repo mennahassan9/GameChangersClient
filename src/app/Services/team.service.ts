@@ -83,13 +83,13 @@ export class TeamService {
     }
   }
 
-  addTeamMember(email): Observable<any> {
+  addTeamMember(email, name): Observable<any> {
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     let body = {
-      email
+      email, name
     }
     return this.http.post( "/teams/self/members", body, { headers: reqHeaders })
       .map(res => res.json());
