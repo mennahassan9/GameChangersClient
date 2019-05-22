@@ -45,10 +45,23 @@ export class EditTeamComponent implements OnInit {
   }
 
   addTeamMember(email) {
+    console.log(email,"HHEERREEE")
     this.hideAlerts();
-    this.teamService.addTeamMember(email.value).subscribe((res) => {
+    this.teamService.addTeamMember(email.email.value, email.name.value).subscribe((res) => {
       this.emailSent = true;
       this.team = res.data.team;
+
+      this.teamService.getCreatedTeam().subscribe((res) => {
+        this.team = res.data.team;
+        this.creator = res.data.team.creator;
+        this.allowOthers = this.team.allowOthers;
+        this.lookingFor = this.team.lookingFor;
+        console.log(this.allowOthers, this.team.allowOthers)
+      }, (err) => {
+        err = err.json();
+        this.error = true;
+        this.errorMsg = err.status == 404 ? err.errors[0]['message'] : 'Something went wrong please try again!';
+      });
     }, (err) => {
       err = err.json();
       this.emailSent = false;

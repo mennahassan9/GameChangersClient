@@ -45,7 +45,12 @@ export class PasswordResetComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.token = this.activatedRoute.snapshot.queryParams['token'];
+    // this.token = this.activatedRoute.snapshot.queryParams['token'];
+  
+    this.token = this.activatedRoute.snapshot.paramMap.get('token');
+
+    console.log('HI AGAIN', this.token)
+
     if(this.token == '' || this.token == undefined || this.token == null){
       this.error = "Please stick to the link sent to your email";
       this.wrongCredentials = true;
