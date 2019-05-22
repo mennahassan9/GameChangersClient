@@ -192,6 +192,6 @@ getChapters(){
    if(chapter.region.name == this.form.get('region').value)
   {this.chapters.push(chapter.name)}
 })
-
+  this.chapters.sort()
 }
 }

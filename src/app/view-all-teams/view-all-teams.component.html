@@ -9,7 +9,7 @@
       <div class="col-sm-offset-1  col-sm-10 team__table" style="padding-top: 5%">
         <div class="row team__brief-container">
           <label class="checkbox-inline">
-            <input [(ngModel)]="allowOthers" type="checkbox" (change)="checkAllowOthers()" />Allow Others
+            <input [(ngModel)]="allowOthers" type="checkbox" (change)="checkAllowOthers()" />View teams I can join
           </label>
           <ng-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)"
             [rows]="rows" [columns]="columns">
