@@ -24,7 +24,7 @@
           <!-- E-mail -->
           <label class="control-label" for="email">E-mail *</label>
           <div class="controls">
-            <input type="text" id="email" formControlName="email" name="email" placeholder="michael@dell.com" class="input-xlarge">
+            <input type="text" id="email" formControlName="email" name="email" placeholder="michael@dell.com" class="input-xlarge" lowercase>
             <i class="help-block">Please provide your corporate email address.</i>
           </div>
           <div *ngIf="(form.get('email').invalid && form.get('email').touched || (submit && form.get('email').invalid))" class="alert alert-danger">

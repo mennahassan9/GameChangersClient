@@ -5,6 +5,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class HeaderButtonsService {
     public isSignedIn = new BehaviorSubject(false);
     public isAdmin = new BehaviorSubject(false);
+    public isCleader = new BehaviorSubject(false)
+    public isRleader = new BehaviorSubject(false)
+
     constructor() { }
 
     setIsSignedIn() {
@@ -16,6 +19,12 @@ export class HeaderButtonsService {
         this.isSignedIn.next(false); 
     }
 
+    setIsSignedInCLeader() {
+        this.isCleader.next(true);
+    }
+    setIsSignedInRLeader() {
+        this.isRleader.next(true);
+    }
     setIsSignedInAdmin() {
         this.isAdmin.next(true);
     }
@@ -23,5 +32,9 @@ export class HeaderButtonsService {
     signOutAdmin()
     {
         this.isAdmin.next(false); 
+    }
+    signOutLeader(){
+        this.isCleader.next(false);
+        this.isRleader.next(false)
     }
 }

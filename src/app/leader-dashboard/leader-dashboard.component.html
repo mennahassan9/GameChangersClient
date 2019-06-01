@@ -1,0 +1,90 @@
+<div class="container-fluid dashboard-container">
+  <div class="row info-boxs">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="row info-box">
+        <span class="col-xs-3 info-box__icon bg-coral">
+          <fa [name]="'user'"></fa>
+        </span>
+        <div class="col-xs-9 info-box__content">
+          <span>Users</span>
+          <span class="info-box__number">{{users}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="row info-box ">
+        <span class="col-xs-3 info-box__icon bg-teal">
+          <fa [name]="'users'"></fa>
+        </span>
+        <div class="col-xs-9 info-box__content">
+          <span>Teams</span>
+          <span class="info-box__number">{{teams}}</span>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="row info-box ">
+            <span class="col-xs-3 info-box__icon bg-chartreuse">
+                <fa [name]="'gavel'"></fa>
+            </span>
+            <div class="col-xs-9 info-box__content">
+              <span>Judges</span>
+              <span class="info-box__number">{{judges}}</span>
+            </div>
+          </div>
+      </div> -->
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+    {{ alertMsg }}
+  </div>
+
+  <div class="row">
+
+    <div class="dashboard-container__section">
+      <!-- <app-leader-view-teams></app-leader-view-teams> -->
+      <h1 [hidden]="!cl">Send an Email to participants in your chapter</h1>
+      <h1 [hidden]="!rl">Send an Email to participants in your Region</h1>
+
+      <div class="row alert alert-success text-center" *ngIf="created" role="alert">
+        <strong>Your emails have been sent!</strong>
+    </div>
+
+      <form class="row form-horizontal" [formGroup]="form" (ngSubmit)="send()">
+        <fieldset>
+          <div id="legend">
+            <legend class="">Register</legend>
+          </div>
+          <div class="control-group">
+            <!-- Username -->
+            <label class="control-label">Subject *</label>
+            <div class="controls">
+              <input type="text" formControlName="subject" id="subject" name="subject" placeholder="Email subject" value=" " class="input-xlarge"
+                required>
+              <i class="help-block">Please enter the email's subject.</i>
+            </div>
+            <div *ngIf="(form.get('subject').invalid && form.get('subject').touched || (submit && form.get('subject').invalid))" class="alert alert-danger">
+              <div *ngIf="form.get('subject').errors.required">Please enter the email's subject. </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <!-- Username -->
+            <label class="control-label">Body *</label>
+            <div class="controls">
+              <textarea type="text" formControlName="body" id="body" name="body" placeholder="Email body" value=" " class="input-xlarge text__area"
+                required></textarea>
+              <i class="help-block">Please enter the email's body.</i>
+            </div>
+            <div *ngIf="(form.get('body').invalid && form.get('body').touched || (submit && form.get('body').invalid))" class="alert alert-danger">
+              <div *ngIf="form.get('body').errors.required">Please enter the email's body. </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <input type="submit" class="btn btn-success">
+          </div>
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+
+</div>

@@ -12,8 +12,8 @@
     </button>
     <div class="header__stub-container collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <!-- content to be added in here -->
-      <button class="header_btns" (click)="redirectToTeam()" [hidden]="!isSignedIn || isJudge || isAdmin">My Team</button>
-      <button class="header_btns" (click)="redirectToIdea()" [hidden]="!isSignedIn || isJudge || isAdmin">My Idea</button>
+      <button class="header_btns" (click)="redirectToTeam()" [hidden]="!isSignedIn || isJudge || isAdmin||isLeader">My Team</button>
+      <button class="header_btns" (click)="redirectToIdea()" [hidden]="!isSignedIn || isJudge || isAdmin||isLeader">My Idea</button>
       <button class="header_btns" (click)="redirectToJoinTeam()" [hidden]="!isSignedIn || isJudge || isAdmin">Teams</button>
       <button class="header_btns" (click)="redirectToViewIdeas()" [hidden]="!isSignedIn || isJudge || isAdmin">Ideas</button>
       <button class="header_btns" (click)="redirectToForgotPassword()" [hidden]="!isSignedIn">Reset Password</button>

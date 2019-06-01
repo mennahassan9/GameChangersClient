@@ -107,7 +107,7 @@ export class RegistrationComponent implements OnInit {
       // this.resortIdeas();
       this.userSvc.register(this.form.value as RegistrationModel).then((success) => {
         if(this.hasIdea) {
-          this.loginService.loginCheck(this.form.get('email').value, this.form.get('password').value).then((res) => {
+          this.loginService.loginCheck(this.form.get('email').value.toLowerCase() , this.form.get('password').value).then((res) => {
             this.headerButtonsService.setIsSignedIn();
             this.router.navigate(['/registerTeam'])
           });

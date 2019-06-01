@@ -71,6 +71,11 @@ import { LowerCaseInputDirective } from './lowercase.directive';
 import { JoinTeamComponent } from './join-team/join-team.component';
 import { ViewAllTeamsComponent } from './view-all-teams/view-all-teams.component';
 import { ViewAllIdeasComponent } from './view-all-ideas/view-all-ideas.component';
+import { LeaderDashboardComponent } from './leader-dashboard/leader-dashboard.component';
+import { LeaderSideNavComponent } from './leader-side-nav/leader-side-nav.component';
+import { LeaderViewTeamsComponent } from './leader-view-teams/leader-view-teams.component';
+import { LeaderViewUsersComponent } from './leader-view-users/leader-view-users.component';
+import { InviteLeaderComponent } from './admin/invite-leader/invite-leader.component';
  
 
 
@@ -122,7 +127,12 @@ import { ViewAllIdeasComponent } from './view-all-ideas/view-all-ideas.component
     LowerCaseInputDirective,
     JoinTeamComponent,
     ViewAllTeamsComponent,
-    ViewAllIdeasComponent
+    ViewAllIdeasComponent,
+    LeaderDashboardComponent,
+    LeaderSideNavComponent,
+    LeaderViewTeamsComponent,
+    LeaderViewUsersComponent,
+    InviteLeaderComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {preloadingStrategy:PreloadAllModules, useHash: true}),
