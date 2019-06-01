@@ -17,7 +17,7 @@ export class AdminViewIdeasComponent implements OnInit {
   public columns: Array<any> = [
     { title: 'Team name', name: 'teamName', filtering: { filterString: '', placeholder: 'Filter by team name' } },
     { title: 'Idea name', name: 'ideaName', sort: false, filtering: { filterString: '', placeholder: 'Filter by idea name' } },
-    {title: 'Location', name: 'location', sort: 'asc',filtering: {filterString: '', placeholder: 'Filter by location'}},    
+    // {title: 'Region', name: 'region', sort: 'asc',filtering: {filterString: '', placeholder: 'Filter by region'}},    
     { title: 'Category', name: 'challenge', sort: 'asc' },
     { title: 'Judges score.', name: 'judgesScore' },
     { title: 'Overall score', name: 'score' }
@@ -62,7 +62,7 @@ export class AdminViewIdeasComponent implements OnInit {
       object['teamName'] = `<a href="#/team-control?team=${element.teamName}">${element.teamName}</a>`;
       object['ideaName'] = element.title == undefined ? "" : element.title;
       object['challenge'] = element.category;
-      object['location'] = element.location;
+      // object['region'] = element.region;
       object['score'] = element.score == '-1' ? 'Not judged yet': element.score;
       object['judgesScore'] = element.judgments.length == 0 ? "No judges assigned yet" : "<ul>";
       for (let index = 0; index < element.judgments.length; index++) {
