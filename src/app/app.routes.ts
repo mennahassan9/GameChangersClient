@@ -39,6 +39,10 @@ import { ViewInvitationsComponent } from './view-invitations/view-invitations.co
 import { JoinTeamComponent } from './join-team/join-team.component';
 import { ViewAllTeamsComponent } from './view-all-teams/view-all-teams.component';
 import { ViewAllIdeasComponent } from './view-all-ideas/view-all-ideas.component';
+import { LeaderDashboardComponent } from './leader-dashboard/leader-dashboard.component';
+import { LeaderViewUsersComponent } from './leader-view-users/leader-view-users.component';
+import { LeaderViewTeamsComponent } from './leader-view-teams/leader-view-teams.component';
+import { InviteLeaderComponent } from './admin/invite-leader/invite-leader.component';
 
 
 export const AppRoutes : Routes= [
@@ -73,17 +77,6 @@ export const AppRoutes : Routes= [
     {
         path: 'admin/user',
         component: AdminViewUserComponent,
-        canActivate: [AuthGuardAdminService]
-    },
-    {
-        path: 'admin/user',
-        component: AdminViewUserComponent,
-        canActivate: [AuthGuardAdminService]
-    },
-    {
-        path: 'admin/user',
-        component: AdminViewUserComponent,
-        canActivate: [AuthGuardAdminService]
     },
     {
         path: 'admin/viewTeam/:id',
@@ -217,7 +210,22 @@ export const AppRoutes : Routes= [
     },
     {
         path: 'admin/teams',
-        component: AdminViewTeamsComponent,
-        canActivate: [AuthGuardAdminService]
+        component: AdminViewTeamsComponent
+    },
+    {
+        path: 'leader/dashboard',
+        component: LeaderDashboardComponent
+    },
+    {
+        path: 'leader/users',
+        component: LeaderViewUsersComponent
+    },
+    {
+        path: 'leader/teams',
+        component: LeaderViewTeamsComponent
+    },
+    {
+        path:'admin/invite-leaders',
+        component: InviteLeaderComponent
     }
 ];
