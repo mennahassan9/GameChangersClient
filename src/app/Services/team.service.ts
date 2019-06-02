@@ -78,7 +78,7 @@ export class TeamService {
       reqHeaders.append('Content-Type', 'application/json');
       const currentToken = this.localStorageService.get('token');
       reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-      return this.http.put( `/teams//invitations/${teamName}`, { accepted }, { headers: reqHeaders })
+      return this.http.put(environment.apiUrl +  `/teams//invitations/${teamName}`, { accepted }, { headers: reqHeaders })
         .map(res => res.json());
     }
   }
