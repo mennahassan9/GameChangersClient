@@ -28,13 +28,22 @@ export class LoginService {
     return this.http.post( "/users/login", { email, password }, { headers: reqHeaders })
     .toPromise()
     .then((res) => 
-    {
+    { console.log(res,"DATA")
       this.localStorageService.set("token", JSON.parse(res["_body"]).data.token);
       this.localStorageService.set("isJudge", JSON.parse(res["_body"]).data.isJudge);
       this.localStorageService.set("isAdmin", JSON.parse(res["_body"]).data.isAdmin);
+      this.localStorageService.set("isCLeader", JSON.parse(res["_body"]).data.isCLeader);
+      this.localStorageService.set("isRLeader", JSON.parse(res["_body"]).data.isRLeader);
       if(JSON.parse(res["_body"]).data.isAdmin){
         this.headerButtonsService.setIsSignedInAdmin();
       }
+      if(JSON.parse(res["_body"]).data.isCLeader){
+        this.headerButtonsService.setIsSignedInCLeader();
+      }
+      if(JSON.parse(res["_body"]).data.isRLeader){
+        this.headerButtonsService.setIsSignedInRLeader();
+      }
+
       this.localStorageService.set("email", email);
     })
     ;

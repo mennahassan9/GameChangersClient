@@ -1,0 +1,32 @@
+<div class="container-fluid users__main-container">
+ 
+  <div class="row">
+    <div class="col-sm-offset-1  col-sm-10 users__table">
+          <div class="row users__brief-container"> 
+            <ng-table [config]="config"
+            (tableChanged)="onChangeTable(config)"
+            (cellClicked)="onCellClick($event)"
+            [rows]="rows" [columns]="columns">
+            
+            </ng-table>
+            <div class="alert alert-danger" role="alert" *ngIf="alertFlag">
+              {{ alertMsg }}
+            </div>
+            <pagination *ngIf="config.paging"
+                  class="pagination-sm"
+                  [(ngModel)]="page"
+                  [totalItems]="length"
+                  [itemsPerPage]="itemsPerPage"
+                  [maxSize]="maxSize"
+                  [boundaryLinks]="true"
+                  [rotate]="false"
+                  (pageChanged)="onChangeTable(config, $event)"
+                  (numPages)="numPages = $event">
+            </pagination>
+            <div id = "loader" [hidden]="!loading" ></div>
+        </div>
+        
+    </div>
+   
+  </div>
+</div>

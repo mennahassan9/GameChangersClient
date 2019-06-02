@@ -111,6 +111,22 @@ export class TeamService {
     return this.http.get( "/teams/allTeams",{ headers: reqHeaders })
     .map(res => res.json());
   }
+  getTeamsC(chapter) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get( `/teams/chapter/${chapter}`,{ headers: reqHeaders })
+    .map(res => res.json());
+  }
+  getTeamsR(region) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get( `/teams/region/${region}`,{ headers: reqHeaders })
+    .map(res => res.json());
+  }
   
   joinTeam(teamName) {
     const reqHeaders: Headers = new Headers();

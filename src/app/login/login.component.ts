@@ -43,6 +43,10 @@ export class LoginComponent implements OnInit {
         else{
           if(this.localStorageService.get("isJudge")){
             this.router.navigate(['./judge']);
+          }
+          if(this.localStorageService.get("isCLeader")|| this.localStorageService.get("isRLeader"))
+          {
+            this.router.navigate(['./leader/dashboard'])
           }else{
             this.router.navigate(['./profile']);
           }

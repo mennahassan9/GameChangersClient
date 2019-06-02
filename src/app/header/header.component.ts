@@ -14,6 +14,8 @@ export class HeaderComponent implements OnInit {
   isSignedIn: boolean;
   isJudge: boolean;
   isAdmin: boolean;
+  isLeader: boolean;
+  teamName: any;
   constructor(
     private router: Router,
     private localStorageService: LocalStorageService,
@@ -23,6 +25,11 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+
+    this.loginService.getUser().subscribe((res) => {
+      this.teamName = res.json().data.teamMember;})
+
     this.isJudge = this.localStorageService.get("isJudge") == true;
     this.isAdmin = this.localStorageService.get("isAdmin") == true;
     this.headerButtonsService.isSignedIn.subscribe(updateSignIn => {
@@ -33,6 +40,10 @@ export class HeaderComponent implements OnInit {
       this.headerButtonsService.setIsSignedIn();
     } else {
       this.headerButtonsService.signOut();
+    }
+
+    if(this.localStorageService.get("isCLeader")||this.localStorageService.get("isRLeader")){
+      this.isLeader=true;
     }
   }
 
@@ -59,25 +70,31 @@ export class HeaderComponent implements OnInit {
     this.localStorageService.remove('isAdmin');
     this.localStorageService.remove('email');
     this.localStorageService.remove('teamName');
+    this.localStorageService.remove("isCLeader");
+    this.localStorageService.remove("isRLeader")
     this.headerButtonsService.signOut();
     this.headerButtonsService.signOutAdmin();
+    this.headerButtonsService.signOutLeader();
     this.router.navigate(['./']);
   }
   redirectToTeam() {
     this.loginService.getUser().subscribe((res) => {
-      let teamName = res.json().data.teamMember;
-      if (teamName == "-1"){
+       this.teamName = res.json().data.teamMember;
+      if (this.teamName == "-1"&& !this.isLeader){
         this.redirectToJoinTeam()
       }
       else {
-        this.router.navigate([`./viewTeam/${teamName}`]);
+        this.router.navigate([`./viewTeam/${this.teamName}`]);
       }
     }, (err) => {
       console.log(err.json());
     });
   }
   redirectToJoinTeam(){
-    this.router.navigate([`./teams`]);
+    if(this.teamName == "-1"&& this.isLeader){
+      this.router.navigate(['admin/teams'])
+    }else{
+    this.router.navigate([`./teams`]);}
   }
   redirectToIdea() {
     this.loginService.getUser().subscribe((res) => {
