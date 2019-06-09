@@ -45,7 +45,6 @@ export class RegistrationComponent implements OnInit {
     console.log("REGIONS",res)
     res.data.forEach(element => {
       this.regions.push(element.name)
-      
     });
     console.log(this.regions)
   })
@@ -54,6 +53,7 @@ export class RegistrationComponent implements OnInit {
     console.log("CHAPTERS",res)
     this.chapter= res.data
     console.log(this.chapters)
+    this.chapters.push('Chapter1')
   })
     this.userSvc.getDeadlines().then((res) => {
       const registrationDeadline = new Date(JSON.parse(res['_body']).data.registration);
