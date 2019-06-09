@@ -44,6 +44,22 @@ export class UserService {
 
     return this.http.get(environment.apiUrl + `/users/${id}`, { headers: reqHeaders });
   }
+  getUsersC(chapter) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get( `/users/chapter/${chapter}`, { headers: reqHeaders })
+    .map(res => res.json());
+  }
+  getUsersR(region) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get( `/users/region/${region}`, { headers: reqHeaders })
+    .map(res => res.json());
+  }
 
   getUserTeamStatus(): Observable<any> {
     const reqHeaders: Headers = new Headers();
@@ -62,6 +78,26 @@ export class UserService {
 
     let body= JSON.stringify(user);
     return this.http.post( environment.apiUrl + "/users/signup",body, { headers: reqHeaders })
+              .toPromise();
+  }
+  sendToC(chapter,email){
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    let body= JSON.stringify(email);
+    return this.http.post( "/users/email/chapter",{chapter, subject: email.subject, emailBody: email.body }, { headers: reqHeaders })
+              .toPromise();
+  }
+  sendToR(region, email){
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    let body= JSON.stringify(email);
+    return this.http.post( "/users/email/region",{region, subject: email.subject, emailBody: email.body }, { headers: reqHeaders })
               .toPromise();
   }
 

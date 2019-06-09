@@ -1,0 +1,97 @@
+<div class="container register__main-container">
+  <div class="jumbotron register__sub-container">
+    <div class="alert alert-danger" *ngIf="errorAlert">
+      {{ errorMessage }}
+    </div>
+    <div class="alert alert-success" *ngIf="doneAlert">
+      Leader has been added successfully
+    </div>
+    <form class="row form-horizontal" [formGroup]="form" (ngSubmit)="register()">
+      <fieldset>
+        <div id="legend">
+          <legend class="">Invite Leader</legend>
+        </div>
+        <div class="control-group">
+          <!-- Username -->
+          <label class="control-label">Name *</label>
+          <div class="controls">
+            <input type="text" formControlName="name" id="name" name="name" placeholder="John Doe" value=" "
+              class="input-xlarge" required>
+            <i class="help-block">Please provide your preferred name.</i>
+          </div>
+          <div *ngIf="(form.get('name').invalid && form.get('name').touched || (submit && form.get('name').invalid))"
+            class="alert alert-danger">
+            <div *ngIf="form.get('name').errors.required">Please enter the leader's name. </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <!-- E-mail -->
+          <label class="control-label" for="email">E-mail *</label>
+          <div class="controls">
+            <input type="text" id="email" formControlName="email" name="email" placeholder="michael@dell.com"
+              class="input-xlarge" lowercase>
+            <i class="help-block">Please provide the leader's corporate email address.</i>
+          </div>
+          <div *ngIf="(form.get('email').invalid && form.get('email').touched || (submit && form.get('email').invalid))"
+            class="alert alert-danger">
+            <div *ngIf="form.get('email').errors.required">Please enter the leader's corporate email address. </div>
+            <div *ngIf="form.get('email').errors.pattern">You should provide the leader's corporate email address.
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <!-- office location -->
+          <label class="control-label">What is the leader's region? *</label>
+          <div class="controls">
+            <select class="form-control" formControlName="region" (click)="getChapters()">
+              <option *ngFor="let region of regions" [ngValue]="region">
+                {{region}}
+              </option>
+            </select>
+            <i class="help-block chapter">Please specify the leader's region.</i>
+            <div
+              *ngIf="(form.get('region').invalid && form.get('region').touched || (submit && form.get('region').invalid))"
+              class="alert alert-danger">
+              <div *ngIf="form.get('region').errors.required">Please specify your region. </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <!-- office location -->
+          <label class="control-label">Where is the Leader's chapter? *</label>
+          <div class="controls">
+            <select class="form-control" formControlName="chapter">
+              <option *ngFor="let chapter of chapters" [ngValue]="chapter">
+                {{chapter}}
+              </option>
+            </select>
+            <i class="help-block chapter">Select the leader's chapter or the chapter that is closest to them.</i>
+            <div
+              *ngIf="(form.get('chapter').invalid && form.get('chapter').touched || (submit && form.get('chapter').invalid))"
+              class="alert alert-danger">
+              <div *ngIf="form.get('chapter').errors.required">Please select the leader's chapter. </div>
+            </div>
+          </div>
+        </div>
+
+        <i class="help-block chapter" style="font-size:20px">
+          <input [(ngModel)]="Cleader" [ngModelOptions]="{standalone: true}" type="checkbox"
+            style="margin-right:10px" />
+          Chapter Leader</i>
+        <i class="help-block chapter" style="font-size:20px">
+          <input [(ngModel)]="Rleader" [ngModelOptions]="{standalone: true}" type="checkbox"
+            style="margin-right:10px" />
+          Region Leader</i>
+
+        <div class="control-group">
+          <input type="submit" class="btn btn-success">
+        </div>
+      </fieldset>
+    </form>
+    <!-- <input [(ngModel)]="hasIdea" type="checkbox"/> -->
+
+  </div>
+</div>

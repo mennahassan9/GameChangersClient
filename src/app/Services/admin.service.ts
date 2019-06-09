@@ -20,6 +20,26 @@ export class AdminService {
     return this.http.get( "/admin/ideas", { headers: reqHeaders })
     .map(res => res.json());
   }
+  inviteCleader(user){
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    let body= JSON.stringify(user);
+    return this.http.post( "/admin/inviteCLeader",body, { headers: reqHeaders })
+              .toPromise();
+  }
+  inviteRleader(user){
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    let body= JSON.stringify(user);
+    return this.http.post( "/admin/inviteRleader",body, { headers: reqHeaders })
+              .toPromise();
+  }
 
   getUsers() {
     const reqHeaders: Headers = new Headers();
