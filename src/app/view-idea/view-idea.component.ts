@@ -84,7 +84,34 @@ export class ViewIdeaComponent implements OnInit {
             if (res == '200') {
               this.successAlert = true;
               this.successMessage = 'Thank you for submitting your idea!';
-              //location.reload()
+
+
+              this.ideaService.getIdea().subscribe((res) => {
+                let data = res.json().body;
+                if (data != null) {
+                  this.title = data.title;
+                  this.oldFilenames = data.oldFilename;
+                  this.filename = data.filename;
+                  this.selectedChallenge = data.category;
+                  this.description = data.description;
+                } else {
+                  this.errorAlert = true;
+                  this.errorMessage = 'No idea was submitted.';
+                }
+              }, (err) => {
+                console.log("ERROOORRR IDEA" , err)
+                if (err.json().status == 404) {
+                  this.router.navigate(['./registerIdea']);
+                } else {
+                  this.errorAlert = true;
+                  this.errorMessage = 'Something went wrong, please try again later.';
+                }
+              });
+
+
+
+
+
             }
             else {
               this.errorAlert = true;
@@ -102,7 +129,31 @@ export class ViewIdeaComponent implements OnInit {
             if (res == '200') {
               this.successAlert = true;
               this.successMessage = 'Thank you for submitting your idea!';
-              //location.reload()
+
+              this.ideaService.getIdea().subscribe((res) => {
+                let data = res.json().body;
+                if (data != null) {
+                  this.title = data.title;
+                  this.oldFilenames = data.oldFilename;
+                  this.filename = data.filename;
+                  this.selectedChallenge = data.category;
+                  this.description = data.description;
+                } else {
+                  this.errorAlert = true;
+                  this.errorMessage = 'No idea was submitted.';
+                }
+              }, (err) => {
+                console.log("ERROOORRR IDEA" , err)
+                if (err.json().status == 404) {
+                  this.router.navigate(['./registerIdea']);
+                } else {
+                  this.errorAlert = true;
+                  this.errorMessage = 'Something went wrong, please try again later.';
+                }
+              });
+
+
+
             }
             else {
               this.errorAlert = true;
