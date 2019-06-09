@@ -174,6 +174,7 @@ export class ViewIdeaComponent implements OnInit {
     this.slides = target.files;
     if (this.slides.length > 0) {
       this.slidesName = this.form.controls.ideaTitle.value;
+      location.reload()
     }
   }
 
@@ -184,7 +185,6 @@ export class ViewIdeaComponent implements OnInit {
         var fileURL = URL.createObjectURL(res);
         var win = window.open(fileURL);
         this.toggleLoading();
-        location.reload()
       }, (err) => {
         this.toggleLoading();
         this.errorAlert = true;
