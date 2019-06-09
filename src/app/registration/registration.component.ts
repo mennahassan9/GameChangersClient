@@ -53,7 +53,6 @@ export class RegistrationComponent implements OnInit {
     console.log("CHAPTERS",res)
     this.chapter= res.data
     console.log(this.chapters)
-    this.chapters.push('Chapter1')
   })
     this.userSvc.getDeadlines().then((res) => {
       const registrationDeadline = new Date(JSON.parse(res['_body']).data.registration);
