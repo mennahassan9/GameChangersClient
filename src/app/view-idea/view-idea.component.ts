@@ -28,7 +28,7 @@ export class ViewIdeaComponent implements OnInit {
   title: string;
   filename: string;
   loading: boolean;
-  oldFilenames: Array<string> = [];
+  oldFilename: string;
   errorAlert: boolean;
   errorMessage: string;
   successAlert: boolean;
@@ -76,9 +76,9 @@ export class ViewIdeaComponent implements OnInit {
       }
       if (this.slides) {
         this.toggleLoading()
-        this.ideaService.changeIdea(this.slides, this.form.get('ideaTitle').value, this.filename,
+        this.ideaService.changeIdea(this.slides[0], this.form.get('ideaTitle').value, this.filename,
           returnedChallenge, this.form.get('description').value).subscribe(
-                
+
           (res) => {
             this.toggleLoading()
             if (res == '200') {
@@ -90,7 +90,7 @@ export class ViewIdeaComponent implements OnInit {
                 let data = res.json().body;
                 if (data != null) {
                   this.title = data.title;
-                  this.oldFilenames = data.oldFilename;
+                  this.oldFilename = data.oldFilename;
                   this.filename = data.filename;
                   this.selectedChallenge = data.category;
                   this.description = data.description;
@@ -119,7 +119,6 @@ export class ViewIdeaComponent implements OnInit {
             }
           }
         );
-        
       }
       else {
         this.ideaService.changeIdea(null, this.form.get('ideaTitle').value, this.filename,
@@ -134,7 +133,7 @@ export class ViewIdeaComponent implements OnInit {
                 let data = res.json().body;
                 if (data != null) {
                   this.title = data.title;
-                  this.oldFilenames = data.oldFilename;
+                  this.oldFilename = data.oldFilename;
                   this.filename = data.filename;
                   this.selectedChallenge = data.category;
                   this.description = data.description;
@@ -169,18 +168,16 @@ export class ViewIdeaComponent implements OnInit {
   }
 
   onUpload(event) {
-    console.log(event)
     var target = event.target || event.srcElement;
     this.slides = target.files;
     if (this.slides.length > 0) {
       this.slidesName = this.form.controls.ideaTitle.value;
-      location.reload()
     }
   }
 
   onDownload() {
     this.toggleLoading()
-    this.ideaService.downloadIdea(this.form.get('FileName').value).subscribe(
+    this.ideaService.downloadIdea(this.filename).subscribe(
       (res) => {
         var fileURL = URL.createObjectURL(res);
         var win = window.open(fileURL);
@@ -215,13 +212,12 @@ export class ViewIdeaComponent implements OnInit {
       ideaTitle: new FormControl('', [Validators.required]),
       challenge: new FormControl('', []),
       description: new FormControl('', []),
-      FileName: new FormControl('',[])
     });
     this.ideaService.getIdea().subscribe((res) => {
       let data = res.json().body;
       if (data != null) {
         this.title = data.title;
-        this.oldFilenames = data.oldFilename.split(',');
+        this.oldFilename = data.oldFilename;
         this.filename = data.filename;
         this.selectedChallenge = data.category;
         this.description = data.description;

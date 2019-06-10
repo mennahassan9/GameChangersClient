@@ -45,6 +45,7 @@ export class RegistrationComponent implements OnInit {
     console.log("REGIONS",res)
     res.data.forEach(element => {
       this.regions.push(element.name)
+      
     });
     console.log(this.regions)
   })

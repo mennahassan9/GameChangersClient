@@ -52,22 +52,12 @@
                     <div class="form-group">
                         <!-- change extensions accordingly -->
                         <input accept=".*" [class.idea__error]="(formSubmitted && emptyUpload)" type="file" id="ideaSlides" class="idea__upload"
-                            (change)="onUpload($event)" [disabled]="loading || deadlineReached" multiple="true">
+                            (change)="onUpload($event)" [disabled]="loading || deadlineReached">
                     </div>
                     <div *ngIf="(formSubmitted && emptyUpload)" class="alert alert-danger">
                         <div class="idea__error-msg">You should upload slides for your idea. </div>
                     </div>
-                    <i>Last submitted files</i>
-                   
-                   
-                        <div class="controls">
-                            <select class="form-control" formControlName="FileName" >
-                                <option *ngFor="let FileName of oldFilenames" [ngValue]="FileName" >
-                                  {{FileName}}
-                                </option>
-                              </select>
-                        </div>
-                   
+                    <i>Last submitted file: {{ oldFilename }}</i>
                     <div class="idea__btn-container--additional">
                         <button class="btn btn-default idea__submit-btn upload__btn" [disabled]="loading || deadlineReached">Change Idea</button>
                         <button type="button" class="btn btn-default idea__submit-btn download__btn" (click)="onDownload()" [disabled]="loading || deadlineReached">Download</button>
