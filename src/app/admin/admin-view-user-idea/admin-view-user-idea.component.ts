@@ -71,7 +71,7 @@ export class AdminViewUserIdeaComponent implements OnInit {
         this.idea = JSON.parse(res["_body"])["data"]["0"];
         this.title = this.idea.title;
         this.oldFilename = this.idea.oldFilename;
-        this.alreadyExistingChallenge = this.idea.challenge;
+        this.alreadyExistingChallenge = this.idea.category;
         this.filename = this.idea.filename;
         this.form.get('challenge').setValue(this.alreadyExistingChallenge);
       }
