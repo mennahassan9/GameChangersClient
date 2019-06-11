@@ -43,6 +43,7 @@ import { LeaderDashboardComponent } from './leader-dashboard/leader-dashboard.co
 import { LeaderViewUsersComponent } from './leader-view-users/leader-view-users.component';
 import { LeaderViewTeamsComponent } from './leader-view-teams/leader-view-teams.component';
 import { InviteLeaderComponent } from './admin/invite-leader/invite-leader.component';
+import { InviteJudgeComponent } from './admin/invite-judge/invite-judge.component';
 
 
 export const AppRoutes : Routes= [
@@ -92,6 +93,10 @@ export const AppRoutes : Routes= [
         path: 'admin/viewIdea/:id',
         component: AdminViewUserIdeaComponent,
         canActivate: [AuthGuardAdminService]
+    },
+    {
+        path: 'admin/invite-judge',
+        component: InviteJudgeComponent
     },
     {
         path: 'signin',

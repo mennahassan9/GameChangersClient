@@ -76,6 +76,7 @@ import { LeaderSideNavComponent } from './leader-side-nav/leader-side-nav.compon
 import { LeaderViewTeamsComponent } from './leader-view-teams/leader-view-teams.component';
 import { LeaderViewUsersComponent } from './leader-view-users/leader-view-users.component';
 import { InviteLeaderComponent } from './admin/invite-leader/invite-leader.component';
+import { InviteJudgeComponent } from './admin/invite-judge/invite-judge.component';
  
 
 
@@ -132,7 +133,8 @@ import { InviteLeaderComponent } from './admin/invite-leader/invite-leader.compo
     LeaderSideNavComponent,
     LeaderViewTeamsComponent,
     LeaderViewUsersComponent,
-    InviteLeaderComponent
+    InviteLeaderComponent,
+    InviteJudgeComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutes, {preloadingStrategy:PreloadAllModules, useHash: true}),
