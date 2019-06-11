@@ -174,7 +174,6 @@ export class ViewIdeaComponent implements OnInit {
     this.slides = target.files;
     if (this.slides.length > 0) {
       this.slidesName = this.form.controls.ideaTitle.value;
-      location.reload()
     }
   }
 
