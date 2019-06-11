@@ -101,6 +101,7 @@ export class JudgeControlComponent implements OnInit {
         this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
           let judgeId = res.data;
           // assign to the idea
+          this.toggleLoading()
           this.adminService.assignJudge(judgeId, this.ideaId).subscribe(res => {
             let judge = {}
             const judgment = res.data.idea.judgments.filter((judgment) => judgment.judgeId === judgeId)[0];

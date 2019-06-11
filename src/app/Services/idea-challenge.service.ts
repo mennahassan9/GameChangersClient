@@ -19,7 +19,7 @@ export class IdeaChallengeService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.get( "/ideas/challenges", { headers: reqHeaders });
+    return this.http.get( environment.apiUrl + "/ideas/challenges", { headers: reqHeaders });
   }
 
   addChallenge(name): Observable<any> {
@@ -27,7 +27,7 @@ export class IdeaChallengeService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.post( "/admin/challenges", { name }, { headers: reqHeaders });
+    return this.http.post( environment.apiUrl + "/admin/challenges", { name }, { headers: reqHeaders });
   }
 
   deleteChallenge(name): Observable<any> {
@@ -43,6 +43,6 @@ export class IdeaChallengeService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.put( `/admin/challenges/${oldName}`, { name }, { headers: reqHeaders });
+    return this.http.put( environment.apiUrl + `/admin/challenges/${oldName}`, { name }, { headers: reqHeaders });
   }
 }
