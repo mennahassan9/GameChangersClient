@@ -16,7 +16,8 @@ export class AdminViewUsersComponent implements OnInit {
   public columns:Array<any> = [
     {title: 'User name', name: 'name', filtering: {filterString: '', placeholder: 'Filter by user name'}},
     {title: 'email', name: 'email', filtering: {filterString: '', placeholder: 'Filter by email'}},
-    {title: 'Location', name: 'location', filtering: {filterString: '', placeholder: 'Filter by Location'}},
+    {title: 'Region', name: 'region', filtering: {filterString: '', placeholder: 'Filter by region'}},
+    //{title: 'Chapter', name: 'chapter', filtering: {filterString: '', placeholder: 'Filter by chapter'}},
     {title: 'Position', name: 'position'}
   ];
   public config:any = {
@@ -52,8 +53,8 @@ export class AdminViewUsersComponent implements OnInit {
       let object = {};
       object['name'] = element.name == undefined ? "": element.name;
       object['email'] = `<a href="#/admin/user?user=${element.email}">${element.email}</a>`;
-      object['location'] = element.location==undefined ? "" : element.location;
       object['region'] = element.region==undefined ? "" : element.region;
+      //object['chaoter'] = element.chapter==undefined ? "" : element.chapter;
       object['position'] = element.position==undefined ? "" : element.position;
       returnedData.push(object);
     });

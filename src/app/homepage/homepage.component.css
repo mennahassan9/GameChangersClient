@@ -164,6 +164,16 @@
     color: #007DB8;
 }
 
+.home__gennext{
+    text-align: center;
+    padding-top: 2%;
+    /* margin: 10px auto; */
+    /* vertical-align: middle !important; */
+    /* padding-left: 20%; */
+    /* margin: 10px auto; */
+    
+}
+
 @media  (max-width: 600px) { 
     .home__main-text {
         font-size: 1.5em;

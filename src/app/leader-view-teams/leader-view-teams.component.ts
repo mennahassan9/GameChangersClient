@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalStorageService } from 'angular-2-local-storage';
 import { TeamService } from '../Services/team.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { LoginService } from '../Services/login.service';
+import { HeaderButtonsService } from '../Services/headerButtons.service';
 
 @Component({
-  selector: 'app-view-all-teams',
-  templateUrl: './view-all-teams.component.html',
-  styleUrls: ['./view-all-teams.component.css']
+  selector: 'app-leader-view-teams',
+  templateUrl: './leader-view-teams.component.html',
+  styleUrls: ['./leader-view-teams.component.css']
 })
-export class ViewAllTeamsComponent implements OnInit {
-
-  teams: any [];
+export class LeaderViewTeamsComponent implements OnInit {teams: any [];
   allowOthers: boolean;
   loading: boolean; 
   alertFlag: boolean;
@@ -20,14 +21,16 @@ export class ViewAllTeamsComponent implements OnInit {
     {title:'Members', name:'members'},
     {title:'Creator', name:'creator'},
     {title:'Region', name:'region', filtering: {filterString:'', placeholder: 'Filter by team region'}},
-    {title:'Chapter', name:'chapter', filtering: {filterString:'', placeholder: 'Filter by team chapter'}},
-    {title:'Looking for', name: 'submitJoin'}
+    {title:'Chapter', name:'chapter', filtering: {filterString:'', placeholder: 'Filter by team chapter'}}
+    
   ];
   public page:number = 1;
   public itemsPerPage:number = 10;
   public maxSize:number = 5;
   public numPages:number;
   public length:number = 0;
+  public chapter: any;
+  public region: any;
   public config:any = {
     paging: true,
     sorting: {columns: this.columns},
@@ -38,49 +41,60 @@ export class ViewAllTeamsComponent implements OnInit {
 
   constructor(
     private teamService: TeamService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService,
+    private loginService: LoginService,
+    private headerService: HeaderButtonsService
     ) { }
 
   ngOnInit() {
-    this.teamService.getTeams().subscribe(res => {
-      console.log(res)
-      this.allowOthers=true
-      this.teams = res.data;
-      this.length = this.teams.length;
-      this.parseResponse(this.teams);
-    }, e=>{
-      this.alertFlag=true;
-      this.alertMsg= "Couldn't connect to server";
-
-    })
+    this.loginService.getUser().subscribe((res) => {
+      this.chapter = JSON.parse(res["_body"]).data.chapter;
+      this.region = JSON.parse(res["_body"]).data.region;
+    //  this.userCreatorTeam = JSON.parse(res["_body"]).data.creatorOf;
+    if(this.localStorageService.get("isCLeader") == true){
+      this.headerService.setIsSignedInCLeader();
+      this.teamService.getTeamsC(this.chapter).subscribe(res => {
+        console.log(res)
+        this.allowOthers=true
+        this.teams = res.data;
+        this.length = this.teams.length;
+        this.parseResponse(this.teams);
+      }, e=>{
+        this.alertFlag=true;
+        this.alertMsg= "Couldn't connect to server";
+  
+      })}
+      if(this.localStorageService.get("isRLeader") == true){
+        this.headerService.setIsSignedInRLeader();
+        this.teamService.getTeamsR(this.region).subscribe(res => {
+          console.log(res)
+          this.allowOthers=true
+          this.teams = res.data;
+          this.length = this.teams.length;
+          this.parseResponse(this.teams);
+        }, e=>{
+          this.alertFlag=true;
+          this.alertMsg= "Couldn't connect to server";
+    
+        })}
+    });
+   
+    
   }
 
   public parseResponse(input){    
     let output = [];
     input.forEach(element => {
-      if (!(this.allowOthers && !element.allowOthers)){
+     
         let object = {};
-     var teamname=encodeURIComponent(element.name)
-     object['team name'] = element.name == undefined ? "" : `<a href='#/viewTeam/${teamname}'>${element.name}</a>`;   
+        object['team name'] = element.name == undefined ? "" : `<a href="#/viewTeam/${element.name}">${element.name}</a>`;
         object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
         object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.email}</a>`;
         object['region'] = element.region
         object['chapter'] = element.chapter
-        if (element.allowOthers == undefined)
-        {
-          element.allowOthers = false
-        }
-       object['submitJoin'] = element.allowOthers == false ? "" : `<div class="row">
-          <div class="col-sm-9">${element.lookingFor}</div> 
-          <div class="col-sm-3" style="padding-left: 0px;"> 
-            <a  href="#/teams/join/${element.name}">
-              <button class="btn " style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;" >
-                Join
-              </button>
-            </a>
-          </div></div></div>`;
         output.push(object);
-      }
+      
     });
     this.rows = output;
     this.data = output;

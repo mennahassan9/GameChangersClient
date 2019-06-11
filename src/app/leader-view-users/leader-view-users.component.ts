@@ -1,89 +1,94 @@
 import { Component, OnInit } from '@angular/core';
-import { TeamService } from '../Services/team.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from '../Services/user.service';
+import { LoginService } from '../Services/login.service';
+import { LocalStorageService } from 'angular-2-local-storage';
+import { HeaderButtonsService } from '../Services/headerButtons.service';
 
 @Component({
-  selector: 'app-view-all-teams',
-  templateUrl: './view-all-teams.component.html',
-  styleUrls: ['./view-all-teams.component.css']
+  selector: 'app-leader-view-users',
+  templateUrl: './leader-view-users.component.html',
+  styleUrls: ['./leader-view-users.component.css']
 })
-export class ViewAllTeamsComponent implements OnInit {
+export class LeaderViewUsersComponent implements OnInit {
 
-  teams: any [];
-  allowOthers: boolean;
+  users: any [];
   loading: boolean; 
   alertFlag: boolean;
   alertMsg: string;
-  public rows:any[] = [];
-  public columns:any[] = [
-    {title:'Team Name', name:'team name', filtering: {filterString:'', placeholder: 'Filter by team name'}},
-    {title:'Members', name:'members'},
-    {title:'Creator', name:'creator'},
-    {title:'Region', name:'region', filtering: {filterString:'', placeholder: 'Filter by team region'}},
-    {title:'Chapter', name:'chapter', filtering: {filterString:'', placeholder: 'Filter by team chapter'}},
-    {title:'Looking for', name: 'submitJoin'}
+  chapter: any;
+  region: any;
+
+  public data:Array<any> = [];
+  public columns:Array<any> = [
+    {title: 'User name', name: 'name', filtering: {filterString: '', placeholder: 'Filter by user name'}},
+    {title: 'Email', name: 'email', filtering: {filterString: '', placeholder: 'Filter by Email'}},
+    {title: 'Team', name: 'team', filtering: {filterString: '', placeholder: 'Filter by Team'}}
   ];
+  public config:any = {
+    paging: true,
+    sorting: {columns: this.columns},
+    className: ['table-striped', 'table-bordered']
+  };
   public page:number = 1;
   public itemsPerPage:number = 10;
   public maxSize:number = 5;
   public numPages:number;
   public length:number = 0;
-  public config:any = {
-    paging: true,
-    sorting: {columns: this.columns},
-    filtering: {filterString: ''},
-    className: ['table-striped', 'table-bordered']
-  };
-    private data:any[];
+  private rows:Array<any> = [];
+  
+  constructor(private adminService: UserService,
+  private loginService: LoginService,
+private localStorageService: LocalStorageService,
+private headerService: HeaderButtonsService) { 
 
-  constructor(
-    private teamService: TeamService,
-    private router: Router
-    ) { }
-
+  }
   ngOnInit() {
-    this.teamService.getTeams().subscribe(res => {
-      console.log(res)
-      this.allowOthers=true
-      this.teams = res.data;
-      this.length = this.teams.length;
-      this.parseResponse(this.teams);
-    }, e=>{
-      this.alertFlag=true;
-      this.alertMsg= "Couldn't connect to server";
 
+   
+    this.loginService.getUser().subscribe((res) => {
+      this.chapter = JSON.parse(res["_body"]).data.chapter;
+      this.region = JSON.parse(res["_body"]).data.region; 
+
+      if(this.localStorageService.get("isCLeader") == true){
+        this.headerService.setIsSignedInCLeader();
+        this.adminService.getUsersC(this.chapter).subscribe(res => {
+          this.users = res.data;
+          console.log(res.data, "USERS")
+          this.length = this.users.length;
+          this.parseResponse(res.data);
+        }, e=>{
+          this.alertFlag=true;
+          this.alertMsg= "Couldn't connect to server";
+    
+        })}
+        if(this.localStorageService.get("isRLeader") == true){
+          this.headerService.setIsSignedInRLeader();
+          this.adminService.getUsersR(this.region).subscribe(res => {
+            this.users = res.data;
+            this.length = this.users.length;
+            this.parseResponse(res.data);
+          }, e=>{
+            this.alertFlag=true;
+            this.alertMsg= "Couldn't connect to server";
+      
+          })}
     })
+    //  this.userCreatorTeam = JSON.parse(res["_body"]).data.creatorOf;
+   
   }
 
-  public parseResponse(input){    
-    let output = [];
-    input.forEach(element => {
-      if (!(this.allowOthers && !element.allowOthers)){
-        let object = {};
-     var teamname=encodeURIComponent(element.name)
-     object['team name'] = element.name == undefined ? "" : `<a href='#/viewTeam/${teamname}'>${element.name}</a>`;   
-        object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
-        object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.email}</a>`;
-        object['region'] = element.region
-        object['chapter'] = element.chapter
-        if (element.allowOthers == undefined)
-        {
-          element.allowOthers = false
-        }
-       object['submitJoin'] = element.allowOthers == false ? "" : `<div class="row">
-          <div class="col-sm-9">${element.lookingFor}</div> 
-          <div class="col-sm-3" style="padding-left: 0px;"> 
-            <a  href="#/teams/join/${element.name}">
-              <button class="btn " style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;" >
-                Join
-              </button>
-            </a>
-          </div></div></div>`;
-        output.push(object);
-      }
+  public parseResponse(data){
+    let returnedData = [];
+    data.forEach(element => {
+      let object = {};
+      object['name'] = element.name == undefined ? "": element.name;
+      object['email'] = `<a href="#/admin/user?user=${element.email}">${element.email}</a>`;
+      object['team'] = element.teamMember=="-1" ? "No Team Yet" : element.teamMember;
+   
+      returnedData.push(object);
     });
-    this.rows = output;
-    this.data = output;
+    this.rows = returnedData;
+    this.data = returnedData;
     this.onChangeTable(this.config, {page: this.page, itemsPerPage: this.itemsPerPage});
   }
 
@@ -91,7 +96,6 @@ export class ViewAllTeamsComponent implements OnInit {
     if (config.filtering) {
       Object.assign(this.config.filtering, config.filtering);
     }
-
     if (config.sorting) {
       Object.assign(this.config.sorting, config.sorting);
     }
@@ -114,6 +118,7 @@ export class ViewAllTeamsComponent implements OnInit {
     let columns = this.config.sorting.columns || [];
     let columnName:string = void 0;
     let sort:string = void 0;
+
     for (let i = 0; i < columns.length; i++) {
       if (columns[i].sort !== '' && columns[i].sort !== false) {
         columnName = columns[i].name;
@@ -145,12 +150,10 @@ export class ViewAllTeamsComponent implements OnInit {
     if (!config.filtering) {
       return filteredData;
     }
-
     if (config.filtering.columnName) {
       return filteredData.filter((item:any) =>
         item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
     }
-
     let tempArray:Array<any> = [];
     filteredData.forEach((item:any) => {
       let flag = false;
@@ -168,11 +171,8 @@ export class ViewAllTeamsComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    return;
-  }
-
-  public checkAllowOthers(inp){
-    //console.log(this.allowOthers)
-    this.parseResponse(this.teams);
+    if (data.column === 'addJudgeButton'){
+        let teamName = data.row.teamName;
+    }
   }
 }
