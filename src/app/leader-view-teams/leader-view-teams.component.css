@@ -1,6 +1,10 @@
 .team__main-container {
-    background-color: rgba(238, 238, 238, 0.842);
     margin-top: 5%;
     margin-left: 3%;
     margin-right: 3%;
 }
+.sendEmail {
+    background-color: #007DB8; 
+    border-color: #007DB8; 
+    color: #ffffff;        
+   }

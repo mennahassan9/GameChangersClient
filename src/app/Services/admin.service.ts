@@ -226,5 +226,20 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     return this.http.put(`/admin/deadlines/`, deadlines, { headers: reqHeaders });
   }
-
+  inviteGleader(user) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    let body= JSON.stringify(user);
+    return this.http.post( "/admin/inviteGleader",body, { headers: reqHeaders })
+              .toPromise();
+  }
+  sendEmails(mailList, email): Observable<any> {
+    const reqHeaders: Headers = new Headers();
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    reqHeaders.append('Content-Type', 'application/json');
+    return this.http.post( `/admin/email/global`, {emails: mailList, subject: email.subject, emailBody: email.body}, { headers: reqHeaders });
+  }
 }

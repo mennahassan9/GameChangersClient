@@ -4,13 +4,20 @@ import { TeamService } from '../Services/team.service';
 import { Router } from '@angular/router';
 import { LoginService } from '../Services/login.service';
 import { HeaderButtonsService } from '../Services/headerButtons.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { UserService } from '../Services/user.service';
 
 @Component({
   selector: 'app-leader-view-teams',
   templateUrl: './leader-view-teams.component.html',
   styleUrls: ['./leader-view-teams.component.css']
 })
-export class LeaderViewTeamsComponent implements OnInit {teams: any [];
+export class LeaderViewTeamsComponent implements OnInit {
+  currentEmails: Array<string> = []
+  form: FormGroup;
+  submitted: boolean;
+  hidden: boolean;
+  teams: any [];
   allowOthers: boolean;
   loading: boolean; 
   alertFlag: boolean;
@@ -44,14 +51,33 @@ export class LeaderViewTeamsComponent implements OnInit {teams: any [];
     private router: Router,
     private localStorageService: LocalStorageService,
     private loginService: LoginService,
-    private headerService: HeaderButtonsService
+    private headerService: HeaderButtonsService,
+    private userService: UserService
     ) { }
 
   ngOnInit() {
+    this.hidden=true
+    this.form = new FormGroup({
+      subject: new FormControl(''),
+      body: new FormControl('')})
     this.loginService.getUser().subscribe((res) => {
       this.chapter = JSON.parse(res["_body"]).data.chapter;
       this.region = JSON.parse(res["_body"]).data.region;
     //  this.userCreatorTeam = JSON.parse(res["_body"]).data.creatorOf;
+    if (this.localStorageService.get("isGLeader")) {
+      this.headerService.setIsSignedInGLeader();
+      this.teamService.getTeams().subscribe(res => {
+        console.log(res)
+        this.allowOthers=true
+        this.teams = res.data;
+        this.length = this.teams.length;
+        this.parseResponse(this.teams);
+      }, e=>{
+        this.alertFlag=true;
+        this.alertMsg= "Couldn't connect to server";
+  
+      })
+    }
     if(this.localStorageService.get("isCLeader") == true){
       this.headerService.setIsSignedInCLeader();
       this.teamService.getTeamsC(this.chapter).subscribe(res => {
@@ -78,6 +104,7 @@ export class LeaderViewTeamsComponent implements OnInit {teams: any [];
           this.alertMsg= "Couldn't connect to server";
     
         })}
+
     });
    
     
@@ -89,10 +116,13 @@ export class LeaderViewTeamsComponent implements OnInit {teams: any [];
      
         let object = {};
         object['team name'] = element.name == undefined ? "" : `<a href="#/viewTeam/${element.name}">${element.name}</a>`;
-        object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
-        object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.email}</a>`;
-        object['region'] = element.region
-        object['chapter'] = element.chapter
+        object['members'] = element.members == undefined ? "" : element.members.map((member) => `<ul>${member.email}</ul>`).join("");
+        object['creator'] = element.creator == undefined ? "" : element.creator.email;
+        object['region'] = element.region  == undefined ? "" : element.region
+        object['chapter'] = element.chapter  == undefined ? "" : element.chapter
+        let getallemails = element.members
+        getallemails.push(element.creator)
+        object['emails'] = getallemails
         output.push(object);
       
     });
@@ -148,6 +178,7 @@ export class LeaderViewTeamsComponent implements OnInit {teams: any [];
   }
 
   public changeFilter(data:any, config:any):any {
+    this.currentEmails = []
     let filteredData:Array<any> = data;
     this.columns.forEach((column:any) => {
       if (column.filtering) {
@@ -175,9 +206,15 @@ export class LeaderViewTeamsComponent implements OnInit {teams: any [];
       });
       if (flag) {
         tempArray.push(item);
+        try{
+          item.emails.forEach(element => {
+            this.currentEmails.push(element.email)
+          });
+        } catch (err) {}
       }
     });
     filteredData = tempArray;
+    console.log(this.currentEmails)
     return filteredData;
   }
 
@@ -188,5 +225,20 @@ export class LeaderViewTeamsComponent implements OnInit {teams: any [];
   public checkAllowOthers(inp){
     //console.log(this.allowOthers)
     this.parseResponse(this.teams);
+  }
+
+  public send(){
+    console.log(this.currentEmails)
+    this.userService.sendEmails(this.currentEmails, this.form.value).subscribe(res => {
+      this.submitted = true;
+      this.hidden = false;
+      this.alertMsg = "Emails sent successfully!";
+      this.form.reset();
+    }, (err) => {
+            this.submitted = false;
+            this.hidden = false;
+            this.alertMsg = "Something went wrong while sending emails";
+          })
+    
   }
 }

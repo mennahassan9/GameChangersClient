@@ -60,3 +60,10 @@
       transform: rotate(140deg);
     }
   }
+
+  .sendEmail {
+   background-color: #007DB8; 
+   border-color: #007DB8; 
+   color: #ffffff;
+                
+  }

@@ -7,6 +7,7 @@ export class HeaderButtonsService {
     public isAdmin = new BehaviorSubject(false);
     public isCleader = new BehaviorSubject(false)
     public isRleader = new BehaviorSubject(false)
+    public isGleader = new BehaviorSubject(false)
 
     constructor() { }
 
@@ -25,6 +26,9 @@ export class HeaderButtonsService {
     setIsSignedInRLeader() {
         this.isRleader.next(true);
     }
+    setIsSignedInGLeader() {
+        this.isGleader.next(true);
+    }
     setIsSignedInAdmin() {
         this.isAdmin.next(true);
     }
@@ -35,6 +39,7 @@ export class HeaderButtonsService {
     }
     signOutLeader(){
         this.isCleader.next(false);
-        this.isRleader.next(false)
+        this.isRleader.next(false);
+        this.isGleader.next(false);
     }
 }

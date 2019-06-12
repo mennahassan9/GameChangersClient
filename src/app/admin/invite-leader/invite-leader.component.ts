@@ -23,6 +23,7 @@ export class InviteLeaderComponent implements OnInit {
   errorMessage: String;
   Cleader: boolean;
   Rleader: boolean;
+  Gleader: boolean;
   doneAlert: boolean;
 
   constructor(private fb: FormBuilder, private userSvc: UserService, private router: Router, private loginService: LoginService,
@@ -70,6 +71,9 @@ export class InviteLeaderComponent implements OnInit {
       }
       if (this.Rleader == true) {
         this.adminService.inviteRleader(this.form.value)
+      }
+      if (this.Gleader == true) {
+        this.adminService.inviteGleader(this.form.value)
       }
       this.doneAlert = true;
       this.form.reset()
