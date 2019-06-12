@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="idea__container row">
+      <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+      <div class="alert alert-danger text-center" role="alert" *ngIf="ideaFlag">
+          <strong>{{ ideaMsg }}</strong>
+        </div>
+      <div class="idea__main-title col-sm-offset-3 col-sm-6 text-center">
+          The Submitted Idea
+      </div>
+      <div class="row" class="loader-background">
+          <div class="col-sm-offset-3 col-sm-6 text-center idea__form-container">
+              <form [formGroup]="form" (ngSubmit)="editIdea()">
+                  <div class="form-group">
+                      <i>Category: {{ alreadyExistingChallenge }}</i>
+                  </div>
+                  <div class="form-group">
+                      <i>Last submitted file: {{ oldFilename }}</i>
+                  </div>
+                  <div class="form-group">
+                      <i>Title: {{ title }}</i>
+                  </div>
+                  <div class="idea__btn-container--additional" *ngIf="!ideaFlag">
+                      <button type="button" class="btn btn-default idea__submit-btn download__btn" (click)="onDownload()" [disabled]="loading">Download</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+      <div id="loader" [hidden]="!loading"></div>
+
+  </div>
+</div>
