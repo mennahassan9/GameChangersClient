@@ -17,7 +17,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( "/admin/ideas", { headers: reqHeaders })
+    return this.http.get("/admin/ideas", { headers: reqHeaders })
     .map(res => res.json());
   }
   inviteCleader(user){
@@ -27,7 +27,7 @@ export class AdminService {
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
 
     let body= JSON.stringify(user);
-    return this.http.post( "/admin/inviteCLeader",body, { headers: reqHeaders })
+    return this.http.post("/admin/inviteCLeader",body, { headers: reqHeaders })
               .toPromise();
   }
   inviteRleader(user){
@@ -37,7 +37,7 @@ export class AdminService {
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
 
     let body= JSON.stringify(user);
-    return this.http.post( "/admin/inviteRleader",body, { headers: reqHeaders })
+    return this.http.post("/admin/inviteRleader",body, { headers: reqHeaders })
               .toPromise();
   }
 
@@ -46,7 +46,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( "/admin/users", { headers: reqHeaders })
+    return this.http.get("/admin/users", { headers: reqHeaders })
     .map(res => res.json());
   }
   getUser(email) {
@@ -54,7 +54,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( `/admin/user/${email}`, { headers: reqHeaders })
+    return this.http.get(`/admin/user/${email}`, { headers: reqHeaders })
     .map(res => res.json());
   }
 
@@ -63,7 +63,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.put( `/admin/addTeamMember/${teamName}`,{'email':email} ,{ headers: reqHeaders })
+    return this.http.put(`/admin/addTeamMember/${teamName}`,{'email':email} ,{ headers: reqHeaders })
     .map(res => res.json());
   }
   deleteTeamMember(teamName, email) {
@@ -72,7 +72,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.put( `/admin/deleteTeamMember/${teamName}`,{'email': email} ,{ headers: reqHeaders })
+    return this.http.put(`/admin/deleteTeamMember/${teamName}`,{'email': email} ,{ headers: reqHeaders })
     .map(res => res.json());
 
   }
@@ -82,7 +82,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( `/admin/createTeam/search/${email}`, { headers: reqHeaders })
+    return this.http.get(`/admin/createTeam/search/${email}`, { headers: reqHeaders })
     .map(res => res.json());
   }
 
@@ -91,7 +91,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( `/admin/viewTeam/${email}`, { headers: reqHeaders });
+    return this.http.get(`/admin/viewTeam/${email}`, { headers: reqHeaders });
   }
 
   getUserIdea(email): Observable<any> {
@@ -99,7 +99,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( `/admin/user/viewIdea/${email}`, { headers: reqHeaders });
+    return this.http.get(`/admin/user/viewIdea/${email}`, { headers: reqHeaders });
   }
 
   getIdea(teamName){
@@ -107,7 +107,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( `/ideas/admin-ideas/${teamName}`, { headers: reqHeaders })
+    return this.http.get(`/ideas/admin-ideas/${teamName}`, { headers: reqHeaders })
     .map(res => res.json());
   }
 
@@ -116,7 +116,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( `/admin/topideas/`, { headers: reqHeaders })
+    return this.http.get(`/admin/topideas/`, { headers: reqHeaders })
     .map(res => res.json());
   }
   downloadIdea(filename): any{
@@ -124,7 +124,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.post( "/admin/user/viewIdea/download", {'file': filename}, {headers: reqHeaders, responseType: ResponseContentType.Blob })
+    return this.http.post("/admin/user/viewIdea/download", {'file': filename}, {headers: reqHeaders, responseType: ResponseContentType.Blob })
     .map(
         (res) => {
             return new Blob([res.blob()], { type: mime.lookup(filename) });
@@ -137,7 +137,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( `/admin/users/${email}/isJudge`, { headers: reqHeaders })
+    return this.http.get(`/admin/users/${email}/isJudge`, { headers: reqHeaders })
     .map(res => res.json());
   }
 
@@ -147,7 +147,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.post( "/judge/assign-judge",{judgeId, ideaId}, { headers: reqHeaders })
+    return this.http.post("/judge/assign-judge",{judgeId, ideaId}, { headers: reqHeaders })
     .map(res => res.json());
   }
 
@@ -157,7 +157,7 @@ export class AdminService {
   //   reqHeaders.append('Content-Type', 'application/json');
   //   const currentToken = this.localStorageService.get('token');
   //   reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-  //   return this.http.get( "/users/makeJudge/"+email,{ headers: reqHeaders })
+  //   return this.http.get("/users/makeJudge/"+email,{ headers: reqHeaders })
   //   .map(res => res.json());
   // }
 
@@ -166,7 +166,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.post( "/admin/createNewjudge/",{email},{ headers: reqHeaders })
+    return this.http.post("/admin/createNewjudge/",{email},{ headers: reqHeaders })
     .map(res => res.json());
   }
   getStatistics(){
@@ -174,7 +174,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( "/admin/stats/",{ headers: reqHeaders })
+    return this.http.get("/admin/stats/",{ headers: reqHeaders })
     .map(res => res.json());
   }
 
@@ -183,7 +183,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( "/admin/mail", { headers: reqHeaders })
+    return this.http.get("/admin/mail", { headers: reqHeaders })
     .map(res => res.json());
   }
   getTeams() {
@@ -191,7 +191,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( "/admin/teams/",{ headers: reqHeaders })
+    return this.http.get("/admin/teams/",{ headers: reqHeaders })
     .map(res => res.json());
   }
   putQuestions(questions){
@@ -199,7 +199,7 @@ export class AdminService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.post( "/admin/edit-questions", {questions},{ headers: reqHeaders })
+    return this.http.post("/admin/edit-questions", {questions},{ headers: reqHeaders })
     .map(res => res.json());
   }
 
@@ -208,7 +208,7 @@ export class AdminService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.put( `/admin/mail/`, mail, { headers: reqHeaders });
+    return this.http.put(`/admin/mail/`, mail, { headers: reqHeaders });
   }
 
   getDeadlines(): Observable<any> {
@@ -216,7 +216,7 @@ export class AdminService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.get( `/admin/deadlines/`, { headers: reqHeaders });
+    return this.http.get(`/admin/deadlines/`, { headers: reqHeaders });
   }
 
   updateDeadlines(deadlines): Observable<any> {
@@ -224,7 +224,7 @@ export class AdminService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.put( `/admin/deadlines/`, deadlines, { headers: reqHeaders });
+    return this.http.put(`/admin/deadlines/`, deadlines, { headers: reqHeaders });
   }
 
 }

@@ -50,4 +50,8 @@ export class JudgeHomeComponent implements OnInit {
       this.errorMsg = err.json().errors[0].message
     });
   }
+
+  viewIdeas() {
+    this.router.navigate(['/judge/ideas'])
+  }
 }

@@ -19,7 +19,7 @@ export class DomainService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.get( "/admin/domains", { headers: reqHeaders });
+    return this.http.get("/admin/domains", { headers: reqHeaders });
   }
 
   addDomain(name): Observable<any> {
@@ -27,7 +27,7 @@ export class DomainService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.post( "/admin/domains", { name }, { headers: reqHeaders });
+    return this.http.post("/admin/domains", { name }, { headers: reqHeaders });
   }
 
   deleteDomain(name): Observable<any> {
@@ -35,7 +35,7 @@ export class DomainService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.delete( `/admin/domains/${name}`, { headers: reqHeaders });
+    return this.http.delete(`/admin/domains/${name}`, { headers: reqHeaders });
   }
 
   updateDomain(oldName, name): Observable<any> {
@@ -43,6 +43,6 @@ export class DomainService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.put( `/admin/domains/${oldName}`, { name }, { headers: reqHeaders });
+    return this.http.put(`/admin/domains/${oldName}`, { name }, { headers: reqHeaders });
   }
 }
