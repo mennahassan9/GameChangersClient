@@ -75,10 +75,11 @@ export class JudgeIdeaComponent implements OnInit {
         this.form.disable();
       } else {
         this.deadlineReached = false;
-        this.judgingService.getIdea(this.teamName)
+        this.judgingService.getTeamIdea(this.teamName)
           .then(response => {
-            this.idea.name = response['idea'].title;
-            this.ideaId = response['idea']._id;
+            this.idea.name = response['body']['title'];
+            this.ideaId = response['body']['_id'];
+            this.idea.filename = response['body']['filename']
             if (response['ideajudgment']) {
               this.loaded = false;
               this.questions = []

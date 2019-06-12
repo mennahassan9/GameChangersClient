@@ -44,6 +44,8 @@ import { LeaderViewUsersComponent } from './leader-view-users/leader-view-users.
 import { LeaderViewTeamsComponent } from './leader-view-teams/leader-view-teams.component';
 import { InviteLeaderComponent } from './admin/invite-leader/invite-leader.component';
 import { InviteJudgeComponent } from './admin/invite-judge/invite-judge.component';
+import { JudgeViewIdeasComponent } from './judge-view-ideas/judge-view-ideas.component';
+import { JudgeViewTeamIdeaComponent } from './judge-view-team-idea/judge-view-team-idea.component';
 
 
 export const AppRoutes : Routes= [
@@ -132,6 +134,11 @@ export const AppRoutes : Routes= [
         canActivate: [AuthGuardService]
     },
     {
+        path: 'judge/viewIdea/:teamName',
+        component : JudgeViewTeamIdeaComponent,
+        canActivate: [AuthGuardJudgeService]
+    },
+    {
         path: 'editTeam',
         component : EditTeamComponent,
         canActivate: [AuthGuardService]
@@ -182,6 +189,11 @@ export const AppRoutes : Routes= [
     {
         path: 'judge/idea',
         component: JudgeIdeaComponent,
+        canActivate: [AuthGuardJudgeService]
+    },
+    {
+        path: 'judge/ideas',
+        component: JudgeViewIdeasComponent,
         canActivate: [AuthGuardJudgeService]
     },
     {
