@@ -17,8 +17,8 @@ export class AdminViewUsersComponent implements OnInit {
     {title: 'User name', name: 'name', filtering: {filterString: '', placeholder: 'Filter by user name'}},
     {title: 'email', name: 'email', filtering: {filterString: '', placeholder: 'Filter by email'}},
     {title: 'Region', name: 'region', filtering: {filterString: '', placeholder: 'Filter by region'}},
-    //{title: 'Chapter', name: 'chapter', filtering: {filterString: '', placeholder: 'Filter by chapter'}},
-    {title: 'Position', name: 'position'}
+    {title: 'Chapter', name: 'chapter', filtering: {filterString: '', placeholder: 'Filter by chapter'}},
+    //{title: 'Position', name: 'position'}
   ];
   public config:any = {
     paging: true,
@@ -54,8 +54,8 @@ export class AdminViewUsersComponent implements OnInit {
       object['name'] = element.name == undefined ? "": element.name;
       object['email'] = `<a href="#/admin/user?user=${element.email}">${element.email}</a>`;
       object['region'] = element.region==undefined ? "" : element.region;
-      //object['chaoter'] = element.chapter==undefined ? "" : element.chapter;
-      object['position'] = element.position==undefined ? "" : element.position;
+      object['chapter'] = element.chapter==undefined ? "" : element.chapter;
+     // object['position'] = element.position==undefined ? "" : element.position;
       returnedData.push(object);
     });
     this.rows = returnedData;
