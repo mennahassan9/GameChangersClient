@@ -165,7 +165,6 @@ export class AdminViewTeamsComponent implements OnInit {
         }
       }
     });
-    console.log(tempEmails)
     this.currentEmails = tempEmails;
     filteredData = tempArray;
     this.hidden = true;

@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
       this.headerButtonsService.signOut();
     }
 
-    if(this.localStorageService.get("isCLeader")||this.localStorageService.get("isRLeader")){
+    if(this.localStorageService.get("isCLeader")||this.localStorageService.get("isRLeader")||this.localStorageService.get("isGLeader")){
       this.isLeader=true;
     }
   }
@@ -71,7 +71,8 @@ export class HeaderComponent implements OnInit {
     this.localStorageService.remove('email');
     this.localStorageService.remove('teamName');
     this.localStorageService.remove("isCLeader");
-    this.localStorageService.remove("isRLeader")
+    this.localStorageService.remove("isRLeader");
+    this.localStorageService.remove("isGLeader");
     this.headerButtonsService.signOut();
     this.headerButtonsService.signOutAdmin();
     this.headerButtonsService.signOutLeader();

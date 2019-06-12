@@ -183,4 +183,19 @@ export class UserService {
       this.localStorageService.set("token", res.json().data.token)});
 
   }
+  sendEmails(mailList, email): Observable<any> {
+    const reqHeaders: Headers = new Headers();
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    reqHeaders.append('Content-Type', 'application/json');
+    return this.http.post( `/users/email/global`, {emails: mailList, subject: email.subject, emailBody: email.body}, { headers: reqHeaders });
+  }
+  getAllUsers() {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get( `/users/allusers`, { headers: reqHeaders })
+    .map(res => res.json());
+  }
 }

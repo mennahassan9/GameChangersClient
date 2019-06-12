@@ -34,6 +34,7 @@ export class LoginService {
       this.localStorageService.set("isAdmin", JSON.parse(res["_body"]).data.isAdmin);
       this.localStorageService.set("isCLeader", JSON.parse(res["_body"]).data.isCLeader);
       this.localStorageService.set("isRLeader", JSON.parse(res["_body"]).data.isRLeader);
+      this.localStorageService.set("isGLeader", JSON.parse(res["_body"]).data.isGLeader);
       if(JSON.parse(res["_body"]).data.isAdmin){
         this.headerButtonsService.setIsSignedInAdmin();
       }
@@ -42,6 +43,9 @@ export class LoginService {
       }
       if(JSON.parse(res["_body"]).data.isRLeader){
         this.headerButtonsService.setIsSignedInRLeader();
+      }
+      if(JSON.parse(res["_body"]).data.isGLeader){
+        this.headerButtonsService.setIsSignedInGLeader();
       }
 
       this.localStorageService.set("email", email);

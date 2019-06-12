@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService} from '../../Services/admin.service';
 import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table/ng2-table';
+import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-admin-view-users',
   templateUrl: './admin-view-users.component.html',
@@ -8,6 +9,10 @@ import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, Ng
 })
 export class AdminViewUsersComponent implements OnInit {
 
+  form: FormGroup;
+  submitted: boolean;
+  hidden: boolean;
+  currentEmails: Array<string> = [];
   users: any [];
   loading: boolean; 
   alertFlag: boolean;
@@ -18,11 +23,12 @@ export class AdminViewUsersComponent implements OnInit {
     {title: 'email', name: 'email', filtering: {filterString: '', placeholder: 'Filter by email'}},
     {title: 'Region', name: 'region', filtering: {filterString: '', placeholder: 'Filter by region'}},
     {title: 'Chapter', name: 'chapter', filtering: {filterString: '', placeholder: 'Filter by chapter'}},
-    //{title: 'Position', name: 'position'}
+    {title: 'Team', name: 'team', filtering: {filterString: '', placeholder: 'Filter by Team'}}
   ];
   public config:any = {
     paging: true,
     sorting: {columns: this.columns},
+    filtering: {filterString: ''},
     className: ['table-striped', 'table-bordered']
   };
   public page:number = 1;
@@ -36,6 +42,10 @@ export class AdminViewUsersComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.form = new FormGroup({
+      subject: new FormControl(''),
+      body: new FormControl('')})
+    this.hidden=true
     this.adminService.getUsers().subscribe(res => {
       this.users = res.data;
       this.length = this.users.length;
@@ -54,9 +64,10 @@ export class AdminViewUsersComponent implements OnInit {
       object['name'] = element.name == undefined ? "": element.name;
       object['email'] = `<a href="#/admin/user?user=${element.email}">${element.email}</a>`;
       object['region'] = element.region==undefined ? "" : element.region;
-      object['chapter'] = element.chapter==undefined ? "" : element.chapter;
-     // object['position'] = element.position==undefined ? "" : element.position;
+      object['chapter'] = element.chapter==undefined ?  "": element.chapter=="-1"?"": element.chapter;
+      object['team'] = element.teamMember=="-1" ? "No Team Yet" : element.teamMember;
       returnedData.push(object);
+      object['emailList'] = element.email
     });
     this.rows = returnedData;
     this.data = returnedData;
@@ -110,6 +121,7 @@ export class AdminViewUsersComponent implements OnInit {
   }
 
   public changeFilter(data:any, config:any):any {
+    this.currentEmails = []
     let filteredData:Array<any> = data;
     this.columns.forEach((column:any) => {
       if (column.filtering) {
@@ -136,8 +148,11 @@ export class AdminViewUsersComponent implements OnInit {
       if (flag) {
         tempArray.push(item);
       }
+      this.currentEmails.push(item.emailList)
     });
     filteredData = tempArray;
+    console.log(this.currentEmails)
+    this.hidden = true;
     return filteredData;
   }
 
@@ -145,5 +160,19 @@ export class AdminViewUsersComponent implements OnInit {
     if (data.column === 'addJudgeButton'){
         let teamName = data.row.teamName;
     }
+  }
+
+  public send() {
+    console.log(this.currentEmails)
+    this.adminService.sendEmails(this.currentEmails, this.form.value).subscribe(res => {
+      this.submitted = true;
+      this.hidden = false;
+      this.alertMsg = "Emails sent successfully!";
+      this.form.reset();
+    }, (err) => {
+            this.submitted = false;
+            this.hidden = false;
+            this.alertMsg = "Something went wrong while sending emails";
+          })
   }
 }
