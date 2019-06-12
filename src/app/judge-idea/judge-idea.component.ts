@@ -87,8 +87,10 @@ export class JudgeIdeaComponent implements OnInit {
                 this.questions.push(response['ideajudgment'].questions[i][0]);
               }
               this.questions.forEach((question, index) => {
-                this.form.addControl(`${question.category}${index}Score`, new FormControl(question.currentScore, [Validators.required, Validators.max(question.rate), Validators.min(0)]))
-                this.form.addControl(`${question.category}${index}Comment`, new FormControl('', []))
+                console.log('$$$$$', question, index)
+                // question.category = 'hi'
+                this.form.addControl(`question${index}Score`, new FormControl(question.currentScore, [Validators.required, Validators.max(question.rate), Validators.min(0)]))
+                this.form.addControl(`question${index}Comment`, new FormControl('', []))
                 this.loaded = (index == this.questions.length - 1);
                 if (this.loaded)
                   this.startCalculateScore();
@@ -96,8 +98,13 @@ export class JudgeIdeaComponent implements OnInit {
               });
             } else {
               this.judgingService.getQuestions().subscribe((response) => {
+                console.log("###", response)
                 this.questions = JSON.parse(response["_body"])["body"];
                 this.questions.forEach((question, index) => {
+                  console.log('Question: ', question)
+                  question.category = question.question.substr(0, question.question.indexOf('>'))
+                  question.question = question.question.substr(question.question.indexOf('>')+ 1)
+                  console.log(question.category, '$#$#$#$#$$#')
                   this.form.addControl(`${question.category}${index}Score`, new FormControl('', [Validators.required, Validators.max(question.rate), Validators.min(0)]))
                   this.form.addControl(`${question.category}${index}Comment`, new FormControl('', []))
                   this.loaded = (index == this.questions.length - 1);
