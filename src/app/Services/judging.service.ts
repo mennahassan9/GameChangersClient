@@ -38,21 +38,7 @@ export class JudgingService {
           });
     });
   }
-  getTeamIdea(teamName) {
-    return new Promise((resolve, reject) => {
-      const reqHeaders: Headers = new Headers();
-      reqHeaders.append('Content-Type', 'application/json');
-      const currentToken = this.localStorageService.get('token');
-      reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-      this.http.get( "/judge/getTeamIdea/" + teamName, { headers: reqHeaders })
-        .map(res => res.json()).subscribe(response => {;
-          resolve(response)
-        },
-          err => {
-            reject(err);
-          });
-    });
-  }
+  
   getIdea(teamName) {
     return new Promise((resolve, reject) => {
       const reqHeaders: Headers = new Headers();
