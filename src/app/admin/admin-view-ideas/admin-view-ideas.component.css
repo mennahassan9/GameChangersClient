@@ -16,6 +16,7 @@
 .judge__info {
     min-height: 65vh;
     /* border-bottom: 2px solid #000000; */
+    margin-left: 118px;
 }
 
 .judge__info-main-text {

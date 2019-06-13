@@ -69,7 +69,7 @@ export class AdminViewTeamsComponent implements OnInit {
       object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.name}</a>`;
       object['region'] = element.region==undefined ? "" : element.region;
       object['chapter'] = element.chapter == undefined ? "" : element.chapter;
-      object['idea'] = element.idea == undefined ? "No idea submitted" : element.team
+      object['idea'] = element.idea == undefined ? "No idea submitted" : element.idea;
       let allEmails = element.members;
       allEmails.push(element.creator)
       object['emails'] = allEmails;

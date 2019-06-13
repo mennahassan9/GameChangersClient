@@ -58,7 +58,7 @@ export const AppRoutes : Routes= [
     {
         path: 'admin/ideas',
         component: AdminViewIdeasComponent,
-        canActivate: [AuthGuardAdminService]
+        //canActivate: [AuthGuardAdminService]
     },
     { 
         path: 'admin/topideas',  
@@ -203,7 +203,7 @@ export const AppRoutes : Routes= [
     {
         path: 'team-control',
         component: JudgeControlComponent,
-        canActivate: [AuthGuardAdminService]
+        //canActivate: [AuthGuardAdminService]
     },
     {
         path: 'admin/domains',
