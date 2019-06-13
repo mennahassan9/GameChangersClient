@@ -143,6 +143,7 @@ export class AdminService {
 
 
   assignJudge(judgeId, ideaId) {
+    console.log(judgeId, ideaId)
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');

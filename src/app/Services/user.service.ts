@@ -44,6 +44,14 @@ export class UserService {
 
     return this.http.get( `/users/${id}`, { headers: reqHeaders });
   }
+  getCurrentUser(): Observable<any> {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+
+    return this.http.get( `/users/user`, { headers: reqHeaders });
+  }
   getUsersC(chapter) {
     const reqHeaders: Headers = new Headers();
     reqHeaders.append('Content-Type', 'application/json');

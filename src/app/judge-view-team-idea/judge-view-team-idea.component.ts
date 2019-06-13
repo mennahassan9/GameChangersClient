@@ -4,6 +4,7 @@ import { JudgingService } from '../Services/judging.service';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { Form, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { IdeaService } from '../Services/idea.service';
+import { UserService } from '../Services/user.service';
 
 @Component({
   selector: 'app-judge-view-team-idea',
@@ -19,6 +20,7 @@ export class JudgeViewTeamIdeaComponent implements OnInit {
 
   team: string;
   idea: any = {};
+  judge: any = {};
   form: FormGroup;
   formSubmitted: boolean;
   slides: any;
@@ -29,16 +31,20 @@ export class JudgeViewTeamIdeaComponent implements OnInit {
   challenges = [];
   alreadyExistingChallenge: string;
   filename: string;
+  ideaId: string;
   loading: boolean;
   oldFilename: string;
   ideaFlag: boolean;
   ideaMsg: string;
+  errorAlert: boolean;
+  errorMessage: string;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private adminService: AdminService,
     private ideaService: IdeaService,
-    private judgingService: JudgingService
+    private judgingService: JudgingService,
+    private userService: UserService
   ) {
   }
 
@@ -82,6 +88,7 @@ export class JudgeViewTeamIdeaComponent implements OnInit {
         this.oldFilename = res['body']['oldFilename'];
         this.alreadyExistingChallenge = res['body']['category'];
         this.filename = res['body']['filename'];
+        this.ideaId = res['body']['_id']
         this.form.get('challenge').setValue(this.alreadyExistingChallenge);
       }
       else {
@@ -94,6 +101,19 @@ export class JudgeViewTeamIdeaComponent implements OnInit {
     })
 
   }
+
+  assignToIdea() {
+    
+    this.userService.getCurrentUser().subscribe(res => {
+      this.judge = JSON.parse(res["_body"])["data"];
+      console.log('!!!!!!!!!!!!!!!!!!!!', this.judge._id)
+    
+      this.adminService.assignJudge(this.judge._id, this.ideaId).subscribe(res => {
+        this.router.navigate(['/judge'])
+      }, err => {
+        this.errorAlert = true;
+        this.errorMessage = JSON.parse(err['_body'])['errors'][0].message
+      });
+    })
+  }
 }
-
-
