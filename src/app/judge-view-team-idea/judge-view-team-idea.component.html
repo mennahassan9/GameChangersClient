@@ -1,5 +1,8 @@
 <div class="container-fluid">
-  <div class="idea__container row">
+    <div class="idea__container row">
+        <div class="alert alert-danger text-center" role="alert" *ngIf="errorAlert">
+                {{ errorMessage }}
+              </div>
       <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
       <div class="alert alert-danger text-center" role="alert" *ngIf="ideaFlag">
           <strong>{{ ideaMsg }}</strong>
@@ -21,9 +24,10 @@
                   </div>
                   <div class="idea__btn-container--additional" *ngIf="!ideaFlag">
                       <button type="button" class="btn btn-default idea__submit-btn download__btn" (click)="onDownload()" [disabled]="loading">Download</button>
-                  </div>
+                </div>
               </form>
-          </div>
+            <button class="btn btn-default idea__submit-btn upload__btn" (click)="assignToIdea()" style="margin-top:0">Assign Self to Idea</button>
+        </div>
       </div>
       <div id="loader" [hidden]="!loading"></div>
 

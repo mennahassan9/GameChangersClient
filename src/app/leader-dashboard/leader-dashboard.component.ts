@@ -61,7 +61,23 @@ created: boolean = false;
     this.loginService.getUser().subscribe((res) => {
       this.chapter = JSON.parse(res["_body"]).data.chapter;
       this.region = JSON.parse(res["_body"]).data.region; 
-      
+      if (this.localStorageService.get("isGLeader")) {
+        this.headerService.setIsSignedInGLeader();
+        this.teamService.getTeams().subscribe(res => {
+          console.log(res)
+          this.teams = res.data.length;
+        }, e=>{
+          this.alertFlag=true;
+          this.alertMsg= "Couldn't connect to server";
+        })
+        this.userService.getAllUsers().subscribe(res => {
+          this.users = res.data.length;
+        }, e=>{
+          this.alertFlag=true;
+          this.alertMsg= "Couldn't connect to server";
+    
+        })
+      }
       if(this.localStorageService.get("isCLeader") == true){
         this.cl=true
         this.headerService.setIsSignedInCLeader();

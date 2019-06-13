@@ -38,6 +38,7 @@ export class JudgingService {
           });
     });
   }
+  
   getIdea(teamName) {
     return new Promise((resolve, reject) => {
       const reqHeaders: Headers = new Headers();
