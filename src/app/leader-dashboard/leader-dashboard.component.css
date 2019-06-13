@@ -2,6 +2,7 @@
     min-height: 100vh;
     padding-top: 70px;
     background-color: #ecf0f5;
+    padding-left: 200px;
 }
  .dashboard-container__chart {
      background-color: white;

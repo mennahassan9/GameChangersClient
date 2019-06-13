@@ -1,7 +1,7 @@
 <app-header ></app-header>
     <app-sidenav [hidden]="!isAdmin" ></app-sidenav>
     <app-leader-side-nav [hidden]="!isLeader"></app-leader-side-nav>
-    <div [ngClass]="{'nameg': isAdmin|| isLeader}">
+    <div class="nameg" >
         <router-outlet ></router-outlet>
     </div>
 <app-footer ></app-footer>
