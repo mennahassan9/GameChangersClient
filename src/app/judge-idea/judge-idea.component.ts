@@ -89,8 +89,10 @@ export class JudgeIdeaComponent implements OnInit {
               this.questions.forEach((question, index) => {
                 console.log('$$$$$', question, index)
                 // question.category = 'hi'
-                this.form.addControl(`question${index}Score`, new FormControl(question.currentScore, [Validators.required, Validators.max(question.rate), Validators.min(0)]))
-                this.form.addControl(`question${index}Comment`, new FormControl('', []))
+                question.category = question.question.substr(0, question.question.indexOf('>'))
+                question.question = question.question.substr(question.question.indexOf('>')+ 1)
+                this.form.addControl(`${question.category}${index}Score`, new FormControl(question.currentScore, [Validators.required, Validators.max(question.rate), Validators.min(0)]))
+                this.form.addControl(`${question.category}${index}Comment`, new FormControl('', []))
                 this.loaded = (index == this.questions.length - 1);
                 if (this.loaded)
                   this.startCalculateScore();
