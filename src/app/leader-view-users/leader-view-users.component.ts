@@ -3,6 +3,7 @@ import { UserService } from '../Services/user.service';
 import { LoginService } from '../Services/login.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { HeaderButtonsService } from '../Services/headerButtons.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-leader-view-users',
@@ -11,6 +12,10 @@ import { HeaderButtonsService } from '../Services/headerButtons.service';
 })
 export class LeaderViewUsersComponent implements OnInit {
 
+  form: FormGroup;
+  submitted: boolean;
+  hidden: boolean;
+  currentEmails: Array<string> = [];
   users: any [];
   loading: boolean; 
   alertFlag: boolean;
@@ -22,11 +27,14 @@ export class LeaderViewUsersComponent implements OnInit {
   public columns:Array<any> = [
     {title: 'User name', name: 'name', filtering: {filterString: '', placeholder: 'Filter by user name'}},
     {title: 'Email', name: 'email', filtering: {filterString: '', placeholder: 'Filter by Email'}},
+    {title: 'Region', name: 'region', filtering: {filterString: '', placeholder: 'Filter by region'}},
+    {title: 'Chapter', name: 'chapter', filtering: {filterString: '', placeholder: 'Filter by chapter'}},
     {title: 'Team', name: 'team', filtering: {filterString: '', placeholder: 'Filter by Team'}}
   ];
   public config:any = {
     paging: true,
     sorting: {columns: this.columns},
+    filtering: {filterString: ''},
     className: ['table-striped', 'table-bordered']
   };
   public page:number = 1;
@@ -45,6 +53,10 @@ export class LeaderViewUsersComponent implements OnInit {
   }
   ngOnInit() {
 
+    this.hidden=true
+    this.form = new FormGroup({
+      subject: new FormControl(''),
+      body: new FormControl('')})
     if (this.localStorageService.get("isGLeader")) {
       this.headerService.setIsSignedInGLeader();
       this.userService.getAllUsers().subscribe(res => {
@@ -93,8 +105,10 @@ export class LeaderViewUsersComponent implements OnInit {
       object['name'] = element.name == undefined ? "": element.name;
       object['email'] = `<a href="#/admin/user?user=${element.email}">${element.email}</a>`;
       object['team'] = element.teamMember=="-1" ? "No Team Yet" : element.teamMember;
-   
+      object['region'] = element.region==undefined ? "" : element.region;
+      object['chapter'] = element.chapter== undefined ?  "": element.chapter=="-1"?"": element.chapter;
       returnedData.push(object);
+      object['emailList'] = element.email
     });
     this.rows = returnedData;
     this.data = returnedData;
@@ -148,6 +162,7 @@ export class LeaderViewUsersComponent implements OnInit {
   }
 
   public changeFilter(data:any, config:any):any {
+    this.currentEmails = []
     let filteredData:Array<any> = data;
     this.columns.forEach((column:any) => {
       if (column.filtering) {
@@ -174,8 +189,10 @@ export class LeaderViewUsersComponent implements OnInit {
       if (flag) {
         tempArray.push(item);
       }
+      this.currentEmails.push(item.emailList)
     });
     filteredData = tempArray;
+    this.hidden = true;
     return filteredData;
   }
 
@@ -183,5 +200,17 @@ export class LeaderViewUsersComponent implements OnInit {
     if (data.column === 'addJudgeButton'){
         let teamName = data.row.teamName;
     }
+  }
+  public send() {
+    this.userService.sendEmails(this.currentEmails, this.form.value).subscribe(res => {
+      this.submitted = true;
+      this.hidden = false;
+      this.alertMsg = "Emails sent successfully!";
+      this.form.reset();
+    }, (err) => {
+            this.submitted = false;
+            this.hidden = false;
+            this.alertMsg = "Something went wrong while sending emails";
+          })
   }
 }

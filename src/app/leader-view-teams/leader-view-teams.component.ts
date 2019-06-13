@@ -60,41 +60,9 @@ export class LeaderViewTeamsComponent implements OnInit {
     this.form = new FormGroup({
       subject: new FormControl(''),
       body: new FormControl('')})
-    this.loginService.getUser().subscribe((res) => {
-      this.chapter = JSON.parse(res["_body"]).data.chapter;
-      this.region = JSON.parse(res["_body"]).data.region;
-    //  this.userCreatorTeam = JSON.parse(res["_body"]).data.creatorOf;
-    if (this.localStorageService.get("isGLeader")) {
-      this.headerService.setIsSignedInGLeader();
-      this.teamService.getTeams().subscribe(res => {
-        console.log(res)
-        this.allowOthers=true
-        this.teams = res.data;
-        this.length = this.teams.length;
-        this.parseResponse(this.teams);
-      }, e=>{
-        this.alertFlag=true;
-        this.alertMsg= "Couldn't connect to server";
-  
-      })
-    }
-    if(this.localStorageService.get("isCLeader") == true){
-      this.headerService.setIsSignedInCLeader();
-      this.teamService.getTeamsC(this.chapter).subscribe(res => {
-        console.log(res)
-        this.allowOthers=true
-        this.teams = res.data;
-        this.length = this.teams.length;
-        this.parseResponse(this.teams);
-      }, e=>{
-        this.alertFlag=true;
-        this.alertMsg= "Couldn't connect to server";
-  
-      })}
-      if(this.localStorageService.get("isRLeader") == true){
-        this.headerService.setIsSignedInRLeader();
-        this.teamService.getTeamsR(this.region).subscribe(res => {
-          console.log(res)
+      if (this.localStorageService.get("isGLeader")) {
+        this.headerService.setIsSignedInGLeader();
+        this.teamService.getTeams().subscribe(res => {
           this.allowOthers=true
           this.teams = res.data;
           this.length = this.teams.length;
@@ -103,11 +71,40 @@ export class LeaderViewTeamsComponent implements OnInit {
           this.alertFlag=true;
           this.alertMsg= "Couldn't connect to server";
     
-        })}
-
-    });
-   
-    
+        })
+      } else{
+        this.loginService.getUser().subscribe((res) => {
+          this.chapter = JSON.parse(res["_body"]).data.chapter;
+          this.region = JSON.parse(res["_body"]).data.region;
+        //  this.userCreatorTeam = JSON.parse(res["_body"]).data.creatorOf;
+        if(this.localStorageService.get("isCLeader") == true){
+          this.headerService.setIsSignedInCLeader();
+          this.teamService.getTeamsC(this.chapter).subscribe(res => {
+            console.log(res)
+            this.allowOthers=true
+            this.teams = res.data;
+            this.length = this.teams.length;
+            this.parseResponse(this.teams);
+          }, e=>{
+            this.alertFlag=true;
+            this.alertMsg= "Couldn't connect to server";
+      
+          })}
+          if(this.localStorageService.get("isRLeader") == true){
+            this.headerService.setIsSignedInRLeader();
+            this.teamService.getTeamsR(this.region).subscribe(res => {
+              console.log(res)
+              this.allowOthers=true
+              this.teams = res.data;
+              this.length = this.teams.length;
+              this.parseResponse(this.teams);
+            }, e=>{
+              this.alertFlag=true;
+              this.alertMsg= "Couldn't connect to server";
+        
+            })}
+        });
+      }
   }
 
   public parseResponse(input){    
@@ -214,7 +211,6 @@ export class LeaderViewTeamsComponent implements OnInit {
       }
     });
     filteredData = tempArray;
-    console.log(this.currentEmails)
     return filteredData;
   }
 
@@ -228,7 +224,6 @@ export class LeaderViewTeamsComponent implements OnInit {
   }
 
   public send(){
-    console.log(this.currentEmails)
     this.userService.sendEmails(this.currentEmails, this.form.value).subscribe(res => {
       this.submitted = true;
       this.hidden = false;
