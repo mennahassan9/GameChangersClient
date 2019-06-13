@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../Services/admin.service';
 import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table/ng2-table';
+import { LocalStorageService } from 'angular-2-local-storage';
+import { isLeapYear } from 'ngx-bootstrap/chronos/units/year';
+import { IdeaService } from '../../Services/idea.service';
+import { HeaderButtonsService } from '../../Services/headerButtons.service';
 @Component({
   selector: 'app-admin-view-ideas',
   templateUrl: './admin-view-ideas.component.html',
   styleUrls: ['./admin-view-ideas.component.css'],
 })
 export class AdminViewIdeasComponent implements OnInit {
+  isLeader: boolean;
   ideas: any[];
-  loading: boolean;
+  loading: boolean =false;
   alertFlag: boolean;
   alertMsg: string;
   challenge: string;
@@ -18,7 +23,7 @@ export class AdminViewIdeasComponent implements OnInit {
     { title: 'Team name', name: 'teamName', filtering: { filterString: '', placeholder: 'Filter by team name' } },
     { title: 'Idea name', name: 'ideaName', sort: false, filtering: { filterString: '', placeholder: 'Filter by idea name' } },
     // {title: 'Region', name: 'region', sort: 'asc',filtering: {filterString: '', placeholder: 'Filter by region'}},    
-    { title: 'Category', name: 'challenge', sort: 'asc' },
+    { title: 'Category', name: 'challenge', filtering: { filterString: '', placeholder: 'Filter by Category' }  },
     { title: 'Judges score.', name: 'judgesScore' },
     { title: 'Overall score', name: 'score' }
   ];
@@ -37,19 +42,45 @@ export class AdminViewIdeasComponent implements OnInit {
   ];
 
 
-  constructor(private adminService: AdminService) { this.length = this.data.length; }
+  constructor(private adminService: AdminService,
+    private localStorageService: LocalStorageService,
+    private ideaService: IdeaService,
+    private headerService: HeaderButtonsService) { this.length = this.data.length; }
 
   ngOnInit() {
     this.toggleLoading();
-    this.adminService.getIdeas().subscribe(res => {
-      this.ideas = res.body;
-      this.parseResponse(res.body);
-      this.toggleLoading();
-    }, e => {
-      this.alertFlag = true;
-      this.alertMsg = "Couldn't connect to server";
-      this.toggleLoading();
-    })
+    this.isLeader = this.localStorageService.get("isCLeader")||this.localStorageService.get("isRLeader")||this.localStorageService.get("isGLeader")
+    if (this.localStorageService.get("isGLeader")) {
+      this.headerService.setIsSignedInGLeader();
+    }
+    if (this.localStorageService.get("isCLeader")) {
+      this.headerService.setIsSignedInCLeader();
+    }
+    if (this.localStorageService.get("isRLeader")) {
+      this.headerService.setIsSignedInRLeader();
+    }
+    if (this.isLeader) {
+      this.ideaService.getIdeas().subscribe(res => {
+        this.ideas = res.body;
+        this.parseResponse(res.body);
+        this.toggleLoading();
+      }, e => {
+        this.alertFlag = true;
+        this.alertMsg = "Couldn't connect to server";
+        this.toggleLoading();
+      })
+    }
+    else {
+      this.adminService.getIdeas().subscribe(res => {
+        this.ideas = res.body;
+        this.parseResponse(res.body);
+        this.toggleLoading();
+      }, e => {
+        this.alertFlag = true;
+        this.alertMsg = "Couldn't connect to server";
+        this.toggleLoading();
+      })
+    }
     // this.onChangeTable(this.config);
   }
   toggleLoading() {
@@ -61,7 +92,7 @@ export class AdminViewIdeasComponent implements OnInit {
       let object = {};
       object['teamName'] = `<a href="#/team-control?team=${element.teamName}">${element.teamName}</a>`;
       object['ideaName'] = element.title == undefined ? "" : element.title;
-      object['challenge'] = element.category;
+      object['challenge'] = element.category == undefined ? "" : element.category;
       // object['region'] = element.region;
       object['score'] = element.score == '-1' ? 'Not judged yet': element.score;
       object['judgesScore'] = element.judgments.length == 0 ? "No judges assigned yet" : "<ul>";

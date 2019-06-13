@@ -12,10 +12,6 @@ import { UserService } from '../Services/user.service';
   styleUrls: ['./judge-view-team-idea.component.css']
 })
 
-
-
-
-
 export class JudgeViewTeamIdeaComponent implements OnInit {
 
   team: string;

@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-offset-3 col-sm-6 text-center judge__info-main-text">
+      <div class="col-sm-offset-3 col-sm-6 text-center judge__info-main-text" *ngIf="!isLeader">
         <!-- Hello, {{ currentUser.name }} -->
         Hello, Admin
       </div>

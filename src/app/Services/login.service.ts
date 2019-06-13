@@ -25,7 +25,7 @@ export class LoginService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
 
-    return this.http.post( "/users/login", { email, password }, { headers: reqHeaders })
+    return this.http.post("/users/login", { email, password }, { headers: reqHeaders })
     .toPromise()
     .then((res) => 
     { console.log(res,"DATA")
@@ -34,6 +34,7 @@ export class LoginService {
       this.localStorageService.set("isAdmin", JSON.parse(res["_body"]).data.isAdmin);
       this.localStorageService.set("isCLeader", JSON.parse(res["_body"]).data.isCLeader);
       this.localStorageService.set("isRLeader", JSON.parse(res["_body"]).data.isRLeader);
+      this.localStorageService.set("isGLeader", JSON.parse(res["_body"]).data.isGLeader);
       if(JSON.parse(res["_body"]).data.isAdmin){
         this.headerButtonsService.setIsSignedInAdmin();
       }
@@ -42,6 +43,9 @@ export class LoginService {
       }
       if(JSON.parse(res["_body"]).data.isRLeader){
         this.headerButtonsService.setIsSignedInRLeader();
+      }
+      if(JSON.parse(res["_body"]).data.isGLeader){
+        this.headerButtonsService.setIsSignedInGLeader();
       }
 
       this.localStorageService.set("email", email);
@@ -54,7 +58,7 @@ export class LoginService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( "/users/user", { headers: reqHeaders });
+    return this.http.get("/users/user", { headers: reqHeaders });
   }
 
 }

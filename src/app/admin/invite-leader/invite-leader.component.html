@@ -41,7 +41,7 @@
           </div>
         </div>
 
-        <div class="control-group">
+        <div class="control-group" *ngIf=!Gleader>
           <!-- office location -->
           <label class="control-label">What is the leader's region? *</label>
           <div class="controls">
@@ -59,7 +59,7 @@
           </div>
         </div>
 
-        <div class="control-group">
+        <div class="control-group" *ngIf=!Gleader>
           <!-- office location -->
           <label class="control-label">Where is the Leader's chapter? *</label>
           <div class="controls">
@@ -77,15 +77,18 @@
           </div>
         </div>
 
-        <i class="help-block chapter" style="font-size:20px">
+        <i class="help-block chapter" style="font-size:20px" *ngIf=!Gleader>
           <input [(ngModel)]="Cleader" [ngModelOptions]="{standalone: true}" type="checkbox"
             style="margin-right:10px" />
           Chapter Leader</i>
-        <i class="help-block chapter" style="font-size:20px">
+        <i class="help-block chapter" style="font-size:20px" *ngIf=!Gleader>
           <input [(ngModel)]="Rleader" [ngModelOptions]="{standalone: true}" type="checkbox"
             style="margin-right:10px" />
           Region Leader</i>
-
+        <i class="help-block chapter" style="font-size:20px">
+          <input [(ngModel)]="Gleader" [ngModelOptions]="{standalone: true}" type="checkbox"
+            style="margin-right:10px" />
+          Global Leader</i>
         <div class="control-group">
           <input type="submit" class="btn btn-success">
         </div>

@@ -156,5 +156,11 @@ export class ProfileComponent implements OnInit {
       this.userCreatorTeam = JSON.parse(res["_body"]).data.creatorOf;
     });
     this.headerButtonsService.setIsSignedIn();
+    if (this.localStorageService.get("isGLeader"))
+      this.headerButtonsService.setIsSignedInGLeader();
+    if (this.localStorageService.get("isRLeader"))
+      this.headerButtonsService.setIsSignedInRLeader();
+    if (this.localStorageService.get("isCLeader"))
+      this.headerButtonsService.setIsSignedInCLeader();
   }
 }

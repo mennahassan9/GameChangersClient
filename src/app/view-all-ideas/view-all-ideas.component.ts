@@ -43,7 +43,6 @@ export class ViewAllIdeasComponent implements OnInit {
   ngOnInit() {
     this.toggleLoading();
     this.adminService.getIdeas().subscribe(res => {
-     console.log(res,"0000")
       this.ideas = res.body;
       this.parseResponse(res.body);
       this.toggleLoading();
@@ -61,7 +60,8 @@ export class ViewAllIdeasComponent implements OnInit {
     let retuenedData = [];
     data.forEach(element => {
       let object = {};
-      object['teamName'] = `<a href="#/viewTeam/${element.teamName}">${element.teamName}</a>`;
+      var teamname=encodeURIComponent(element.teamName)
+      object['teamName'] = element.teamName == undefined ? "" : `<a href="#/viewTeam/${teamname}">${element.teamName}</a>`;
       object['ideaName'] = element.title == undefined ? "" : element.title;
       object['challenge'] = element.category;
       // object['location'] = element.location;
