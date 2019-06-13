@@ -198,4 +198,12 @@ export class UserService {
     return this.http.get( `/users/allusers`, { headers: reqHeaders })
     .map(res => res.json());
   }
+  createNewJudge(email) {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.post( "/users/createNewjudge/",{email},{ headers: reqHeaders })
+    .map(res => res.json());
+  }
 }

@@ -5,6 +5,7 @@ import { HeaderButtonsService } from '../../Services/headerButtons.service';
 import { Router } from '@angular/router';
 import { LoginService } from '../../Services/login.service';
 import { AdminService } from '../../Services/admin.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-invite-judge',
@@ -22,14 +23,25 @@ export class InviteJudgeComponent implements OnInit {
   submit: boolean;
   errorAlert: boolean;
   errorMessage: String;
-  Cleader: boolean;
-  Rleader: boolean;
+  isLeader: boolean;
   doneAlert: boolean;
 
   constructor(private fb: FormBuilder, private userSvc: UserService, private router: Router, private loginService: LoginService,
-    private headerButtonsService: HeaderButtonsService, private adminService: AdminService) { }
+    private headerButtonsService: HeaderButtonsService, private adminService: AdminService,
+    private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
+    this.isLeader = this.localStorageService.get("isCLeader")||this.localStorageService.get("isRLeader")||this.localStorageService.get("isGLeader")
+    this.isLeader = this.localStorageService.get("isCLeader")||this.localStorageService.get("isRLeader")||this.localStorageService.get("isGLeader")
+    if (this.localStorageService.get("isGLeader")) {
+      this.headerButtonsService.setIsSignedInGLeader();
+    }
+    if (this.localStorageService.get("isCLeader")) {
+      this.headerButtonsService.setIsSignedInCLeader();
+    }
+    if (this.localStorageService.get("isRLeader")) {
+      this.headerButtonsService.setIsSignedInRLeader();
+    }
     this.doneAlert = false
     this.chapters = new Array<any>()
     this.chapter = new Array<any>()
@@ -48,9 +60,16 @@ export class InviteJudgeComponent implements OnInit {
     console.log(this.form.valid)
     if (this.form.valid) {
       // this.resortIdeas();
-      this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
-        let judgeId = res.data;
-      })
+      if (this.isLeader) {
+        this.userSvc.createNewJudge(this.form.value.email).subscribe(res => {
+          let judgeId = res.data;
+        })
+      }
+      else {
+        this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
+          let judgeId = res.data;
+        })
+      }
       this.doneAlert = true;
       this.form.reset()
       this.submit = false

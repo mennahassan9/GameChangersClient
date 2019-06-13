@@ -43,7 +43,6 @@ export class ViewAllIdeasComponent implements OnInit {
   ngOnInit() {
     this.toggleLoading();
     this.adminService.getIdeas().subscribe(res => {
-     console.log(res,"0000")
       this.ideas = res.body;
       this.parseResponse(res.body);
       this.toggleLoading();

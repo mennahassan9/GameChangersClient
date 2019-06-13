@@ -14,6 +14,7 @@ export class AppComponent {
   isRleader: boolean = false;
   isGleader: boolean = false;
   isLeader: boolean = false;
+  flag: boolean =false;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -54,7 +55,7 @@ export class AppComponent {
       }
       console.log("LEADER", this.isLeader)
     })
-
+    this.flag = (this.isAdmin || this.isLeader)
 
   }
   ngOnChanges() {
@@ -62,23 +63,27 @@ export class AppComponent {
     this.isCleader = this.localStorageService.get("isCLeader")== true? true : false;
     this.isRleader = this.localStorageService.get("isRLeader")== true? true : false;
     this.isGleader = this.localStorageService.get("isGLeader")== true? true : false;
+    this.flag = (this.isAdmin || this.isLeader)
   }
   ngAfterContentInit() {
     this.isAdmin = this.localStorageService.get("isAdmin") == true ? true : false;
     this.isCleader = this.localStorageService.get("isCLeader")== true? true : false;
     this.isRleader = this.localStorageService.get("isRLeader")== true? true : false;
     this.isGleader = this.localStorageService.get("isGLeader")== true? true : false;
+    this.flag = (this.isAdmin || this.isLeader)
   }
   ngAfterViewInit() {
     this.isAdmin = this.localStorageService.get("isAdmin") == true ? true : false;
     this.isCleader = this.localStorageService.get("isCLeader")== true? true : false;
     this.isRleader = this.localStorageService.get("isRLeader")== true? true : false;
     this.isGleader = this.localStorageService.get("isGLeader")== true? true : false;
+    this.flag = (this.isAdmin || this.isLeader)
   }
   ngOnDestroy() {
     this.isAdmin = this.localStorageService.get("isAdmin") == true ? true : false;
     this.isCleader = this.localStorageService.get("isCLeader")== true? true : false;
     this.isRleader = this.localStorageService.get("isRLeader")== true? true : false;
     this.isGleader = this.localStorageService.get("isGLeader")== true? true : false;
+    this.flag = (this.isAdmin || this.isLeader)
   }
 }

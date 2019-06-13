@@ -5,7 +5,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-offset-3 col-sm-6 text-center judge__info-main-text">
+      <div class="col-sm-offset-3 col-sm-6 text-center judge__info-main-text" *ngIf=!isLeader>
         Hello, Admin
       </div>
       <div class="row">
@@ -21,7 +21,7 @@
     <div class="row">
       <div class="col-sm-offset-1  col-sm-10 judge__info-details">
         <div class="row judge__brief-container">
-          <h1>{{teaName}}</h1>
+          <h1>{{teamName}}</h1>
           <h2>{{challengeName}}</h2>
           <table class="table">
             <thead>
