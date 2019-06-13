@@ -62,7 +62,7 @@ export class LeaderViewTeamsComponent implements OnInit {
       body: new FormControl('')})
       if (this.localStorageService.get("isGLeader")) {
         this.headerService.setIsSignedInGLeader();
-        this.teamService.getTeams().subscribe(res => {
+        this.userService.getTeams().subscribe(res => {
           this.allowOthers=true
           this.teams = res.data;
           this.length = this.teams.length;
