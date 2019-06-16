@@ -3,6 +3,8 @@ import { AdminService } from '../Services/admin.service';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { IdeaService } from '../Services/idea.service';
+import { LocalStorageService } from 'angular-2-local-storage';
+import { HeaderButtonsService } from '../Services/headerButtons.service';
 
 @Component({
   selector: 'app-judge-control',
@@ -21,11 +23,16 @@ export class JudgeControlComponent implements OnInit {
   fileName: string;
   errorAlert: boolean;
   errorMessage: string;
+  isLeader: boolean;
+  idea: any;
 
   constructor(private adminService: AdminService,
     private route: ActivatedRoute,
     private router: Router,
-    private ideaService: IdeaService
+    private ideaService: IdeaService,
+    private localStorageService: LocalStorageService,
+    private headerService: HeaderButtonsService
+
   ) { }
 
   ngOnInit() {
@@ -33,14 +40,49 @@ export class JudgeControlComponent implements OnInit {
       email: new FormControl('')
     });
     this.toggleLoading();
-    this.adminService.getIdea(this.route.snapshot.queryParams['team']).subscribe(res => {
-      this.teamName = res.body.teamName;
-      this.challengeName = res.body.challenge;
-      this.ideaId = res.body._id;
-      this.fileName = res.body.filename;
-      this.getJudges(res.body.judgments);
-      this.toggleLoading();
-    })
+    this.isLeader = this.localStorageService.get("isCLeader")||this.localStorageService.get("isRLeader")||this.localStorageService.get("isGLeader")
+    if (this.localStorageService.get("isGLeader")) {
+      this.headerService.setIsSignedInGLeader();
+    }
+    if (this.localStorageService.get("isCLeader")) {
+      this.headerService.setIsSignedInCLeader();
+    }
+    if (this.localStorageService.get("isRLeader")) {
+      this.headerService.setIsSignedInRLeader();
+    }
+    if (this.isLeader) {
+      console.log('hhhhhhhh')
+      this.ideaService.getIdea(this.route.snapshot.queryParams['team']).subscribe((res) => {
+       // console.log(res)
+        // this.ideaFlag = false;
+        if (JSON.parse(res["_body"])["body"] != null) {
+          this.idea = JSON.parse(res["_body"])["body"];
+          console.log(this.idea)
+          this.teamName = this.idea.teamName;
+          // this.title = this.idea.title;
+          this.challengeName = this.idea.category;
+          this.fileName = this.idea.filename;
+          this.getJudges(this.idea.judgments);
+          this.toggleLoading();
+        }
+        else {
+          this.errorAlert = true;
+          this.errorMessage = "No Idea found for this user"
+        }
+      }, (err) => {
+        this.errorAlert = true;
+          this.errorMessage = "Couldn't retrieve idea"
+      })
+    } else {
+      this.adminService.getIdea(this.route.snapshot.queryParams['team']).subscribe(res => {
+        this.teamName = res.body.teamName;
+        this.challengeName = res.body.challenge;
+        this.ideaId = res.body._id;
+        this.fileName = res.body.filename;
+        this.getJudges(res.body.judgments);
+        this.toggleLoading();
+      })
+    }
   }
   getJudges(judgments) {
     judgments.forEach(judgment => {
@@ -101,6 +143,7 @@ export class JudgeControlComponent implements OnInit {
         this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
           let judgeId = res.data;
           // assign to the idea
+          this.toggleLoading()
           this.adminService.assignJudge(judgeId, this.ideaId).subscribe(res => {
             let judge = {}
             const judgment = res.data.idea.judgments.filter((judgment) => judgment.judgeId === judgeId)[0];

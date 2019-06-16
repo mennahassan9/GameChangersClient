@@ -36,22 +36,31 @@ export class LeaderViewUsersComponent implements OnInit {
   public length:number = 0;
   private rows:Array<any> = [];
   
-  constructor(private adminService: UserService,
-  private loginService: LoginService,
-private localStorageService: LocalStorageService,
-private headerService: HeaderButtonsService) { 
+  constructor(
+    private userService: UserService,
+    private loginService: LoginService,
+    private localStorageService: LocalStorageService,
+    private headerService: HeaderButtonsService) { 
 
   }
   ngOnInit() {
 
-   
+    if (this.localStorageService.get("isGLeader")) {
+      this.headerService.setIsSignedInGLeader();
+      this.userService.getAllUsers().subscribe(res => {
+        this.parseResponse(res.data);
+      }, e=>{
+        this.alertFlag=true;
+        this.alertMsg= "Couldn't connect to server";
+  
+      })
+    }
     this.loginService.getUser().subscribe((res) => {
       this.chapter = JSON.parse(res["_body"]).data.chapter;
       this.region = JSON.parse(res["_body"]).data.region; 
-
       if(this.localStorageService.get("isCLeader") == true){
         this.headerService.setIsSignedInCLeader();
-        this.adminService.getUsersC(this.chapter).subscribe(res => {
+        this.userService.getUsersC(this.chapter).subscribe(res => {
           this.users = res.data;
           console.log(res.data, "USERS")
           this.length = this.users.length;
@@ -63,7 +72,7 @@ private headerService: HeaderButtonsService) {
         })}
         if(this.localStorageService.get("isRLeader") == true){
           this.headerService.setIsSignedInRLeader();
-          this.adminService.getUsersR(this.region).subscribe(res => {
+          this.userService.getUsersR(this.region).subscribe(res => {
             this.users = res.data;
             this.length = this.users.length;
             this.parseResponse(res.data);

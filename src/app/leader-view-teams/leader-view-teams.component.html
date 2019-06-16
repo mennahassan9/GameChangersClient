@@ -23,4 +23,56 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-sm-offset-10 align-self-center">
+      <button class="btn sendEmail" (click)="viewEmail=true">
+        Send Email
+      </button>
+    </div>
+  </div>
+  <div class="row" *ngIf="viewEmail">
+    <div class="col-sm-offset-1  col-sm-10 team__table">
+      <form class="row form-horizontal" [formGroup]="form" (ngSubmit)="send()">
+        <fieldset>
+          <div id="legend">
+            <legend class="">Send email</legend>
+          </div>
+          <div *ngIf="submitted && !hidden" class="alert alert-success">
+            <div>{{alertMsg}}</div>
+          </div>
+          <div *ngIf="!submitted && !hidden" class="alert alert-danger">
+            <div>{{alertMsg}}</div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Subject *</label>
+            <div class="controls">
+              <input type="text" formControlName="subject" id="subject" name="subject" placeholder="Email subject"
+                value=" " class="input-xlarge" required>
+              <i class="help-block">Please enter the email's subject.</i>
+            </div>
+            <div
+              *ngIf="(form.get('subject').invalid && form.get('subject').touched || (submit && form.get('subject').invalid))"
+              class="alert alert-danger">
+              <div *ngIf="form.get('subject').errors.required">Please enter the email's subject. </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Body *</label>
+            <div class="controls">
+              <textarea type="text" formControlName="body" id="body" name="body" placeholder="Email body" value=" "
+                class="input-xlarge text__area" required></textarea>
+              <i class="help-block">Please enter the email's body.</i>
+            </div>
+            <div *ngIf="(form.get('body').invalid && form.get('body').touched || (submit && form.get('body').invalid))"
+              class="alert alert-danger">
+              <div *ngIf="form.get('body').errors.required">Please enter the email's body. </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <input type="submit" class="btn btn-success">
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
 </div>

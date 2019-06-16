@@ -1,12 +1,11 @@
 .judge__main-container {
     overflow-x: hidden;
     /* background-image: url("../../../assets/images/home_ideas_background_alt7.jpg"); */
-    /* background-size: cover;
-    background-color: beige;
+    background-size: cover;
+    /* background-color: beige; */
     background-repeat: no-repeat;
     background-position: 0px 30px;
-    min-height: 100vh; */
-    padding: 50px 0px;
+    min-height: 100vh;
 }
 
 
@@ -17,7 +16,6 @@
 .judge__info {
     min-height: 65vh;
     /* border-bottom: 2px solid #000000; */
-    margin-left: 118px;
 }
 
 .judge__info-main-text {
@@ -27,9 +25,9 @@
 }
 
 .judge__info-details {
-    font-size: 1.5em;
+    /* font-size: 1.5em; */
     color: #000000;
-    border: 1px solid #000000;
+    /* border: 1px solid #000000; */
     padding: 10px;
     margin-top: 2%;
 }

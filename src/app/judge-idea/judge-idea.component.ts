@@ -75,10 +75,11 @@ export class JudgeIdeaComponent implements OnInit {
         this.form.disable();
       } else {
         this.deadlineReached = false;
-        this.judgingService.getIdea(this.teamName)
+        this.judgingService.getTeamIdea(this.teamName)
           .then(response => {
-            this.idea.name = response['idea'].title;
-            this.ideaId = response['idea']._id;
+            this.idea.name = response['body']['title'];
+            this.ideaId = response['body']['_id'];
+            this.idea.filename = response['body']['filename']
             if (response['ideajudgment']) {
               this.loaded = false;
               this.questions = []
@@ -86,6 +87,10 @@ export class JudgeIdeaComponent implements OnInit {
                 this.questions.push(response['ideajudgment'].questions[i][0]);
               }
               this.questions.forEach((question, index) => {
+                console.log('$$$$$', question, index)
+                // question.category = 'hi'
+                question.category = question.question.substr(0, question.question.indexOf('>'))
+                question.question = question.question.substr(question.question.indexOf('>')+ 1)
                 this.form.addControl(`${question.category}${index}Score`, new FormControl(question.currentScore, [Validators.required, Validators.max(question.rate), Validators.min(0)]))
                 this.form.addControl(`${question.category}${index}Comment`, new FormControl('', []))
                 this.loaded = (index == this.questions.length - 1);
@@ -95,8 +100,13 @@ export class JudgeIdeaComponent implements OnInit {
               });
             } else {
               this.judgingService.getQuestions().subscribe((response) => {
+                console.log("###", response)
                 this.questions = JSON.parse(response["_body"])["body"];
                 this.questions.forEach((question, index) => {
+                  console.log('Question: ', question)
+                  question.category = question.question.substr(0, question.question.indexOf('>'))
+                  question.question = question.question.substr(question.question.indexOf('>')+ 1)
+                  console.log(question.category, '$#$#$#$#$$#')
                   this.form.addControl(`${question.category}${index}Score`, new FormControl('', [Validators.required, Validators.max(question.rate), Validators.min(0)]))
                   this.form.addControl(`${question.category}${index}Comment`, new FormControl('', []))
                   this.loaded = (index == this.questions.length - 1);

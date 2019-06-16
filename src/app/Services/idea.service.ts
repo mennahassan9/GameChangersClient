@@ -21,7 +21,11 @@ export class IdeaService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+<<<<<<< HEAD
     return this.http.get( environment.apiUrl + "/ideas/allIdeas", { headers: reqHeaders })
+=======
+    return this.http.get("/ideas/allIdeas", { headers: reqHeaders })
+>>>>>>> 6c3d4440ad7cc1d0267ed612a8719068202a45eb
     .map(res => res.json());
   }
 
@@ -31,9 +35,15 @@ export class IdeaService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     if (teamName) {
+<<<<<<< HEAD
       return this.http.get( environment.apiUrl + `/ideas/${teamName}`, { headers: reqHeaders });
     }
     return this.http.get( environment.apiUrl + "/ideas/self", { headers: reqHeaders });
+=======
+      return this.http.get(`/ideas/${teamName}`, { headers: reqHeaders });
+    }
+    return this.http.get("/ideas/self", { headers: reqHeaders });
+>>>>>>> 6c3d4440ad7cc1d0267ed612a8719068202a45eb
   }
 
 
@@ -94,7 +104,11 @@ export class IdeaService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+<<<<<<< HEAD
     return this.http.post( environment.apiUrl + '/ideas/download', { 'file': filename }, { headers: reqHeaders, responseType: ResponseContentType.Blob })
+=======
+    return this.http.post('/ideas/download', { 'file': filename }, { headers: reqHeaders, responseType: ResponseContentType.Blob })
+>>>>>>> 6c3d4440ad7cc1d0267ed612a8719068202a45eb
       .map(
         (res) => {
           return new Blob([res.blob()], { type: mime.lookup(filename) });

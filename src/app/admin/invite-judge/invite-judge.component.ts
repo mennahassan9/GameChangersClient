@@ -5,13 +5,15 @@ import { HeaderButtonsService } from '../../Services/headerButtons.service';
 import { Router } from '@angular/router';
 import { LoginService } from '../../Services/login.service';
 import { AdminService } from '../../Services/admin.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
-  selector: 'app-invite-leader',
-  templateUrl: './invite-leader.component.html',
-  styleUrls: ['./invite-leader.component.css']
+  selector: 'app-invite-judge',
+  templateUrl: './invite-judge.component.html',
+  styleUrls: ['./invite-judge.component.css']
 })
-export class InviteLeaderComponent implements OnInit {
+
+export class InviteJudgeComponent implements OnInit {
   match: boolean;
   form: FormGroup;
   chapters: Array<any>;
@@ -21,15 +23,25 @@ export class InviteLeaderComponent implements OnInit {
   submit: boolean;
   errorAlert: boolean;
   errorMessage: String;
-  Cleader: boolean;
-  Rleader: boolean;
-  Gleader: boolean;
+  isLeader: boolean;
   doneAlert: boolean;
 
   constructor(private fb: FormBuilder, private userSvc: UserService, private router: Router, private loginService: LoginService,
-    private headerButtonsService: HeaderButtonsService, private adminService: AdminService) { }
+    private headerButtonsService: HeaderButtonsService, private adminService: AdminService,
+    private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
+    this.isLeader = this.localStorageService.get("isCLeader")||this.localStorageService.get("isRLeader")||this.localStorageService.get("isGLeader")
+    this.isLeader = this.localStorageService.get("isCLeader")||this.localStorageService.get("isRLeader")||this.localStorageService.get("isGLeader")
+    if (this.localStorageService.get("isGLeader")) {
+      this.headerButtonsService.setIsSignedInGLeader();
+    }
+    if (this.localStorageService.get("isCLeader")) {
+      this.headerButtonsService.setIsSignedInCLeader();
+    }
+    if (this.localStorageService.get("isRLeader")) {
+      this.headerButtonsService.setIsSignedInRLeader();
+    }
     this.doneAlert = false
     this.chapters = new Array<any>()
     this.chapter = new Array<any>()
@@ -37,43 +49,26 @@ export class InviteLeaderComponent implements OnInit {
 
     this.regions = new Array<String>();
 
-    this.userSvc.getRegions().subscribe((res) => {
-      console.log("REGIONS", res)
-      res.data.forEach(element => {
-        this.regions.push(element.name)
-
-      });
-      console.log(this.regions)
-    })
-    this.userSvc.getChapters().subscribe((res) => {
-      console.log("CHAPTERS", res)
-      this.chapter = res.data
-      console.log(this.chapters)
-    })
-
-
     this.form = new FormGroup({
       name: new FormControl(''),
       email: new FormControl(''),
-      region: new FormControl(''),
-      chapter: new FormControl(''),
-
     });
   }
+  
   register() {
     this.submit = true;
-
+    console.log(this.form.valid)
     if (this.form.valid) {
       // this.resortIdeas();
-      console.log(this.form.value, "VALUE")
-      if (this.Cleader == true) {
-        this.adminService.inviteCleader(this.form.value)
+      if (this.isLeader) {
+        this.userSvc.createNewJudge(this.form.value.email).subscribe(res => {
+          let judgeId = res.data;
+        })
       }
-      if (this.Rleader == true) {
-        this.adminService.inviteRleader(this.form.value)
-      }
-      if (this.Gleader == true) {
-        this.adminService.inviteGleader(this.form.value)
+      else {
+        this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
+          let judgeId = res.data;
+        })
       }
       this.doneAlert = true;
       this.form.reset()
@@ -81,21 +76,8 @@ export class InviteLeaderComponent implements OnInit {
     }
   }
 
-
-
-
-
   showAlert(message) {
     this.errorAlert = true;
     this.errorMessage = message;
-  }
-
-  getChapters() {
-    this.chapters = []
-    console.log(this.form.get('region').value)
-    this.chapter.forEach(chapter => {
-      if (chapter.region.name == this.form.get('region').value) { this.chapters.push(chapter.name) }
-    })
-
   }
 }

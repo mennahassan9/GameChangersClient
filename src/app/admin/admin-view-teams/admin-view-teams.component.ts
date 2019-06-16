@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService} from '../../Services/admin.service';
 import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table/ng2-table';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-view-teams',
@@ -9,16 +10,22 @@ import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, Ng
 })
 export class AdminViewTeamsComponent implements OnInit {
 
+  form: FormGroup;
+  submitted: boolean;
+  hidden: boolean;
   teams: any [];
   loading: boolean; 
   alertFlag: boolean;
   alertMsg: string;
+  currentEmails: string[];
   public rows:any[] = [];
   public columns:any[] = [
     {title:'Team Name', name:'team name', filtering: {filterString:'', placeholder: 'Filter by team name'}},
     {title:'Members', name:'members'},
     {title:'Creator', name:'creator'},
     {title:'Region', name:'region', filtering: {filterString: '', placeholder: 'Filter by Region'}},
+    {title:'Chapter', name:'chapter', filtering: {filterString: '', placeholder: 'Filter by Chapter'}},
+    {title:'Idea', name:'idea', filtering: {filterString: '', placeholder: 'Filter by Idea name'}}
   ];
   public page:number = 1;
   public itemsPerPage:number = 10;
@@ -38,6 +45,9 @@ export class AdminViewTeamsComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.form = new FormGroup({
+      subject: new FormControl(''),
+      body: new FormControl('')})
     this.adminService.getTeams().subscribe(res => {
       this.teams = res.data;
       this.length = this.teams.length;
@@ -53,10 +63,16 @@ export class AdminViewTeamsComponent implements OnInit {
     let output = [];
     input.forEach(element => {
       let object = {};
-      object['team name'] = element.name == undefined ? "" : `<a href="#/viewTeam/${element.name}">${element.name}</a>`;
+     var teamname=encodeURIComponent(element.name)
+     object['team name'] = element.name == undefined ? "" : `<a href='#/viewTeam/${teamname}'>${element.name}</a>`; 
       object['members'] = element.members == undefined ? "" : element.members.map((member) => `<a href="/#/admin/user?user=${member.email}">${member.email}</a><br>`).join("");
       object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.name}</a>`;
       object['region'] = element.region==undefined ? "" : element.region;
+      object['chapter'] = element.chapter == undefined ? "" : element.chapter;
+      object['idea'] = element.idea == undefined ? "No idea submitted" : element.idea;
+      let allEmails = element.members;
+      allEmails.push(element.creator)
+      object['emails'] = allEmails;
       output.push(object);
     });
     this.rows = output;
@@ -128,6 +144,7 @@ export class AdminViewTeamsComponent implements OnInit {
         item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
     }
 
+    let tempEmails = [];
     let tempArray:Array<any> = [];
     filteredData.forEach((item:any) => {
       let flag = false;
@@ -138,13 +155,36 @@ export class AdminViewTeamsComponent implements OnInit {
       });
       if (flag) {
         tempArray.push(item);
+        let temp = item.emails;
+        try{
+          temp.forEach((member:any) => {
+              tempEmails.push(member.email)
+          });
+        } catch(err){
+          console.log(temp, err)
+        }
       }
     });
+    this.currentEmails = tempEmails;
     filteredData = tempArray;
+    this.hidden = true;
     return filteredData;
   }
 
   public onCellClick(data: any): any {
     return;
+  }
+  public send(){
+    this.adminService.sendEmails(this.currentEmails, this.form.value).subscribe(res => {
+      this.submitted = true;
+      this.hidden = false;
+      this.alertMsg = "Emails sent successfully!";
+      this.form.reset();
+    }, (err) => {
+            this.submitted = false;
+            this.hidden = false;
+            this.alertMsg = "Something went wrong while sending emails";
+          })
+    
   }
 }

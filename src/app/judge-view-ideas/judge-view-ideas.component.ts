@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {IdeaService} from '../Services/idea.service';
+import { AdminService } from '../Services/admin.service';
 import { NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table/ng2-table';
+import { IdeaService } from '../Services/idea.service';
 
 @Component({
-  selector: 'app-view-all-ideas',
-  templateUrl: './view-all-ideas.component.html',
-  styleUrls: ['./view-all-ideas.component.css']
+  selector: 'app-judge-view-ideas',
+  templateUrl: './judge-view-ideas.component.html',
+  styleUrls: ['./judge-view-ideas.component.css']
 })
-export class ViewAllIdeasComponent implements OnInit {
+
+export class JudgeViewIdeasComponent implements OnInit {
   ideas: any[];
   loading: boolean;
   alertFlag: boolean;
@@ -18,7 +20,7 @@ export class ViewAllIdeasComponent implements OnInit {
   public columns: Array<any> = [
     { title: 'Team name', name: 'teamName', filtering: { filterString: '', placeholder: 'Filter by team name' } },
     { title: 'Idea name', name: 'ideaName', sort: false, filtering: { filterString: '', placeholder: 'Filter by idea name' } },
-    // {title: 'Location', name: 'location', sort: 'asc',filtering: {filterString: '', placeholder: 'Filter by location'}},    
+    // {title: 'Region', name: 'region', sort: 'asc',filtering: {filterString: '', placeholder: 'Filter by region'}},    
     { title: 'Category', name: 'challenge', sort: 'asc' },
     { title: 'Judges score.', name: 'judgesScore' },
     { title: 'Overall score', name: 'score' }
@@ -38,11 +40,12 @@ export class ViewAllIdeasComponent implements OnInit {
   ];
 
 
-  constructor(private adminService: IdeaService) { this.length = this.data.length; }
+  constructor(private adminService: AdminService,
+    private ideaService: IdeaService) { this.length = this.data.length; }
 
   ngOnInit() {
     this.toggleLoading();
-    this.adminService.getIdeas().subscribe(res => {
+    this.ideaService.getIdeas().subscribe(res => {
       this.ideas = res.body;
       this.parseResponse(res.body);
       this.toggleLoading();
@@ -60,11 +63,10 @@ export class ViewAllIdeasComponent implements OnInit {
     let retuenedData = [];
     data.forEach(element => {
       let object = {};
-      var teamname=encodeURIComponent(element.teamName)
-      object['teamName'] = element.teamName == undefined ? "" : `<a href="#/viewTeam/${teamname}">${element.teamName}</a>`;
+      object['teamName'] = `<a href="#/judge/viewIdea/${element.teamName}">${element.teamName}</a>`;
       object['ideaName'] = element.title == undefined ? "" : element.title;
       object['challenge'] = element.category;
-      // object['location'] = element.location;
+      // object['region'] = element.region;
       object['score'] = element.score == '-1' ? 'Not judged yet': element.score;
       object['judgesScore'] = element.judgments.length == 0 ? "No judges assigned yet" : "<ul>";
       for (let index = 0; index < element.judgments.length; index++) {
@@ -132,7 +134,6 @@ export class ViewAllIdeasComponent implements OnInit {
     this.columns.forEach((column: any) => {
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => {
-          console.log(column)
           return item[column.name].toLowerCase().match(column.filtering.filterString.toLowerCase());
         });
       }
@@ -147,7 +148,6 @@ export class ViewAllIdeasComponent implements OnInit {
     }
 
     let tempArray: Array<any> = [];
-    console.log(filteredData, "ress")
     filteredData.forEach((item: any) => {
       let flag = false;
       this.columns.forEach((column: any) => {

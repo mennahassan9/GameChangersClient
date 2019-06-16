@@ -65,6 +65,7 @@ export class EditQuestionsComponent implements OnInit {
   submit() {
     
     this.adminService.putQuestions(this.questions).subscribe((res) => {
+      console.log(this.questions)
      this.alertFlag=false;
     
     }, e=>{

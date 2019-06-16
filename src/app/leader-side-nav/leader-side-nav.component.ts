@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HeaderButtonsService } from '../Services/headerButtons.service';
 
 @Component({
   selector: 'app-leader-side-nav',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeaderSideNavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private headerButtonsService: HeaderButtonsService) { }
 
   ngOnInit() {
+    this.headerButtonsService.isSignedIn.subscribe(updateSignIn => {
+      
+    });
   }
 
 }
