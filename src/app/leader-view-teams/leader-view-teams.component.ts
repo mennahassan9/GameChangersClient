@@ -28,7 +28,9 @@ export class LeaderViewTeamsComponent implements OnInit {
     {title:'Members', name:'members'},
     {title:'Creator', name:'creator'},
     {title:'Region', name:'region', filtering: {filterString:'', placeholder: 'Filter by team region'}},
-    {title:'Chapter', name:'chapter', filtering: {filterString:'', placeholder: 'Filter by team chapter'}}
+    {title:'Chapter', name:'chapter', filtering: {filterString:'', placeholder: 'Filter by team chapter'}},
+    {title:'Idea', name:'idea', filtering: {filterString: '', placeholder: 'Filter by Idea name'}},
+    {title:'Category', name:'category', filtering: {filterString: '', placeholder: 'Filter by Category'}}
     
   ];
   public page:number = 1;
@@ -117,6 +119,8 @@ export class LeaderViewTeamsComponent implements OnInit {
         object['creator'] = element.creator == undefined ? "" : element.creator.email;
         object['region'] = element.region  == undefined ? "" : element.region
         object['chapter'] = element.chapter  == undefined ? "" : element.chapter
+        object['idea'] = element.ideaname == undefined ? "No idea submitted" : element.ideaname;
+      object['category'] = element.category == undefined ? "No idea submitted" : element.category;
         let getallemails = element.members
         getallemails.push(element.creator)
         object['emails'] = getallemails
