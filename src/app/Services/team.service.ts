@@ -99,7 +99,7 @@ export class TeamService {
     const reqHeaders: Headers = new Headers();
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.delete(  `/teams/self/members/${email}`, { headers: reqHeaders })
+    return this.http.put(  `/teams/self/members/${email}`, { headers: reqHeaders })
       .map(res => res.json());
   }
 

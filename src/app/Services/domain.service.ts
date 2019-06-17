@@ -43,6 +43,6 @@ export class DomainService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     reqHeaders.append('Content-Type', 'application/json');
-    return this.http.put(`/admin/domains/${oldName}`, { name }, { headers: reqHeaders });
+    return this.http.put( environment.apiUrl +`/admin/domains/${oldName}`, { name }, { headers: reqHeaders });
   }
 }
