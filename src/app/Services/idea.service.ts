@@ -21,7 +21,7 @@ export class IdeaService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get( "/ideas/allIdeas", { headers: reqHeaders })
+    return this.http.get(  "/ideas/allIdeas", { headers: reqHeaders })
     .map(res => res.json());
   }
 
@@ -31,9 +31,9 @@ export class IdeaService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
     if (teamName) {
-      return this.http.get( `/ideas/${teamName}`, { headers: reqHeaders });
+      return this.http.get(  `/ideas/${teamName}`, { headers: reqHeaders });
     }
-    return this.http.get( "/ideas/self", { headers: reqHeaders });
+    return this.http.get(  "/ideas/self", { headers: reqHeaders });
   }
 
 
@@ -53,7 +53,7 @@ export class IdeaService {
       data.append('challenge', challenge);
       data.append('description', description);
       const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/ideas/new');
+      xhr.open('POST',  '/ideas/new');
       const currentToken = this.localStorageService.get('token');
       xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken);
       xhr.onload = () => {
@@ -78,7 +78,7 @@ export class IdeaService {
         data.append('oldFilename', file.name);
       }
       const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/ideas/edit');
+      xhr.open('POST',  '/ideas/edit');
       const currentToken = this.localStorageService.get('token');
       xhr.setRequestHeader('Authorization', 'Bearer ' + currentToken);
       xhr.send(data);
@@ -94,7 +94,7 @@ export class IdeaService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.post( '/ideas/download', { 'file': filename }, { headers: reqHeaders, responseType: ResponseContentType.Blob })
+    return this.http.post(  '/ideas/download', { 'file': filename }, { headers: reqHeaders, responseType: ResponseContentType.Blob })
       .map(
         (res) => {
           return new Blob([res.blob()], { type: mime.lookup(filename) });
