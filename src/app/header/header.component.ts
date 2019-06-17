@@ -28,7 +28,8 @@ export class HeaderComponent implements OnInit {
 
 
     this.loginService.getUser().subscribe((res) => {
-      this.teamName = res.json().data.teamMember;})
+      this.teamName = res.json().data.teamMember;
+    })
 
     this.isJudge = this.localStorageService.get("isJudge") == true;
     this.isAdmin = this.localStorageService.get("isAdmin") == true;
@@ -42,8 +43,8 @@ export class HeaderComponent implements OnInit {
       this.headerButtonsService.signOut();
     }
 
-    if(this.localStorageService.get("isCLeader")||this.localStorageService.get("isRLeader")||this.localStorageService.get("isGLeader")){
-      this.isLeader=true;
+    if (this.localStorageService.get("isCLeader") || this.localStorageService.get("isRLeader") || this.localStorageService.get("isGLeader")) {
+      this.isLeader = true;
     }
   }
 
@@ -80,8 +81,8 @@ export class HeaderComponent implements OnInit {
   }
   redirectToTeam() {
     this.loginService.getUser().subscribe((res) => {
-       this.teamName = res.json().data.teamMember;
-      if (this.teamName == "-1"&& !this.isLeader){
+      this.teamName = res.json().data.teamMember;
+      if (this.teamName == "-1" && !this.isLeader) {
         this.redirectToJoinTeam()
       }
       else {
@@ -91,16 +92,21 @@ export class HeaderComponent implements OnInit {
       console.log(err.json());
     });
   }
-  redirectToJoinTeam(){
-    if(this.teamName == "-1"&& this.isLeader){
+  redirectToJoinTeam() {
+    if (this.isAdmin) {
       this.router.navigate(['admin/teams'])
-    }else{
-    this.router.navigate([`./teams`]);}
+    } else {
+      if (this.isLeader) {
+        this.router.navigate(['leader/teams'])
+      } else {
+        this.router.navigate([`./teams`]);
+      }
+    }
   }
   redirectToIdea() {
     this.loginService.getUser().subscribe((res) => {
       let teamName = res.json().data.teamMember;
-      if (teamName == "-1"){
+      if (teamName == "-1") {
         alert('You need to join a team first, or create your own team');
         this.redirectToJoinTeam()
       }
@@ -120,7 +126,7 @@ export class HeaderComponent implements OnInit {
   redirectToForgotPassword() {
     this.router.navigate(['./forgot-password']);
   }
-  redirectToViewIdeas(){
+  redirectToViewIdeas() {
     this.router.navigate([`./ideas`]);
   }
 }

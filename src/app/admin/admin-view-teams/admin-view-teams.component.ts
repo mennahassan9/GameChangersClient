@@ -25,7 +25,8 @@ export class AdminViewTeamsComponent implements OnInit {
     {title:'Creator', name:'creator'},
     {title:'Region', name:'region', filtering: {filterString: '', placeholder: 'Filter by Region'}},
     {title:'Chapter', name:'chapter', filtering: {filterString: '', placeholder: 'Filter by Chapter'}},
-    {title:'Idea', name:'idea', filtering: {filterString: '', placeholder: 'Filter by Idea name'}}
+    {title:'Idea', name:'idea', filtering: {filterString: '', placeholder: 'Filter by Idea name'}},
+    {title:'Category', name:'category', filtering: {filterString: '', placeholder: 'Filter by Category'}}
   ];
   public page:number = 1;
   public itemsPerPage:number = 10;
@@ -69,7 +70,8 @@ export class AdminViewTeamsComponent implements OnInit {
       object['creator'] = element.creator == undefined ? "" : `<a href="/#/admin/user?user=${element.creator.email}">${element.creator.name}</a>`;
       object['region'] = element.region==undefined ? "" : element.region;
       object['chapter'] = element.chapter == undefined ? "" : element.chapter;
-      object['idea'] = element.idea == undefined ? "No idea submitted" : element.idea;
+      object['idea'] = element.ideaname == undefined ? "No idea submitted" : element.ideaname;
+      object['category'] = element.category == undefined ? "No idea submitted" : element.category;
       let allEmails = element.members;
       allEmails.push(element.creator)
       object['emails'] = allEmails;
