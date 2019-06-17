@@ -60,23 +60,35 @@ export class InviteJudgeComponent implements OnInit {
     console.log(this.form.valid)
     try{
     if (this.form.valid) {
+      console.log(this.isLeader,"LEADER")
       // this.resortIdeas();
       if (this.isLeader) {
+        console.log( "HEEERRR")
         this.userSvc.createNewJudge(this.form.value.email).subscribe(res => {
+          console.log(res, "HEEERRR")
           let judgeId = res.data;
+          console.log(res, "HEEERRR")
+        }, err=>{
+          console.log(err, "HEEERRR")
+          this.showAlert(err.json().errors[0].message)
         })
       }
       else {
         this.adminService.createNewJudge(this.form.value.email).subscribe(res => {
           let judgeId = res.data;
+          console.log(res)
+        }, err=>{
+          console.log(err, "HEEERRR")
+          this.showAlert(err.json().errors[0].message)
         })
       }
-      this.doneAlert = true;
+      //this.doneAlert = true;
       this.form.reset()
       this.submit = false
     }}
     catch(err){ 
-      console.log(err,"ERR")
+      console.log(err,"ERR", JSON.parse(err["_body"])[0])
+      JSON.parse(err["_body"])[0]
      // this.showAlert("couldn't create judge")
     }
   }

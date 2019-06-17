@@ -21,7 +21,7 @@ export class JudgingService {
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
 
-    return this.http.get(environment.apiUrl +"/judge/ideas", { headers: reqHeaders });
+    return this.http.get("/judge/ideas", { headers: reqHeaders });
   }
   getTeamIdea(teamName) {
     return new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ export class JudgingService {
       reqHeaders.append('Content-Type', 'application/json');
       const currentToken = this.localStorageService.get('token');
       reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-      this.http.get(environment.apiUrl +"/judge/getTeamIdea/" + teamName, { headers: reqHeaders })
+      this.http.get("/judge/getTeamIdea/" + teamName, { headers: reqHeaders })
         .map(res => res.json()).subscribe(response => {;
           resolve(response)
         },
@@ -45,7 +45,7 @@ export class JudgingService {
       reqHeaders.append('Content-Type', 'application/json');
       const currentToken = this.localStorageService.get('token');
       reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-      this.http.get(environment.apiUrl +"/judge/ideas/" + teamName, { headers: reqHeaders })
+      this.http.get("/judge/ideas/" + teamName, { headers: reqHeaders })
         .map(res => res.json()).subscribe(response => {;
           resolve(response)
         },
@@ -61,7 +61,7 @@ export class JudgingService {
       reqHeaders.append('Content-Type', 'application/json');
       const currentToken = this.localStorageService.get('token');
       reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-      this.http.post(environment.apiUrl +"/judge/submit/", { ideaId, questions, teamName }, { headers: reqHeaders })
+      this.http.post("/judge/submit/", { ideaId, questions, teamName }, { headers: reqHeaders })
         .map(res => res.json()).subscribe(response => {
           resolve(response)
         },
@@ -93,6 +93,6 @@ export class JudgingService {
     reqHeaders.append('Content-Type', 'application/json');
     const currentToken = this.localStorageService.get('token');
     reqHeaders.append('Authorization', 'Bearer ' + currentToken);
-    return this.http.get(environment.apiUrl +"/judge/get-questions", { headers: reqHeaders });
+    return this.http.get("/judge/get-questions", { headers: reqHeaders });
   }
 }
