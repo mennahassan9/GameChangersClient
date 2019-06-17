@@ -45,12 +45,15 @@ export class JoinTeamComponent implements OnInit {
         this.alertFlag = false;
         this.router.navigate([`./viewTeam/${this.teamMember}`]);
       }
+      if(this.teamMember== '-1'){
+        this.submitJoin(this.teamName)
+      }
     }, (err) => {
       err = err.json();
       this.alertFlag = true;
       this.alertMsg = 'An error has occured. Please try again later!';
     });
-    this.submitJoin(this.teamName)
+   // this.submitJoin(this.teamName)
     // this.teamService.getTeam(this.teamName).subscribe((res) => {
     // this.team = res.data.team;
     //   if (this.team == null) {
