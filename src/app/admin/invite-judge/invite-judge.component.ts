@@ -58,6 +58,7 @@ export class InviteJudgeComponent implements OnInit {
   register() {
     this.submit = true;
     console.log(this.form.valid)
+    try{
     if (this.form.valid) {
       // this.resortIdeas();
       if (this.isLeader) {
@@ -73,6 +74,10 @@ export class InviteJudgeComponent implements OnInit {
       this.doneAlert = true;
       this.form.reset()
       this.submit = false
+    }}
+    catch(err){ 
+      console.log(err,"ERR")
+     // this.showAlert("couldn't create judge")
     }
   }
 
