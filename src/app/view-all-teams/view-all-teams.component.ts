@@ -44,7 +44,7 @@ export class ViewAllTeamsComponent implements OnInit {
   ngOnInit() {
     this.teamService.getTeams().subscribe(res => {
       console.log(res)
-      this.allowOthers=true
+      this.allowOthers=false
       this.teams = res.data;
       this.length = this.teams.length;
       this.parseResponse(this.teams);
@@ -70,7 +70,7 @@ export class ViewAllTeamsComponent implements OnInit {
         {
           element.allowOthers = false
         }
-       object['submitJoin'] = element.allowOthers == false ? "" : `<div class="row">
+        object['submitJoin'] = element.allowOthers == false ? "" : `<div class="row">
           <div class="col-sm-9">${element.lookingFor}</div> 
           <div class="col-sm-3" style="padding-left: 0px;"> 
             <a  href="#/teams/join/${element.name}">
@@ -79,6 +79,7 @@ export class ViewAllTeamsComponent implements OnInit {
               </button>
             </a>
           </div></div></div>`;
+          
         output.push(object);
       }
     });
