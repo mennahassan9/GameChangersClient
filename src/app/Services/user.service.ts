@@ -222,4 +222,12 @@ export class UserService {
     return this.http.get(  "/users/getAllTeams",{ headers: reqHeaders })
     .map(res => res.json());
   }
+  getTeams() {
+    const reqHeaders: Headers = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    const currentToken = this.localStorageService.get('token');
+    reqHeaders.append('Authorization', 'Bearer ' + currentToken);
+    return this.http.get( "/users/getAllTeams",{ headers: reqHeaders })
+    .map(res => res.json());
+  }
 }
