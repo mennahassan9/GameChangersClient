@@ -15,6 +15,8 @@ export class EditQuestionsComponent implements OnInit {
   question: any;
   alertFlag:boolean
   string;alertMsg
+  errorMessage: string;
+  errorAlert: boolean;
 
   constructor(private adminService: AdminService,private judgeService :JudgingService) {
 
@@ -25,6 +27,8 @@ export class EditQuestionsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.errorAlert=false;
+    this.errorMessage=''
    this.getQuestions();
   }
   getQuestions(){
@@ -66,11 +70,15 @@ export class EditQuestionsComponent implements OnInit {
     
     this.adminService.putQuestions(this.questions).subscribe((res) => {
       console.log(this.questions)
+      this.errorAlert = false;
+      this.errorMessage = res.errors[0].message
      this.alertFlag=false;
     
     }, e=>{
+      console.log(e)
+      this.errorAlert = true;
       this.alertFlag=true;
-      this.alertMsg="An Error occured while editing the questions"
+      this.errorMessage="An Error occured while editing the questions"
 
     });
   }

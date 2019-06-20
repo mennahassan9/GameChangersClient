@@ -63,27 +63,27 @@ export class AppComponent {
     this.isCleader = this.localStorageService.get("isCLeader")== true? true : false;
     this.isRleader = this.localStorageService.get("isRLeader")== true? true : false;
     this.isGleader = this.localStorageService.get("isGLeader")== true? true : false;
-    this.flag = (this.isAdmin || this.isLeader)
+    this.flag = (this.isAdmin  || this.isCleader|| this.isGleader|| this.isRleader)
   }
   ngAfterContentInit() {
     this.isAdmin = this.localStorageService.get("isAdmin") == true ? true : false;
     this.isCleader = this.localStorageService.get("isCLeader")== true? true : false;
     this.isRleader = this.localStorageService.get("isRLeader")== true? true : false;
     this.isGleader = this.localStorageService.get("isGLeader")== true? true : false;
-    this.flag = (this.isAdmin || this.isLeader)
+    this.flag = (this.isAdmin  || this.isCleader|| this.isGleader|| this.isRleader)
   }
   ngAfterViewInit() {
     this.isAdmin = this.localStorageService.get("isAdmin") == true ? true : false;
     this.isCleader = this.localStorageService.get("isCLeader")== true? true : false;
     this.isRleader = this.localStorageService.get("isRLeader")== true? true : false;
     this.isGleader = this.localStorageService.get("isGLeader")== true? true : false;
-    this.flag = (this.isAdmin || this.isLeader)
+    this.flag = (this.isAdmin  || this.isCleader|| this.isGleader|| this.isRleader)
   }
   ngOnDestroy() {
     this.isAdmin = this.localStorageService.get("isAdmin") == true ? true : false;
     this.isCleader = this.localStorageService.get("isCLeader")== true? true : false;
     this.isRleader = this.localStorageService.get("isRLeader")== true? true : false;
     this.isGleader = this.localStorageService.get("isGLeader")== true? true : false;
-    this.flag = (this.isAdmin || this.isLeader)
+    this.flag = (this.isAdmin  || this.isCleader|| this.isGleader|| this.isRleader)
   }
 }
