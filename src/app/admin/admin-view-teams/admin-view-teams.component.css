@@ -19,6 +19,10 @@
     padding: 10px;
     margin-top: 2%;
 }
+.text__area{
+  width: 600px;
+  height: 150px
+}
 
  #loader {
     animation: animate 1.5s linear infinite;

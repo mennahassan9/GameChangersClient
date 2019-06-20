@@ -67,15 +67,33 @@ export class InviteLeaderComponent implements OnInit {
       // this.resortIdeas();
       console.log(this.form.value, "VALUE")
       if (this.Cleader == true) {
-        this.adminService.inviteCleader(this.form.value)
+        this.adminService.inviteCleader(this.form.value).then(res=>{
+          this.doneAlert= true;
+          this.errorAlert=false;
+        }).catch(err=>{
+          this.doneAlert=false;
+          this.showAlert(err.json().errors[0].message)
+        })
       }
       if (this.Rleader == true) {
-        this.adminService.inviteRleader(this.form.value)
+        this.adminService.inviteRleader(this.form.value).then(res=>{
+          this.doneAlert= true;
+          this.errorAlert=false;
+        }).catch(err=>{
+          this.doneAlert=false;
+          this.showAlert(err.json().errors[0].message)
+        })
       }
       if (this.Gleader == true) {
-        this.adminService.inviteGleader(this.form.value)
+        this.adminService.inviteGleader(this.form.value).then(res=>{
+          this.doneAlert= true;
+          this.errorAlert=false;
+        }).catch(err=>{
+          this.doneAlert=false;
+          this.showAlert(err.json().errors[0].message)
+        })
       }
-      this.doneAlert = true;
+     // this.doneAlert = true;
       this.form.reset()
       this.submit = false
     }
