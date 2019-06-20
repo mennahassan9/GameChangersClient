@@ -61,6 +61,7 @@ export class JudgeControlComponent implements OnInit {
           console.log(this.idea)
           this.teamName = this.idea.teamName;
           // this.title = this.idea.title;
+          this.ideaId = this.idea._id;
           this.challengeName = this.idea.category;
           this.fileName = this.idea.filename;
           this.getJudges(this.idea.judgments);
@@ -139,7 +140,7 @@ export class JudgeControlComponent implements OnInit {
           this.toggleLoading()
         })
       }
-
+      console.log('*****************************', this.ideaId)
       this.adminService.assignJudge(judgeId, this.ideaId).subscribe(res => {
         let judge = {};
         const judgment = res.data.judgments.filter(judgment => judgment.judgeId == judgeId)[0];
@@ -151,6 +152,7 @@ export class JudgeControlComponent implements OnInit {
         this.errorMessage = this.errorMessage + "Successfully assigned judge to idea\n"
         //this.toggleLoading();
       }, err => {
+        this.successAlert = false;
         this.errorAlert = true;
         // this.errorMessage = err.json().errors[0].message;
         this.errorMessage = this.errorMessage + err.json().errors[0].message + '\n'
@@ -177,12 +179,14 @@ export class JudgeControlComponent implements OnInit {
           this.errorMessage = this.errorMessage + "Successfully assigned judge to idea\n"
           //this.toggleLoading();
         }, err => {
+          this.successAlert = false;
           this.errorAlert = true;
           // this.errorMessage = err.json().errors[0].message;
           this.errorMessage = this.errorMessage + err.json().errors[0].message + '\n'
           this.toggleLoading();
         });
       }, err => {
+        this.successAlert = false;
         this.errorAlert = true;
         // this.errorMessage = err.json().errors[0].message;
         this.errorMessage = this.errorMessage + err.json().errors[0].message + '\n'
