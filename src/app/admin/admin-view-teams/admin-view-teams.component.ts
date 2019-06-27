@@ -26,13 +26,15 @@ export class AdminViewTeamsComponent implements OnInit {
     {title:'Region', name:'region', filtering: {filterString: '', placeholder: 'Filter by Region'}},
     {title:'Chapter', name:'chapter', filtering: {filterString: '', placeholder: 'Filter by Chapter'}},
     {title:'Idea', name:'idea', filtering: {filterString: '', placeholder: 'Filter by Idea name'}},
-    {title:'Category', name:'category', filtering: {filterString: '', placeholder: 'Filter by Category'}}
+    {title:'Category', name:'category', filtering: {filterString: '', placeholder: 'Filter by Category'}},
+    {title:'', name:'delete'}
   ];
   public page:number = 1;
   public itemsPerPage:number = 10;
   public maxSize:number = 5;
   public numPages:number;
   public length:number = 0;
+  tname : any;
   public config:any = {
     paging: true,
     sorting: {columns: this.columns},
@@ -59,6 +61,9 @@ export class AdminViewTeamsComponent implements OnInit {
 
     })
   }
+  public deleteTeam(name){
+  
+  }
 
   public parseResponse(input){
     let output = [];
@@ -72,6 +77,15 @@ export class AdminViewTeamsComponent implements OnInit {
       object['chapter'] = element.chapter == undefined ? "" : element.chapter;
       object['idea'] = element.ideaname == undefined ? "No idea submitted" : element.ideaname;
       object['category'] = element.category == undefined ? "No idea submitted" : element.category;
+      object['delete']=  `<div class="row">
+      <div class="col-sm-3" style="padding-left: 20px;"> 
+        
+          <button class="btn " style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;" >
+            Delete
+          </button>
+        
+      </div></div>`;
+      object['tname']=element.name;
       let allEmails = element.members;
       allEmails.push(element.creator)
       object['emails'] = allEmails;
@@ -174,7 +188,25 @@ export class AdminViewTeamsComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    return;
+console.log("DATA", data, this.tname)
+  if (data.column =='delete'){
+    this.adminService.deleteTeam(data.row.tname).subscribe(res => {
+      this.adminService.getTeams().subscribe(res => {
+        this.teams = res.data;
+        this.length = this.teams.length;
+        this.parseResponse(this.teams);
+      }, e=>{
+        this.alertFlag=true;
+        this.alertMsg= "Couldn't connect to server";
+  
+      })
+     
+    }, e=>{
+      this.alertFlag=true;
+      this.alertMsg= "Couldn't delete Team";
+
+    })
+  }
   }
   public send(){
     this.adminService.sendEmails(this.currentEmails, this.form.value).subscribe(res => {

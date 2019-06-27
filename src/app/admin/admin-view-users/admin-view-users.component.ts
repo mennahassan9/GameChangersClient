@@ -23,7 +23,8 @@ export class AdminViewUsersComponent implements OnInit {
     {title: 'email', name: 'email', filtering: {filterString: '', placeholder: 'Filter by email'}},
     {title: 'Region', name: 'region', filtering: {filterString: '', placeholder: 'Filter by region'}},
     {title: 'Chapter', name: 'chapter', filtering: {filterString: '', placeholder: 'Filter by chapter'}},
-    {title: 'Team', name: 'team', filtering: {filterString: '', placeholder: 'Filter by Team'}}
+    {title: 'Team', name: 'team', filtering: {filterString: '', placeholder: 'Filter by Team'}},
+    {title:'', name:'delete'}
   ];
   public config:any = {
     paging: true,
@@ -56,6 +57,10 @@ export class AdminViewUsersComponent implements OnInit {
 
     })
   }
+  public deleteUser(email){
+    console.log("HERE")
+    console.log(email)
+  }
 
   public parseResponse(data){
     let returnedData = [];
@@ -66,6 +71,14 @@ export class AdminViewUsersComponent implements OnInit {
       object['region'] = element.region==undefined ? "" : element.region;
       object['chapter'] = element.chapter==undefined ?  "": element.chapter=="-1"?"": element.chapter;
       object['team'] = element.teamMember=="-1" ? "No Team Yet" : element.teamMember;
+      object['delete']=  `<div class="row">
+      <div class="col-sm-3" style="padding-left: 20px;"> 
+        
+          <button class="btn " style="background-color: #007DB8; border-color: #007DB8; color: #ffffff;"  ng-click='deleteUser(${element.email})'>
+            Delete
+          </button>
+        
+      </div></div>`;
       returnedData.push(object);
       object['emailList'] = element.email
     });
@@ -74,6 +87,8 @@ export class AdminViewUsersComponent implements OnInit {
     this.onChangeTable(this.config, {page: this.page, itemsPerPage: this.itemsPerPage});
   }
 
+
+ 
   public onChangeTable(config:any, page:any):any {
     if (config.filtering) {
       Object.assign(this.config.filtering, config.filtering);
@@ -157,8 +172,28 @@ export class AdminViewUsersComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
+    console.log(data,"HERE")
     if (data.column === 'addJudgeButton'){
         let teamName = data.row.teamName;
+    }
+    if (data.column ==='delete'){
+      this.adminService.deleteUser(data.row.emailList).subscribe(
+        res=>{
+          this.adminService.getUsers().subscribe(res => {
+            this.users = res.data;
+            this.length = this.users.length;
+            this.parseResponse(res.data);
+          }, e=>{
+            this.alertFlag=true;
+            this.alertMsg= "Couldn't connect to server";
+      
+          })
+        }, e=>{
+          this.alertFlag=true;
+          this.alertMsg= "Couldn't delete user";
+
+        }
+      )
     }
   }
 
